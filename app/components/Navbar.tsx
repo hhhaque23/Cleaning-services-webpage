@@ -7,10 +7,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sparkles, ShieldCheck } from "lucide-react";
 
 const LINKS = [
-  { href: "/book", label: "Get a price" },
   { href: "/about", label: "About" },
   { href: "/about#reviews", label: "Reviews" },
   { href: "/about#faq", label: "FAQ" },
+  { href: "/book", label: "Get a price" },
 ];
 
 function onSamePath(pathname: string, href: string) {
