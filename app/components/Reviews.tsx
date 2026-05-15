@@ -96,7 +96,7 @@ function Card({ r }: { r: Review }) {
       </p>
       <div className="mt-4 flex items-center gap-3">
         <span className="relative h-10 w-10 flex-none rounded-full overflow-hidden ring-2 ring-white shadow">
-          <Image src={r.photo} alt="" fill sizes="40px" className="object-cover" />
+          <Image src={r.photo} alt="" aria-hidden="true" fill sizes="40px" className="object-cover" />
         </span>
         <div className="leading-tight min-w-0">
           <div className="text-sm font-semibold text-ink-950 truncate">{r.name}</div>

@@ -51,7 +51,7 @@ export function SubscriptionCallout() {
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <Link
                   href="/book?frequency=biweekly"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-ink-950 hover:bg-ink-900 text-white font-semibold px-6 py-3.5 shadow-[0_20px_50px_-20px_rgba(8,51,68,0.7)] transition-all cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-ink-950 hover:bg-ink-900 text-white font-semibold px-6 py-3.5 shadow-[0_20px_50px_-20px_oklch(0.13_0.045_230/0.55)] transition-all cursor-pointer"
                 >
                   Start a biweekly plan
                   <ArrowRight className="h-4 w-4" />
@@ -71,7 +71,7 @@ export function SubscriptionCallout() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3, duration: 0.45 }}
-                className="absolute -top-1 right-5 z-10 inline-flex items-center gap-1.5 rounded-full bg-ink-950 text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 shadow-[0_12px_28px_-10px_rgba(8,36,50,0.55)]"
+                className="absolute -top-1 right-5 z-10 inline-flex items-center gap-1.5 rounded-full bg-ink-950 text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 shadow-[0_12px_28px_-10px_oklch(0.13_0.045_230/0.45)]"
               >
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-grass-400" />
                 Most popular plan

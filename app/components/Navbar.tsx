@@ -75,7 +75,7 @@ export function Navbar() {
               </a>
               <Link
                 href="/book"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-grass-500 hover:bg-grass-600 text-white text-sm font-semibold px-4 py-2.5 shadow-[0_8px_24px_-8px_rgba(34,197,94,0.6)] hover:shadow-[0_12px_30px_-10px_rgba(34,197,94,0.7)] transition-all cursor-pointer"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-grass-500 hover:bg-grass-600 text-white text-sm font-semibold px-4 py-2.5 shadow-[0_8px_24px_-8px_oklch(0.68_0.18_145/0.55)] hover:shadow-[0_12px_30px_-10px_oklch(0.68_0.18_145/0.65)] transition-all cursor-pointer"
               >
                 Book now
               </Link>
@@ -138,7 +138,7 @@ export function Navbar() {
                 <Link
                   href="/book"
                   onClick={() => setOpen(false)}
-                  className="mt-3 inline-flex items-center justify-center rounded-xl bg-grass-500 hover:bg-grass-600 text-white text-base font-semibold px-4 py-3.5 shadow-[0_10px_24px_-8px_rgba(34,197,94,0.6)] transition-all cursor-pointer"
+                  className="mt-3 inline-flex items-center justify-center rounded-xl bg-grass-500 hover:bg-grass-600 text-white text-base font-semibold px-4 py-3.5 shadow-[0_10px_24px_-8px_oklch(0.68_0.18_145/0.55)] transition-all cursor-pointer"
                 >
                   Book now
                 </Link>

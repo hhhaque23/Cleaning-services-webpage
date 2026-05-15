@@ -184,7 +184,7 @@ export function BookingFlow() {
                       s === 3 ? 4 : ((s + 1) as 1 | 2 | 3 | 4)
                     )
                   }
-                  className="inline-flex items-center gap-1.5 rounded-2xl bg-ink-950 hover:bg-ink-800 disabled:bg-ink-300 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-3 shadow-[0_10px_24px_-10px_rgba(8,51,68,0.6)] transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 rounded-2xl bg-ink-950 hover:bg-ink-800 disabled:bg-ink-300 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-3 shadow-[0_10px_24px_-10px_oklch(0.13_0.045_230/0.5)] transition-all cursor-pointer"
                 >
                   {step === 3 ? "Confirm booking" : "Continue"}
                   <ArrowRight className="h-4 w-4" />

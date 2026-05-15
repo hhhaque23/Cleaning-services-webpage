@@ -160,6 +160,7 @@ export function Hero() {
                       <Image
                         src={PHOTOS.team[i].photo}
                         alt=""
+                        aria-hidden="true"
                         width={28}
                         height={28}
                         className="object-cover"
