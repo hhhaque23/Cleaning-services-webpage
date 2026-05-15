@@ -1,11 +1,12 @@
-// Higher-quality Unsplash URLs. w=2400 gives crisp retina rendering for hero
-// crops; q=85 trades a small bandwidth bump for visibly sharper grain.
-// Avatars at w=400 stay small (faces only need ~40px display).
+// Unsplash URLs tuned for weight vs. clarity at the rendered breakpoints.
+// w=1600 q=78 is visually indistinguishable from w=2400 q=85 at 1080p but
+// drops file size ~55%. Portraits display at 240 px max; w=900 covers
+// retina. Avatars stay tiny.
 
 const hero = (id: string) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=2400&q=85`;
+  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1600&q=78`;
 const portrait = (id: string) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1200&q=85`;
+  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=900&q=78`;
 const avatar = (id: string) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=400&q=85`;
 
@@ -13,7 +14,7 @@ export const PHOTOS = {
   hero: hero("1583847268964-b28dc8f51f92"),
   heroAlt: "Sunlit living room with white sofa and clean wood floors",
 
-  kitchen: hero("1556909114-f6e7ad7d3136"),
+  kitchen: hero("1571066811602-716837d681de"),
   bathroom: hero("1552321554-5fefe8c9ef14"),
   bedroom: hero("1505691938895-1758d7feb511"),
   livingRoom: hero("1493663284031-b7e3aefcae8e"),
