@@ -12,7 +12,7 @@ import {
   Leaf,
 } from "lucide-react";
 import { PHOTOS } from "@/lib/unsplash";
-import { HeroBackground } from "./HeroBackground";
+import { HeroVideo } from "./HeroVideo";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
@@ -29,7 +29,7 @@ export function Hero() {
       id="top"
       className="relative overflow-hidden pt-28 sm:pt-32 lg:pt-40 pb-16 sm:pb-24 lg:pb-32"
     >
-      <HeroBackground />
+      <HeroVideo />
 
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
