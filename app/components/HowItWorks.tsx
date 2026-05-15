@@ -117,16 +117,11 @@ export function HowItWorks() {
   );
 }
 
-// ---- Glyph 01: Configure (slider, one-shot on view-in) ----
+// ---- Glyph 01: Configure ------------------------------------------------
+// Two horizontal rails, each with a single smooth sweep from left to a
+// final landing position. No oscillation. Settles and stays.
 function SliderGlyph() {
-  const knobCycle = [50, 150, 95, 130, 110];
-  const knobFinal = knobCycle[knobCycle.length - 1];
-  const dotCycle = [130, 70, 110, 145];
-  const dotFinal = dotCycle[dotCycle.length - 1];
-
-  const topTransition = { duration: 2.6, ease: [0.45, 0, 0.55, 1] };
-  const bottomTransition = { duration: 3.0, ease: [0.45, 0, 0.55, 1], delay: 0.4 };
-
+  const viewport = { once: true, margin: "-40px" };
   return (
     <motion.svg
       viewBox="0 0 200 96"
@@ -136,12 +131,12 @@ function SliderGlyph() {
       aria-label="A configurable slider control"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: "-40px" }}
+      viewport={viewport}
       transition={{ duration: 0.4 }}
     >
       {/* Top rail base */}
       <line x1="14" y1="34" x2="186" y2="34" stroke="oklch(0.88 0.022 220)" strokeWidth="4" strokeLinecap="round" />
-      {/* Top rail grass fill, x2 follows knob */}
+      {/* Top rail grass fill */}
       <motion.line
         x1="14"
         y1="34"
@@ -150,9 +145,9 @@ function SliderGlyph() {
         strokeWidth="4"
         strokeLinecap="round"
         initial={{ x2: 14 }}
-        whileInView={{ x2: knobCycle }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={topTransition}
+        whileInView={{ x2: 132 }}
+        viewport={viewport}
+        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
       />
       {/* Top knob */}
       <motion.circle
@@ -162,14 +157,14 @@ function SliderGlyph() {
         stroke="oklch(0.985 0.006 220)"
         strokeWidth="3"
         initial={{ cx: 14 }}
-        whileInView={{ cx: knobCycle }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={topTransition}
+        whileInView={{ cx: 132 }}
+        viewport={viewport}
+        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
       />
 
       {/* Bottom rail base */}
       <line x1="14" y1="68" x2="186" y2="68" stroke="oklch(0.88 0.022 220)" strokeWidth="3" strokeLinecap="round" />
-      {/* Bottom rail grass fill, x2 follows lower knob */}
+      {/* Bottom rail grass fill */}
       <motion.line
         x1="14"
         y1="68"
@@ -178,9 +173,9 @@ function SliderGlyph() {
         strokeWidth="3"
         strokeLinecap="round"
         initial={{ x2: 14 }}
-        whileInView={{ x2: dotCycle }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={bottomTransition}
+        whileInView={{ x2: 84 }}
+        viewport={viewport}
+        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
       />
       {/* Bottom knob */}
       <motion.circle
@@ -188,43 +183,64 @@ function SliderGlyph() {
         r="8"
         fill="oklch(0.62 0.17 145)"
         initial={{ cx: 14 }}
-        whileInView={{ cx: dotCycle }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={bottomTransition}
+        whileInView={{ cx: 84 }}
+        viewport={viewport}
+        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
       />
-
-      {/* Final-position fallbacks (rendered statically; the motion above overrides on view) */}
-      <line x1="-9999" y1="0" x2="-9998" y2="0" data-final-top={knobFinal} data-final-bottom={dotFinal} />
     </motion.svg>
   );
 }
 
-// ---- Glyph 02: Schedule (full calendar + cursor click + check spread, one-shot) ----
+// ---- Glyph 02: Schedule ------------------------------------------------
+// Two-week calendar (2 rows × 7 columns = 14 cells). A cursor walks across
+// and clicks three days in sequence; each click triggers a grass glow plus
+// a white checkmark in that cell. Plays once on view-in then settles.
 function CalendarGlyph() {
-  const gridX = 32;
-  const gridY = 34;
-  const cellW = 19;
-  const cellH = 12;
-  const gap = 1.5;
   const cols = 7;
-  const rows = 5;
-  const targetRow = 2;
-  const targetCol = 2;
+  const rows = 2;
+  const cellW = 19;
+  const cellH = 13;
+  const gap = 1.5;
+  const gridX = 32;
+  const gridY = 38;
 
-  const cellCx = gridX + targetCol * (cellW + gap) + cellW / 2;
-  const cellCy = gridY + 4 + targetRow * (cellH + gap) + cellH / 2;
-  const targetCellX = gridX + targetCol * (cellW + gap);
-  const targetCellY = gridY + 4 + targetRow * (cellH + gap);
+  const startDate = 14; // showing May 14 to May 27
+
+  const targets = [
+    { col: 1, row: 0 }, // Mon week 1
+    { col: 3, row: 0 }, // Wed week 1
+    { col: 5, row: 1 }, // Fri week 2
+  ];
+
+  const center = (col: number, row: number) => ({
+    x: gridX + col * (cellW + gap) + cellW / 2,
+    y: gridY + row * (cellH + gap) + cellH / 2,
+  });
 
   const cells = Array.from({ length: cols * rows }, (_, i) => ({
     col: i % cols,
     row: Math.floor(i / cols),
-    n: i + 1,
+    n: startDate + i,
   }));
 
-  const DURATION = 3.4;
+  const DURATION = 4.6;
   const t = (sec: number) => sec / DURATION;
   const viewport = { once: true, margin: "-40px" };
+
+  // Per-cell click time inside the sequence (each click is 1.1s apart)
+  const clickAt = (i: number) => 0.7 + i * 1.1;
+
+  // Cursor path: enter from top-left, hit each target, then exit bottom-right.
+  const cursorPath = (() => {
+    const enter = { x: 16, y: -10 };
+    const exit = { x: 170, y: 100 };
+    const stops = targets.map((tg) => center(tg.col, tg.row));
+    return {
+      x: [enter.x, ...stops.map((s) => s.x - 5), exit.x],
+      y: [enter.y, ...stops.map((s) => s.y - 4), exit.y],
+      opacity: [0, 1, 1, 1, 0],
+    };
+  })();
 
   return (
     <motion.svg
@@ -232,22 +248,23 @@ function CalendarGlyph() {
       width="200"
       height="124"
       role="img"
-      aria-label="A mouse cursor clicks a date on the calendar and a check confirms"
+      aria-label="A cursor clicks three days on a two-week calendar"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={viewport}
       transition={{ duration: 0.4 }}
     >
-      <rect x="20" y="14" width="160" height="100" rx="9" fill="oklch(0.985 0.006 220)" stroke="oklch(0.84 0.018 220)" strokeWidth="1.3" />
-      <text x="100" y="24" textAnchor="middle" fontSize="6" fontWeight="700" fill="oklch(0.32 0.05 230)" letterSpacing="1.2" fontFamily="sans-serif">
-        MAY 2026
+      {/* Frame */}
+      <rect x="20" y="18" width="160" height="92" rx="9" fill="oklch(0.985 0.006 220)" stroke="oklch(0.84 0.018 220)" strokeWidth="1.3" />
+      <text x="100" y="28" textAnchor="middle" fontSize="6" fontWeight="700" fill="oklch(0.32 0.05 230)" letterSpacing="1.2" fontFamily="sans-serif">
+        MAY 14 — MAY 27
       </text>
-      <line x1="20" y1="30" x2="180" y2="30" stroke="oklch(0.92 0.012 220)" strokeWidth="0.8" />
+      <line x1="20" y1="33" x2="180" y2="33" stroke="oklch(0.92 0.012 220)" strokeWidth="0.8" />
       {"SMTWTFS".split("").map((d, i) => (
         <text
           key={i}
           x={gridX + i * (cellW + gap) + cellW / 2}
-          y="33.5"
+          y="36.5"
           textAnchor="middle"
           fontSize="3.6"
           fontWeight="700"
@@ -259,19 +276,20 @@ function CalendarGlyph() {
         </text>
       ))}
 
+      {/* Static cells (non-targets) */}
       {cells.map((c) => {
         const x = gridX + c.col * (cellW + gap);
-        const y = gridY + 4 + c.row * (cellH + gap);
-        const isTarget = c.col === targetCol && c.row === targetRow;
+        const y = gridY + c.row * (cellH + gap);
+        const isTarget = targets.some((tg) => tg.col === c.col && tg.row === c.row);
         if (isTarget) return null;
         return (
           <g key={c.n}>
             <rect x={x} y={y} width={cellW} height={cellH} rx="2.5" fill="oklch(0.96 0.012 220)" />
             <text
               x={x + cellW / 2}
-              y={y + cellH / 2 + 1.6}
+              y={y + cellH / 2 + 1.8}
               textAnchor="middle"
-              fontSize="4.5"
+              fontSize="5"
               fontWeight="500"
               fill="oklch(0.5 0.042 228)"
               fontFamily="sans-serif"
@@ -282,129 +300,136 @@ function CalendarGlyph() {
         );
       })}
 
-      {/* Target cell fill */}
-      <motion.rect
-        x={targetCellX}
-        y={targetCellY}
-        width={cellW}
-        height={cellH}
-        rx="2.5"
-        fill="oklch(0.96 0.012 220)"
-        initial={false}
-        whileInView={{ fill: ["oklch(0.96 0.012 220)", "oklch(0.96 0.012 220)", "oklch(0.62 0.17 145)"] }}
-        viewport={viewport}
-        transition={{
-          duration: DURATION,
-          times: [0, t(1.35), t(1.6)],
-          ease: "linear",
-        }}
-      />
-      {/* Target cell number fades out */}
-      <motion.text
-        x={targetCellX + cellW / 2}
-        y={targetCellY + cellH / 2 + 1.6}
-        textAnchor="middle"
-        fontSize="4.5"
-        fontWeight="500"
-        fill="oklch(0.5 0.042 228)"
-        fontFamily="sans-serif"
-        initial={false}
-        whileInView={{ opacity: [1, 1, 0] }}
-        viewport={viewport}
-        transition={{ duration: DURATION, times: [0, t(1.35), t(1.55)], ease: "linear" }}
-      >
-        17
-      </motion.text>
-      {/* Check draws */}
-      <motion.path
-        d={`M ${targetCellX + cellW * 0.28} ${targetCellY + cellH * 0.55} L ${targetCellX + cellW * 0.46} ${targetCellY + cellH * 0.78} L ${targetCellX + cellW * 0.76} ${targetCellY + cellH * 0.3}`}
-        fill="none"
-        stroke="oklch(0.985 0.006 220)"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        initial={{ pathLength: 0, opacity: 0 }}
-        whileInView={{ pathLength: [0, 0, 1], opacity: [0, 0, 1] }}
-        viewport={viewport}
-        transition={{
-          duration: DURATION,
-          times: [0, t(1.4), t(1.75)],
-          ease: [0.22, 1, 0.36, 1],
-        }}
-      />
+      {/* Target cells: each gets a glow, fill, check, in sequence */}
+      {targets.map((tg, i) => {
+        const x = gridX + tg.col * (cellW + gap);
+        const y = gridY + tg.row * (cellH + gap);
+        const c = center(tg.col, tg.row);
+        const clickT = clickAt(i);
+        return (
+          <g key={`target-${i}`}>
+            {/* Glow halo behind cell (fades in then settles soft) */}
+            <motion.circle
+              cx={c.x}
+              cy={c.y}
+              r={cellW * 0.9}
+              fill="oklch(0.68 0.18 145 / 0.35)"
+              style={{ filter: "blur(6px)", transformOrigin: `${c.x}px ${c.y}px` }}
+              initial={{ scale: 0.5, opacity: 0 }}
+              whileInView={{
+                scale: [0.5, 0.5, 1.15, 1],
+                opacity: [0, 0, 1, 0.55],
+              }}
+              viewport={viewport}
+              transition={{
+                duration: DURATION,
+                times: [0, t(clickT), t(clickT + 0.25), t(clickT + 0.55)],
+                ease: "easeOut",
+              }}
+            />
+            {/* Cell fill */}
+            <motion.rect
+              x={x}
+              y={y}
+              width={cellW}
+              height={cellH}
+              rx="2.5"
+              fill="oklch(0.96 0.012 220)"
+              initial={false}
+              whileInView={{
+                fill: [
+                  "oklch(0.96 0.012 220)",
+                  "oklch(0.96 0.012 220)",
+                  "oklch(0.62 0.17 145)",
+                ],
+              }}
+              viewport={viewport}
+              transition={{
+                duration: DURATION,
+                times: [0, t(clickT), t(clickT + 0.18)],
+                ease: "linear",
+              }}
+            />
+            {/* Date number fades out as cell turns grass */}
+            <motion.text
+              x={x + cellW / 2}
+              y={y + cellH / 2 + 1.8}
+              textAnchor="middle"
+              fontSize="5"
+              fontWeight="500"
+              fill="oklch(0.5 0.042 228)"
+              fontFamily="sans-serif"
+              initial={false}
+              whileInView={{ opacity: [1, 1, 0] }}
+              viewport={viewport}
+              transition={{
+                duration: DURATION,
+                times: [0, t(clickT), t(clickT + 0.18)],
+                ease: "linear",
+              }}
+            >
+              {startDate + tg.row * cols + tg.col}
+            </motion.text>
+            {/* Check draws */}
+            <motion.path
+              d={`M ${x + cellW * 0.26} ${y + cellH * 0.54} L ${x + cellW * 0.45} ${y + cellH * 0.78} L ${x + cellW * 0.78} ${y + cellH * 0.3}`}
+              fill="none"
+              stroke="oklch(0.985 0.006 220)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              whileInView={{ pathLength: [0, 0, 1], opacity: [0, 0, 1] }}
+              viewport={viewport}
+              transition={{
+                duration: DURATION,
+                times: [0, t(clickT + 0.15), t(clickT + 0.45)],
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            />
+          </g>
+        );
+      })}
 
-      {/* Ripples (one pass, expand and fade, don't loop) */}
-      {[0, 0.2].map((delaySec, i) => (
-        <motion.circle
-          key={i}
-          cx={cellCx}
-          cy={cellCy}
-          r={cellW / 2 + 1}
-          fill="none"
-          stroke="oklch(0.62 0.17 145)"
-          strokeWidth="1.4"
-          style={{ transformOrigin: `${cellCx}px ${cellCy}px` }}
-          initial={{ scale: 0.7, opacity: 0 }}
-          whileInView={{
-            scale: [0.7, 0.7, 1, 3.2],
-            opacity: [0, 0, 0.65, 0],
-          }}
-          viewport={viewport}
-          transition={{
-            duration: DURATION,
-            times: [0, t(1.5 + delaySec), t(1.6 + delaySec), t(2.6 + delaySec)],
-            ease: "easeOut",
-          }}
-        />
-      ))}
-
-      {/* Cursor: enters, clicks, leaves once */}
+      {/* Cursor */}
       <motion.g
-        initial={{ x: 30, y: -22, opacity: 0 }}
-        whileInView={{
-          x: [30, cellCx - 6, cellCx - 6, cellCx + 12],
-          y: [-22, cellCy - 4, cellCy - 4, cellCy + 20],
-          opacity: [0, 1, 1, 0],
-        }}
+        initial={{ x: 16, y: -10, opacity: 0 }}
+        whileInView={cursorPath}
         viewport={viewport}
         transition={{
           duration: DURATION,
-          times: [0, t(1.15), t(1.55), t(3.0)],
+          times: [
+            0,
+            t(clickAt(0) - 0.05),
+            t(clickAt(1) - 0.05),
+            t(clickAt(2) - 0.05),
+            1,
+          ],
           ease: [0.22, 1, 0.36, 1],
         }}
       >
-        <motion.g
-          initial={{ scale: 1 }}
-          whileInView={{ scale: [1, 1, 0.82, 1.06, 1] }}
-          viewport={viewport}
-          transition={{
-            duration: DURATION,
-            times: [0, t(1.18), t(1.27), t(1.35), t(1.45)],
-            ease: "easeOut",
-          }}
-          style={{ transformOrigin: "6px 6px" }}
-        >
-          <path
-            d="M 0 0 L 0 14 L 4 11 L 7 17 L 9 16 L 6 10 L 11 10 Z"
-            fill="oklch(0.13 0.045 230)"
-            stroke="oklch(0.985 0.006 220)"
-            strokeWidth="1"
-            strokeLinejoin="round"
-          />
-        </motion.g>
+        <path
+          d="M 0 0 L 0 14 L 4 11 L 7 17 L 9 16 L 6 10 L 11 10 Z"
+          fill="oklch(0.13 0.045 230)"
+          stroke="oklch(0.985 0.006 220)"
+          strokeWidth="1"
+          strokeLinejoin="round"
+        />
       </motion.g>
     </motion.svg>
   );
 }
 
-// ---- Glyph 03: Relax (clean crescent + stars twinkle once and stay) ----
+// ---- Glyph 03: Relax ---------------------------------------------------
+// Definitive crescent via SVG mask: a solid ink circle masked by an
+// offset surface-colored circle. Stars twinkle in on stagger and stay.
 function MoonGlyph() {
   const stars = [
     { cx: 58, cy: 26, size: 8, delay: 0.4 },
-    { cx: 40, cy: 56, size: 6, delay: 0.7 },
-    { cx: 60, cy: 86, size: 5, delay: 1.0 },
+    { cx: 38, cy: 56, size: 6, delay: 0.7 },
+    { cx: 62, cy: 88, size: 5, delay: 1.0 },
     { cx: 28, cy: 38, size: 4, delay: 0.55 },
-    { cx: 82, cy: 96, size: 4, delay: 0.9 },
+    { cx: 80, cy: 96, size: 4, delay: 0.9 },
   ];
   return (
     <motion.svg
@@ -418,14 +443,24 @@ function MoonGlyph() {
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.4 }}
     >
-      <motion.path
-        d="M 134 30 A 32 32 0 1 0 134 94 A 24 24 0 1 1 134 30 Z"
+      <defs>
+        <mask id="moon-cutout" maskUnits="userSpaceOnUse">
+          <rect x="0" y="0" width="200" height="124" fill="white" />
+          <circle cx="140" cy="56" r="28" fill="black" />
+        </mask>
+      </defs>
+
+      <motion.circle
+        cx="124"
+        cy="62"
+        r="32"
         fill="oklch(0.13 0.045 230)"
+        mask="url(#moon-cutout)"
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        style={{ transformOrigin: "126px 62px" }}
+        transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        style={{ transformOrigin: "124px 62px" }}
       />
 
       {stars.map((s, i) => (
@@ -440,9 +475,9 @@ function Twinkle({ cx, cy, size, delay }: { cx: number; cy: number; size: number
     <motion.g
       style={{ transformOrigin: `${cx}px ${cy}px` }}
       initial={{ scale: 0, opacity: 0 }}
-      whileInView={{ scale: [0, 1.15, 1], opacity: [0, 1, 1] }}
+      whileInView={{ scale: [0, 1.18, 1], opacity: [0, 1, 1] }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 1.4, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 1.3, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       <path
         d={`M${cx} ${cy - size} L${cx + size * 0.35} ${cy - size * 0.35} L${cx + size} ${cy} L${cx + size * 0.35} ${cy + size * 0.35} L${cx} ${cy + size} L${cx - size * 0.35} ${cy + size * 0.35} L${cx - size} ${cy} L${cx - size * 0.35} ${cy - size * 0.35} Z`}
