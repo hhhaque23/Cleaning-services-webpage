@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { animate, motion, useMotionValue, useTransform } from "framer-motion";
+import { AnimatePresence, animate, motion, useMotionValue, useTransform } from "framer-motion";
 
 export function PriceTicker({ value, className = "" }: { value: number; className?: string }) {
   const motionVal = useMotionValue(value);
@@ -9,14 +9,33 @@ export function PriceTicker({ value, className = "" }: { value: number; classNam
     `$${Math.round(v).toLocaleString()}`
   );
   const [display, setDisplay] = useState(`$${Math.round(value).toLocaleString()}`);
+  const [delta, setDelta] = useState<{ id: number; amount: number } | null>(null);
+  const [flash, setFlash] = useState<"up" | "down" | null>(null);
   const prev = useRef(value);
+  const deltaIdRef = useRef(0);
+  const flashTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const deltaTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
+    const diff = Math.round(value - prev.current);
     const controls = animate(motionVal, value, {
       duration: 0.45,
       ease: [0.22, 1, 0.36, 1],
     });
     const unsub = rounded.on("change", (v) => setDisplay(v));
+
+    if (diff !== 0 && prev.current !== value) {
+      setFlash(diff > 0 ? "up" : "down");
+      deltaIdRef.current += 1;
+      setDelta({ id: deltaIdRef.current, amount: diff });
+
+      if (flashTimer.current) clearTimeout(flashTimer.current);
+      flashTimer.current = setTimeout(() => setFlash(null), 700);
+
+      if (deltaTimer.current) clearTimeout(deltaTimer.current);
+      deltaTimer.current = setTimeout(() => setDelta(null), 1100);
+    }
+
     prev.current = value;
     return () => {
       controls.stop();
@@ -25,14 +44,37 @@ export function PriceTicker({ value, className = "" }: { value: number; classNam
   }, [value, motionVal, rounded]);
 
   return (
-    <motion.span
-      key={Math.round(value)}
-      initial={{ opacity: 0.6, y: 4 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className={className}
-    >
-      {display}
-    </motion.span>
+    <span className={`relative inline-block ${className}`}>
+      <span
+        className={`relative inline-block transition-colors duration-300 ${
+          flash === "down"
+            ? "text-grass-300"
+            : flash === "up"
+            ? "text-[oklch(0.92_0.04_70)]"
+            : ""
+        }`}
+      >
+        {display}
+      </span>
+
+      <AnimatePresence>
+        {delta && (
+          <motion.span
+            key={delta.id}
+            initial={{ opacity: 0, y: 6, scale: 0.96 }}
+            animate={{ opacity: 1, y: -28, scale: 1 }}
+            exit={{ opacity: 0, y: -36, scale: 0.96 }}
+            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            className={`pointer-events-none absolute left-full top-2 ml-2 inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-xs font-bold tabular-nums whitespace-nowrap ${
+              delta.amount < 0
+                ? "bg-grass-500/20 text-grass-300"
+                : "bg-[oklch(0.55_0.16_70/0.18)] text-[oklch(0.88_0.1_75)]"
+            }`}
+          >
+            {delta.amount > 0 ? "+" : "−"}${Math.abs(delta.amount)}
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </span>
   );
 }

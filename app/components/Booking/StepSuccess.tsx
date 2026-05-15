@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  CheckCircle2,
   Phone,
   Mail,
   CalendarClock,
@@ -13,6 +12,7 @@ import {
 } from "lucide-react";
 import type { Contact } from "./StepConfirm";
 import type { Slot } from "./StepSchedule";
+import { SuccessCheck } from "./SuccessCheck";
 
 type Props = {
   contact: Contact;
@@ -42,14 +42,7 @@ export function StepSuccess({ contact, slot, total, bookingId }: Props) {
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className="text-center py-2"
     >
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 0.1, type: "spring", stiffness: 200, damping: 14 }}
-        className="mx-auto inline-flex h-20 w-20 items-center justify-center rounded-full bg-grass-500/15 text-grass-700"
-      >
-        <CheckCircle2 className="h-10 w-10" strokeWidth={2.2} />
-      </motion.div>
+      <SuccessCheck />
 
       <h3 className="mt-5 font-display font-extrabold text-3xl text-ink-950 tracking-tight">
         Your clean is locked in.
