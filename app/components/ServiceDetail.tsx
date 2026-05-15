@@ -130,7 +130,11 @@ const CONTENT: Record<Tier, TierContent> = {
       },
       {
         title: "Bathroom deep",
-        items: ["Grout hand-scrubbed", "Fixtures descaled", "Exhaust vents wiped"],
+        items: [
+          "Grout hand-scrubbed",
+          "Fixtures descaled",
+          "Exhaust vents wiped",
+        ],
       },
       {
         title: "Throughout deep",
@@ -212,25 +216,17 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-ink-950 text-[var(--surface)] pt-32 sm:pt-36 lg:pt-44 pb-20">
-        <div className="absolute inset-0 noise opacity-30 pointer-events-none" aria-hidden="true" />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          aria-hidden="true"
-          style={{
-            background:
-              "radial-gradient(ellipse at 20% 30%, oklch(0.32 0.06 230) 0%, transparent 55%), radial-gradient(ellipse at 90% 100%, oklch(0.42 0.13 146 / 0.45) 0%, transparent 55%)",
-          }}
-        />
+      <section className="relative overflow-hidden pt-32 sm:pt-36 lg:pt-44 pb-16 sm:pb-20">
+        <div className="absolute inset-0 -z-10 bg-grid-faint bg-grid-32 [mask-image:radial-gradient(ellipse_at_top,black_25%,transparent_70%)]" />
 
-        <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14 items-center">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-14 items-center">
             <div>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-grass-300 font-semibold"
+                className="inline-flex items-center gap-2 rounded-full bg-ink-100 text-ink-800 text-xs font-semibold px-3 py-1.5 uppercase tracking-wider"
               >
                 <Icon className="h-3.5 w-3.5" /> {meta.tagline}
               </motion.div>
@@ -239,7 +235,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.05 }}
-                className="mt-4 font-display font-extrabold text-hero text-balance text-[var(--surface)]"
+                className="mt-4 font-display font-extrabold text-hero text-balance text-ink-950"
               >
                 {meta.label}.
               </motion.h1>
@@ -248,7 +244,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="mt-5 max-w-xl text-lead text-[oklch(0.985_0.006_220/0.78)] leading-relaxed text-pretty"
+                className="mt-5 max-w-xl text-lead text-ink-700 leading-relaxed text-pretty"
               >
                 {c.oneLiner}
               </motion.p>
@@ -257,41 +253,39 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.15 }}
-                className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3"
+                className="mt-8 flex flex-wrap items-center gap-5"
               >
                 <div>
-                  <div className="text-[10px] uppercase tracking-[0.14em] font-semibold text-grass-300">
+                  <div className="text-[11px] uppercase tracking-[0.12em] font-semibold text-ink-600">
                     From
                   </div>
                   <div className="mt-0.5 flex items-baseline gap-2">
-                    <span className="font-display font-extrabold text-5xl text-[var(--surface)] tabular-nums">
+                    <span className="font-display font-extrabold text-5xl text-ink-950 tabular-nums">
                       ${meta.base}
                     </span>
-                    <span className="text-[oklch(0.985_0.006_220/0.7)] text-sm">flat-priced</span>
+                    <span className="text-ink-700 text-sm">flat-priced</span>
                   </div>
                 </div>
-                <div className="h-10 w-px bg-[oklch(0.985_0.006_220/0.2)]" />
-                <div className="text-sm text-[oklch(0.985_0.006_220/0.75)] max-w-[16rem]">
-                  {c.durationHint}
-                </div>
+                <div className="h-10 w-px bg-line-strong" />
+                <div className="text-sm text-ink-700 max-w-[16rem]">{c.durationHint}</div>
               </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.22 }}
-                className="mt-9 flex flex-col sm:flex-row gap-3"
+                className="mt-8 flex flex-col sm:flex-row gap-3"
               >
                 <Link
                   href={`/book?tier=${TIER_SLUG[tier]}`}
-                  className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-grass-500 hover:bg-grass-600 text-[var(--surface)] font-semibold px-7 py-3.5 text-[15px] shadow-commit transition-all duration-300 ease-out-quint cursor-pointer"
+                  className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-grass-500 hover:bg-grass-600 text-white font-semibold px-7 py-3.5 text-[15px] shadow-commit transition-all duration-300 ease-out-quint cursor-pointer"
                 >
                   Book this clean
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 ease-out-quint group-hover:translate-x-1" />
                 </Link>
                 <Link
-                  href="/#tiers"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[oklch(0.985_0.006_220/0.08)] hover:bg-[oklch(0.985_0.006_220/0.14)] text-[var(--surface)] font-semibold px-7 py-3.5 text-[15px] transition-all duration-300 ease-out-quint cursor-pointer"
+                  href="/services"
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--surface-elevated)] hover:bg-white border border-line text-ink-950 font-semibold px-7 py-3.5 text-[15px] transition-all duration-300 ease-out-quint cursor-pointer"
                 >
                   Compare tiers
                 </Link>
@@ -304,7 +298,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
               transition={{ duration: 0.7, delay: 0.12 }}
               className="relative"
             >
-              <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden">
+              <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-lift">
                 <Image
                   src={c.hero}
                   alt={c.heroAlt}
@@ -313,31 +307,32 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                   sizes="(min-width: 1024px) 480px, 100vw"
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-tr from-ink-950/60 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-[oklch(0.11_0.04_230/0.45)] via-transparent to-transparent" />
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      <section className="relative py-20 sm:py-24">
-        <div className="mx-auto max-w-6xl px-5 sm:px-8">
-          <div className="grid lg:grid-cols-[1fr_2.2fr] gap-12 lg:gap-20 items-start">
-            <div className="lg:sticky lg:top-24">
-              <div className="text-[11px] uppercase tracking-[0.14em] font-semibold text-grass-700">
+      <section className="relative py-16 sm:py-20 border-t border-line">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="grid lg:grid-cols-[1fr_2fr] gap-10 lg:gap-16 items-start">
+            <div>
+              <div className="text-[11px] uppercase tracking-[0.14em] font-semibold text-ink-600">
                 What&apos;s included
               </div>
               <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance">
                 Every surface,{" "}
                 <span className="italic font-medium text-ink-700">named</span>.
               </h2>
-              <p className="mt-5 text-ink-700 leading-relaxed">
+              <p className="mt-4 text-ink-700 leading-relaxed">
                 No vague checklists. Here&apos;s exactly what your cleaner will do, room
-                by room.
+                by room. If something isn&apos;t listed, ask before booking and we&apos;ll
+                tell you in plain English.
               </p>
 
               {c.notIncluded && (
-                <div className="mt-10">
+                <div className="mt-8 rounded-2xl border border-line bg-[var(--surface-elevated)] p-5">
                   <div className="text-[11px] uppercase tracking-[0.12em] font-semibold text-ink-600">
                     Not included
                   </div>
@@ -353,7 +348,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
               )}
             </div>
 
-            <div className="divide-y divide-line-strong/40">
+            <div className="grid sm:grid-cols-2 gap-4">
               {c.included.map((group, gi) => (
                 <motion.div
                   key={group.title}
@@ -361,21 +356,17 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{ duration: 0.5, delay: gi * 0.06 }}
-                  className="grid sm:grid-cols-[10rem_1fr] gap-3 sm:gap-8 py-7 first:pt-0 last:pb-0"
+                  className="rounded-2xl bg-white border border-line p-6 shadow-soft"
                 >
-                  <div className="font-display font-bold text-lg text-ink-950 leading-tight">
+                  <div className="font-display font-bold text-lg text-ink-950">
                     {group.title}
                   </div>
-                  <ul className="space-y-2.5">
+                  <ul className="mt-4 space-y-2.5">
                     {group.items.map((item) => (
-                      <li
-                        key={item}
-                        className="flex items-start gap-2.5 text-[15px] text-ink-800"
-                      >
-                        <Check
-                          className="h-4 w-4 mt-1 flex-none text-grass-700"
-                          strokeWidth={3}
-                        />
+                      <li key={item} className="flex items-start gap-2.5 text-[15px] text-ink-800">
+                        <span className="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-grass-500/15 text-grass-700">
+                          <Check className="h-3 w-3" strokeWidth={3.5} />
+                        </span>
                         {item}
                       </li>
                     ))}
@@ -387,9 +378,9 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
         </div>
       </section>
 
-      <section className="relative py-20 sm:py-24 bg-[var(--surface-tint)]">
-        <div className="mx-auto max-w-6xl px-5 sm:px-8">
-          <div className="text-[11px] uppercase tracking-[0.14em] font-semibold text-grass-700">
+      <section className="relative py-16 sm:py-20 bg-ink-50/50">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="text-[11px] uppercase tracking-[0.14em] font-semibold text-ink-600">
             Best for
           </div>
           <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 max-w-2xl text-balance">
@@ -397,7 +388,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
             <span className="italic font-medium text-ink-700">these are true</span>.
           </h2>
 
-          <ol className="mt-12 divide-y divide-line-strong/40">
+          <ul className="mt-10 grid md:grid-cols-3 gap-5 lg:gap-6">
             {c.bestFor.map((b, bi) => (
               <motion.li
                 key={b.label}
@@ -405,30 +396,25 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: bi * 0.07 }}
-                className="grid sm:grid-cols-[6rem_1fr] gap-3 sm:gap-10 py-7 first:pt-0 last:pb-0 items-baseline"
+                className="rounded-2xl bg-white border border-line p-6 shadow-soft"
               >
-                <div className="font-display font-extrabold text-4xl text-grass-700 tabular-nums">
-                  {String(bi + 1).padStart(2, "0")}
+                <div className="font-display font-bold text-xl text-ink-950">
+                  {b.label}
                 </div>
-                <div>
-                  <div className="font-display font-bold text-xl text-ink-950">
-                    {b.label}
-                  </div>
-                  <p className="mt-1.5 text-[15px] text-ink-800 leading-relaxed max-w-xl">
-                    {b.body}
-                  </p>
-                </div>
+                <p className="mt-2 text-[15px] text-ink-700 leading-relaxed">
+                  {b.body}
+                </p>
               </motion.li>
             ))}
-          </ol>
+          </ul>
 
           {c.extras && (
-            <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-600">
+            <div className="mt-10 inline-flex flex-wrap items-center gap-x-6 gap-y-2 rounded-2xl bg-white border border-line px-5 py-4 shadow-soft">
+              <span className="text-xs font-semibold uppercase tracking-wider text-ink-600">
                 Optional add-ons
               </span>
               {c.extras.map((e) => (
-                <span key={e} className="text-ink-800">
+                <span key={e} className="text-sm text-ink-800">
                   · {e}
                 </span>
               ))}

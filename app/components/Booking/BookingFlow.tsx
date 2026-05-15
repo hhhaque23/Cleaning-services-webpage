@@ -120,8 +120,9 @@ export function BookingFlow() {
   return (
     <section
       id="booking"
-      className="relative py-16 sm:py-24 scroll-mt-24 bg-[oklch(0.93_0.022_220)]"
+      className="relative py-16 sm:py-24 scroll-mt-24"
     >
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-ink-50/60 via-transparent to-ink-50/60" />
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -147,7 +148,7 @@ export function BookingFlow() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6 }}
-            className="relative rounded-3xl bg-white border border-ink-200/70 overflow-hidden"
+            className="relative rounded-3xl bg-white border border-ink-200/70 shadow-card overflow-hidden"
           >
             <div className="px-5 sm:px-7 pt-5 sm:pt-6">
               <Stepper step={step} />
