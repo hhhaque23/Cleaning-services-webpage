@@ -78,8 +78,8 @@ export function AboutHero() {
           >
             <div className="relative aspect-[5/6] rounded-[2rem] overflow-hidden shadow-lift">
               <Image
-                src={PHOTOS.kitchen}
-                alt="A bright kitchen freshly cleaned, late afternoon light"
+                src={PHOTOS.livingRoom}
+                alt="A sunlit living room, late afternoon, after a Pristine clean"
                 fill
                 priority
                 sizes="(min-width: 1024px) 520px, 100vw"
