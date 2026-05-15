@@ -15,7 +15,6 @@ export function FinalCTA() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="relative rounded-[2rem] bg-ink-950 text-[var(--surface)] p-8 sm:p-12 lg:p-16 overflow-hidden shadow-lift"
         >
-          <div className="absolute inset-0 noise opacity-40 pointer-events-none" />
           <div className="absolute -top-40 -left-32 h-[28rem] w-[28rem] rounded-full bg-[oklch(0.4_0.08_230/0.5)] blur-3xl" />
           <div className="absolute -bottom-32 -right-24 h-[24rem] w-[24rem] rounded-full bg-[oklch(0.68_0.18_145/0.35)] blur-3xl" />
 

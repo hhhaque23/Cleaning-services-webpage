@@ -22,6 +22,19 @@ export function HeroVideo() {
     v.play().catch(() => {
       // Some browsers refuse autoplay; the poster still shows.
     });
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          v.play().catch(() => {});
+        } else {
+          v.pause();
+        }
+      },
+      { threshold: 0.05 }
+    );
+    io.observe(v);
+    return () => io.disconnect();
   }, []);
 
   return (

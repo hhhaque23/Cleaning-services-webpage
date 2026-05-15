@@ -21,7 +21,7 @@ export function PhotoQuote() {
               alt="A sunlit living room, mid-afternoon, after a recurring clean"
               fill
               sizes="(min-width: 1024px) 540px, 100vw"
-              className="object-cover scale-[1.06] animate-ken-burns"
+              className="object-cover scale-[1.04]"
             />
             <div className="absolute inset-0 bg-gradient-to-br from-[oklch(0.13_0.045_230/0.18)] via-transparent to-[oklch(0.13_0.045_230/0.08)]" />
           </motion.figure>

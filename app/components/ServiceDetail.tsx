@@ -33,8 +33,8 @@ type TierContent = {
 
 const CONTENT: Record<Tier, TierContent> = {
   Standard: {
-    hero: PHOTOS.kitchen,
-    heroAlt: "A clean modern kitchen, the standard finish",
+    hero: PHOTOS.livingRoom,
+    heroAlt: "A sunlit living room, the standard finish",
     includesPhoto: PHOTOS.livingRoom,
     includesAlt: "A living room mid-afternoon, dusted and vacuumed",
     Icon: Sparkles,
@@ -98,8 +98,8 @@ const CONTENT: Record<Tier, TierContent> = {
   Deep: {
     hero: PHOTOS.bathroom,
     heroAlt: "A bright bathroom with detailed surfaces, after a deep clean",
-    includesPhoto: PHOTOS.kitchen,
-    includesAlt: "A kitchen freshly deep-cleaned, including cabinet fronts and the range hood",
+    includesPhoto: PHOTOS.livingRoom,
+    includesAlt: "A living room freshly deep-cleaned, including baseboards and vents",
     Icon: Hammer,
     oneLiner:
       "Everything Standard misses, hand-detailed. Required before your first recurring clean.",
