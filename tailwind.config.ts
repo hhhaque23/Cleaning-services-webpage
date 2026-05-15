@@ -72,11 +72,32 @@ const config: Config = {
           "0%": { boxShadow: "0 0 0 0 oklch(0.68 0.18 145 / 0.55)" },
           "100%": { boxShadow: "0 0 0 14px oklch(0.68 0.18 145 / 0)" },
         },
+        "ken-burns": {
+          "0%, 100%": { transform: "scale(1.04) translate(-1%, -1%)" },
+          "50%": { transform: "scale(1.12) translate(2%, 2%)" },
+        },
+        "tile-drift": {
+          "0%, 100%": { transform: "translate3d(0, 0, 0)" },
+          "33%": { transform: "translate3d(-14px, -10px, 0)" },
+          "66%": { transform: "translate3d(10px, 6px, 0)" },
+        },
+        "tile-rise": {
+          "0%": { opacity: "0", transform: "translateY(28px) scale(0.96)" },
+          "100%": { opacity: "var(--tile-opacity, 0.55)", transform: "translateY(0) scale(1)" },
+        },
+        "mosaic-swap": {
+          "0%, 92%, 100%": { opacity: "1" },
+          "94%, 98%": { opacity: "0.15" },
+        },
       },
       animation: {
         "blob-drift": "blob-drift 18s cubic-bezier(0.45, 0, 0.55, 1) infinite",
         marquee: "marquee 42s linear infinite",
         "pulse-ring": "pulse-ring 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite",
+        "ken-burns": "ken-burns 22s cubic-bezier(0.45, 0, 0.55, 1) infinite",
+        "tile-drift": "tile-drift 28s cubic-bezier(0.45, 0, 0.55, 1) infinite",
+        "tile-rise": "tile-rise 1.1s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "mosaic-swap": "mosaic-swap 12s ease-in-out infinite",
       },
       backgroundImage: {
         "grid-faint":

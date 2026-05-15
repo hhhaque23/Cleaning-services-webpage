@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Calculator, Receipt, ShieldCheck, Sparkles } from "lucide-react";
 import {
@@ -8,12 +9,16 @@ import {
   FREQUENCY_META,
   TIER_META,
   type BookingConfig,
+  type Frequency,
 } from "./pricing";
+import { SLUG_TO_TIER } from "@/lib/tiers";
 import { PriceTicker } from "./PriceTicker";
 import { StepConfigure } from "./StepConfigure";
 import { StepSchedule, type Slot } from "./StepSchedule";
 import { StepConfirm, type Contact } from "./StepConfirm";
 import { StepSuccess } from "./StepSuccess";
+
+const VALID_FREQUENCIES: Frequency[] = ["onetime", "monthly", "biweekly", "weekly"];
 
 const STEPS = [
   { id: 1, label: "Configure", icon: Calculator },
@@ -39,8 +44,22 @@ const DEFAULT_CONTACT: Contact = {
 };
 
 export function BookingFlow() {
+  const params = useSearchParams();
+  const initialConfig = useMemo<BookingConfig>(() => {
+    const tierSlug = params?.get("tier");
+    const freqParam = params?.get("frequency") as Frequency | null;
+    return {
+      ...DEFAULT_CONFIG,
+      tier: (tierSlug && SLUG_TO_TIER[tierSlug]) || DEFAULT_CONFIG.tier,
+      frequency:
+        freqParam && VALID_FREQUENCIES.includes(freqParam)
+          ? freqParam
+          : DEFAULT_CONFIG.frequency,
+    };
+  }, [params]);
+
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
-  const [config, setConfig] = useState<BookingConfig>(DEFAULT_CONFIG);
+  const [config, setConfig] = useState<BookingConfig>(initialConfig);
   const [slot, setSlot] = useState<Slot | null>(null);
   const [contact, setContact] = useState<Contact>(DEFAULT_CONTACT);
 

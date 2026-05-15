@@ -24,7 +24,7 @@ const AREAS = [
 
 export function ServiceAreas() {
   return (
-    <section className="relative py-16 sm:py-20">
+    <section id="areas" className="relative py-16 sm:py-20 scroll-mt-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid lg:grid-cols-[1fr_1.4fr] gap-10 items-center">
           <motion.div

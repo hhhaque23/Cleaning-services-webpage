@@ -113,7 +113,7 @@ export function Reviews() {
   const rowA = REVIEWS.slice(0, 5);
   const rowB = REVIEWS.slice(3, 8);
   return (
-    <section id="reviews" className="relative py-16 sm:py-24 overflow-hidden">
+    <section id="reviews" className="relative py-16 sm:py-24 overflow-hidden scroll-mt-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 14 }}

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Repeat, Sparkles, TrendingDown } from "lucide-react";
 
@@ -48,23 +49,34 @@ export function SubscriptionCallout() {
               </ul>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                <a
-                  href="#booking"
+                <Link
+                  href="/book?frequency=biweekly"
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-ink-950 hover:bg-ink-900 text-white font-semibold px-6 py-3.5 shadow-[0_20px_50px_-20px_rgba(8,51,68,0.7)] transition-all cursor-pointer"
                 >
                   Start a biweekly plan
                   <ArrowRight className="h-4 w-4" />
-                </a>
-                <a
-                  href="#faq"
+                </Link>
+                <Link
+                  href="/about#faq"
                   className="inline-flex items-center justify-center rounded-2xl bg-white/15 hover:bg-white/25 text-white font-semibold px-6 py-3.5 transition-all cursor-pointer"
                 >
                   How billing works
-                </a>
+                </Link>
               </div>
             </div>
 
-            <div className="relative">
+            <div className="relative pt-3">
+              <motion.div
+                initial={{ opacity: 0, y: -6 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3, duration: 0.45 }}
+                className="absolute -top-1 right-5 z-10 inline-flex items-center gap-1.5 rounded-full bg-ink-950 text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 shadow-[0_12px_28px_-10px_rgba(8,36,50,0.55)]"
+              >
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-grass-400" />
+                Most popular plan
+              </motion.div>
+
               <div className="rounded-3xl bg-white text-ink-950 p-5 sm:p-6 shadow-2xl">
                 <div className="text-xs font-semibold uppercase tracking-wider text-ink-700">
                   Two-year savings
@@ -90,16 +102,6 @@ export function SubscriptionCallout() {
                   with you, locked at today&apos;s price.
                 </div>
               </div>
-
-              <motion.div
-                initial={{ rotate: -2, opacity: 0, y: 16 }}
-                whileInView={{ rotate: -3, opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-                className="absolute -bottom-5 -right-3 inline-flex items-center gap-1.5 rounded-full bg-ink-950 text-white text-xs font-bold px-3 py-1.5 shadow-glow"
-              >
-                Most popular plan
-              </motion.div>
             </div>
           </div>
         </motion.div>

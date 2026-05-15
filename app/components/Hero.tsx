@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -11,6 +12,7 @@ import {
   Leaf,
 } from "lucide-react";
 import { PHOTOS } from "@/lib/unsplash";
+import { HeroBackground } from "./HeroBackground";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
@@ -27,9 +29,7 @@ export function Hero() {
       id="top"
       className="relative overflow-hidden pt-28 sm:pt-32 lg:pt-40 pb-16 sm:pb-24 lg:pb-32"
     >
-      <div className="absolute inset-0 -z-10 bg-grid-faint bg-grid-32 [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_70%)]" />
-      <div className="absolute -z-10 top-[-12%] left-[-8%] h-[40rem] w-[40rem] rounded-full bg-[oklch(0.78_0.09_220/0.55)] blur-3xl animate-blob-drift" />
-      <div className="absolute -z-10 top-[18%] right-[-10%] h-[36rem] w-[36rem] rounded-full bg-[oklch(0.85_0.14_145/0.3)] blur-3xl animate-blob-drift [animation-delay:-6s]" />
+      <HeroBackground />
 
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
@@ -78,19 +78,19 @@ export function Hero() {
               variants={fadeUp}
               className="mt-9 flex flex-col sm:flex-row gap-3"
             >
-              <a
-                href="#booking"
+              <Link
+                href="/book"
                 className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-ink-950 hover:bg-ink-900 text-[var(--surface)] font-semibold px-7 py-[1.05rem] text-[15px] shadow-lift hover:shadow-[0_30px_70px_-22px_oklch(0.13_0.045_230/0.55)] transition-all duration-300 ease-out-quint cursor-pointer"
               >
                 Get my price and book
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 ease-out-quint group-hover:translate-x-1" />
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#tiers"
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--surface-elevated)] hover:bg-white border border-line text-ink-950 font-semibold px-7 py-[1.05rem] text-[15px] transition-all duration-300 ease-out-quint cursor-pointer"
               >
                 See services
-              </a>
+              </Link>
             </motion.div>
 
             <motion.ul
@@ -197,13 +197,13 @@ export function Hero() {
                   3 slots left, same-day available
                 </div>
               </div>
-              <a
-                href="#booking"
+              <Link
+                href="/book"
                 className="ml-auto inline-flex items-center gap-1 text-sm font-semibold text-ink-700 hover:text-ink-950 cursor-pointer"
               >
                 Grab one
                 <ArrowRight className="h-3.5 w-3.5" />
-              </a>
+              </Link>
             </motion.div>
 
             <motion.div

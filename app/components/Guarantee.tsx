@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { ShieldCheck, RotateCcw, Leaf, UserCheck, Lock, ArrowRight } from "lucide-react";
 import { PHOTOS } from "@/lib/unsplash";
 
@@ -104,13 +105,13 @@ export function Guarantee() {
                     Text or call within a day of your clean. We send a cleaner back the
                     next morning. You don&apos;t pay twice.
                   </p>
-                  <a
-                    href="#booking"
+                  <Link
+                    href="/book"
                     className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-grass-300 hover:text-grass-glow transition-colors cursor-pointer"
                   >
                     Book with that promise
                     <ArrowRight className="h-3.5 w-3.5" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </motion.div>

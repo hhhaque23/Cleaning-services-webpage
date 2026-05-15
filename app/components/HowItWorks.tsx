@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { SlidersHorizontal, CalendarCheck, Sparkles, ArrowDownRight } from "lucide-react";
 
@@ -32,7 +33,7 @@ const STEPS = [
 
 export function HowItWorks() {
   return (
-    <section id="how" className="relative py-20 sm:py-28">
+    <section id="how" className="relative py-20 sm:py-28 scroll-mt-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
@@ -94,13 +95,13 @@ export function HowItWorks() {
               </div>
 
               {i === 2 && (
-                <a
-                  href="#booking"
+                <Link
+                  href="/book"
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-ink-950 hover:bg-ink-900 text-[var(--surface)] font-semibold px-6 py-3.5 text-sm whitespace-nowrap transition-all duration-300 ease-out-quint cursor-pointer self-end"
                 >
                   Start a booking
                   <ArrowDownRight className="h-4 w-4 -rotate-90" />
-                </a>
+                </Link>
               )}
             </motion.article>
           ))}

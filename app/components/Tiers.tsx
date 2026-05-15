@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Check, Sparkles, Hammer, KeyRound, ArrowRight } from "lucide-react";
 import { startingPrice, type Tier } from "./Booking/pricing";
+import { TIER_SLUG } from "@/lib/tiers";
 
 type Card = {
   tier: Tier;
@@ -55,7 +57,7 @@ const CARDS: Card[] = [
 
 export function Tiers() {
   return (
-    <section id="tiers" className="relative py-16 sm:py-24">
+    <section id="tiers" className="relative py-16 sm:py-24 scroll-mt-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -157,8 +159,8 @@ export function Tiers() {
                 ))}
               </ul>
 
-              <a
-                href={`#booking?tier=${c.tier}`}
+              <Link
+                href={`/book?tier=${TIER_SLUG[c.tier]}`}
                 className={`mt-7 group inline-flex items-center justify-between gap-2 rounded-2xl px-5 py-3.5 font-semibold transition-all cursor-pointer ${
                   c.popular
                     ? "bg-grass-500 hover:bg-grass-600 text-white shadow-[0_12px_28px_-10px_rgba(34,197,94,0.7)]"
@@ -167,7 +169,19 @@ export function Tiers() {
               >
                 Configure &amp; book
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </a>
+              </Link>
+
+              <Link
+                href={`/services/${TIER_SLUG[c.tier]}`}
+                className={`mt-3 inline-flex items-center gap-1 text-sm font-semibold transition-colors cursor-pointer ${
+                  c.popular
+                    ? "text-grass-400 hover:text-grass-300"
+                    : "text-ink-700 hover:text-ink-950"
+                }`}
+              >
+                What&apos;s included
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
             </motion.div>
           ))}
         </div>

@@ -1,33 +1,34 @@
 "use client";
 
+import Link from "next/link";
 import { Sparkles, Instagram, Facebook, Mail, Phone, MapPin } from "lucide-react";
 
 const NAV = [
   {
     title: "Services",
     links: [
-      { label: "Standard clean", href: "#tiers" },
-      { label: "Deep clean", href: "#tiers" },
-      { label: "Move in / out", href: "#tiers" },
-      { label: "Recurring plans", href: "#booking" },
+      { label: "Standard clean", href: "/services/standard" },
+      { label: "Deep clean", href: "/services/deep" },
+      { label: "Move in / out", href: "/services/move-in-out" },
+      { label: "Recurring plans", href: "/book" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "How it works", href: "#how" },
-      { label: "Reviews", href: "#reviews" },
-      { label: "FAQ", href: "#faq" },
-      { label: "Service areas", href: "#" },
+      { label: "How it works", href: "/#how" },
+      { label: "About us", href: "/about" },
+      { label: "Reviews", href: "/about#reviews" },
+      { label: "FAQ", href: "/about#faq" },
     ],
   },
   {
     title: "Help",
     links: [
+      { label: "Book a clean", href: "/book" },
       { label: "Reschedule", href: "tel:+12485550199" },
       { label: "Re-clean request", href: "tel:+12485550199" },
-      { label: "Gift cards", href: "#" },
-      { label: "Refer a friend", href: "#" },
+      { label: "Service areas", href: "/about#areas" },
     ],
   },
 ];
@@ -38,7 +39,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-10 lg:gap-12">
           <div>
-            <a href="#top" className="inline-flex items-center gap-2.5 cursor-pointer">
+            <Link href="/" className="inline-flex items-center gap-2.5 cursor-pointer">
               <span className="relative inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white text-ink-950">
                 <Sparkles className="h-5 w-5" strokeWidth={2.4} />
                 <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-grass-500 ring-2 ring-ink-950" />
@@ -47,7 +48,7 @@ export function Footer() {
                 Pristine
                 <span className="font-medium text-white/70"> Cleaning Co.</span>
               </span>
-            </a>
+            </Link>
             <p className="mt-4 text-white/70 leading-relaxed max-w-sm">
               Rochester Hills&apos; no-friction home cleaning. Transparent pricing, vetted
               cleaners, same-day availability. Booked like a delivery.
@@ -81,12 +82,21 @@ export function Footer() {
               <ul className="mt-4 space-y-2.5">
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <a
-                      href={l.href}
-                      className="text-white/85 hover:text-white text-sm cursor-pointer"
-                    >
-                      {l.label}
-                    </a>
+                    {l.href.startsWith("tel:") ? (
+                      <a
+                        href={l.href}
+                        className="text-white/85 hover:text-white text-sm cursor-pointer"
+                      >
+                        {l.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={l.href}
+                        className="text-white/85 hover:text-white text-sm cursor-pointer"
+                      >
+                        {l.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

@@ -1,15 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sparkles } from "lucide-react";
 
 const LINKS = [
-  { href: "#tiers", label: "Services" },
-  { href: "#booking", label: "Pricing" },
-  { href: "#how", label: "How it works" },
-  { href: "#reviews", label: "Reviews" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#tiers", label: "Services" },
+  { href: "/book", label: "Book" },
+  { href: "/about", label: "About" },
+  { href: "/about#reviews", label: "Reviews" },
+  { href: "/about#faq", label: "FAQ" },
 ];
 
 export function Navbar() {
@@ -39,8 +40,8 @@ export function Navbar() {
           }`}
         >
           <div className="flex items-center justify-between px-4 sm:px-5 py-2.5">
-            <a
-              href="#top"
+            <Link
+              href="/"
               className="flex items-center gap-2 group cursor-pointer"
               aria-label="Pristine Cleaning Co. home"
             >
@@ -52,17 +53,17 @@ export function Navbar() {
                 Pristine
                 <span className="font-medium text-ink-700"> Cleaning Co.</span>
               </span>
-            </a>
+            </Link>
 
             <nav className="hidden md:flex items-center gap-1">
               {LINKS.map((l) => (
-                <a
+                <Link
                   key={l.href}
                   href={l.href}
                   className="px-3 py-2 text-sm font-medium text-ink-900/80 hover:text-ink-950 rounded-lg hover:bg-ink-100/60 transition-colors cursor-pointer"
                 >
                   {l.label}
-                </a>
+                </Link>
               ))}
             </nav>
 
@@ -73,12 +74,12 @@ export function Navbar() {
               >
                 (248) 555-0199
               </a>
-              <a
-                href="#booking"
+              <Link
+                href="/book"
                 className="inline-flex items-center gap-1.5 rounded-xl bg-grass-500 hover:bg-grass-600 text-white text-sm font-semibold px-4 py-2.5 shadow-[0_8px_24px_-8px_rgba(34,197,94,0.6)] hover:shadow-[0_12px_30px_-10px_rgba(34,197,94,0.7)] transition-all cursor-pointer"
               >
                 Book now
-              </a>
+              </Link>
               <button
                 type="button"
                 aria-label="Open menu"
@@ -126,22 +127,22 @@ export function Navbar() {
               </div>
               <nav className="mt-6 flex flex-col gap-1">
                 {LINKS.map((l) => (
-                  <a
+                  <Link
                     key={l.href}
                     href={l.href}
                     onClick={() => setOpen(false)}
                     className="px-4 py-3 rounded-xl text-base font-medium text-ink-900 hover:bg-ink-100/60 transition-colors cursor-pointer"
                   >
                     {l.label}
-                  </a>
+                  </Link>
                 ))}
-                <a
-                  href="#booking"
+                <Link
+                  href="/book"
                   onClick={() => setOpen(false)}
                   className="mt-3 inline-flex items-center justify-center rounded-xl bg-grass-500 hover:bg-grass-600 text-white text-base font-semibold px-4 py-3.5 shadow-[0_10px_24px_-8px_rgba(34,197,94,0.6)] transition-all cursor-pointer"
                 >
                   Book now
-                </a>
+                </Link>
                 <a
                   href="tel:+12485550199"
                   className="mt-2 text-center text-sm text-ink-700 hover:text-ink-950 cursor-pointer"

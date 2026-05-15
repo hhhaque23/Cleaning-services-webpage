@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Phone, Sparkles, CalendarClock } from "lucide-react";
 
@@ -35,13 +36,13 @@ export function FinalCTA() {
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                <a
-                  href="#booking"
+                <Link
+                  href="/book"
                   className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-grass-500 hover:bg-grass-600 text-[var(--surface)] font-semibold px-7 py-4 text-[15px] shadow-commit hover:shadow-[0_30px_70px_-20px_oklch(0.52_0.16_145/0.7)] transition-all duration-300 ease-out-quint cursor-pointer animate-pulse-ring"
                 >
                   Get my price
                   <ArrowRight className="h-5 w-5 transition-transform duration-300 ease-out-quint group-hover:translate-x-1" />
-                </a>
+                </Link>
                 <a
                   href="tel:+12485550199"
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[oklch(0.985_0.006_220/0.1)] hover:bg-[oklch(0.985_0.006_220/0.18)] text-[var(--surface)] font-semibold px-7 py-4 text-[15px] transition-all duration-300 ease-out-quint cursor-pointer"
