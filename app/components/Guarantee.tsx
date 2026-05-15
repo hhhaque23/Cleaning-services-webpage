@@ -49,7 +49,7 @@ export function Guarantee() {
               whileInView={{ opacity: 1, scale: 1, rotate: -4 }}
               viewport={{ once: true }}
               transition={{ delay: 0.25, duration: 0.55 }}
-              className="absolute -top-4 -right-3 sm:-right-6 glass rounded-2xl px-4 py-3 shadow-card"
+              className="absolute -top-4 -right-3 sm:-right-6 bg-[var(--surface)] rounded-2xl px-4 py-3"
             >
               <div className="text-[10px] uppercase tracking-[0.1em] font-bold text-ink-600">
                 Better Business

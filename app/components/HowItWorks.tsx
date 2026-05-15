@@ -17,7 +17,6 @@ const STEPS = [
     title: "Configure",
     body: "Pick a tier, set rooms and add-ons. The price is live. No hidden fees, no quote forms.",
     accent: "Tap. Drag. Done.",
-    meta: "About 45 seconds",
   },
   {
     n: "02",
@@ -25,7 +24,6 @@ const STEPS = [
     title: "Schedule",
     body: "Open dates and time windows are shown in real time. Same-day available when slots are open.",
     accent: "It's a live calendar.",
-    meta: "Pick one slot",
   },
   {
     n: "03",
@@ -33,7 +31,6 @@ const STEPS = [
     title: "Relax",
     body: "We text within 15 minutes with your cleaner's photo. You're charged only after the clean is approved.",
     accent: "Sleep in tomorrow.",
-    meta: "We handle the rest",
   },
 ];
 
@@ -109,21 +106,22 @@ export function HowItWorks() {
                   </div>
                 </div>
 
-                <div className="hidden lg:flex items-baseline gap-3 mt-5">
-                  <span className="font-display font-extrabold text-[3.25rem] leading-none tabular-nums text-ink-950 -tracking-[0.04em]">
-                    {s.n}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-grass-500/10 text-grass-700 text-[10px] font-bold uppercase tracking-[0.12em] px-2.5 py-1">
-                    <span className="inline-block h-1 w-1 rounded-full bg-grass-500" />
-                    {s.meta}
-                  </span>
+                <div className="hidden lg:block mt-5">
+                  <div className="inline-flex items-baseline gap-2 text-ink-faint">
+                    <span className="font-display font-extrabold text-[1.4rem] leading-none tabular-nums -tracking-[0.02em]">
+                      {s.n}
+                    </span>
+                    <span className="text-[10px] uppercase tracking-[0.14em] font-semibold text-ink-600">
+                      Step
+                    </span>
+                  </div>
                 </div>
 
-                <div className="lg:mt-6">
-                  <h3 className="font-display font-bold text-2xl lg:text-[1.625rem] tracking-[-0.018em] text-ink-950">
+                <div className="lg:mt-3">
+                  <h3 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-[clamp(2rem,3.5vw,3rem)] tracking-[-0.025em] leading-[1.02] text-ink-950">
                     {s.title}
                   </h3>
-                  <p className="mt-2.5 text-[15px] sm:text-base text-ink-700 leading-relaxed text-pretty max-w-sm">
+                  <p className="mt-4 text-[15px] sm:text-base text-ink-700 leading-relaxed text-pretty max-w-sm">
                     {s.body}
                   </p>
                   <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-grass-700">

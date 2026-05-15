@@ -81,32 +81,33 @@ const REVIEWS: Review[] = [
   },
 ];
 
-function Card({ r }: { r: Review }) {
+function Quote_({ r }: { r: Review }) {
   return (
-    <div className="w-[20rem] sm:w-[22rem] flex-none rounded-2xl bg-white border border-ink-200/70 shadow-card p-5 mr-4">
-      <div className="flex items-start justify-between">
-        <Quote className="h-7 w-7 text-ink-300" />
-        <div className="flex items-center gap-0.5 text-grass-600">
-          {[0, 1, 2, 3, 4].map((i) => (
-            <Star key={i} className="h-3.5 w-3.5 fill-grass-500 stroke-grass-500" />
-          ))}
-        </div>
-      </div>
-      <p className="mt-3 text-ink-900/90 text-[15px] leading-relaxed">
+    <figure className="w-[22rem] sm:w-[26rem] flex-none mr-10 sm:mr-14">
+      <Quote className="h-6 w-6 text-grass-500/55" strokeWidth={2.2} />
+      <blockquote className="mt-3 text-ink-900 text-[17px] sm:text-[18px] leading-[1.55] font-medium">
         &ldquo;{r.body}&rdquo;
-      </p>
-      <div className="mt-4 flex items-center gap-3">
-        <span className="relative h-10 w-10 flex-none rounded-full overflow-hidden ring-2 ring-white shadow">
-          <Image src={r.photo} alt="" aria-hidden="true" fill sizes="40px" className="object-cover" />
+      </blockquote>
+      <figcaption className="mt-5 flex items-center gap-3 text-sm">
+        <span className="relative h-9 w-9 flex-none rounded-full overflow-hidden">
+          <Image src={r.photo} alt="" aria-hidden="true" fill sizes="36px" className="object-cover" />
         </span>
-        <div className="leading-tight min-w-0">
-          <div className="text-sm font-semibold text-ink-950 truncate">{r.name}</div>
-          <div className="text-xs text-ink-700">
-            {r.city} · <span className="font-semibold">{r.service}</span>
-          </div>
-        </div>
-      </div>
-    </div>
+        <span className="leading-tight min-w-0">
+          <span className="block font-semibold text-ink-950 truncate">
+            {r.name}
+            <span className="text-ink-faint font-normal"> · {r.city}</span>
+          </span>
+          <span className="mt-0.5 flex items-center gap-1 text-grass-700">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <Star key={i} className="h-3 w-3 fill-grass-500 stroke-grass-500" />
+            ))}
+            <span className="ml-1.5 text-[11px] uppercase tracking-wider text-ink-700 font-semibold">
+              {r.service}
+            </span>
+          </span>
+        </span>
+      </figcaption>
+    </figure>
   );
 }
 
@@ -130,35 +131,41 @@ export function Reviews() {
   const playState = visible ? "running" : "paused";
 
   return (
-    <section ref={sectionRef} id="reviews" className="relative py-16 sm:py-24 overflow-hidden scroll-mt-24">
+    <section
+      ref={sectionRef}
+      id="reviews"
+      className="relative py-20 sm:py-28 overflow-hidden scroll-mt-24"
+    >
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
-          className="max-w-2xl"
+          className="grid lg:grid-cols-[1fr_auto] gap-6 items-end max-w-7xl"
         >
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-grass-500/12 text-grass-700 text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">
-            <Star className="h-3.5 w-3.5 fill-grass-700" /> Real homes, real reviews
+          <div className="max-w-2xl">
+            <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
+              Real homes, real reviews
+            </div>
+            <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance">
+              2,300+ five-star cleans across metro Detroit.
+            </h2>
           </div>
-          <h2 className="mt-4 font-display font-extrabold text-4xl sm:text-5xl tracking-tight text-ink-950">
-            2,300+ five-star cleans across metro Detroit.
-          </h2>
-          <p className="mt-3 text-ink-800/80 text-lg">
-            We don&apos;t curate. Every neighborhood, every service tier, every review.
+          <p className="text-ink-700 lg:text-right max-w-xs">
+            We don&apos;t curate. Every neighborhood, every tier.
           </p>
         </motion.div>
       </div>
 
-      <div className="mt-12 space-y-4 group">
+      <div className="relative mt-14 space-y-12 group">
         <div className="relative">
           <div
             className="flex animate-marquee group-hover:[animation-play-state:paused]"
             style={{ animationPlayState: playState }}
           >
             {[...rowA, ...rowA].map((r, i) => (
-              <Card key={`a-${i}`} r={r} />
+              <Quote_ key={`a-${i}`} r={r} />
             ))}
           </div>
         </div>
@@ -168,12 +175,12 @@ export function Reviews() {
             style={{ animationPlayState: playState }}
           >
             {[...rowB, ...rowB].map((r, i) => (
-              <Card key={`b-${i}`} r={r} />
+              <Quote_ key={`b-${i}`} r={r} />
             ))}
           </div>
         </div>
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-20 sm:w-32 bg-gradient-to-r from-[var(--bg-deep)] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-20 sm:w-32 bg-gradient-to-l from-[var(--bg-deep)] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-[var(--surface)] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-40 bg-gradient-to-l from-[var(--surface)] to-transparent" />
       </div>
     </section>
   );

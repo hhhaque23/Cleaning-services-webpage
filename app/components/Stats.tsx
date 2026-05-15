@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
 import { Star, TrendingUp, Repeat, ShieldCheck } from "lucide-react";
+import { PHOTOS } from "@/lib/unsplash";
 
 function Counter({
   to,
@@ -45,8 +47,26 @@ function Counter({
 
 export function Stats() {
   return (
-    <section className="relative py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+    <section className="relative py-20 sm:py-28 overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, y: 30, rotate: -1.5 }}
+        whileInView={{ opacity: 1, y: 0, rotate: -2 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        className="hidden lg:block absolute right-[4%] top-[58%] w-[18rem] aspect-[3/4] rounded-[1.5rem] overflow-hidden pointer-events-none"
+      >
+        <Image
+          src={PHOTOS.bathroom}
+          alt=""
+          aria-hidden="true"
+          fill
+          sizes="288px"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-tl from-[var(--surface)]/35 via-transparent to-[var(--surface)]/15" />
+      </motion.div>
+
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid lg:grid-cols-[1.35fr_1fr] gap-10 lg:gap-16 items-end">
           <motion.div
             initial={{ opacity: 0, y: 18 }}

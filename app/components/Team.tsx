@@ -41,7 +41,7 @@ export function Team() {
               variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0 } }}
               className="group"
             >
-              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-card">
+              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
                 <Image
                   src={m.photo}
                   alt={m.name}

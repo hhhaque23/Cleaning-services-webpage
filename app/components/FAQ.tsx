@@ -38,49 +38,48 @@ const FAQS = [
 export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="relative py-16 sm:py-24 scroll-mt-24">
+    <section id="faq" className="relative py-20 sm:py-24 scroll-mt-24">
       <div className="mx-auto max-w-3xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
-          className="text-center"
+          className="max-w-xl"
         >
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-ink-100 text-ink-800 text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">
+          <div className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
             <MessageCircleQuestion className="h-3.5 w-3.5" /> Questions, answered
           </div>
-          <h2 className="mt-4 font-display font-extrabold text-4xl sm:text-5xl tracking-tight text-ink-950">
+          <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance">
             Everything you&apos;d ask before booking.
           </h2>
         </motion.div>
 
-        <ul className="mt-10 space-y-3">
+        <ul className="mt-10 divide-y divide-line">
           {FAQS.map((f, i) => {
             const isOpen = open === i;
             return (
               <motion.li
                 key={f.q}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 8 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.4, delay: i * 0.04 }}
-                className="rounded-2xl bg-white border border-ink-200/70 overflow-hidden shadow-card"
+                transition={{ duration: 0.4, delay: i * 0.03 }}
               >
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? null : i)}
                   aria-expanded={isOpen}
-                  className="w-full px-5 sm:px-6 py-4 sm:py-5 flex items-center justify-between gap-4 text-left cursor-pointer hover:bg-ink-50/40 transition-colors"
+                  className="w-full py-5 sm:py-6 flex items-center justify-between gap-4 text-left cursor-pointer group"
                 >
-                  <span className="font-semibold text-ink-950 text-base sm:text-[17px]">
+                  <span className="font-display font-bold text-ink-950 text-lg sm:text-[1.25rem] group-hover:text-grass-700 transition-colors">
                     {f.q}
                   </span>
                   <motion.span
                     animate={{ rotate: isOpen ? 45 : 0 }}
-                    transition={{ duration: 0.2 }}
-                    className={`inline-flex h-9 w-9 flex-none items-center justify-center rounded-xl transition-colors ${
-                      isOpen ? "bg-ink-950 text-white" : "bg-ink-100 text-ink-700"
+                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                    className={`inline-flex h-9 w-9 flex-none items-center justify-center rounded-full transition-colors ${
+                      isOpen ? "bg-ink-950 text-[var(--surface)]" : "bg-transparent text-ink-700 ring-1 ring-line-strong/60"
                     }`}
                   >
                     <Plus className="h-4 w-4" strokeWidth={2.5} />
@@ -95,7 +94,7 @@ export function FAQ() {
                       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="px-5 sm:px-6 pb-5 text-ink-800/90 leading-relaxed text-[15px]">
+                      <div className="pb-6 pr-12 text-ink-800 leading-relaxed text-[15px] sm:text-base max-w-xl">
                         {f.a}
                       </div>
                     </motion.div>

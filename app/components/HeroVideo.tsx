@@ -64,7 +64,7 @@ export function HeroVideo() {
       <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.985_0.006_220/0.78)] via-[oklch(0.985_0.006_220/0.32)] to-[oklch(0.985_0.006_220/0.08)]" />
       <div className="absolute inset-0 bg-gradient-to-b from-[oklch(0.985_0.006_220/0.18)] via-transparent to-[oklch(0.985_0.006_220/0.5)]" />
 
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[var(--surface)] via-[var(--surface)]/70 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[var(--surface)] via-[var(--surface)]/85 via-30% to-transparent" />
     </div>
   );
 }

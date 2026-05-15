@@ -130,11 +130,7 @@ const CONTENT: Record<Tier, TierContent> = {
       },
       {
         title: "Bathroom deep",
-        items: [
-          "Grout hand-scrubbed",
-          "Fixtures descaled",
-          "Exhaust vents wiped",
-        ],
+        items: ["Grout hand-scrubbed", "Fixtures descaled", "Exhaust vents wiped"],
       },
       {
         title: "Throughout deep",
@@ -284,7 +280,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 ease-out-quint group-hover:translate-x-1" />
                 </Link>
                 <Link
-                  href="/services"
+                  href="/#tiers"
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--surface-elevated)] hover:bg-white border border-line text-ink-950 font-semibold px-7 py-3.5 text-[15px] transition-all duration-300 ease-out-quint cursor-pointer"
                 >
                   Compare tiers
@@ -298,7 +294,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
               transition={{ duration: 0.7, delay: 0.12 }}
               className="relative"
             >
-              <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-lift">
+              <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden">
                 <Image
                   src={c.hero}
                   alt={c.heroAlt}
@@ -314,25 +310,24 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
         </div>
       </section>
 
-      <section className="relative py-16 sm:py-20 border-t border-line">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="grid lg:grid-cols-[1fr_2fr] gap-10 lg:gap-16 items-start">
-            <div>
-              <div className="text-[11px] uppercase tracking-[0.14em] font-semibold text-ink-600">
+      <section className="relative py-20 sm:py-24 border-t border-line">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8">
+          <div className="grid lg:grid-cols-[1fr_2.2fr] gap-12 lg:gap-20 items-start">
+            <div className="lg:sticky lg:top-24">
+              <div className="text-[11px] uppercase tracking-[0.14em] font-semibold text-grass-700">
                 What&apos;s included
               </div>
               <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance">
                 Every surface,{" "}
                 <span className="italic font-medium text-ink-700">named</span>.
               </h2>
-              <p className="mt-4 text-ink-700 leading-relaxed">
+              <p className="mt-5 text-ink-700 leading-relaxed">
                 No vague checklists. Here&apos;s exactly what your cleaner will do, room
-                by room. If something isn&apos;t listed, ask before booking and we&apos;ll
-                tell you in plain English.
+                by room.
               </p>
 
               {c.notIncluded && (
-                <div className="mt-8 rounded-2xl border border-line bg-[var(--surface-elevated)] p-5">
+                <div className="mt-10">
                   <div className="text-[11px] uppercase tracking-[0.12em] font-semibold text-ink-600">
                     Not included
                   </div>
@@ -348,7 +343,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
               )}
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="divide-y divide-line-strong/40">
               {c.included.map((group, gi) => (
                 <motion.div
                   key={group.title}
@@ -356,17 +351,21 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{ duration: 0.5, delay: gi * 0.06 }}
-                  className="rounded-2xl bg-white border border-line p-6 shadow-soft"
+                  className="grid sm:grid-cols-[10rem_1fr] gap-3 sm:gap-8 py-7 first:pt-0 last:pb-0"
                 >
-                  <div className="font-display font-bold text-lg text-ink-950">
+                  <div className="font-display font-bold text-lg text-ink-950 leading-tight">
                     {group.title}
                   </div>
-                  <ul className="mt-4 space-y-2.5">
+                  <ul className="space-y-2.5">
                     {group.items.map((item) => (
-                      <li key={item} className="flex items-start gap-2.5 text-[15px] text-ink-800">
-                        <span className="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-grass-500/15 text-grass-700">
-                          <Check className="h-3 w-3" strokeWidth={3.5} />
-                        </span>
+                      <li
+                        key={item}
+                        className="flex items-start gap-2.5 text-[15px] text-ink-800"
+                      >
+                        <Check
+                          className="h-4 w-4 mt-1 flex-none text-grass-700"
+                          strokeWidth={3}
+                        />
                         {item}
                       </li>
                     ))}
@@ -378,9 +377,9 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
         </div>
       </section>
 
-      <section className="relative py-16 sm:py-20 bg-ink-50/50">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="text-[11px] uppercase tracking-[0.14em] font-semibold text-ink-600">
+      <section className="relative py-20 sm:py-24 bg-ink-50/50">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8">
+          <div className="text-[11px] uppercase tracking-[0.14em] font-semibold text-grass-700">
             Best for
           </div>
           <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 max-w-2xl text-balance">
@@ -388,7 +387,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
             <span className="italic font-medium text-ink-700">these are true</span>.
           </h2>
 
-          <ul className="mt-10 grid md:grid-cols-3 gap-5 lg:gap-6">
+          <ol className="mt-12 divide-y divide-line-strong/40">
             {c.bestFor.map((b, bi) => (
               <motion.li
                 key={b.label}
@@ -396,25 +395,30 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: bi * 0.07 }}
-                className="rounded-2xl bg-white border border-line p-6 shadow-soft"
+                className="grid sm:grid-cols-[6rem_1fr] gap-3 sm:gap-10 py-7 first:pt-0 last:pb-0 items-baseline"
               >
-                <div className="font-display font-bold text-xl text-ink-950">
-                  {b.label}
+                <div className="font-display font-extrabold text-4xl text-grass-700 tabular-nums">
+                  {String(bi + 1).padStart(2, "0")}
                 </div>
-                <p className="mt-2 text-[15px] text-ink-700 leading-relaxed">
-                  {b.body}
-                </p>
+                <div>
+                  <div className="font-display font-bold text-xl text-ink-950">
+                    {b.label}
+                  </div>
+                  <p className="mt-1.5 text-[15px] text-ink-800 leading-relaxed max-w-xl">
+                    {b.body}
+                  </p>
+                </div>
               </motion.li>
             ))}
-          </ul>
+          </ol>
 
           {c.extras && (
-            <div className="mt-10 inline-flex flex-wrap items-center gap-x-6 gap-y-2 rounded-2xl bg-white border border-line px-5 py-4 shadow-soft">
-              <span className="text-xs font-semibold uppercase tracking-wider text-ink-600">
+            <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-600">
                 Optional add-ons
               </span>
               {c.extras.map((e) => (
-                <span key={e} className="text-sm text-ink-800">
+                <span key={e} className="text-ink-800">
                   · {e}
                 </span>
               ))}
