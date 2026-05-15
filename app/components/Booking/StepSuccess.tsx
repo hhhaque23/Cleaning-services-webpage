@@ -1,7 +1,16 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { CheckCircle2, Phone, Mail, CalendarClock, MapPin } from "lucide-react";
+import {
+  CheckCircle2,
+  Phone,
+  Mail,
+  CalendarClock,
+  MapPin,
+  Hash,
+  ArrowRight,
+} from "lucide-react";
 import type { Contact } from "./StepConfirm";
 import type { Slot } from "./StepSchedule";
 
@@ -9,9 +18,10 @@ type Props = {
   contact: Contact;
   slot: Slot | null;
   total: number;
+  bookingId: string | null;
 };
 
-export function StepSuccess({ contact, slot, total }: Props) {
+export function StepSuccess({ contact, slot, total, bookingId }: Props) {
   const date = slot?.dateISO
     ? new Date(slot.dateISO + "T00:00:00").toLocaleDateString("en-US", {
         weekday: "long",
@@ -50,14 +60,26 @@ export function StepSuccess({ contact, slot, total }: Props) {
       </p>
 
       <div className="mt-7 max-w-md mx-auto text-left rounded-2xl bg-white border border-ink-200/70 shadow-card overflow-hidden">
-        <div className="px-5 py-4 bg-ink-50 border-b border-ink-200/70">
-          <div className="text-xs font-semibold uppercase tracking-wider text-ink-700">
-            Booking summary
+        <div className="px-5 py-4 bg-ink-50 border-b border-ink-200/70 flex items-center justify-between gap-3">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-ink-700">
+              Booking summary
+            </div>
+            <div className="mt-1 font-display font-bold text-xl text-ink-950">
+              ${total.toLocaleString()}
+              <span className="text-sm text-ink-700 font-medium"> · charged after the clean</span>
+            </div>
           </div>
-          <div className="mt-1 font-display font-bold text-xl text-ink-950">
-            ${total.toLocaleString()}
-            <span className="text-sm text-ink-700 font-medium"> · charged after the clean</span>
-          </div>
+          {bookingId && (
+            <div className="text-right">
+              <div className="text-[10px] font-semibold uppercase tracking-[0.12em] text-ink-600">
+                Confirmation
+              </div>
+              <div className="mt-0.5 font-mono text-sm font-bold text-ink-950 tabular-nums">
+                {bookingId}
+              </div>
+            </div>
+          )}
         </div>
         <ul className="divide-y divide-ink-100">
           <Row icon={CalendarClock} label="When" value={`${date} · ${slot ? windowLabel[slot.window] : ""}`} />
@@ -65,6 +87,27 @@ export function StepSuccess({ contact, slot, total }: Props) {
           <Row icon={Phone} label="Text" value={contact.phone} />
           <Row icon={Mail} label="Email" value={contact.email} />
         </ul>
+        {bookingId && (
+          <Link
+            href={`/booking/${bookingId}`}
+            className="flex items-center justify-between gap-3 px-5 py-4 border-t border-ink-200/70 hover:bg-ink-50/70 transition-colors cursor-pointer"
+          >
+            <span className="flex items-center gap-3">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-grass-500/15 text-grass-700">
+                <Hash className="h-4 w-4" />
+              </span>
+              <span className="leading-tight text-left">
+                <span className="block text-[11px] uppercase tracking-wider font-semibold text-ink-700">
+                  Track this booking
+                </span>
+                <span className="block text-sm font-semibold text-ink-950">
+                  Status updates and contact info
+                </span>
+              </span>
+            </span>
+            <ArrowRight className="h-4 w-4 text-ink-700" />
+          </Link>
+        )}
       </div>
 
       <p className="mt-5 text-sm text-ink-700">

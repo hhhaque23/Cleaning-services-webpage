@@ -62,6 +62,43 @@ export function BookingFlow() {
   const [config, setConfig] = useState<BookingConfig>(initialConfig);
   const [slot, setSlot] = useState<Slot | null>(null);
   const [contact, setContact] = useState<Contact>(DEFAULT_CONTACT);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [bookingId, setBookingId] = useState<string | null>(null);
+
+  async function submitBooking() {
+    if (!slot) return;
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const res = await fetch("/api/bookings", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          ...contact,
+          tier: config.tier,
+          bedrooms: config.bedrooms,
+          bathrooms: config.bathrooms,
+          sqft: config.sqft,
+          frequency: config.frequency,
+          addOns: config.addOns,
+          slotDate: slot.dateISO,
+          slotWindow: slot.window,
+          priceSubtotal: price.subtotal,
+          priceDiscount: price.discount,
+          priceTotal: price.total,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || "Could not submit booking");
+      setBookingId(data.id);
+      setStep(4);
+    } catch (e) {
+      setSubmitError(e instanceof Error ? e.message : "Network error");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   const price = useMemo(() => computePrice(config), [config]);
 
@@ -160,35 +197,53 @@ export function BookingFlow() {
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    <StepSuccess contact={contact} slot={slot} total={price.total} />
+                    <StepSuccess
+                      contact={contact}
+                      slot={slot}
+                      total={price.total}
+                      bookingId={bookingId}
+                    />
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
             {step !== 4 && (
-              <div className="border-t border-ink-200/70 bg-ink-50/60 px-5 sm:px-7 py-4 flex items-center justify-between gap-3">
-                <button
-                  type="button"
-                  onClick={() => setStep((s) => (s > 1 ? ((s - 1) as 1 | 2 | 3) : s))}
-                  disabled={step === 1}
-                  className="inline-flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold text-ink-800 hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
-                >
-                  <ArrowLeft className="h-4 w-4" /> Back
-                </button>
-                <button
-                  type="button"
-                  disabled={!canAdvance()}
-                  onClick={() =>
-                    setStep((s) =>
-                      s === 3 ? 4 : ((s + 1) as 1 | 2 | 3 | 4)
-                    )
-                  }
-                  className="inline-flex items-center gap-1.5 rounded-2xl bg-ink-950 hover:bg-ink-800 disabled:bg-ink-300 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-3 shadow-[0_10px_24px_-10px_oklch(0.13_0.045_230/0.5)] transition-all cursor-pointer"
-                >
-                  {step === 3 ? "Confirm booking" : "Continue"}
-                  <ArrowRight className="h-4 w-4" />
-                </button>
+              <div className="border-t border-ink-200/70 bg-ink-50/60 px-5 sm:px-7 py-4">
+                {submitError && step === 3 && (
+                  <div className="mb-3 rounded-xl bg-[oklch(0.96_0.05_25)] text-[oklch(0.42_0.18_25)] text-sm font-medium px-3 py-2.5">
+                    {submitError}
+                  </div>
+                )}
+                <div className="flex items-center justify-between gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setStep((s) => (s > 1 ? ((s - 1) as 1 | 2 | 3) : s))}
+                    disabled={step === 1 || submitting}
+                    className="inline-flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold text-ink-800 hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                  >
+                    <ArrowLeft className="h-4 w-4" /> Back
+                  </button>
+                  <button
+                    type="button"
+                    disabled={!canAdvance() || submitting}
+                    onClick={() => {
+                      if (step === 3) {
+                        submitBooking();
+                      } else {
+                        setStep((s) => ((s + 1) as 1 | 2 | 3 | 4));
+                      }
+                    }}
+                    className="inline-flex items-center gap-1.5 rounded-2xl bg-ink-950 hover:bg-ink-800 disabled:bg-ink-300 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-3 shadow-[0_10px_24px_-10px_oklch(0.13_0.045_230/0.5)] transition-all cursor-pointer"
+                  >
+                    {step === 3
+                      ? submitting
+                        ? "Sending…"
+                        : "Confirm booking"
+                      : "Continue"}
+                    {!submitting && <ArrowRight className="h-4 w-4" />}
+                  </button>
+                </div>
               </div>
             )}
           </motion.div>
