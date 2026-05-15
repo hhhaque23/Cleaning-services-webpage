@@ -20,6 +20,8 @@ type IncludedGroup = { title: string; items: string[] };
 type TierContent = {
   hero: string;
   heroAlt: string;
+  includesPhoto: string;
+  includesAlt: string;
   Icon: typeof Sparkles;
   oneLiner: string;
   bestFor: { label: string; body: string }[];
@@ -33,6 +35,8 @@ const CONTENT: Record<Tier, TierContent> = {
   Standard: {
     hero: PHOTOS.kitchen,
     heroAlt: "A clean modern kitchen, the standard finish",
+    includesPhoto: PHOTOS.livingRoom,
+    includesAlt: "A living room mid-afternoon, dusted and vacuumed",
     Icon: Sparkles,
     oneLiner:
       "The recurring upkeep clean. Built for already-tidy homes on a maintenance schedule.",
@@ -94,6 +98,8 @@ const CONTENT: Record<Tier, TierContent> = {
   Deep: {
     hero: PHOTOS.bathroom,
     heroAlt: "A bright bathroom with detailed surfaces, after a deep clean",
+    includesPhoto: PHOTOS.kitchen,
+    includesAlt: "A kitchen freshly deep-cleaned, including cabinet fronts and the range hood",
     Icon: Hammer,
     oneLiner:
       "Everything Standard misses, hand-detailed. Required before your first recurring clean.",
@@ -150,6 +156,8 @@ const CONTENT: Record<Tier, TierContent> = {
   MoveInOut: {
     hero: PHOTOS.emptyRoom,
     heroAlt: "An empty room ready for the next tenant, freshly cleaned",
+    includesPhoto: PHOTOS.bedroom,
+    includesAlt: "A bedroom emptied and turned, ready for handover",
     Icon: KeyRound,
     oneLiner:
       "Empty home, top to bottom. The clean that gets deposits back and homes sold.",
@@ -310,8 +318,34 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
         </div>
       </section>
 
-      <section className="relative py-20 sm:py-24 border-t border-line">
+      <section className="relative pt-12 sm:pt-16 pb-20 sm:pb-24 border-t border-line">
         <div className="mx-auto max-w-6xl px-5 sm:px-8">
+          <motion.figure
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="relative w-full aspect-[21/9] sm:aspect-[24/9] overflow-hidden rounded-[1.5rem] mb-14 sm:mb-16"
+          >
+            <Image
+              src={c.includesPhoto}
+              alt={c.includesAlt}
+              fill
+              sizes="(min-width: 1024px) 1024px, 100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.13_0.045_230/0.45)] via-transparent to-transparent" />
+            <figcaption className="absolute bottom-5 left-5 right-5 sm:bottom-7 sm:left-7 text-[var(--surface)]">
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-[oklch(0.13_0.045_230/0.5)] backdrop-blur-sm text-[var(--surface)] text-[10px] font-bold uppercase tracking-[0.14em] px-2.5 py-1.5">
+                <span className="inline-block h-1 w-1 rounded-full bg-grass-400" />
+                {meta.label}
+              </div>
+              <div className="mt-2 font-display font-bold text-xl sm:text-2xl tracking-[-0.018em] max-w-md">
+                What every {meta.label.toLowerCase()} clean covers.
+              </div>
+            </figcaption>
+          </motion.figure>
+
           <div className="grid lg:grid-cols-[1fr_2.2fr] gap-12 lg:gap-20 items-start">
             <div className="lg:sticky lg:top-24">
               <div className="text-[11px] uppercase tracking-[0.14em] font-semibold text-grass-700">

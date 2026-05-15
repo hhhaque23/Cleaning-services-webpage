@@ -1,14 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   SlidersHorizontal,
   CalendarCheck,
   Sparkles,
   ArrowDownRight,
-  ArrowRight,
 } from "lucide-react";
+import { PHOTOS } from "@/lib/unsplash";
 
 const STEPS = [
   {
@@ -17,6 +18,8 @@ const STEPS = [
     title: "Configure",
     body: "Pick a tier, set rooms and add-ons. The price is live. No hidden fees, no quote forms.",
     accent: "Tap. Drag. Done.",
+    photo: PHOTOS.kitchen,
+    alt: "A kitchen on a Sunday afternoon, ready to be booked",
   },
   {
     n: "02",
@@ -24,6 +27,8 @@ const STEPS = [
     title: "Schedule",
     body: "Open dates and time windows are shown in real time. Same-day available when slots are open.",
     accent: "It's a live calendar.",
+    photo: PHOTOS.livingRoom,
+    alt: "A living room the morning of your slot",
   },
   {
     n: "03",
@@ -31,12 +36,14 @@ const STEPS = [
     title: "Relax",
     body: "We text within 15 minutes with your cleaner's photo. You're charged only after the clean is approved.",
     accent: "Sleep in tomorrow.",
+    photo: PHOTOS.bedroom,
+    alt: "A made bed in late afternoon light, after the clean",
   },
 ];
 
 export function HowItWorks() {
   return (
-    <section id="how" className="relative py-20 sm:py-28 scroll-mt-24 overflow-hidden">
+    <section id="how" className="relative py-20 sm:py-28 scroll-mt-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
@@ -59,96 +66,65 @@ export function HowItWorks() {
           </p>
         </motion.div>
 
-        <div className="mt-16 relative">
-          <div className="hidden lg:block">
-            <div
-              aria-hidden="true"
-              className="absolute top-[2.75rem] left-0 right-0 h-[3px] rounded-full"
-              style={{
-                background:
-                  "linear-gradient(90deg, oklch(0.92 0.012 220) 0%, oklch(0.68 0.18 145) 18%, oklch(0.68 0.18 145) 82%, oklch(0.92 0.012 220) 100%)",
-              }}
-            />
-            <motion.div
-              aria-hidden="true"
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute top-[2.75rem] left-[8%] right-[8%] h-[3px] rounded-full bg-grass-500 origin-left shadow-[0_0_24px_-4px_oklch(0.68_0.18_145/0.55)]"
-            />
-          </div>
+        <ol className="mt-12 grid md:grid-cols-3 gap-6 lg:gap-8">
+          {STEPS.map((s, i) => (
+            <motion.li
+              key={s.n}
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="group"
+            >
+              <figure className="relative aspect-[3/4] overflow-hidden rounded-[1.5rem]">
+                <Image
+                  src={s.photo}
+                  alt={s.alt}
+                  fill
+                  sizes="(min-width: 1024px) 380px, (min-width: 768px) 33vw, 100vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.13_0.045_230/0.5)] via-transparent to-[oklch(0.13_0.045_230/0.15)]" />
 
-          <div className="lg:hidden absolute top-12 bottom-12 left-[2.625rem] w-[3px] rounded-full bg-gradient-to-b from-[oklch(0.92_0.012_220)] via-grass-500 to-[oklch(0.92_0.012_220)]" aria-hidden="true" />
-
-          <ol className="relative grid lg:grid-cols-3 gap-12 lg:gap-10">
-            {STEPS.map((s, i) => (
-              <motion.li
-                key={s.n}
-                initial={{ opacity: 0, y: 22 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.55, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                className="relative pl-24 lg:pl-0"
-              >
-                <div className="absolute left-0 top-0 lg:relative lg:left-auto lg:top-auto flex items-center gap-4 lg:block">
-                  <span className="relative inline-flex h-14 w-14 items-center justify-center rounded-full bg-ink-950 text-[var(--surface)] ring-8 ring-[var(--surface)] shadow-[0_0_0_2px_oklch(0.68_0.18_145/0.25),0_18px_40px_-20px_oklch(0.13_0.045_230/0.35)]">
-                    <s.icon className="h-5 w-5" strokeWidth={2.2} />
+                <div className="absolute top-4 left-4">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--surface)]/95 backdrop-blur-sm text-ink-950 text-[10px] font-bold uppercase tracking-[0.14em] px-2.5 py-1.5">
+                    <span className="inline-block h-1 w-1 rounded-full bg-grass-500" />
+                    Step {s.n}
                   </span>
-
-                  <div className="lg:hidden">
-                    <div className="font-display font-extrabold text-2xl text-ink-950 tabular-nums leading-none">
-                      {s.n}
-                    </div>
-                    <div className="mt-1 text-[10px] uppercase tracking-[0.14em] font-semibold text-ink-600">
-                      Step {s.n.replace(/^0/, "")} of 3
-                    </div>
-                  </div>
                 </div>
 
-                <div className="hidden lg:block mt-5">
-                  <div className="inline-flex items-baseline gap-2 text-ink-faint">
-                    <span className="font-display font-extrabold text-[1.4rem] leading-none tabular-nums -tracking-[0.02em]">
-                      {s.n}
-                    </span>
-                    <span className="text-[10px] uppercase tracking-[0.14em] font-semibold text-ink-600">
-                      Step
-                    </span>
-                  </div>
-                </div>
-
-                <div className="lg:mt-3">
-                  <h3 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-[clamp(2rem,3.5vw,3rem)] tracking-[-0.025em] leading-[1.02] text-ink-950">
-                    {s.title}
-                  </h3>
-                  <p className="mt-4 text-[15px] sm:text-base text-ink-700 leading-relaxed text-pretty max-w-sm">
-                    {s.body}
-                  </p>
-                  <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-grass-700">
-                    <ArrowDownRight className="h-3.5 w-3.5" />
-                    {s.accent}
-                  </div>
-                </div>
-
-                {i < STEPS.length - 1 && (
-                  <span
-                    aria-hidden="true"
-                    className="hidden lg:block absolute top-[2.4rem] right-[-1.2rem] text-ink-faint"
-                  >
-                    <ArrowRight className="h-4 w-4" strokeWidth={2.4} />
+                <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-3 text-[var(--surface)]">
+                  <span className="font-display font-extrabold text-[3rem] sm:text-[3.5rem] leading-none tabular-nums -tracking-[0.04em]">
+                    {s.n}
                   </span>
-                )}
-              </motion.li>
-            ))}
-          </ol>
-        </div>
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--surface)]/15 backdrop-blur-sm text-[var(--surface)] ring-1 ring-[var(--surface)]/25">
+                    <s.icon className="h-4 w-4" strokeWidth={2.2} />
+                  </span>
+                </div>
+              </figure>
+
+              <div className="mt-5">
+                <h3 className="font-display font-extrabold text-2xl sm:text-[1.625rem] tracking-[-0.02em] text-ink-950">
+                  {s.title}
+                </h3>
+                <p className="mt-2 text-[15px] text-ink-700 leading-relaxed text-pretty">
+                  {s.body}
+                </p>
+                <div className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-grass-700">
+                  <ArrowDownRight className="h-3.5 w-3.5" />
+                  {s.accent}
+                </div>
+              </div>
+            </motion.li>
+          ))}
+        </ol>
 
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, delay: 0.25 }}
-          className="mt-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 border-t border-line pt-8"
+          className="mt-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 border-t border-line pt-8"
         >
           <p className="text-ink-700 max-w-lg">
             Cleaners are typically dispatched within the hour. You won&apos;t hear from us

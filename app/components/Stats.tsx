@@ -48,26 +48,8 @@ function Counter({
 export function Stats() {
   return (
     <section className="relative py-20 sm:py-28 overflow-hidden">
-      <motion.div
-        initial={{ opacity: 0, y: 30, rotate: -1.5 }}
-        whileInView={{ opacity: 1, y: 0, rotate: -2 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="hidden lg:block absolute right-[4%] top-[58%] w-[18rem] aspect-[3/4] rounded-[1.5rem] overflow-hidden pointer-events-none"
-      >
-        <Image
-          src={PHOTOS.bathroom}
-          alt=""
-          aria-hidden="true"
-          fill
-          sizes="288px"
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-tl from-[var(--surface)]/35 via-transparent to-[var(--surface)]/15" />
-      </motion.div>
-
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="grid lg:grid-cols-[1.35fr_1fr] gap-10 lg:gap-16 items-end">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="grid lg:grid-cols-[1.3fr_1fr] gap-10 lg:gap-16 items-end">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -78,7 +60,7 @@ export function Stats() {
               Since 2019
             </div>
             <div className="mt-3 flex items-start gap-2 font-display font-extrabold text-ink-950 leading-[0.92] tracking-[-0.04em]">
-              <span className="text-[clamp(5.5rem,12vw,11rem)]">
+              <span className="text-[clamp(5rem,11vw,10rem)]">
                 <Counter to={12384} suffix="" duration={2} />
               </span>
               <span className="text-[clamp(2rem,4vw,3.5rem)] text-grass-600 mt-3">
@@ -89,45 +71,59 @@ export function Stats() {
               homes cleaned across metro Detroit, by a team that&apos;s mostly
               been on the same crew since year one.
             </p>
+
+            <div className="mt-10 grid grid-cols-3 gap-5 sm:gap-7 max-w-md">
+              <Inline
+                figure={
+                  <>
+                    <Counter to={4.9} decimals={1} duration={1.4} />
+                    <span className="text-ink-600 font-medium text-lg">/5</span>
+                  </>
+                }
+                label="2,300+ reviews"
+              />
+              <Inline
+                figure={
+                  <>
+                    <Counter to={92} duration={1.4} />
+                    <span className="text-ink-600 font-medium text-lg">%</span>
+                  </>
+                }
+                label="Rebook in 30 days"
+              />
+              <Inline
+                figure={
+                  <>
+                    $<Counter to={2} duration={1.2} />M
+                  </>
+                }
+                label="Liability cover"
+              />
+            </div>
           </motion.div>
 
-          <div className="space-y-5 lg:pb-3">
-            <Inline
-              icon={Star}
-              tone="grass"
-              figure={
-                <>
-                  <Counter to={4.9} decimals={1} duration={1.4} />
-                  <span className="text-ink-600 font-medium text-2xl">/5</span>
-                </>
-              }
-              label="From 2,300+ verified reviews"
-              delay={0.05}
+          <motion.figure
+            initial={{ opacity: 0, y: 28, rotate: -2.5 }}
+            whileInView={{ opacity: 1, y: 0, rotate: -2 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            className="relative w-full max-w-[26rem] aspect-[3/4] mx-auto lg:mx-0 lg:ml-auto overflow-hidden rounded-[1.5rem]"
+          >
+            <Image
+              src={PHOTOS.bathroom}
+              alt="A bathroom on a quiet weekday afternoon after a Pristine clean"
+              fill
+              sizes="(min-width: 1024px) 420px, (min-width: 640px) 50vw, 100vw"
+              className="object-cover"
             />
-            <Inline
-              icon={Repeat}
-              tone="ink"
-              figure={
-                <>
-                  <Counter to={92} duration={1.4} />
-                  <span className="text-ink-600 font-medium text-2xl">%</span>
-                </>
-              }
-              label="Of clients book us again within 30 days"
-              delay={0.12}
-            />
-            <Inline
-              icon={ShieldCheck}
-              tone="ink"
-              figure={
-                <>
-                  $<Counter to={2} duration={1.2} />M
-                </>
-              }
-              label="Liability coverage on every clean, bonded"
-              delay={0.19}
-            />
-          </div>
+            <div className="absolute inset-0 bg-gradient-to-tl from-[oklch(0.13_0.045_230/0.35)] via-transparent to-transparent" />
+            <figcaption className="absolute bottom-4 left-4 right-4 text-[var(--surface)] text-[11px] uppercase tracking-[0.14em] font-semibold">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[oklch(0.13_0.045_230/0.55)] backdrop-blur-sm px-2.5 py-1">
+                <span className="inline-block h-1 w-1 rounded-full bg-grass-400" />
+                Tuesday, 2:14 PM
+              </span>
+            </figcaption>
+          </motion.figure>
         </div>
 
         <motion.div
@@ -158,41 +154,20 @@ export function Stats() {
 }
 
 function Inline({
-  icon: Icon,
-  tone,
   figure,
   label,
-  delay,
 }: {
-  icon: typeof Star;
-  tone: "ink" | "grass";
   figure: React.ReactNode;
   label: string;
-  delay: number;
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.55, delay }}
-      className="flex items-start gap-4 group"
-    >
-      <span
-        className={`inline-flex h-11 w-11 flex-none items-center justify-center rounded-2xl mt-1 ${
-          tone === "grass"
-            ? "bg-[oklch(0.78_0.16_145/0.16)] text-grass-700"
-            : "bg-[oklch(0.65_0.13_220/0.1)] text-ink-700"
-        }`}
-      >
-        <Icon className="h-5 w-5" />
-      </span>
-      <div className="leading-tight">
-        <div className="font-display font-extrabold text-4xl text-ink-950 tracking-[-0.02em] tabular-nums">
-          {figure}
-        </div>
-        <p className="mt-1.5 text-[15px] text-ink-700 max-w-sm">{label}</p>
+    <div>
+      <div className="font-display font-extrabold text-2xl sm:text-3xl text-ink-950 tracking-[-0.02em] tabular-nums leading-none">
+        {figure}
       </div>
-    </motion.div>
+      <div className="mt-2 text-[11px] uppercase tracking-[0.12em] font-semibold text-ink-700">
+        {label}
+      </div>
+    </div>
   );
 }
