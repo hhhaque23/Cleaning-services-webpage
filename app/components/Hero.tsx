@@ -86,10 +86,10 @@ export function Hero() {
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 ease-out-quint group-hover:translate-x-1" />
               </Link>
               <Link
-                href="#tiers"
+                href="/about"
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--surface-elevated)] hover:bg-white border border-line text-ink-950 font-semibold px-7 py-[1.05rem] text-[15px] transition-all duration-300 ease-out-quint cursor-pointer"
               >
-                See services
+                Why us
               </Link>
             </motion.div>
 

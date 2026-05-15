@@ -13,11 +13,11 @@ export function SubscriptionCallout() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
-          className="rounded-3xl bg-gradient-to-br from-grass-500 to-grass-700 text-white p-6 sm:p-10 lg:p-12 relative overflow-hidden shadow-[0_40px_100px_-30px_rgba(34,197,94,0.6)]"
+          className="rounded-3xl text-white p-6 sm:p-10 lg:p-12 relative overflow-hidden bg-[linear-gradient(135deg,oklch(0.62_0.17_145)_0%,oklch(0.46_0.14_145)_55%,oklch(0.36_0.11_148)_100%)] shadow-[0_40px_100px_-30px_oklch(0.46_0.14_145/0.55)]"
         >
           <div className="absolute inset-0 noise opacity-30 pointer-events-none" />
           <div className="absolute -top-32 -right-24 h-80 w-80 rounded-full bg-white/15 blur-3xl" />
-          <div className="absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-grass-400/30 blur-3xl" />
+          <div className="absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-[oklch(0.78_0.16_145/0.4)] blur-3xl" />
 
           <div className="relative grid lg:grid-cols-[1.05fr_1fr] gap-8 items-center">
             <div>

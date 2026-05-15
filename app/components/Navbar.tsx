@@ -6,8 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sparkles } from "lucide-react";
 
 const LINKS = [
-  { href: "/#tiers", label: "Services" },
-  { href: "/book", label: "Book" },
+  { href: "/book", label: "Get a price" },
   { href: "/about", label: "About" },
   { href: "/about#reviews", label: "Reviews" },
   { href: "/about#faq", label: "FAQ" },
