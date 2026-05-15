@@ -13,16 +13,29 @@ const LINKS = [
   { href: "/about#faq", label: "FAQ" },
 ];
 
-function isActive(pathname: string, href: string) {
+function onSamePath(pathname: string, href: string) {
   const path = href.split("#")[0];
   if (path === "/") return pathname === "/";
   return pathname === path || pathname.startsWith(path + "/");
+}
+
+function isActive(
+  pathname: string,
+  activeHash: string,
+  href: string
+): boolean {
+  if (!onSamePath(pathname, href)) return false;
+  const hash = href.split("#")[1] ?? "";
+  // Hash links match only when the scroll-spy hash equals their hash.
+  // Path-only links match only when no scroll-spy hash is active.
+  return hash === activeHash;
 }
 
 export function Navbar() {
   const pathname = usePathname() ?? "/";
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [activeHash, setActiveHash] = useState<string>("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -30,6 +43,43 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Scroll-spy: track which hashed section on the current path is in view.
+  useEffect(() => {
+    // Collect ids of LINKS that anchor into the current page.
+    const ids = LINKS.filter(
+      (l) => l.href.includes("#") && onSamePath(pathname, l.href)
+    )
+      .map((l) => l.href.split("#")[1])
+      .filter(Boolean);
+
+    if (ids.length === 0) {
+      setActiveHash("");
+      return;
+    }
+
+    const compute = () => {
+      const activeLine = Math.min(180, window.innerHeight * 0.22);
+      let best: { id: string; top: number } | null = null;
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const top = el.getBoundingClientRect().top;
+        if (top <= activeLine) {
+          if (!best || top > best.top) best = { id, top };
+        }
+      }
+      setActiveHash(best?.id ?? "");
+    };
+
+    compute();
+    window.addEventListener("scroll", compute, { passive: true });
+    window.addEventListener("resize", compute);
+    return () => {
+      window.removeEventListener("scroll", compute);
+      window.removeEventListener("resize", compute);
+    };
+  }, [pathname]);
 
   return (
     <>
@@ -42,8 +92,8 @@ export function Navbar() {
         <div
           className={`mx-auto max-w-6xl rounded-2xl transition-all duration-300 ${
             scrolled
-              ? "bg-[oklch(0.97_0.012_220/0.88)] backdrop-blur-md border border-line-strong/40 shadow-card"
-              : "bg-[oklch(0.965_0.012_220/0.78)] backdrop-blur-md border border-line-strong/30"
+              ? "bg-[oklch(0.92_0.018_220/0.92)] backdrop-blur-lg border border-line-strong/70 shadow-card"
+              : "bg-[oklch(0.9_0.02_220/0.82)] backdrop-blur-lg border border-line-strong/60 shadow-soft"
           }`}
         >
           <div className="flex items-center justify-between px-4 sm:px-5 py-2.5">
@@ -64,7 +114,7 @@ export function Navbar() {
 
             <nav className="hidden md:flex items-center gap-0.5">
               {LINKS.map((l) => {
-                const active = isActive(pathname, l.href);
+                const active = isActive(pathname, activeHash, l.href);
                 return (
                   <Link
                     key={l.href}
@@ -158,7 +208,7 @@ export function Navbar() {
               </div>
               <nav className="mt-6 flex flex-col gap-1">
                 {LINKS.map((l) => {
-                  const active = isActive(pathname, l.href);
+                  const active = isActive(pathname, activeHash, l.href);
                   return (
                     <Link
                       key={l.href}
