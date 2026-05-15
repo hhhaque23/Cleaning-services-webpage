@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
@@ -112,8 +113,24 @@ function Card({ r }: { r: Review }) {
 export function Reviews() {
   const rowA = REVIEWS.slice(0, 5);
   const rowB = REVIEWS.slice(3, 8);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { rootMargin: "120px 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const playState = visible ? "running" : "paused";
+
   return (
-    <section id="reviews" className="relative py-16 sm:py-24 overflow-hidden scroll-mt-24">
+    <section ref={sectionRef} id="reviews" className="relative py-16 sm:py-24 overflow-hidden scroll-mt-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -136,14 +153,20 @@ export function Reviews() {
 
       <div className="mt-12 space-y-4 group">
         <div className="relative">
-          <div className="flex animate-marquee group-hover:[animation-play-state:paused]">
+          <div
+            className="flex animate-marquee group-hover:[animation-play-state:paused]"
+            style={{ animationPlayState: playState }}
+          >
             {[...rowA, ...rowA].map((r, i) => (
               <Card key={`a-${i}`} r={r} />
             ))}
           </div>
         </div>
         <div className="relative">
-          <div className="flex animate-marquee [animation-direction:reverse] [animation-duration:46s] group-hover:[animation-play-state:paused]">
+          <div
+            className="flex animate-marquee [animation-direction:reverse] [animation-duration:46s] group-hover:[animation-play-state:paused]"
+            style={{ animationPlayState: playState }}
+          >
             {[...rowB, ...rowB].map((r, i) => (
               <Card key={`b-${i}`} r={r} />
             ))}

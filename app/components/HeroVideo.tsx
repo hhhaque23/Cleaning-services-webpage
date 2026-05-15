@@ -4,11 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { PHOTOS } from "@/lib/unsplash";
 
-// Free-license stock from Mixkit. Swap in any direct .mp4 URL.
-// Higher-bitrate 720p clip (~4.4 MB). True 1080p free cleaning footage
-// is not freely hotlinkable; drop a 1080p .mp4 into /public and point
-// VIDEO_URL at it to upgrade.
-const VIDEO_URL = "https://assets.mixkit.co/videos/45039/45039-720.mp4";
+// Self-hosted Mixkit 720p clip (~4.4 MB) at public/hero.mp4. Same-origin
+// avoids the hotlink gating that blocked the previous Mixkit URL in
+// production. Replace the file in /public to change the footage.
+const VIDEO_URL = "/hero.mp4";
 
 export function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -64,9 +63,6 @@ export function HeroVideo() {
 
       <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.985_0.006_220/0.78)] via-[oklch(0.985_0.006_220/0.32)] to-[oklch(0.985_0.006_220/0.08)]" />
       <div className="absolute inset-0 bg-gradient-to-b from-[oklch(0.985_0.006_220/0.18)] via-transparent to-[oklch(0.985_0.006_220/0.5)]" />
-
-      <div className="absolute top-[-12%] left-[8%] h-[28rem] w-[28rem] rounded-full bg-[oklch(0.78_0.09_220/0.22)] blur-3xl animate-blob-drift" />
-      <div className="absolute top-[18%] right-[2%] h-[20rem] w-[20rem] rounded-full bg-[oklch(0.85_0.14_145/0.14)] blur-3xl animate-blob-drift [animation-delay:-6s]" />
 
       <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[var(--surface)] via-[var(--surface)]/70 to-transparent" />
     </div>

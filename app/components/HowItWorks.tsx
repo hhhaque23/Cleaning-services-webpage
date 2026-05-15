@@ -40,8 +40,6 @@ const STEPS = [
 export function HowItWorks() {
   return (
     <section id="how" className="relative py-20 sm:py-28 scroll-mt-24 overflow-hidden">
-      <div className="absolute top-1/4 -left-32 h-[26rem] w-[26rem] rounded-full bg-[oklch(0.78_0.09_220/0.16)] blur-3xl animate-blob-drift pointer-events-none" />
-
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
@@ -97,11 +95,8 @@ export function HowItWorks() {
                 className="relative pl-24 lg:pl-0"
               >
                 <div className="absolute left-0 top-0 lg:relative lg:left-auto lg:top-auto flex items-center gap-4 lg:block">
-                  <span className="relative inline-flex h-[5.5rem] w-[5.5rem] lg:h-[5.5rem] lg:w-[5.5rem] items-center justify-center">
-                    <span className="absolute inset-0 rounded-full bg-grass-500/15 animate-pulse-ring" aria-hidden="true" />
-                    <span className="relative inline-flex h-14 w-14 items-center justify-center rounded-full bg-ink-950 text-[var(--surface)] ring-8 ring-[var(--surface)] shadow-card">
-                      <s.icon className="h-5 w-5" strokeWidth={2.2} />
-                    </span>
+                  <span className="relative inline-flex h-14 w-14 items-center justify-center rounded-full bg-ink-950 text-[var(--surface)] ring-8 ring-[var(--surface)] shadow-[0_0_0_2px_oklch(0.68_0.18_145/0.25),0_18px_40px_-20px_oklch(0.13_0.045_230/0.35)]">
+                    <s.icon className="h-5 w-5" strokeWidth={2.2} />
                   </span>
 
                   <div className="lg:hidden">
