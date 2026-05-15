@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import { Lock, ArrowRight, Sparkles } from "lucide-react";
+import { Lock, ArrowRight, Sparkles, FlaskConical } from "lucide-react";
 
 function LoginInner() {
   const router = useRouter();
@@ -13,6 +13,14 @@ function LoginInner() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [demoMode, setDemoMode] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/admin/mode")
+      .then((r) => r.json())
+      .then((d) => setDemoMode(Boolean(d.demo)))
+      .catch(() => {});
+  }, []);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -56,6 +64,17 @@ function LoginInner() {
             Sign in to see today&apos;s bookings and manage the queue.
           </p>
         </div>
+
+        {demoMode && (
+          <div className="mt-6 rounded-2xl bg-[oklch(0.97_0.06_75)] ring-1 ring-[oklch(0.78_0.12_75)] px-4 py-3 flex items-start gap-3">
+            <FlaskConical className="h-4 w-4 flex-none text-[oklch(0.55_0.16_70)] mt-0.5" />
+            <div className="text-xs text-[oklch(0.38_0.13_70)] leading-relaxed">
+              <strong className="font-semibold">Demo mode.</strong> Type anything,
+              you&apos;re in. Set <code className="font-mono">ADMIN_PASSWORD</code> on
+              Railway to lock this down.
+            </div>
+          </div>
+        )}
 
         <form onSubmit={onSubmit} className="mt-8 space-y-4">
           <label className="block">
