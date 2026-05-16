@@ -112,7 +112,8 @@ function Quote_({ r }: { r: Review }) {
 }
 
 export function Reviews() {
-  const rowA = REVIEWS;
+  const rowA = REVIEWS.slice(0, 5);
+  const rowB = REVIEWS.slice(3, 8);
   const sectionRef = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -157,7 +158,7 @@ export function Reviews() {
         </motion.div>
       </div>
 
-      <div className="relative mt-14 group">
+      <div className="relative mt-14 space-y-10 group">
         <div className="relative">
           <div
             className="flex animate-marquee group-hover:[animation-play-state:paused]"
@@ -165,6 +166,16 @@ export function Reviews() {
           >
             {[...rowA, ...rowA].map((r, i) => (
               <Quote_ key={`a-${i}`} r={r} />
+            ))}
+          </div>
+        </div>
+        <div className="relative">
+          <div
+            className="flex animate-marquee [animation-direction:reverse] [animation-duration:46s] group-hover:[animation-play-state:paused]"
+            style={{ animationPlayState: playState }}
+          >
+            {[...rowB, ...rowB].map((r, i) => (
+              <Quote_ key={`b-${i}`} r={r} />
             ))}
           </div>
         </div>
