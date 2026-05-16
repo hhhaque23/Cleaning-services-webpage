@@ -7,7 +7,7 @@ import {
   type Booking,
   type BookingStatus,
 } from "@/lib/bookings";
-import { TIER_META } from "../components/Booking/pricing";
+import { FREQUENCY_META, TIER_META } from "../components/Booking/pricing";
 import {
   CalendarClock,
   ArrowRight,
@@ -16,12 +16,16 @@ import {
   TrendingUp,
   Inbox,
   CheckCheck,
+  Repeat,
 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
-const FILTERS: { id: BookingStatus | "all"; label: string }[] = [
+type FilterId = BookingStatus | "all" | "recurring";
+
+const FILTERS: { id: FilterId; label: string }[] = [
   { id: "all", label: "All" },
+  { id: "recurring", label: "Recurring" },
   { id: "new", label: "New" },
   { id: "confirmed", label: "Confirmed" },
   { id: "scheduled", label: "Scheduled" },
@@ -33,11 +37,17 @@ type Props = { searchParams: { status?: string } };
 
 export default async function AdminDashboard({ searchParams }: Props) {
   const dbReady = isDbConfigured();
-  const filter = (searchParams?.status as BookingStatus | "all") ?? "all";
+  const filter = (searchParams?.status as FilterId) ?? "all";
 
-  const bookings = await listBookings(
-    filter === "all" ? undefined : { status: filter as BookingStatus }
+  const isRecurringFilter = filter === "recurring";
+  const allBookings = await listBookings(
+    filter === "all" || isRecurringFilter
+      ? undefined
+      : { status: filter as BookingStatus },
   );
+  const bookings = isRecurringFilter
+    ? allBookings.filter((b) => b.frequency !== "onetime")
+    : allBookings;
   const stats = await bookingStats();
 
   return (
@@ -153,6 +163,8 @@ function Stat({
 
 function BookingRow({ booking }: { booking: Booking }) {
   const tier = TIER_META[booking.tier];
+  const freq = FREQUENCY_META[booking.frequency];
+  const isRecurring = booking.frequency !== "onetime";
   const date = new Date(booking.slotDate + "T00:00:00").toLocaleDateString("en-US", {
     weekday: "short",
     month: "short",
@@ -181,12 +193,18 @@ function BookingRow({ booking }: { booking: Booking }) {
           <StatusDot tone={meta.tone} />
 
           <div className="min-w-0">
-            <div className="flex items-baseline gap-2">
+            <div className="flex items-baseline gap-2 flex-wrap">
               <span className="font-mono text-xs font-bold text-ink-950 tabular-nums">
                 {booking.id}
               </span>
               <span className="text-xs text-ink-faint">·</span>
               <span className="text-xs text-ink-700 truncate">{tier.label}</span>
+              {isRecurring && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-grass-500/15 text-grass-700 text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5">
+                  <Repeat className="h-2.5 w-2.5" strokeWidth={2.8} />
+                  {freq.label}
+                </span>
+              )}
             </div>
             <div className="mt-1 text-sm font-semibold text-ink-950 truncate">
               {booking.address}

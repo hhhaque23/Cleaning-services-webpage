@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   AnimatePresence,
@@ -73,6 +73,19 @@ export function BookingFlow() {
   const [contact, setContact] = useState<Contact>(DEFAULT_CONTACT);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const formCardRef = useRef<HTMLDivElement | null>(null);
+
+  // When the step changes, scroll the form card back to the top so the user
+  // always sees the new step starting from its header, not from where they
+  // left off scrolling on the previous step.
+  useEffect(() => {
+    if (step === 1) return;
+    const el = formCardRef.current;
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 24;
+    window.scrollTo({ top, behavior: "smooth" });
+  }, [step]);
   const [bookingId, setBookingId] = useState<string | null>(null);
 
   async function submitBooking() {
@@ -152,25 +165,26 @@ export function BookingFlow() {
 
         <div className="mt-12 grid lg:grid-cols-[1.4fr_1fr] gap-6 lg:gap-8 items-start">
           <motion.div
+            ref={formCardRef}
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6 }}
-            className="relative rounded-3xl bg-[var(--surface-elevated)] border border-line shadow-card overflow-hidden"
+            className="relative scroll-mt-24 rounded-3xl bg-[var(--surface-elevated)] border border-line shadow-card overflow-hidden"
           >
             <div className="px-5 sm:px-7 pt-5 sm:pt-7">
               <ProgressRail step={step} />
             </div>
 
             <div className="px-5 sm:px-7 py-6 sm:py-8 min-h-[28rem]">
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="wait" onExitComplete={() => setIsTransitioning(false)}>
                 {step === 1 && (
                   <motion.div
                     key="s1"
-                    initial={{ opacity: 0, x: 22, scale: 0.98 }}
-                    animate={{ opacity: 1, x: 0, scale: 1 }}
-                    exit={{ opacity: 0, x: -22, scale: 0.98 }}
-                    transition={{ duration: 0.35, ease: EASE_OUT_QUINT }}
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -16 }}
+                    transition={{ duration: 0.22, ease: EASE_OUT_QUINT }}
                   >
                     <StepConfigure config={config} setConfig={setConfig} />
                   </motion.div>
@@ -178,10 +192,10 @@ export function BookingFlow() {
                 {step === 2 && (
                   <motion.div
                     key="s2"
-                    initial={{ opacity: 0, x: 22, scale: 0.98 }}
-                    animate={{ opacity: 1, x: 0, scale: 1 }}
-                    exit={{ opacity: 0, x: -22, scale: 0.98 }}
-                    transition={{ duration: 0.35, ease: EASE_OUT_QUINT }}
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -16 }}
+                    transition={{ duration: 0.22, ease: EASE_OUT_QUINT }}
                   >
                     <StepSchedule selected={slot} onSelect={setSlot} />
                   </motion.div>
@@ -189,10 +203,10 @@ export function BookingFlow() {
                 {step === 3 && (
                   <motion.div
                     key="s3"
-                    initial={{ opacity: 0, x: 22, scale: 0.98 }}
-                    animate={{ opacity: 1, x: 0, scale: 1 }}
-                    exit={{ opacity: 0, x: -22, scale: 0.98 }}
-                    transition={{ duration: 0.35, ease: EASE_OUT_QUINT }}
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -16 }}
+                    transition={{ duration: 0.22, ease: EASE_OUT_QUINT }}
                   >
                     <StepConfirm contact={contact} setContact={setContact} />
                   </motion.div>
@@ -235,8 +249,12 @@ export function BookingFlow() {
                 <div className="flex items-center justify-between gap-3">
                   <button
                     type="button"
-                    onClick={() => setStep((s) => (s > 1 ? ((s - 1) as 1 | 2 | 3) : s))}
-                    disabled={step === 1 || submitting}
+                    onClick={() => {
+                      if (step <= 1) return;
+                      setIsTransitioning(true);
+                      setStep((s) => ((s - 1) as 1 | 2 | 3));
+                    }}
+                    disabled={step === 1 || submitting || isTransitioning}
                     className="inline-flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold text-ink-800 hover:bg-[var(--surface)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
                   >
                     <ArrowLeft className="h-4 w-4" /> Back
@@ -244,14 +262,15 @@ export function BookingFlow() {
                   <MagneticButton as="div" radius={110} strength={0.22}>
                     <button
                       type="button"
-                      disabled={!canAdvance() || submitting}
+                      disabled={!canAdvance() || submitting || isTransitioning}
                       aria-busy={submitting}
                       onClick={() => {
                         if (step === 3) {
                           submitBooking();
-                        } else {
-                          setStep((s) => ((s + 1) as 1 | 2 | 3 | 4));
+                          return;
                         }
+                        setIsTransitioning(true);
+                        setStep((s) => ((s + 1) as 1 | 2 | 3 | 4));
                       }}
                       className="group relative inline-flex items-center gap-1.5 rounded-2xl bg-ink-950 hover:bg-ink-800 disabled:bg-ink-300 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-3 shadow-lift transition-all cursor-pointer overflow-hidden"
                     >

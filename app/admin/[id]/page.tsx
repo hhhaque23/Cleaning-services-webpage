@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getBooking, STATUS_META } from "@/lib/bookings";
-import { ADDON_META, FREQUENCY_META, TIER_META } from "../../components/Booking/pricing";
+import { ADDON_META, FREQUENCY_META, TIER_META, type Frequency } from "../../components/Booking/pricing";
 import {
   ArrowLeft,
   CalendarClock,
@@ -10,8 +10,26 @@ import {
   Phone,
   StickyNote,
   ExternalLink,
+  Repeat,
 } from "lucide-react";
 import { StatusActions } from "./StatusActions";
+
+const CADENCE_DAYS: Record<Frequency, number> = {
+  onetime: 0,
+  weekly: 7,
+  biweekly: 14,
+  monthly: 30,
+};
+
+function addDays(iso: string, days: number) {
+  const d = new Date(iso + "T00:00:00");
+  d.setDate(d.getDate() + days);
+  return d.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+}
 
 type Props = { params: { id: string } };
 
@@ -113,6 +131,33 @@ export default async function AdminBookingDetail({ params }: Props) {
               )}
             </ul>
           </section>
+
+          {booking.frequency !== "onetime" && (
+            <section className="relative rounded-2xl bg-ink-950 text-white p-6 shadow-card overflow-hidden">
+              <div className="absolute inset-0 noise opacity-30 pointer-events-none" />
+              <div className="absolute -top-16 -right-16 h-44 w-44 rounded-full bg-[oklch(0.68_0.18_145/0.32)] blur-3xl pointer-events-none" />
+              <div className="relative flex items-start gap-4">
+                <span className="inline-flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-[oklch(0.68_0.18_145/0.2)] text-grass-300">
+                  <Repeat className="h-5 w-5" />
+                </span>
+                <div className="flex-1 min-w-0">
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-grass-500/15 text-grass-300 text-[10px] font-bold uppercase tracking-[0.14em] px-2 py-0.5">
+                    Recurring customer
+                  </div>
+                  <div className="mt-2 font-display font-bold text-xl tracking-[-0.018em]">
+                    {freq.label} cadence
+                  </div>
+                  <p className="mt-1 text-sm text-[oklch(0.985_0.006_220/0.78)] leading-relaxed">
+                    After this clean is completed, schedule the next visit on{" "}
+                    <span className="font-semibold text-white">
+                      {addDays(booking.slotDate, CADENCE_DAYS[booking.frequency])}
+                    </span>
+                    .
+                  </p>
+                </div>
+              </div>
+            </section>
+          )}
 
           <section className="rounded-2xl bg-white ring-1 ring-line shadow-soft">
             <header className="px-6 py-4 border-b border-line">
