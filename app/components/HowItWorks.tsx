@@ -231,9 +231,9 @@ function CalendarGlyph() {
 
   return (
     <motion.svg
-      viewBox="0 0 200 86"
+      viewBox="0 0 200 90"
       width="200"
-      height="86"
+      height="90"
       role="img"
       aria-label="A cursor clicks three separate days on a two-week calendar"
       initial={{ opacity: 0 }}
@@ -241,15 +241,21 @@ function CalendarGlyph() {
       viewport={viewport}
       transition={{ duration: 0.4 }}
     >
-      {/* Day-of-week dots above the grid */}
-      {Array.from({ length: cols }).map((_, i) => (
-        <circle
+      {/* Day-of-week abbreviations above the grid */}
+      {"SMTWTFS".split("").map((d, i) => (
+        <text
           key={i}
-          cx={gridX + i * (cellSize + gap) + cellSize / 2}
-          cy={headerY}
-          r="1.6"
-          fill="oklch(0.78 0.028 220)"
-        />
+          x={gridX + i * (cellSize + gap) + cellSize / 2}
+          y={headerY + 2}
+          textAnchor="middle"
+          fontSize="6"
+          fontWeight="700"
+          fill="oklch(0.5 0.042 228)"
+          letterSpacing="0.6"
+          fontFamily="sans-serif"
+        >
+          {d}
+        </text>
       ))}
 
       {/* Empty cells (non-targets) */}
@@ -266,9 +272,9 @@ function CalendarGlyph() {
             width={cellSize}
             height={cellSize}
             rx="3.5"
-            fill="oklch(0.96 0.012 220)"
-            stroke="oklch(0.9 0.018 220)"
-            strokeWidth="0.6"
+            fill="oklch(0.91 0.022 220)"
+            stroke="oklch(0.82 0.024 220)"
+            strokeWidth="0.8"
           />
         );
       })}
@@ -304,13 +310,13 @@ function CalendarGlyph() {
               width={cellSize}
               height={cellSize}
               rx="3.5"
-              stroke="oklch(0.9 0.018 220)"
-              strokeWidth="0.6"
-              initial={{ fill: "oklch(0.96 0.012 220)" }}
+              stroke="oklch(0.82 0.024 220)"
+              strokeWidth="0.8"
+              initial={{ fill: "oklch(0.91 0.022 220)" }}
               whileInView={{
                 fill: [
-                  "oklch(0.96 0.012 220)",
-                  "oklch(0.96 0.012 220)",
+                  "oklch(0.91 0.022 220)",
+                  "oklch(0.91 0.022 220)",
                   "oklch(0.62 0.17 145)",
                 ],
               }}
