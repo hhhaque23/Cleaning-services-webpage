@@ -38,24 +38,25 @@ const FAQS = [
 export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="relative py-20 sm:py-24 scroll-mt-24">
+    <section id="faq" className="relative py-24 sm:py-32 scroll-mt-24">
       <div className="mx-auto max-w-3xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.65 }}
           className="max-w-xl"
         >
           <div className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
             <MessageCircleQuestion className="h-3.5 w-3.5" /> Questions, answered
           </div>
-          <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance">
-            Everything you&apos;d ask before booking.
+          <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance leading-[1.05]">
+            Everything you&apos;d ask{" "}
+            <span className="italic font-medium text-ink-700">before booking.</span>
           </h2>
         </motion.div>
 
-        <ul className="mt-10 divide-y divide-line">
+        <ul className="mt-12 divide-y divide-line">
           {FAQS.map((f, i) => {
             const isOpen = open === i;
             return (
@@ -64,22 +65,30 @@ export function FAQ() {
                 initial={{ opacity: 0, y: 8 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.4, delay: i * 0.03 }}
+                transition={{ duration: 0.45, delay: i * 0.04 }}
+                className="group/item"
               >
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? null : i)}
                   aria-expanded={isOpen}
-                  className="w-full py-5 sm:py-6 flex items-center justify-between gap-4 text-left cursor-pointer group"
+                  className="relative w-full py-5 sm:py-6 flex items-center justify-between gap-4 text-left cursor-pointer"
                 >
-                  <span className="font-display font-bold text-ink-950 text-lg sm:text-[1.25rem] group-hover:text-grass-700 transition-colors">
+                  <span
+                    className={`absolute inset-y-0 -inset-x-2 rounded-xl bg-grass-500/0 transition-colors duration-300 group-hover/item:bg-grass-500/[0.04] ${
+                      isOpen ? "bg-grass-500/[0.06]" : ""
+                    }`}
+                  />
+                  <span className="relative font-display font-bold text-ink-950 text-lg sm:text-[1.25rem] group-hover/item:text-grass-700 transition-colors">
                     {f.q}
                   </span>
                   <motion.span
                     animate={{ rotate: isOpen ? 45 : 0 }}
-                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                    className={`inline-flex h-9 w-9 flex-none items-center justify-center rounded-full transition-colors ${
-                      isOpen ? "bg-ink-950 text-[var(--surface)]" : "bg-transparent text-ink-700 ring-1 ring-line-strong/60"
+                    transition={{ type: "spring", stiffness: 320, damping: 22 }}
+                    className={`relative inline-flex h-9 w-9 flex-none items-center justify-center rounded-full transition-colors ${
+                      isOpen
+                        ? "bg-ink-950 text-[var(--surface)]"
+                        : "bg-transparent text-ink-700 ring-1 ring-line-strong/60"
                     }`}
                   >
                     <Plus className="h-4 w-4" strokeWidth={2.5} />
@@ -91,12 +100,21 @@ export function FAQ() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      transition={{
+                        height: { type: "spring", stiffness: 220, damping: 26 },
+                        opacity: { duration: 0.2 },
+                      }}
                       className="overflow-hidden"
                     >
-                      <div className="pb-6 pr-12 text-ink-800 leading-relaxed text-[15px] sm:text-base max-w-xl">
+                      <motion.div
+                        initial={{ y: 8, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 4, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
+                        className="pb-6 pr-12 text-ink-800 leading-relaxed text-[15px] sm:text-base max-w-xl"
+                      >
                         {f.a}
-                      </div>
+                      </motion.div>
                     </motion.div>
                   )}
                 </AnimatePresence>

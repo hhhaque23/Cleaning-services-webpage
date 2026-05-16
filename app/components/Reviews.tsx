@@ -81,15 +81,27 @@ const REVIEWS: Review[] = [
   },
 ];
 
-function Quote_({ r }: { r: Review }) {
+function ReviewCard({ r }: { r: Review }) {
   return (
-    <figure className="w-[22rem] sm:w-[26rem] flex-none mr-10 sm:mr-14">
-      <Quote className="h-6 w-6 text-grass-500/55" strokeWidth={2.2} />
-      <blockquote className="mt-3 text-ink-900 text-[17px] sm:text-[18px] leading-[1.55] font-medium">
+    <motion.figure
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+      className="group relative w-[22rem] sm:w-[26rem] flex-none mr-6 sm:mr-8 rounded-2xl bg-[var(--surface-elevated)] border border-line hover:border-grass-500/40 shadow-soft hover:shadow-card transition-all p-6"
+    >
+      <div
+        aria-hidden
+        className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at top right, oklch(0.68 0.18 145 / 0.12), transparent 70%)",
+        }}
+      />
+      <Quote className="relative h-6 w-6 text-grass-500/55" strokeWidth={2.2} />
+      <blockquote className="relative mt-3 text-ink-900 text-[16px] sm:text-[17px] leading-[1.55] font-medium">
         &ldquo;{r.body}&rdquo;
       </blockquote>
-      <figcaption className="mt-5 flex items-center gap-3 text-sm">
-        <span className="relative h-9 w-9 flex-none rounded-full overflow-hidden">
+      <figcaption className="relative mt-5 flex items-center gap-3 text-sm">
+        <span className="relative h-9 w-9 flex-none rounded-full overflow-hidden ring-2 ring-[var(--surface)]">
           <Image src={r.photo} alt="" aria-hidden="true" fill sizes="36px" className="object-cover" />
         </span>
         <span className="leading-tight min-w-0">
@@ -99,7 +111,21 @@ function Quote_({ r }: { r: Review }) {
           </span>
           <span className="mt-0.5 flex items-center gap-1 text-grass-700">
             {[0, 1, 2, 3, 4].map((i) => (
-              <Star key={i} className="h-3 w-3 fill-grass-500 stroke-grass-500" />
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, scale: 0 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: "-20px" }}
+                transition={{
+                  duration: 0.3,
+                  delay: i * 0.06,
+                  type: "spring",
+                  stiffness: 320,
+                  damping: 16,
+                }}
+              >
+                <Star className="h-3 w-3 fill-grass-500 stroke-grass-500" />
+              </motion.span>
             ))}
             <span className="ml-1.5 text-[11px] uppercase tracking-wider text-ink-700 font-semibold">
               {r.service}
@@ -107,7 +133,7 @@ function Quote_({ r }: { r: Review }) {
           </span>
         </span>
       </figcaption>
-    </figure>
+    </motion.figure>
   );
 }
 
@@ -122,7 +148,7 @@ export function Reviews() {
     if (!el) return;
     const io = new IntersectionObserver(
       ([entry]) => setVisible(entry.isIntersecting),
-      { rootMargin: "120px 0px" }
+      { rootMargin: "120px 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -134,22 +160,27 @@ export function Reviews() {
     <section
       ref={sectionRef}
       id="reviews"
-      className="relative py-20 sm:py-28 overflow-hidden scroll-mt-24"
+      className="relative py-24 sm:py-32 overflow-hidden scroll-mt-24"
     >
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+      <div
+        aria-hidden
+        className="absolute inset-0 topo-lines opacity-50 [mask-image:radial-gradient(ellipse_at_center,black_25%,transparent_75%)]"
+      />
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.65 }}
           className="grid lg:grid-cols-[1fr_auto] gap-6 items-end max-w-7xl"
         >
           <div className="max-w-2xl">
             <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
               Real homes, real reviews
             </div>
-            <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance">
-              2,300+ five-star cleans across metro Detroit.
+            <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance leading-[1.05]">
+              2,300+ five-star cleans{" "}
+              <span className="italic font-medium text-ink-700">across metro Detroit.</span>
             </h2>
           </div>
           <p className="text-ink-700 lg:text-right max-w-xs">
@@ -158,14 +189,14 @@ export function Reviews() {
         </motion.div>
       </div>
 
-      <div className="relative mt-14 space-y-10 group">
+      <div className="relative mt-16 space-y-8 group">
         <div className="relative">
           <div
             className="flex animate-marquee group-hover:[animation-play-state:paused]"
             style={{ animationPlayState: playState }}
           >
             {[...rowA, ...rowA].map((r, i) => (
-              <Quote_ key={`a-${i}`} r={r} />
+              <ReviewCard key={`a-${i}`} r={r} />
             ))}
           </div>
         </div>
@@ -175,7 +206,7 @@ export function Reviews() {
             style={{ animationPlayState: playState }}
           >
             {[...rowB, ...rowB].map((r, i) => (
-              <Quote_ key={`b-${i}`} r={r} />
+              <ReviewCard key={`b-${i}`} r={r} />
             ))}
           </div>
         </div>

@@ -1,9 +1,15 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Calculator, Receipt, ShieldCheck, Sparkles } from "lucide-react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+} from "framer-motion";
+import { ArrowLeft, ArrowRight, Calculator, Receipt, ShieldCheck, Sparkles, Check } from "lucide-react";
 import {
   computePrice,
   FREQUENCY_META,
@@ -17,6 +23,8 @@ import { StepConfigure } from "./StepConfigure";
 import { StepSchedule, type Slot } from "./StepSchedule";
 import { StepConfirm, type Contact } from "./StepConfirm";
 import { StepSuccess } from "./StepSuccess";
+import { MagneticButton } from "../motion/MagneticButton";
+import { SplitText } from "../motion/SplitText";
 
 const VALID_FREQUENCIES: Frequency[] = ["onetime", "monthly", "biweekly", "weekly"];
 
@@ -118,50 +126,49 @@ export function BookingFlow() {
   const freq = FREQUENCY_META[config.frequency];
 
   return (
-    <section
-      id="booking"
-      className="relative py-16 sm:py-24 scroll-mt-24"
-    >
+    <section id="booking" className="relative py-20 sm:py-28 scroll-mt-24">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-ink-50/60 via-transparent to-ink-50/60" />
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.65 }}
           className="max-w-2xl mx-auto text-center"
         >
           <div className="inline-flex items-center gap-1.5 rounded-full bg-grass-500/12 text-grass-700 text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">
             <Calculator className="h-3.5 w-3.5" /> Live pricing
           </div>
-          <h2 className="mt-4 font-display font-extrabold text-4xl sm:text-5xl tracking-tight text-ink-950">
-            Build your booking in 60 seconds.
+          <h2 className="mt-4 font-display font-extrabold text-display-1 tracking-[-0.022em] text-ink-950 leading-[1.05]">
+            <SplitText mode="word" trigger="view" stagger={0.06}>
+              {"Build your booking in 60 seconds."}
+            </SplitText>
           </h2>
           <p className="mt-3 text-ink-800/80 text-lg">
             Move the sliders. Watch the price land. Pick a slot. Done.
           </p>
         </motion.div>
 
-        <div className="mt-10 grid lg:grid-cols-[1.4fr_1fr] gap-6 lg:gap-8 items-start">
+        <div className="mt-12 grid lg:grid-cols-[1.4fr_1fr] gap-6 lg:gap-8 items-start">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6 }}
-            className="relative rounded-3xl bg-white border border-ink-200/70 shadow-card overflow-hidden"
+            className="relative rounded-3xl bg-[var(--surface-elevated)] border border-line shadow-card overflow-hidden"
           >
-            <div className="px-5 sm:px-7 pt-5 sm:pt-6">
-              <Stepper step={step} />
+            <div className="px-5 sm:px-7 pt-5 sm:pt-7">
+              <ProgressRail step={step} />
             </div>
 
-            <div className="px-5 sm:px-7 py-6 sm:py-7 min-h-[26rem]">
+            <div className="px-5 sm:px-7 py-6 sm:py-8 min-h-[28rem]">
               <AnimatePresence mode="wait">
                 {step === 1 && (
                   <motion.div
                     key="s1"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: 22, scale: 0.98 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: -22, scale: 0.98 }}
                     transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <StepConfigure config={config} setConfig={setConfig} />
@@ -170,9 +177,9 @@ export function BookingFlow() {
                 {step === 2 && (
                   <motion.div
                     key="s2"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: 22, scale: 0.98 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: -22, scale: 0.98 }}
                     transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <StepSchedule selected={slot} onSelect={setSlot} />
@@ -181,9 +188,9 @@ export function BookingFlow() {
                 {step === 3 && (
                   <motion.div
                     key="s3"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: 22, scale: 0.98 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: -22, scale: 0.98 }}
                     transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <StepConfirm contact={contact} setContact={setContact} />
@@ -192,10 +199,10 @@ export function BookingFlow() {
                 {step === 4 && (
                   <motion.div
                     key="s4"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <StepSuccess
                       contact={contact}
@@ -209,167 +216,267 @@ export function BookingFlow() {
             </div>
 
             {step !== 4 && (
-              <div className="border-t border-ink-200/70 bg-ink-50/60 px-5 sm:px-7 py-4">
+              <div className="border-t border-line bg-ink-50/60 px-5 sm:px-7 py-4">
                 {submitError && step === 3 && (
-                  <div className="mb-3 rounded-xl bg-[oklch(0.96_0.05_25)] text-[oklch(0.42_0.18_25)] text-sm font-medium px-3 py-2.5">
+                  <motion.div
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: [0, -6, 6, -3, 3, 0] }}
+                    transition={{ duration: 0.45 }}
+                    className="mb-3 rounded-xl bg-[oklch(0.96_0.05_25)] text-[oklch(0.42_0.18_25)] text-sm font-medium px-3 py-2.5"
+                  >
                     {submitError}
-                  </div>
+                  </motion.div>
                 )}
                 <div className="flex items-center justify-between gap-3">
                   <button
                     type="button"
                     onClick={() => setStep((s) => (s > 1 ? ((s - 1) as 1 | 2 | 3) : s))}
                     disabled={step === 1 || submitting}
-                    className="inline-flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold text-ink-800 hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold text-ink-800 hover:bg-[var(--surface)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
                   >
                     <ArrowLeft className="h-4 w-4" /> Back
                   </button>
-                  <button
-                    type="button"
-                    disabled={!canAdvance() || submitting}
-                    onClick={() => {
-                      if (step === 3) {
-                        submitBooking();
-                      } else {
-                        setStep((s) => ((s + 1) as 1 | 2 | 3 | 4));
-                      }
-                    }}
-                    className="inline-flex items-center gap-1.5 rounded-2xl bg-ink-950 hover:bg-ink-800 disabled:bg-ink-300 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-3 shadow-[0_10px_24px_-10px_oklch(0.13_0.045_230/0.5)] transition-all cursor-pointer"
-                  >
-                    {step === 3
-                      ? submitting
-                        ? "Sending…"
-                        : "Confirm booking"
-                      : "Continue"}
-                    {!submitting && <ArrowRight className="h-4 w-4" />}
-                  </button>
+                  <MagneticButton as="div" radius={110} strength={0.22}>
+                    <button
+                      type="button"
+                      disabled={!canAdvance() || submitting}
+                      onClick={() => {
+                        if (step === 3) {
+                          submitBooking();
+                        } else {
+                          setStep((s) => ((s + 1) as 1 | 2 | 3 | 4));
+                        }
+                      }}
+                      className="group relative inline-flex items-center gap-1.5 rounded-2xl bg-ink-950 hover:bg-ink-800 disabled:bg-ink-300 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-3 shadow-lift transition-all cursor-pointer overflow-hidden"
+                    >
+                      <span
+                        aria-hidden
+                        className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-grass-500/0 via-grass-500/30 to-grass-500/0 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"
+                      />
+                      <span className="relative">
+                        {step === 3 ? (submitting ? "Sending…" : "Confirm booking") : "Continue"}
+                      </span>
+                      {!submitting && <ArrowRight className="relative h-4 w-4 transition-transform group-hover:translate-x-1" />}
+                    </button>
+                  </MagneticButton>
                 </div>
               </div>
             )}
           </motion.div>
 
-          <motion.aside
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6, delay: 0.08 }}
-            className="lg:sticky lg:top-24"
-          >
-            <div className="rounded-3xl bg-ink-950 text-white p-6 sm:p-7 shadow-glow relative overflow-hidden">
-              <div className="absolute inset-0 noise opacity-50 pointer-events-none" />
-              <div className="absolute -top-20 -right-20 h-56 w-56 rounded-full bg-grass-500/25 blur-3xl" />
-              <div className="relative">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-ink-100/70">
-                    Your price
-                  </span>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-white/10 text-white text-[11px] font-semibold px-2.5 py-1">
-                    <ShieldCheck className="h-3 w-3" />
-                    Guaranteed
-                  </span>
-                </div>
-                <div className="mt-1.5 flex items-baseline gap-1.5">
-                  <PriceTicker
-                    value={price.total}
-                    className="font-display font-extrabold text-5xl sm:text-6xl tracking-tight text-white"
-                  />
-                  <span className="text-ink-100/70 text-sm">/ visit</span>
-                </div>
-                {price.discount > 0 && (
-                  <div className="mt-1 inline-flex items-center gap-1.5 text-grass-400 text-sm font-semibold">
-                    <span className="line-through text-ink-100/50 font-normal">
-                      ${price.subtotal}
-                    </span>
-                    <span>−${price.discount} {freq.label.toLowerCase()} savings</span>
-                  </div>
-                )}
-
-                <hr className="my-5 border-white/10" />
-
-                <ul className="space-y-2.5 text-sm">
-                  <SumRow label="Service" value={tierLabel} />
-                  <SumRow
-                    label="Home size"
-                    value={`${config.bedrooms} bd · ${config.bathrooms} ba · ${config.sqft.toLocaleString()} sqft`}
-                  />
-                  <SumRow label="Frequency" value={freq.label} />
-                  <SumRow
-                    label="Add-ons"
-                    value={
-                      config.addOns.length === 0
-                        ? "None"
-                        : `${config.addOns.length} selected`
-                    }
-                  />
-                  {slot && (
-                    <SumRow
-                      label="Slot"
-                      value={`${new Date(slot.dateISO + "T00:00:00").toLocaleDateString(
-                        "en-US",
-                        { weekday: "short", month: "short", day: "numeric" }
-                      )} · ${slot.window}`}
-                    />
-                  )}
-                </ul>
-
-                <div className="mt-6 rounded-2xl bg-white/5 border border-white/10 p-4 text-sm text-ink-100/80 leading-relaxed">
-                  No charge until your home is clean. If anything&apos;s missed, we
-                  return within 24 hours, free.
-                </div>
-              </div>
-            </div>
-          </motion.aside>
+          <SidebarPricing
+            price={price}
+            config={config}
+            tierLabel={tierLabel}
+            freq={freq}
+            slot={slot}
+          />
         </div>
       </div>
     </section>
   );
 }
 
-function Stepper({ step }: { step: 1 | 2 | 3 | 4 }) {
+function SidebarPricing({
+  price,
+  config,
+  tierLabel,
+  freq,
+  slot,
+}: {
+  price: ReturnType<typeof computePrice>;
+  config: BookingConfig;
+  tierLabel: string;
+  freq: { label: string; sub: string; discount: number };
+  slot: Slot | null;
+}) {
+  const ref = useRef<HTMLElement | null>(null);
+  const reduce = useReducedMotion();
+  const mx = useMotionValue(50);
+  const my = useMotionValue(35);
+
+  const handleMove = useCallback(
+    (e: React.MouseEvent) => {
+      if (reduce) return;
+      const el = ref.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      mx.set(((e.clientX - rect.left) / rect.width) * 100);
+      my.set(((e.clientY - rect.top) / rect.height) * 100);
+    },
+    [mx, my, reduce],
+  );
+
+  const spotlight = useMotionTemplate`radial-gradient(380px circle at ${mx}% ${my}%, oklch(0.65 0.13 220 / 0.32), transparent 70%)`;
+
   return (
-    <ol className="flex items-center gap-2 sm:gap-3 overflow-x-auto scrollbar-none">
-      {STEPS.map((s, i) => {
-        const active = step === s.id;
-        const done = step > s.id;
-        return (
-          <li key={s.id} className="flex items-center gap-2 sm:gap-3 flex-none">
-            <span
-              className={`inline-flex h-8 w-8 items-center justify-center rounded-xl text-[13px] font-bold transition-colors ${
-                done
-                  ? "bg-grass-500 text-white"
-                  : active
-                  ? "bg-ink-950 text-white"
-                  : "bg-ink-100 text-ink-700"
-              }`}
-            >
-              {done ? "✓" : s.id}
+    <motion.aside
+      ref={ref}
+      onMouseMove={handleMove}
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.65, delay: 0.08 }}
+      className="lg:sticky lg:top-24"
+    >
+      <div className="rounded-3xl bg-ink-950 text-white p-6 sm:p-7 shadow-glow relative overflow-hidden">
+        <motion.div
+          aria-hidden
+          style={{ background: spotlight }}
+          className="absolute inset-0 pointer-events-none"
+        />
+        <div className="absolute inset-0 noise opacity-40 pointer-events-none" />
+        <div className="absolute -top-20 -right-20 h-56 w-56 rounded-full bg-grass-500/25 blur-3xl pointer-events-none" />
+
+        <div className="relative">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase tracking-wider text-ink-100/70">
+              Your price
             </span>
-            <span
-              className={`text-sm font-semibold transition-colors ${
-                active || done ? "text-ink-950" : "text-ink-700/70"
-              }`}
-            >
-              {s.label}
+            <span className="inline-flex items-center gap-1 rounded-full bg-white/10 text-white text-[11px] font-semibold px-2.5 py-1">
+              <ShieldCheck className="h-3 w-3" />
+              Guaranteed
             </span>
-            {i < STEPS.length - 1 && (
-              <span
-                className={`hidden sm:block h-px w-10 transition-colors ${
-                  done ? "bg-grass-500" : "bg-ink-200"
-                }`}
+          </div>
+          <div className="mt-1.5 flex items-baseline gap-1.5">
+            <PriceTicker
+              value={price.total}
+              className="font-display font-extrabold text-5xl sm:text-6xl tracking-tight text-white"
+            />
+            <span className="text-ink-100/70 text-sm">/ visit</span>
+          </div>
+          {price.discount > 0 && (
+            <motion.div
+              key={`${price.discount}-${freq.label}`}
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mt-1 inline-flex items-center gap-1.5 text-grass-400 text-sm font-semibold"
+            >
+              <span className="line-through text-ink-100/50 font-normal">${price.subtotal}</span>
+              <span>−${price.discount} {freq.label.toLowerCase()} savings</span>
+            </motion.div>
+          )}
+
+          <hr className="my-5 border-white/10" />
+
+          <ul className="space-y-2.5 text-sm">
+            <SumRow label="Service" value={tierLabel} />
+            <SumRow
+              label="Home size"
+              value={`${config.bedrooms} bd · ${config.bathrooms} ba · ${config.sqft.toLocaleString()} sqft`}
+            />
+            <SumRow label="Frequency" value={freq.label} />
+            <AnimatePresence mode="popLayout">
+              <SumRow
+                key={config.addOns.length}
+                label="Add-ons"
+                value={config.addOns.length === 0 ? "None" : `${config.addOns.length} selected`}
+              />
+            </AnimatePresence>
+            {slot && (
+              <SumRow
+                label="Slot"
+                value={`${new Date(slot.dateISO + "T00:00:00").toLocaleDateString("en-US", {
+                  weekday: "short",
+                  month: "short",
+                  day: "numeric",
+                })} · ${slot.window}`}
               />
             )}
-          </li>
-        );
-      })}
-    </ol>
+          </ul>
+
+          <div className="mt-6 rounded-2xl bg-white/5 border border-white/10 p-4 text-sm text-ink-100/80 leading-relaxed flex items-start gap-2.5">
+            <Check className="h-4 w-4 flex-none mt-0.5 text-grass-400" strokeWidth={3} />
+            <span>
+              No charge until your home is clean. If anything&apos;s missed, we return within 24 hours, free.
+            </span>
+          </div>
+        </div>
+      </div>
+    </motion.aside>
+  );
+}
+
+function ProgressRail({ step }: { step: 1 | 2 | 3 | 4 }) {
+  const stepCount = STEPS.length;
+  const progress = step >= 4 ? 1 : (step - 1) / (stepCount - 1);
+
+  return (
+    <div className="relative">
+      <div className="relative h-1.5 rounded-full bg-ink-100 overflow-hidden">
+        <motion.div
+          animate={{ width: `${progress * 100}%` }}
+          transition={{ type: "spring", stiffness: 220, damping: 26 }}
+          className="absolute left-0 top-0 h-full bg-gradient-to-r from-grass-500 to-grass-600"
+        />
+      </div>
+      <ol className="mt-3 flex items-center justify-between">
+        {STEPS.map((s) => {
+          const active = step === s.id;
+          const done = step > s.id;
+          return (
+            <li key={s.id} className="flex items-center gap-2">
+              <motion.span
+                animate={{
+                  scale: active ? 1.05 : 1,
+                  backgroundColor: done
+                    ? "oklch(0.68 0.18 145)"
+                    : active
+                    ? "oklch(0.15 0.045 230)"
+                    : "oklch(0.94 0.018 220)",
+                  color: done || active ? "#fff" : "oklch(0.43 0.04 230)",
+                }}
+                transition={{ type: "spring", stiffness: 280, damping: 22 }}
+                className="relative inline-flex h-7 w-7 items-center justify-center rounded-lg text-[12px] font-bold"
+              >
+                <AnimatePresence mode="wait">
+                  {done ? (
+                    <motion.span
+                      key="check"
+                      initial={{ scale: 0, rotate: -30 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      exit={{ scale: 0 }}
+                      transition={{ type: "spring", stiffness: 280, damping: 18 }}
+                    >
+                      <Check className="h-3.5 w-3.5" strokeWidth={3} />
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="num"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                      transition={{ duration: 0.18 }}
+                    >
+                      {s.id}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </motion.span>
+              <span
+                className={`text-sm font-semibold transition-colors ${
+                  active || done ? "text-ink-950" : "text-ink-700/70"
+                }`}
+              >
+                {s.label}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
   );
 }
 
 function SumRow({ label, value }: { label: string; value: string }) {
   return (
-    <li className="flex items-center justify-between gap-3">
+    <motion.li
+      layout
+      className="flex items-center justify-between gap-3"
+    >
       <span className="text-ink-100/70">{label}</span>
       <span className="font-semibold text-white text-right truncate max-w-[60%]">{value}</span>
-    </li>
+    </motion.li>
   );
 }

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sparkles, ShieldCheck } from "lucide-react";
+import { MagneticButton } from "./motion/MagneticButton";
 
 const LINKS = [
   { href: "/about", label: "About" },
@@ -19,15 +20,9 @@ function onSamePath(pathname: string, href: string) {
   return pathname === path || pathname.startsWith(path + "/");
 }
 
-function isActive(
-  pathname: string,
-  activeHash: string,
-  href: string
-): boolean {
+function isActive(pathname: string, activeHash: string, href: string): boolean {
   if (!onSamePath(pathname, href)) return false;
   const hash = href.split("#")[1] ?? "";
-  // Hash links match only when the scroll-spy hash equals their hash.
-  // Path-only links match only when no scroll-spy hash is active.
   return hash === activeHash;
 }
 
@@ -36,6 +31,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeHash, setActiveHash] = useState<string>("");
+  const [hovered, setHovered] = useState<string | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -44,12 +40,8 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Scroll-spy: track which hashed section on the current path is in view.
   useEffect(() => {
-    // Collect ids of LINKS that anchor into the current page.
-    const ids = LINKS.filter(
-      (l) => l.href.includes("#") && onSamePath(pathname, l.href)
-    )
+    const ids = LINKS.filter((l) => l.href.includes("#") && onSamePath(pathname, l.href))
       .map((l) => l.href.split("#")[1])
       .filter(Boolean);
 
@@ -112,20 +104,30 @@ export function Navbar() {
               </span>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-0.5">
+            <nav
+              className="hidden md:flex items-center gap-0.5 relative"
+              onMouseLeave={() => setHovered(null)}
+            >
               {LINKS.map((l) => {
                 const active = isActive(pathname, activeHash, l.href);
+                const isHovered = hovered === l.href;
                 return (
                   <Link
                     key={l.href}
                     href={l.href}
+                    onMouseEnter={() => setHovered(l.href)}
                     className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-colors cursor-pointer ${
-                      active
-                        ? "text-ink-950"
-                        : "text-ink-800/80 hover:text-ink-950 hover:bg-ink-100/50"
+                      active ? "text-ink-950" : "text-ink-800/80 hover:text-ink-950"
                     }`}
                   >
-                    {l.label}
+                    {isHovered && (
+                      <motion.span
+                        layoutId="nav-hover-pill"
+                        className="absolute inset-0 -z-10 rounded-lg bg-ink-100/55"
+                        transition={{ type: "spring", stiffness: 320, damping: 30 }}
+                      />
+                    )}
+                    <span className="relative">{l.label}</span>
                     {active && (
                       <motion.span
                         layoutId="nav-underline"
@@ -146,20 +148,25 @@ export function Navbar() {
                 (248) 555-0199
               </a>
 
-              <Link
-                href="/admin/login"
-                className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-[var(--surface)]/70 hover:bg-[var(--surface)] border border-line-strong/60 hover:border-ink-700/50 text-ink-800 hover:text-ink-950 text-sm font-semibold px-3 py-2 transition-all cursor-pointer"
-              >
-                <ShieldCheck className="h-3.5 w-3.5" />
-                Ops
-              </Link>
+              <MagneticButton as="div" radius={70} strength={0.22} className="hidden sm:inline-flex">
+                <Link
+                  href="/admin/login"
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-[var(--surface)]/70 hover:bg-[var(--surface)] border border-line-strong/60 hover:border-ink-700/50 text-ink-800 hover:text-ink-950 text-sm font-semibold px-3 py-2 transition-all cursor-pointer"
+                >
+                  <ShieldCheck className="h-3.5 w-3.5" />
+                  Ops
+                </Link>
+              </MagneticButton>
 
-              <Link
-                href="/book"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-grass-500 hover:bg-grass-600 text-white text-sm font-semibold px-4 py-2.5 shadow-[0_8px_24px_-8px_oklch(0.68_0.18_145/0.55)] hover:shadow-[0_12px_30px_-10px_oklch(0.68_0.18_145/0.65)] transition-all cursor-pointer"
-              >
-                Book now
-              </Link>
+              <MagneticButton as="div" radius={90} strength={0.28}>
+                <Link
+                  href="/book"
+                  className="relative inline-flex items-center gap-1.5 rounded-xl bg-grass-500 hover:bg-grass-600 text-white text-sm font-semibold px-4 py-2.5 shadow-commit hover:shadow-commit-glow transition-all cursor-pointer"
+                >
+                  <span className="absolute inset-0 -z-10 rounded-xl bg-grass-500 blur-md opacity-50" aria-hidden />
+                  Book now
+                </Link>
+              </MagneticButton>
 
               <button
                 type="button"
@@ -193,9 +200,13 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute right-0 top-0 h-full w-[85%] max-w-sm bg-[var(--surface)] p-6 shadow-2xl"
+              className="absolute right-0 top-0 h-full w-[85%] max-w-sm bg-[var(--surface)] p-6 shadow-2xl overflow-hidden"
             >
-              <div className="flex items-center justify-between">
+              <div
+                aria-hidden
+                className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-[oklch(0.68_0.18_145/0.18)] blur-3xl animate-halo-rotate"
+              />
+              <div className="relative flex items-center justify-between">
                 <span className="font-display font-bold text-ink-950">Menu</span>
                 <button
                   type="button"
@@ -206,50 +217,78 @@ export function Navbar() {
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              <nav className="mt-6 flex flex-col gap-1">
+              <motion.nav
+                initial="hidden"
+                animate="show"
+                variants={{ show: { transition: { staggerChildren: 0.04, delayChildren: 0.1 } } }}
+                className="relative mt-6 flex flex-col gap-1"
+              >
                 {LINKS.map((l) => {
                   const active = isActive(pathname, activeHash, l.href);
                   return (
-                    <Link
+                    <motion.div
                       key={l.href}
-                      href={l.href}
-                      onClick={() => setOpen(false)}
-                      className={`relative flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-colors cursor-pointer ${
-                        active
-                          ? "bg-ink-100/70 text-ink-950"
-                          : "text-ink-900 hover:bg-ink-100/40"
-                      }`}
+                      variants={{
+                        hidden: { opacity: 0, x: 12 },
+                        show: { opacity: 1, x: 0 },
+                      }}
                     >
-                      {l.label}
-                      {active && (
-                        <span className="inline-block h-1.5 w-1.5 rounded-full bg-grass-500 shadow-[0_0_0_3px_oklch(0.68_0.18_145/0.18)]" />
-                      )}
-                    </Link>
+                      <Link
+                        href={l.href}
+                        onClick={() => setOpen(false)}
+                        className={`relative flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-colors cursor-pointer ${
+                          active ? "bg-ink-100/70 text-ink-950" : "text-ink-900 hover:bg-ink-100/40"
+                        }`}
+                      >
+                        {l.label}
+                        {active && (
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-grass-500 shadow-[0_0_0_3px_oklch(0.68_0.18_145/0.18)]" />
+                        )}
+                      </Link>
+                    </motion.div>
                   );
                 })}
 
-                <Link
-                  href="/book"
-                  onClick={() => setOpen(false)}
-                  className="mt-3 inline-flex items-center justify-center rounded-xl bg-grass-500 hover:bg-grass-600 text-white text-base font-semibold px-4 py-3.5 shadow-[0_10px_24px_-8px_oklch(0.68_0.18_145/0.55)] transition-all cursor-pointer"
+                <motion.div
+                  variants={{
+                    hidden: { opacity: 0, y: 8 },
+                    show: { opacity: 1, y: 0 },
+                  }}
                 >
-                  Book now
-                </Link>
-                <Link
-                  href="/admin/login"
-                  onClick={() => setOpen(false)}
-                  className="mt-2 inline-flex items-center justify-center gap-1.5 rounded-xl bg-[var(--surface-elevated)] border border-line-strong/60 text-ink-800 text-sm font-semibold px-4 py-3 transition-colors cursor-pointer"
+                  <Link
+                    href="/book"
+                    onClick={() => setOpen(false)}
+                    className="mt-3 inline-flex w-full items-center justify-center rounded-xl bg-grass-500 hover:bg-grass-600 text-white text-base font-semibold px-4 py-3.5 shadow-commit transition-all cursor-pointer"
+                  >
+                    Book now
+                  </Link>
+                </motion.div>
+                <motion.div
+                  variants={{
+                    hidden: { opacity: 0, y: 8 },
+                    show: { opacity: 1, y: 0 },
+                  }}
                 >
-                  <ShieldCheck className="h-4 w-4" />
-                  Ops sign-in
-                </Link>
-                <a
+                  <Link
+                    href="/admin/login"
+                    onClick={() => setOpen(false)}
+                    className="mt-2 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-[var(--surface-elevated)] border border-line-strong/60 text-ink-800 text-sm font-semibold px-4 py-3 transition-colors cursor-pointer"
+                  >
+                    <ShieldCheck className="h-4 w-4" />
+                    Ops sign-in
+                  </Link>
+                </motion.div>
+                <motion.a
                   href="tel:+12485550199"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    show: { opacity: 1 },
+                  }}
                   className="mt-2 text-center text-sm text-ink-700 hover:text-ink-950 cursor-pointer"
                 >
                   Or call (248) 555-0199
-                </a>
-              </nav>
+                </motion.a>
+              </motion.nav>
             </motion.div>
           </motion.div>
         )}

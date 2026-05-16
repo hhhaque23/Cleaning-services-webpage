@@ -58,6 +58,8 @@ const config: Config = {
         glow: "0 40px 80px -30px oklch(0.65 0.13 220 / 0.55)",
         ring: "0 0 0 1px oklch(0.65 0.13 220 / 0.18), 0 24px 60px -24px oklch(0.65 0.13 220 / 0.4)",
         commit: "0 18px 40px -16px oklch(0.52 0.16 145 / 0.55)",
+        spotlight: "0 40px 120px -20px oklch(0.65 0.13 220 / 0.45)",
+        "commit-glow": "0 0 0 1px oklch(0.68 0.18 145 / 0.35), 0 24px 60px -18px oklch(0.68 0.18 145 / 0.6)",
       },
       keyframes: {
         "blob-drift": {
@@ -90,6 +92,30 @@ const config: Config = {
           "0%, 92%, 100%": { opacity: "1" },
           "94%, 98%": { opacity: "0.15" },
         },
+        "aurora-shift": {
+          "0%, 100%": { transform: "translate3d(0,0,0) scale(1)", opacity: "0.55" },
+          "50%": { transform: "translate3d(6%,-4%,0) scale(1.08)", opacity: "0.75" },
+        },
+        "border-spin": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        "spotlight-pulse": {
+          "0%, 100%": { opacity: "0.55" },
+          "50%": { opacity: "0.85" },
+        },
+        "digit-up": {
+          "0%": { transform: "translateY(0)" },
+          "100%": { transform: "translateY(-1em)" },
+        },
+        "star-twinkle": {
+          "0%, 100%": { opacity: "0.85", transform: "scale(1)" },
+          "50%": { opacity: "1", transform: "scale(1.12)" },
+        },
+        "halo-rotate": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
       },
       animation: {
         "blob-drift": "blob-drift 18s cubic-bezier(0.45, 0, 0.55, 1) infinite",
@@ -99,6 +125,11 @@ const config: Config = {
         "tile-drift": "tile-drift 28s cubic-bezier(0.45, 0, 0.55, 1) infinite",
         "tile-rise": "tile-rise 1.1s cubic-bezier(0.22, 1, 0.36, 1) both",
         "mosaic-swap": "mosaic-swap 12s ease-in-out infinite",
+        "aurora-shift": "aurora-shift 14s cubic-bezier(0.45, 0, 0.55, 1) infinite",
+        "border-spin": "border-spin 6s linear infinite",
+        "spotlight-pulse": "spotlight-pulse 5s ease-in-out infinite",
+        "star-twinkle": "star-twinkle 3s ease-in-out infinite",
+        "halo-rotate": "halo-rotate 18s linear infinite",
       },
       backgroundImage: {
         "grid-faint":

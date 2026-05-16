@@ -1,16 +1,21 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ShieldCheck, Users, MapPin } from "lucide-react";
 import { PHOTOS } from "@/lib/unsplash";
+import { SplitText } from "./motion/SplitText";
+import { Aurora } from "./motion/Aurora";
 
 export function AboutHero() {
-  return (
-    <section className="relative overflow-hidden pt-32 sm:pt-36 lg:pt-44 pb-12 sm:pb-16">
-      <div className="absolute inset-0 -z-10 bg-grid-faint bg-grid-32 [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_75%)]" />
+  const reduce = useReducedMotion();
 
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+  return (
+    <section className="relative overflow-hidden pt-32 sm:pt-36 lg:pt-44 pb-16 sm:pb-20">
+      <div className="absolute inset-0 -z-10 bg-grid-faint bg-grid-32 [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_75%)]" />
+      <Aurora palette="mixed" intensity="subtle" blur={120} blobs={2} />
+
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-14 items-center">
           <div>
             <motion.div
@@ -21,35 +26,41 @@ export function AboutHero() {
             >
               About Pristine
             </motion.div>
-            <motion.h1
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-3 font-display font-extrabold text-hero text-balance text-ink-950"
-            >
-              Real cleaners.
+            <h1 className="mt-3 font-display font-extrabold text-hero text-balance text-ink-950 leading-[1.02] tracking-[-0.028em]">
+              <SplitText as="span" mode="word" trigger="load" stagger={0.06}>
+                {"Real cleaners."}
+              </SplitText>
               <br />
-              Real homes.{" "}
-              <span className="italic font-medium text-ink-700">
-                Real guarantee.
-              </span>
-            </motion.h1>
+              <SplitText as="span" mode="word" trigger="load" stagger={0.06} delay={0.3}>
+                {"Real homes."}
+              </SplitText>{" "}
+              <SplitText
+                as="span"
+                mode="word"
+                trigger="load"
+                stagger={0.06}
+                delay={0.6}
+                className="italic font-medium text-ink-700"
+              >
+                {"Real guarantee."}
+              </SplitText>
+            </h1>
             <motion.p
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
               className="mt-6 max-w-xl text-lead text-ink-700 leading-relaxed text-pretty"
             >
-              No subcontractors, no surge pricing, no chase calls. Pristine is a small
-              local crew that has cleaned more than 12,000 homes around Rochester Hills
-              since 2019, paid above market, and trained relentlessly.
+              No subcontractors, no surge pricing, no chase calls. Pristine is a small local crew
+              that has cleaned more than 12,000 homes around Rochester Hills since 2019, paid above
+              market, and trained relentlessly.
             </motion.p>
 
             <motion.ul
               initial="hidden"
               animate="show"
-              variants={{ show: { transition: { staggerChildren: 0.07, delayChildren: 0.2 } } }}
-              className="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-sm"
+              variants={{ show: { transition: { staggerChildren: 0.08, delayChildren: 1 } } }}
+              className="mt-8 flex flex-wrap gap-3"
             >
               {[
                 { icon: Users, label: "Locally hired team of 14" },
@@ -58,11 +69,12 @@ export function AboutHero() {
               ].map((b) => (
                 <motion.li
                   key={b.label}
-                  variants={{ hidden: { opacity: 0, y: 8 }, show: { opacity: 1, y: 0 } }}
-                  className="flex items-center gap-2 text-ink-800"
+                  variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}
+                  whileHover={reduce ? undefined : { y: -2 }}
+                  className="group inline-flex items-center gap-2 rounded-full bg-[var(--surface-elevated)] border border-line px-3.5 py-2 text-sm text-ink-800 shadow-soft hover:shadow-card transition-shadow cursor-default"
                 >
-                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[oklch(0.65_0.13_220/0.1)] text-ink-700">
-                    <b.icon className="h-3.5 w-3.5" strokeWidth={2.2} />
+                  <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[oklch(0.65_0.13_220/0.1)] text-ink-700 group-hover:bg-grass-500/15 group-hover:text-grass-700 transition-colors">
+                    <b.icon className="h-3 w-3" strokeWidth={2.4} />
                   </span>
                   <span className="font-medium">{b.label}</span>
                 </motion.li>
@@ -73,7 +85,7 @@ export function AboutHero() {
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.85, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="relative"
           >
             <div className="relative aspect-[5/6] rounded-[2rem] overflow-hidden shadow-lift">
@@ -86,7 +98,37 @@ export function AboutHero() {
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-[oklch(0.11_0.04_230/0.45)] via-transparent to-transparent" />
+              {/* Cinemagraph: subtle sweeping light gradient overlay */}
+              <motion.div
+                aria-hidden
+                animate={
+                  reduce
+                    ? undefined
+                    : {
+                        opacity: [0.18, 0.42, 0.18],
+                        backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
+                      }
+                }
+                transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-0 mix-blend-screen pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(120deg, oklch(0.85 0.14 75 / 0.0) 30%, oklch(0.85 0.14 75 / 0.35) 50%, oklch(0.85 0.14 75 / 0.0) 70%)",
+                  backgroundSize: "200% 200%",
+                }}
+              />
             </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, rotate: -3 }}
+              animate={{ opacity: 1, scale: 1, rotate: -3 }}
+              transition={{ delay: 1.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute -bottom-3 -left-3 sm:-bottom-5 sm:-left-5 bg-[var(--surface)] rounded-2xl px-4 py-3 shadow-card border border-line"
+            >
+              <div className="text-[10px] uppercase tracking-[0.1em] font-bold text-ink-600">
+                BBB rating
+              </div>
+              <div className="font-display font-extrabold text-3xl text-ink-950 leading-none">A+</div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

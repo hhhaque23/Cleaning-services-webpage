@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
+import { ScrollProgressRail } from "./components/motion/ScrollProgressRail";
 
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -37,6 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${display.variable} ${sans.variable}`}>
       <body className="font-sans antialiased bg-[var(--surface)] text-[var(--ink)]">
+        <ScrollProgressRail />
         {children}
       </body>
     </html>
