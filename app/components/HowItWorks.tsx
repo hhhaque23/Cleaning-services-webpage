@@ -287,15 +287,30 @@ function CalendarGlyph() {
         const clickT = clickAt(i);
         return (
           <g key={`target-${i}`}>
-            {/* Glow halo */}
+            {/* Glow halo (stacked translucent circles, no filter blur) */}
             <motion.circle
               cx={c.x}
               cy={c.y}
-              r={cellSize}
-              fill="oklch(0.68 0.18 145 / 0.45)"
-              style={{ filter: "blur(7px)", transformOrigin: `${c.x}px ${c.y}px` }}
+              r={cellSize * 1.15}
+              fill="oklch(0.68 0.18 145 / 0.18)"
+              style={{ transformOrigin: `${c.x}px ${c.y}px` }}
               initial={{ scale: 0.5, opacity: 0 }}
-              whileInView={{ scale: [0.5, 0.5, 1.2, 1], opacity: [0, 0, 1, 0.55] }}
+              whileInView={{ scale: [0.5, 0.5, 1.2, 1], opacity: [0, 0, 1, 0.7] }}
+              viewport={viewport}
+              transition={{
+                duration: DURATION,
+                times: [0, t(clickT), t(clickT + 0.25), t(clickT + 0.55)],
+                ease: "easeOut",
+              }}
+            />
+            <motion.circle
+              cx={c.x}
+              cy={c.y}
+              r={cellSize * 0.85}
+              fill="oklch(0.68 0.18 145 / 0.32)"
+              style={{ transformOrigin: `${c.x}px ${c.y}px` }}
+              initial={{ scale: 0.5, opacity: 0 }}
+              whileInView={{ scale: [0.5, 0.5, 1.15, 1], opacity: [0, 0, 1, 0.7] }}
               viewport={viewport}
               transition={{
                 duration: DURATION,

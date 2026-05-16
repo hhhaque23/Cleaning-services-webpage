@@ -92,8 +92,8 @@ export function Navbar() {
         <div
           className={`mx-auto max-w-6xl rounded-2xl transition-all duration-300 ${
             scrolled
-              ? "bg-[oklch(0.92_0.018_220/0.92)] backdrop-blur-lg border border-line-strong/70 shadow-card"
-              : "bg-[oklch(0.9_0.02_220/0.82)] backdrop-blur-lg border border-line-strong/60 shadow-soft"
+              ? "bg-[oklch(0.93_0.018_220/0.97)] backdrop-blur-sm border border-line-strong/70 shadow-card"
+              : "bg-[oklch(0.91_0.02_220/0.94)] backdrop-blur-sm border border-line-strong/60 shadow-soft"
           }`}
         >
           <div className="flex items-center justify-between px-4 sm:px-5 py-2.5">
