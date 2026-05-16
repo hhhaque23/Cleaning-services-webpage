@@ -65,11 +65,18 @@ export function SplitText({
           return (
             <span
               key={i}
-              style={{ display: "inline-block", overflow: "hidden", verticalAlign: "bottom" }}
+              style={{
+                display: "inline-block",
+                clipPath: "inset(-0.2em 0 -0.2em 0)",
+              }}
             >
               <motion.span
                 variants={variants}
-                style={{ display: "inline-block", willChange: "transform, opacity" }}
+                style={{
+                  display: "inline-block",
+                  willChange: "transform, opacity",
+                  paddingBottom: "0.05em",
+                }}
               >
                 {tok}
               </motion.span>

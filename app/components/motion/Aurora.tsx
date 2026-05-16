@@ -40,6 +40,28 @@ export function Aurora({
     { color: a, x: "20%", y: "60%", w: "50%", h: "50%", delay: 2.4 },
   ].slice(0, blobs);
 
+  if (reduce) {
+    return (
+      <div
+        aria-hidden
+        className={className}
+        style={{
+          position: "absolute",
+          inset: 0,
+          overflow: "hidden",
+          pointerEvents: "none",
+          filter: `blur(${Math.min(40, blur)}px)`,
+          opacity: baseOpacity * 0.6,
+          contain: "paint",
+          backgroundImage: blobConfigs
+            .map((cfg) => `radial-gradient(${cfg.w} ${cfg.h} at ${cfg.x} ${cfg.y}, ${cfg.color}, transparent 65%)`)
+            .join(", "),
+          ...style,
+        }}
+      />
+    );
+  }
+
   return (
     <div
       aria-hidden
@@ -49,7 +71,7 @@ export function Aurora({
         inset: 0,
         overflow: "hidden",
         pointerEvents: "none",
-        filter: `blur(${reduce ? Math.min(40, blur) : blur}px)`,
+        filter: `blur(${blur}px)`,
         opacity: baseOpacity,
         contain: "paint",
         ...style,
@@ -59,15 +81,11 @@ export function Aurora({
         <motion.div
           key={i}
           initial={false}
-          animate={
-            reduce
-              ? undefined
-              : {
-                  x: ["0%", "6%", "-3%", "0%"],
-                  y: ["0%", "-4%", "5%", "0%"],
-                  scale: [1, 1.08, 0.96, 1],
-                }
-          }
+          animate={{
+            x: ["0%", "6%", "-3%", "0%"],
+            y: ["0%", "-4%", "5%", "0%"],
+            scale: [1, 1.08, 0.96, 1],
+          }}
           transition={{
             duration: 18 + i * 4,
             repeat: Infinity,
@@ -82,7 +100,7 @@ export function Aurora({
             height: cfg.h,
             borderRadius: "50%",
             background: cfg.color,
-            willChange: reduce ? undefined : "transform",
+            willChange: "transform",
           }}
         />
       ))}

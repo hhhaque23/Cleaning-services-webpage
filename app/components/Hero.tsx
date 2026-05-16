@@ -24,12 +24,8 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
 
-  const photoY = useTransform(scrollYProgress, [0, 1], [0, -60]);
-  const photoScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
-  const card1Y = useTransform(scrollYProgress, [0, 1], [0, -18]);
-  const card2Y = useTransform(scrollYProgress, [0, 1], [0, -36]);
-  const card3Y = useTransform(scrollYProgress, [0, 1], [0, -54]);
-  const card4Y = useTransform(scrollYProgress, [0, 1], [0, -28]);
+  const photoY = useTransform(scrollYProgress, [0, 1], [0, -32]);
+  const photoScale = useTransform(scrollYProgress, [0, 1], [1, 1.02]);
 
   return (
     <section
@@ -136,6 +132,7 @@ export function Hero() {
                 alt="Sunlit living room with white sofa and clean wood floors, just finished by our team"
                 fill
                 priority
+                fetchPriority="high"
                 sizes="(min-width: 1024px) 560px, 100vw"
                 className="object-cover"
               />
@@ -144,7 +141,6 @@ export function Hero() {
             </motion.div>
 
             <motion.div
-              style={reduce ? undefined : { y: card1Y }}
               initial={{ opacity: 0, y: 14, x: -10 }}
               animate={{ opacity: 1, y: 0, x: 0 }}
               transition={{ delay: 0.95, duration: 0.6, ease: EASE_OUT_QUINT }}
@@ -164,7 +160,6 @@ export function Hero() {
             </motion.div>
 
             <motion.div
-              style={reduce ? undefined : { y: card2Y }}
               initial={{ opacity: 0, y: -10, x: 10 }}
               animate={{ opacity: 1, y: 0, x: 0 }}
               transition={{ delay: 1.05, duration: 0.6, ease: EASE_OUT_QUINT }}
@@ -200,7 +195,6 @@ export function Hero() {
             </motion.div>
 
             <motion.div
-              style={reduce ? undefined : { y: card3Y }}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.15, duration: 0.6, ease: EASE_OUT_QUINT }}
@@ -229,7 +223,6 @@ export function Hero() {
             </motion.div>
 
             <motion.div
-              style={reduce ? undefined : { y: card4Y }}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.85, duration: 0.5 }}

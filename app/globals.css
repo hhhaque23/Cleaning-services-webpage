@@ -4,11 +4,11 @@
 
 :root {
   /* OKLCH tokens. Every neutral carries a faint cyan tint, never pure #fff or #000. */
-  --surface: oklch(0.985 0.006 220);
-  --surface-elevated: oklch(0.995 0.004 220);
+  --surface: oklch(0.97 0.012 220);
+  --surface-elevated: oklch(0.985 0.008 220);
   /* Tinted band, visibly darker than --surface so alternating sections create rhythm
      without going SaaS-slab. */
-  --surface-tint: oklch(0.93 0.02 220);
+  --surface-tint: oklch(0.91 0.024 220);
   --surface-warm: oklch(0.95 0.025 95);
 
   --ink: oklch(0.23 0.05 230);
@@ -40,12 +40,21 @@
 
 html,
 body {
-  background: var(--surface);
+  background-color: var(--surface);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   font-feature-settings: "ss01", "cv11";
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse 90% 50% at 50% 0%, oklch(0.91 0.025 220 / 0.55), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 100% 100%, oklch(0.93 0.03 145 / 0.45), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 0% 80%, oklch(0.91 0.025 220 / 0.4), transparent 60%);
+  background-attachment: fixed;
+  min-height: 100vh;
 }
 
 *:focus-visible {

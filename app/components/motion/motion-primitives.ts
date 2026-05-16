@@ -26,12 +26,12 @@ export const fadeUpStagger = (delay = 0, stagger = 0.08): Variants => ({
 });
 
 export const splitWord: Variants = {
-  hidden: { opacity: 0, y: "0.7em", rotateX: -45 },
+  hidden: { opacity: 0, y: "0.4em", rotateX: -20 },
   show: {
     opacity: 1,
     y: 0,
     rotateX: 0,
-    transition: { duration: 0.7, ease: EASE_OUT_QUINT },
+    transition: { duration: 0.6, ease: EASE_OUT_QUINT },
   },
 };
 

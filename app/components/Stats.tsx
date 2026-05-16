@@ -258,30 +258,98 @@ function SpeedTile() {
         </span>
         <span className="text-2xl text-ink-600 font-medium">sec</span>
       </div>
-      <div className="relative h-12">
-        <svg viewBox="0 0 100 100" className="absolute -top-1 -right-1 h-16 w-16 opacity-90" aria-hidden>
-          <circle cx="50" cy="50" r="44" fill="none" stroke="oklch(0.92 0.012 220)" strokeWidth="6" />
-          <motion.line
-            x1="50"
-            y1="50"
-            x2="50"
-            y2="14"
-            stroke="oklch(0.68 0.18 145)"
-            strokeWidth="3.5"
-            strokeLinecap="round"
-            initial={{ rotate: 0 }}
-            whileInView={{ rotate: 320 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 1.6, ease: EASE_OUT_QUINT, delay: 0.3 }}
-            style={{ transformOrigin: "50px 50px" }}
-          />
-          <circle cx="50" cy="50" r="3.5" fill="oklch(0.13 0.045 230)" />
-        </svg>
-        <p className="text-sm text-ink-700 leading-relaxed max-w-[10rem]">
+      <div className="relative">
+        <ClockFace />
+        <p className="text-sm text-ink-700 leading-relaxed max-w-[9rem] pt-2">
           from open tab to text confirmation.
         </p>
       </div>
     </TileShell>
+  );
+}
+
+function ClockFace() {
+  const reduce = useReducedMotion();
+  // 12 tick marks around the face. Major ticks at 12/3/6/9 are longer/bolder.
+  const ticks = Array.from({ length: 12 }, (_, i) => {
+    const angle = (i * 30 * Math.PI) / 180;
+    const isMajor = i % 3 === 0;
+    const outerR = 46;
+    const innerR = isMajor ? 39 : 42;
+    const cx = 50 + Math.sin(angle) * outerR;
+    const cy = 50 - Math.cos(angle) * outerR;
+    const ix = 50 + Math.sin(angle) * innerR;
+    const iy = 50 - Math.cos(angle) * innerR;
+    return { x1: cx, y1: cy, x2: ix, y2: iy, isMajor };
+  });
+
+  return (
+    <svg
+      viewBox="0 0 100 100"
+      className="absolute -top-2 -right-2 h-20 w-20 opacity-95"
+      aria-hidden
+    >
+      {/* Face */}
+      <circle cx="50" cy="50" r="48" fill="oklch(0.99 0.005 220)" stroke="oklch(0.88 0.015 220)" strokeWidth="1.5" />
+
+      {/* Ticks */}
+      {ticks.map((t, i) => (
+        <line
+          key={i}
+          x1={t.x1}
+          y1={t.y1}
+          x2={t.x2}
+          y2={t.y2}
+          stroke={t.isMajor ? "oklch(0.23 0.05 230)" : "oklch(0.62 0.025 230)"}
+          strokeWidth={t.isMajor ? 2.2 : 1.2}
+          strokeLinecap="round"
+        />
+      ))}
+
+      {/* Hour hand — pointing roughly to 10 (classic 10:10 pose) */}
+      <line
+        x1="50"
+        y1="50"
+        x2="34"
+        y2="38"
+        stroke="oklch(0.23 0.05 230)"
+        strokeWidth="3.4"
+        strokeLinecap="round"
+      />
+
+      {/* Minute hand — pointing to 2 (classic 10:10 pose) */}
+      <line
+        x1="50"
+        y1="50"
+        x2="68"
+        y2="34"
+        stroke="oklch(0.23 0.05 230)"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+
+      {/* Sweeping second hand — full revolution every 10s (visual pace) */}
+      <motion.g
+        style={{ originX: "50px", originY: "50px" }}
+        animate={reduce ? undefined : { rotate: 360 }}
+        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+      >
+        <line
+          x1="50"
+          y1="56"
+          x2="50"
+          y2="16"
+          stroke="oklch(0.68 0.18 145)"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+        />
+        <circle cx="50" cy="16" r="2" fill="oklch(0.68 0.18 145)" />
+      </motion.g>
+
+      {/* Center pivot */}
+      <circle cx="50" cy="50" r="2.6" fill="oklch(0.13 0.045 230)" />
+      <circle cx="50" cy="50" r="1" fill="oklch(0.68 0.18 145)" />
+    </svg>
   );
 }
 
