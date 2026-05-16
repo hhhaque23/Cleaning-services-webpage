@@ -6,6 +6,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowRight, Repeat, Sparkles, TrendingDown, Check } from "lucide-react";
 import { MagneticButton } from "./motion/MagneticButton";
 import { Aurora } from "./motion/Aurora";
+import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 type Freq = "one-time" | "biweekly" | "weekly";
 
@@ -67,7 +68,7 @@ export function SubscriptionCallout() {
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.7, ease: EASE_OUT_QUINT }}
           className="relative rounded-[2rem] bg-[var(--surface-tint)] text-ink-950 p-6 sm:p-10 lg:p-14 overflow-hidden border border-line-strong/40 shadow-card"
         >
           <Aurora palette="grass" intensity="subtle" blobs={2} blur={140} />
@@ -301,7 +302,7 @@ function Bar({
           key={`${keySuffix}-${highlight ? "h" : "m"}`}
           initial={{ width: 0 }}
           animate={{ width: `${pct}%` }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.9, ease: EASE_OUT_QUINT }}
           className={`h-full rounded-full ${highlight ? "bg-grass-500" : "bg-ink-400"}`}
         />
       </div>

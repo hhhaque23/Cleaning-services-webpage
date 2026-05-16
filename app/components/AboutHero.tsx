@@ -6,6 +6,7 @@ import { ShieldCheck, Users, MapPin } from "lucide-react";
 import { PHOTOS } from "@/lib/unsplash";
 import { SplitText } from "./motion/SplitText";
 import { Aurora } from "./motion/Aurora";
+import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 export function AboutHero() {
   const reduce = useReducedMotion();
@@ -21,23 +22,23 @@ export function AboutHero() {
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.55, ease: EASE_OUT_QUINT }}
               className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold"
             >
               About Pristine
             </motion.div>
             <h1 className="mt-3 font-display font-extrabold text-hero text-balance text-ink-950 leading-[1.02] tracking-[-0.028em]">
-              <SplitText as="span" mode="word" trigger="load" stagger={0.06}>
+              <SplitText as="span" mode="word" trigger="view" stagger={0.06}>
                 {"Real cleaners."}
               </SplitText>
               <br />
-              <SplitText as="span" mode="word" trigger="load" stagger={0.06} delay={0.3}>
+              <SplitText as="span" mode="word" trigger="view" stagger={0.06} delay={0.3}>
                 {"Real homes."}
               </SplitText>{" "}
               <SplitText
                 as="span"
                 mode="word"
-                trigger="load"
+                trigger="view"
                 stagger={0.06}
                 delay={0.6}
                 className="italic font-medium text-ink-700"
@@ -48,7 +49,7 @@ export function AboutHero() {
             <motion.p
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, delay: 0.85, ease: EASE_OUT_QUINT }}
               className="mt-6 max-w-xl text-lead text-ink-700 leading-relaxed text-pretty"
             >
               No subcontractors, no surge pricing, no chase calls. Pristine is a small local crew
@@ -85,7 +86,7 @@ export function AboutHero() {
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.85, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.85, delay: 0.2, ease: EASE_OUT_QUINT }}
             className="relative"
           >
             <div className="relative aspect-[5/6] rounded-[2rem] overflow-hidden shadow-lift">
@@ -121,7 +122,7 @@ export function AboutHero() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9, rotate: -3 }}
               animate={{ opacity: 1, scale: 1, rotate: -3 }}
-              transition={{ delay: 1.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: 1.1, duration: 0.6, ease: EASE_OUT_QUINT }}
               className="absolute -bottom-3 -left-3 sm:-bottom-5 sm:-left-5 bg-[var(--surface)] rounded-2xl px-4 py-3 shadow-card border border-line"
             >
               <div className="text-[10px] uppercase tracking-[0.1em] font-bold text-ink-600">

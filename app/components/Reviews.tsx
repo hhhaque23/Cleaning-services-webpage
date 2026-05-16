@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 import { PHOTOS } from "@/lib/unsplash";
+import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 type Review = {
   name: string;
@@ -85,7 +86,7 @@ function ReviewCard({ r }: { r: Review }) {
   return (
     <motion.figure
       whileHover={{ y: -4 }}
-      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.25, ease: EASE_OUT_QUINT }}
       className="group relative w-[22rem] sm:w-[26rem] flex-none mr-6 sm:mr-8 rounded-2xl bg-[var(--surface-elevated)] border border-line hover:border-grass-500/40 shadow-soft hover:shadow-card transition-all p-6"
     >
       <div

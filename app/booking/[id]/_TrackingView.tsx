@@ -29,6 +29,7 @@ import { SplitText } from "@/app/components/motion/SplitText";
 import { MagneticButton } from "@/app/components/motion/MagneticButton";
 import { Aurora } from "@/app/components/motion/Aurora";
 import { Confetti } from "@/app/components/motion/Confetti";
+import { EASE_OUT_QUINT } from "@/app/components/motion/motion-primitives";
 
 const WINDOW_LABEL: Record<string, string> = {
   morning: "8 to 11 AM",
@@ -117,12 +118,12 @@ export function TrackingView({ booking }: { booking: Booking }) {
         </motion.div>
 
         <h1 className="mt-3 font-display font-extrabold text-4xl sm:text-5xl tracking-[-0.022em] text-ink-950 text-balance leading-[1.05]">
-          <SplitText mode="word" trigger="load" stagger={0.05}>
+          <SplitText mode="word" trigger="view" stagger={0.05}>
             {"Your clean is"}
           </SplitText>{" "}
           <SplitText
             mode="word"
-            trigger="load"
+            trigger="view"
             stagger={0.05}
             delay={0.5}
             className={`${toneText(statusMeta.tone)} not-italic font-extrabold`}
@@ -147,7 +148,7 @@ export function TrackingView({ booking }: { booking: Booking }) {
           onMouseMove={handleMove}
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.05, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.6, delay: 1.05, ease: EASE_OUT_QUINT }}
           className="relative mt-10 rounded-3xl bg-[var(--surface-elevated)] border border-line shadow-card overflow-hidden"
         >
           <motion.div
@@ -255,7 +256,7 @@ function StatusTimeline({ status }: { status: BookingStatus }) {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.55, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.55, delay: 0.95, ease: EASE_OUT_QUINT }}
       className="mt-10 relative"
     >
       <div className="flex items-center justify-between relative">
@@ -263,7 +264,7 @@ function StatusTimeline({ status }: { status: BookingStatus }) {
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `calc(${progress * 100}% - ${progress * 32}px)` }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 1.1 }}
+          transition={{ duration: 1, ease: EASE_OUT_QUINT, delay: 1.1 }}
           className="absolute left-4 top-3.5 h-px bg-gradient-to-r from-grass-500 to-grass-600"
           aria-hidden
         />
@@ -281,7 +282,7 @@ function StatusTimeline({ status }: { status: BookingStatus }) {
                 transition={{
                   duration: 0.4,
                   delay: 1.1 + i * 0.1,
-                  ease: [0.22, 1, 0.36, 1],
+                  ease: EASE_OUT_QUINT,
                 }}
                 className={`relative inline-flex h-7 w-7 items-center justify-center rounded-full ring-4 ring-[var(--surface)] ${
                   done
@@ -377,7 +378,7 @@ function Row({
     <motion.li
       variants={{
         hidden: { opacity: 0, x: -8 },
-        show: { opacity: 1, x: 0, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } },
+        show: { opacity: 1, x: 0, transition: { duration: 0.35, ease: EASE_OUT_QUINT } },
       }}
       className="flex items-center gap-3 px-6 py-4"
     >

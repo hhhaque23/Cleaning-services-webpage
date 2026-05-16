@@ -12,6 +12,7 @@ import {
   type Tier,
 } from "./pricing";
 import { MagneticButton } from "../motion/MagneticButton";
+import { EASE_OUT_QUINT } from "../motion/motion-primitives";
 
 const TIER_ICONS: Record<Tier, typeof Sparkles> = {
   Standard: Sparkles,
@@ -67,7 +68,7 @@ function NumberStepper({
               initial={{ y: -28, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 28, opacity: 0 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.25, ease: EASE_OUT_QUINT }}
               className="absolute inset-0 flex items-center justify-center font-display font-bold text-lg tabular-nums text-ink-950"
             >
               {value}

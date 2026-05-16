@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { CalendarClock, Clock, Check } from "lucide-react";
+import { EASE_OUT_QUINT } from "../motion/motion-primitives";
 
 export type Slot = {
   dateISO: string;
@@ -88,7 +89,7 @@ export function StepSchedule({ selected, onSelect }: Props) {
                 type="button"
                 variants={{
                   hidden: { opacity: 0, y: 12 },
-                  show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } },
+                  show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: EASE_OUT_QUINT } },
                 }}
                 whileHover={reduce ? undefined : { y: -2 }}
                 whileTap={reduce ? undefined : { scale: 0.97 }}
@@ -155,7 +156,7 @@ export function StepSchedule({ selected, onSelect }: Props) {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.35, ease: EASE_OUT_QUINT }}
           >
             <div className="text-xs font-semibold uppercase tracking-wider text-ink-700/80 mb-3">
               Pick a window
@@ -176,7 +177,7 @@ export function StepSchedule({ selected, onSelect }: Props) {
                     type="button"
                     variants={{
                       hidden: { opacity: 0, y: 14 },
-                      show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } },
+                      show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE_OUT_QUINT } },
                     }}
                     whileTap={reduce ? undefined : { scale: 0.98 }}
                     whileHover={reduce || disabled ? undefined : { y: -2 }}

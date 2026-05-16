@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion
 import { useRef } from "react";
 import { PHOTOS } from "@/lib/unsplash";
 import { SplitText } from "./motion/SplitText";
+import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 export function PhotoQuote() {
   const ref = useRef<HTMLElement | null>(null);
@@ -56,7 +57,7 @@ export function PhotoQuote() {
               initial={{ opacity: 0, scale: 0.6, rotate: -8 }}
               whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.85, ease: EASE_OUT_QUINT }}
               className="font-display font-extrabold text-[6rem] sm:text-[8rem] leading-none text-grass-500/35 -mb-6 block select-none"
               style={{ transformOrigin: "left bottom" }}
             >
@@ -71,14 +72,14 @@ export function PhotoQuote() {
               initial={{ opacity: 0, x: -8 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, delay: 0.8, ease: EASE_OUT_QUINT }}
               className="mt-7 flex items-center gap-3 text-sm text-ink-700"
             >
               <motion.span
                 initial={{ scaleX: 0 }}
                 whileInView={{ scaleX: 1 }}
                 viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.6, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.6, delay: 0.7, ease: EASE_OUT_QUINT }}
                 className="inline-block h-px w-10 bg-line-strong origin-left"
               />
               <span className="font-semibold text-ink-950">Lena P.</span>

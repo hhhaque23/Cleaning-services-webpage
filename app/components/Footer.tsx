@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Sparkles, Instagram, Facebook, Mail, Phone, MapPin, Star, ShieldCheck, Leaf, Clock } from "lucide-react";
+import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 const NAV = [
   {
@@ -103,7 +104,7 @@ export function Footer() {
                   initial={{ scale: 0.8, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
                   className="absolute inset-0 rounded-xl ring-2 ring-grass-500/0 group-hover:ring-grass-500/60 transition-all duration-300"
                 />
               </motion.span>

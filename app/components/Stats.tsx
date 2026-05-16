@@ -6,6 +6,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Star, TrendingUp, ShieldCheck, Zap } from "lucide-react";
 import { PHOTOS } from "@/lib/unsplash";
 import { CountUp } from "./motion/CountUp";
+import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 const RECENT_BOOKINGS = [
   { city: "Troy", tier: "Deep clean", min: 2 },
@@ -32,7 +33,7 @@ export function Stats() {
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
           className="max-w-2xl"
         >
           <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
@@ -94,8 +95,8 @@ function TileShell({
       initial={{ opacity: 0, y: 22 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -3, transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] } }}
+      transition={{ duration: 0.6, delay, ease: EASE_OUT_QUINT }}
+      whileHover={{ y: -3, transition: { duration: 0.25, ease: EASE_OUT_QUINT } }}
       className={`relative rounded-[1.5rem] border border-line-strong/40 bg-[var(--surface-elevated)] shadow-soft hover:shadow-card transition-shadow ${className ?? ""}`}
     >
       {children}
@@ -109,7 +110,7 @@ function BigPhotoTile() {
       initial={{ opacity: 0, y: 22 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
       className="relative col-span-1 sm:col-span-2 lg:col-span-2 lg:row-span-2 rounded-[1.5rem] overflow-hidden shadow-card aspect-[4/5] sm:aspect-auto sm:min-h-[28rem]"
     >
       <Image
@@ -178,7 +179,7 @@ function Sparkline() {
         initial={{ pathLength: 0, opacity: 0 }}
         whileInView={{ pathLength: 1, opacity: 1 }}
         viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
+        transition={{ duration: 1.4, ease: EASE_OUT_QUINT, delay: 0.4 }}
       />
       <motion.path
         d="M 4 28 L 28 22 L 52 25 L 76 18 L 100 20 L 124 12 L 148 14 L 172 6 L 196 8 L 196 36 L 4 36 Z"
@@ -271,7 +272,7 @@ function SpeedTile() {
             initial={{ rotate: 0 }}
             whileInView={{ rotate: 320 }}
             viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+            transition={{ duration: 1.6, ease: EASE_OUT_QUINT, delay: 0.3 }}
             style={{ transformOrigin: "50px 50px" }}
           />
           <circle cx="50" cy="50" r="3.5" fill="oklch(0.13 0.045 230)" />
@@ -317,14 +318,14 @@ function LiveTickerTile() {
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -14 }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-x-0 font-display font-bold text-ink-950 truncate"
+                transition={{ duration: 0.45, ease: EASE_OUT_QUINT }}
+                className="absolute inset-x-0 font-display font-bold text-ink-950 truncate min-w-0"
               >
                 <span>{b.tier}</span>
                 <span className="text-ink-faint mx-1.5">·</span>
                 <span>{b.city}</span>
                 <span className="text-ink-faint mx-1.5">·</span>
-                <span className="text-ink-600 text-sm font-medium">{b.min} min ago</span>
+                <span className="text-ink-600 text-sm font-medium tabular-nums">{b.min} min ago</span>
               </motion.div>
             </AnimatePresence>
           </div>

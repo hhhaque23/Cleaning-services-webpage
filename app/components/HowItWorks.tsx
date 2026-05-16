@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion
 import { useRef } from "react";
 import { ArrowDownRight } from "lucide-react";
 import { MagneticButton } from "./motion/MagneticButton";
+import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 const STEPS = [
   {
@@ -68,7 +69,7 @@ export function HowItWorks() {
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.65, ease: EASE_OUT_QUINT }}
           className="grid lg:grid-cols-[1fr_auto] gap-6 items-end"
         >
           <div className="max-w-2xl">
@@ -107,7 +108,7 @@ export function HowItWorks() {
                   initial={{ opacity: 0, y: 22 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.55, delay: i * 0.1, ease: EASE_OUT_QUINT }}
                   className="relative"
                 >
                   <motion.div
@@ -193,7 +194,7 @@ function SliderGlyph() {
         initial={{ x2: 14 }}
         whileInView={{ x2: 132 }}
         viewport={viewport}
-        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+        transition={{ duration: 1.4, ease: EASE_OUT_QUINT, delay: 0.15 }}
       />
       <motion.circle
         cy="34"
@@ -204,7 +205,7 @@ function SliderGlyph() {
         initial={{ cx: 14 }}
         whileInView={{ cx: 132 }}
         viewport={viewport}
-        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+        transition={{ duration: 1.4, ease: EASE_OUT_QUINT, delay: 0.15 }}
       />
 
       <line x1="14" y1="68" x2="186" y2="68" stroke="oklch(0.88 0.022 220)" strokeWidth="3" strokeLinecap="round" />
@@ -218,7 +219,7 @@ function SliderGlyph() {
         initial={{ x2: 14 }}
         whileInView={{ x2: 84 }}
         viewport={viewport}
-        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
+        transition={{ duration: 1.4, ease: EASE_OUT_QUINT, delay: 0.5 }}
       />
       <motion.circle
         cy="68"
@@ -227,7 +228,7 @@ function SliderGlyph() {
         initial={{ cx: 14 }}
         whileInView={{ cx: 84 }}
         viewport={viewport}
-        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
+        transition={{ duration: 1.4, ease: EASE_OUT_QUINT, delay: 0.5 }}
       />
     </motion.svg>
   );
@@ -397,7 +398,7 @@ function CalendarGlyph() {
               transition={{
                 duration: DURATION,
                 times: [0, t(clickT + 0.15), t(clickT + 0.5)],
-                ease: [0.22, 1, 0.36, 1],
+                ease: EASE_OUT_QUINT,
               }}
             />
           </g>
@@ -408,7 +409,7 @@ function CalendarGlyph() {
         initial={{ x: cursorX[0], y: cursorY[0], opacity: 0 }}
         whileInView={{ x: cursorX, y: cursorY, opacity: cursorOpacity }}
         viewport={viewport}
-        transition={{ duration: DURATION, times: cursorTimes, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: DURATION, times: cursorTimes, ease: EASE_OUT_QUINT }}
       >
         <path
           d="M 0 0 L 0 14 L 4 11 L 7 17 L 9 16 L 6 10 L 11 10 Z"
@@ -462,7 +463,7 @@ function MoonGlyph() {
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.65, delay: 0.15, ease: EASE_OUT_QUINT }}
         style={{ transformOrigin: "124px 62px" }}
       />
 
@@ -480,7 +481,7 @@ function Twinkle({ cx, cy, size, delay }: { cx: number; cy: number; size: number
       initial={{ scale: 0, opacity: 0 }}
       whileInView={{ scale: [0, 1.18, 1], opacity: [0, 1, 1] }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 1.3, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 1.3, delay, ease: EASE_OUT_QUINT }}
     >
       <path
         d={`M${cx} ${cy - size} L${cx + size * 0.35} ${cy - size * 0.35} L${cx + size} ${cy} L${cx + size * 0.35} ${cy + size * 0.35} L${cx} ${cy + size} L${cx - size * 0.35} ${cy + size * 0.35} L${cx - size} ${cy} L${cx - size * 0.35} ${cy - size * 0.35} Z`}

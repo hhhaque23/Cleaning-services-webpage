@@ -27,7 +27,7 @@ export function Aurora({
   intensity = "subtle",
   className,
   style,
-  blur = 90,
+  blur = 70,
   blobs = 2,
 }: AuroraProps) {
   const reduce = useReducedMotion();
@@ -49,8 +49,9 @@ export function Aurora({
         inset: 0,
         overflow: "hidden",
         pointerEvents: "none",
-        filter: `blur(${blur}px)`,
+        filter: `blur(${reduce ? Math.min(40, blur) : blur}px)`,
         opacity: baseOpacity,
+        contain: "paint",
         ...style,
       }}
     >
@@ -81,7 +82,7 @@ export function Aurora({
             height: cfg.h,
             borderRadius: "50%",
             background: cfg.color,
-            willChange: "transform",
+            willChange: reduce ? undefined : "transform",
           }}
         />
       ))}

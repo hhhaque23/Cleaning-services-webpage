@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { MapPin } from "lucide-react";
+import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 type Anchor = "n" | "s" | "e" | "w" | "ne" | "nw" | "se" | "sw";
 type City = { name: string; x: number; y: number; anchor: Anchor };
@@ -60,7 +61,7 @@ const lineVariants: Variants = {
     pathLength: 1,
     opacity: 1,
     transition: {
-      pathLength: { duration: LINE_DURATION, delay: LINE_START + i * STAGGER, ease: [0.22, 1, 0.36, 1] },
+      pathLength: { duration: LINE_DURATION, delay: LINE_START + i * STAGGER, ease: EASE_OUT_QUINT },
       opacity: { duration: 0.18, delay: LINE_START + i * STAGGER },
     },
   }),
@@ -74,7 +75,7 @@ const dotVariants: Variants = {
     transition: {
       duration: DOT_DURATION,
       delay: LINE_START + i * STAGGER + LINE_DURATION - 0.1,
-      ease: [0.22, 1, 0.36, 1],
+      ease: EASE_OUT_QUINT,
     },
   }),
 };
@@ -87,7 +88,7 @@ const labelVariants: Variants = {
     transition: {
       duration: LABEL_DURATION,
       delay: LINE_START + i * STAGGER + LINE_DURATION + 0.05,
-      ease: [0.22, 1, 0.36, 1],
+      ease: EASE_OUT_QUINT,
     },
   }),
 };
@@ -161,7 +162,7 @@ export function ServiceAreas() {
               show: {
                 opacity: 1,
                 pathLength: 1,
-                transition: { pathLength: { duration: 1.1, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.3 } },
+                transition: { pathLength: { duration: 1.1, ease: EASE_OUT_QUINT }, opacity: { duration: 0.3 } },
               },
             }}
           />
@@ -249,7 +250,7 @@ export function ServiceAreas() {
             fill="oklch(0.68 0.18 145 / 0.28)"
             variants={{
               hidden: { scale: 0, opacity: 0 },
-              show: { scale: 1, opacity: 1, transition: { duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] } },
+              show: { scale: 1, opacity: 1, transition: { duration: 0.6, delay: 0.1, ease: EASE_OUT_QUINT } },
             }}
             style={{ transformOrigin: `${HQ.x}px ${HQ.y}px` }}
           />
@@ -263,7 +264,7 @@ export function ServiceAreas() {
             strokeWidth="3"
             variants={{
               hidden: { scale: 0, opacity: 0 },
-              show: { scale: 1, opacity: 1, transition: { duration: 0.45, delay: 0.18, ease: [0.22, 1, 0.36, 1] } },
+              show: { scale: 1, opacity: 1, transition: { duration: 0.45, delay: 0.18, ease: EASE_OUT_QUINT } },
             }}
             style={{ transformOrigin: `${HQ.x}px ${HQ.y}px` }}
           />
@@ -271,7 +272,7 @@ export function ServiceAreas() {
           <motion.g
             variants={{
               hidden: { opacity: 0, y: 6 },
-              show: { opacity: 1, y: 0, transition: { duration: LABEL_DURATION, delay: 0.45, ease: [0.22, 1, 0.36, 1] } },
+              show: { opacity: 1, y: 0, transition: { duration: LABEL_DURATION, delay: 0.45, ease: EASE_OUT_QUINT } },
             }}
           >
             <text
@@ -318,7 +319,7 @@ export function ServiceAreas() {
                   stroke="oklch(0.985 0.006 220)"
                   strokeWidth="2"
                   animate={{ scale: isActive ? 1.5 : 1 }}
-                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.25, ease: EASE_OUT_QUINT }}
                   custom={i}
                   variants={dotVariants}
                   style={{ transformOrigin: `${c.x}px ${c.y}px` }}

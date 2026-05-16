@@ -50,7 +50,9 @@ body {
 
 *:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px oklch(0.65 0.13 220 / 0.32);
+  box-shadow:
+    0 0 0 2px oklch(0.985 0.006 220 / 0.95),
+    0 0 0 4px oklch(0.65 0.13 220 / 0.65);
   border-radius: 10px;
 }
 

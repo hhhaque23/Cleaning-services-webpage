@@ -10,11 +10,7 @@ import { HeroVideo } from "./HeroVideo";
 import { SplitText } from "./motion/SplitText";
 import { MagneticButton } from "./motion/MagneticButton";
 import { Aurora } from "./motion/Aurora";
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0 },
-};
+import { EASE_OUT_QUINT, fadeUp } from "./motion/motion-primitives";
 
 const stagger = {
   show: { transition: { staggerChildren: 0.08, delayChildren: 0.55 } },
@@ -64,14 +60,14 @@ export function Hero() {
             </motion.div>
 
             <h1 className="mt-6 font-display font-extrabold text-hero text-balance text-ink-950 leading-[1.02] tracking-[-0.028em]">
-              <SplitText as="span" mode="word" trigger="load" stagger={0.06}>
+              <SplitText as="span" mode="word" trigger="view" stagger={0.06}>
                 {"Your home, spotless."}
               </SplitText>
               <br />
               <SplitText
                 as="span"
                 mode="word"
-                trigger="load"
+                trigger="view"
                 stagger={0.06}
                 delay={0.4}
                 className="text-ink-700/90 italic font-medium"
@@ -151,7 +147,7 @@ export function Hero() {
               style={reduce ? undefined : { y: card1Y }}
               initial={{ opacity: 0, y: 14, x: -10 }}
               animate={{ opacity: 1, y: 0, x: 0 }}
-              transition={{ delay: 0.95, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: 0.95, duration: 0.6, ease: EASE_OUT_QUINT }}
               className="absolute -left-3 sm:-left-6 top-6 sm:top-10 glass rounded-2xl px-4 py-3 shadow-card max-w-[15rem]"
             >
               <div className="flex items-center gap-2.5">
@@ -171,7 +167,7 @@ export function Hero() {
               style={reduce ? undefined : { y: card2Y }}
               initial={{ opacity: 0, y: -10, x: 10 }}
               animate={{ opacity: 1, y: 0, x: 0 }}
-              transition={{ delay: 1.05, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: 1.05, duration: 0.6, ease: EASE_OUT_QUINT }}
               className="absolute -right-2 sm:-right-4 top-1/3 -translate-y-1/2 glass rounded-2xl px-4 py-3 shadow-card"
             >
               <div className="flex items-center gap-2.5">
@@ -207,8 +203,8 @@ export function Hero() {
               style={reduce ? undefined : { y: card3Y }}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.15, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute -bottom-4 sm:-bottom-6 left-4 right-4 sm:left-10 sm:right-10 glass rounded-2xl px-4 py-3.5 shadow-card flex items-center gap-3"
+              transition={{ delay: 1.15, duration: 0.6, ease: EASE_OUT_QUINT }}
+              className="absolute -bottom-4 sm:-bottom-6 left-4 right-4 sm:left-10 sm:right-10 glass rounded-2xl px-4 py-3.5 shadow-card hidden sm:flex items-center gap-3"
             >
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[oklch(0.78_0.16_145/0.18)] text-grass-700">
                 <CalendarClock className="h-5 w-5" />
@@ -237,7 +233,7 @@ export function Hero() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.85, duration: 0.5 }}
-              className="absolute left-4 bottom-12 sm:bottom-20 inline-flex items-center gap-1.5 rounded-full bg-ink-950 text-[var(--surface)] text-xs font-semibold px-3 py-1.5 shadow-card"
+              className="absolute left-4 bottom-6 sm:bottom-20 hidden sm:inline-flex items-center gap-1.5 rounded-full bg-ink-950 text-[var(--surface)] text-xs font-semibold px-3 py-1.5 shadow-card"
             >
               <Leaf className="h-3.5 w-3.5 text-grass-400" />
               Eco and pet-safe
@@ -246,7 +242,7 @@ export function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 14, x: 14 }}
               animate={{ opacity: 1, y: 0, x: 0 }}
-              transition={{ delay: 1.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: 1.3, duration: 0.6, ease: EASE_OUT_QUINT }}
               className="absolute hidden sm:flex -right-3 -bottom-3 glass rounded-2xl px-3.5 py-2.5 shadow-card items-center gap-2"
             >
               <motion.span

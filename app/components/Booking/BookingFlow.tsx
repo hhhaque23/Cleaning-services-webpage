@@ -25,6 +25,7 @@ import { StepConfirm, type Contact } from "./StepConfirm";
 import { StepSuccess } from "./StepSuccess";
 import { MagneticButton } from "../motion/MagneticButton";
 import { SplitText } from "../motion/SplitText";
+import { EASE_OUT_QUINT } from "../motion/motion-primitives";
 
 const VALID_FREQUENCIES: Frequency[] = ["onetime", "monthly", "biweekly", "weekly"];
 
@@ -169,7 +170,7 @@ export function BookingFlow() {
                     initial={{ opacity: 0, x: 22, scale: 0.98 }}
                     animate={{ opacity: 1, x: 0, scale: 1 }}
                     exit={{ opacity: 0, x: -22, scale: 0.98 }}
-                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.35, ease: EASE_OUT_QUINT }}
                   >
                     <StepConfigure config={config} setConfig={setConfig} />
                   </motion.div>
@@ -180,7 +181,7 @@ export function BookingFlow() {
                     initial={{ opacity: 0, x: 22, scale: 0.98 }}
                     animate={{ opacity: 1, x: 0, scale: 1 }}
                     exit={{ opacity: 0, x: -22, scale: 0.98 }}
-                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.35, ease: EASE_OUT_QUINT }}
                   >
                     <StepSchedule selected={slot} onSelect={setSlot} />
                   </motion.div>
@@ -191,7 +192,7 @@ export function BookingFlow() {
                     initial={{ opacity: 0, x: 22, scale: 0.98 }}
                     animate={{ opacity: 1, x: 0, scale: 1 }}
                     exit={{ opacity: 0, x: -22, scale: 0.98 }}
-                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.35, ease: EASE_OUT_QUINT }}
                   >
                     <StepConfirm contact={contact} setContact={setContact} />
                   </motion.div>
@@ -202,7 +203,7 @@ export function BookingFlow() {
                     initial={{ opacity: 0, scale: 0.96 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.96 }}
-                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.45, ease: EASE_OUT_QUINT }}
                   >
                     <StepSuccess
                       contact={contact}
@@ -217,8 +218,12 @@ export function BookingFlow() {
 
             {step !== 4 && (
               <div className="border-t border-line bg-ink-50/60 px-5 sm:px-7 py-4">
+                <div aria-live="polite" aria-atomic="true" className="sr-only">
+                  {submitting ? "Sending your booking" : submitError ?? ""}
+                </div>
                 {submitError && step === 3 && (
                   <motion.div
+                    role="alert"
                     initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: [0, -6, 6, -3, 3, 0] }}
                     transition={{ duration: 0.45 }}
@@ -240,6 +245,7 @@ export function BookingFlow() {
                     <button
                       type="button"
                       disabled={!canAdvance() || submitting}
+                      aria-busy={submitting}
                       onClick={() => {
                         if (step === 3) {
                           submitBooking();
@@ -330,7 +336,7 @@ function SidebarPricing({
 
         <div className="relative">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-ink-100/70">
+            <span className="text-xs font-semibold uppercase tracking-wider text-ink-100/85">
               Your price
             </span>
             <span className="inline-flex items-center gap-1 rounded-full bg-white/10 text-white text-[11px] font-semibold px-2.5 py-1">
@@ -343,7 +349,7 @@ function SidebarPricing({
               value={price.total}
               className="font-display font-extrabold text-5xl sm:text-6xl tracking-tight text-white"
             />
-            <span className="text-ink-100/70 text-sm">/ visit</span>
+            <span className="text-ink-100/85 text-sm">/ visit</span>
           </div>
           {price.discount > 0 && (
             <motion.div
@@ -353,7 +359,7 @@ function SidebarPricing({
               transition={{ duration: 0.3 }}
               className="mt-1 inline-flex items-center gap-1.5 text-grass-400 text-sm font-semibold"
             >
-              <span className="line-through text-ink-100/50 font-normal">${price.subtotal}</span>
+              <span className="line-through text-ink-100/75 font-normal">${price.subtotal}</span>
               <span>−${price.discount} {freq.label.toLowerCase()} savings</span>
             </motion.div>
           )}
@@ -367,13 +373,11 @@ function SidebarPricing({
               value={`${config.bedrooms} bd · ${config.bathrooms} ba · ${config.sqft.toLocaleString()} sqft`}
             />
             <SumRow label="Frequency" value={freq.label} />
-            <AnimatePresence mode="popLayout">
-              <SumRow
-                key={config.addOns.length}
-                label="Add-ons"
-                value={config.addOns.length === 0 ? "None" : `${config.addOns.length} selected`}
-              />
-            </AnimatePresence>
+            <SumRow
+              key={config.addOns.length}
+              label="Add-ons"
+              value={config.addOns.length === 0 ? "None" : `${config.addOns.length} selected`}
+            />
             {slot && (
               <SumRow
                 label="Slot"
@@ -386,7 +390,7 @@ function SidebarPricing({
             )}
           </ul>
 
-          <div className="mt-6 rounded-2xl bg-white/5 border border-white/10 p-4 text-sm text-ink-100/80 leading-relaxed flex items-start gap-2.5">
+          <div className="mt-6 rounded-2xl bg-white/5 border border-white/10 p-4 text-sm text-ink-100/85 leading-relaxed flex items-start gap-2.5">
             <Check className="h-4 w-4 flex-none mt-0.5 text-grass-400" strokeWidth={3} />
             <span>
               No charge until your home is clean. If anything&apos;s missed, we return within 24 hours, free.
@@ -475,7 +479,7 @@ function SumRow({ label, value }: { label: string; value: string }) {
       layout
       className="flex items-center justify-between gap-3"
     >
-      <span className="text-ink-100/70">{label}</span>
+      <span className="text-ink-100/85">{label}</span>
       <span className="font-semibold text-white text-right truncate max-w-[60%]">{value}</span>
     </motion.li>
   );

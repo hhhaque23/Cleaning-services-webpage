@@ -1,8 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, MessageSquare, Home } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { MapPin, Phone, Mail, MessageSquare, Home, Check, AlertCircle } from "lucide-react";
+import { EASE_OUT_QUINT } from "../motion/motion-primitives";
+
+function isValid(label: string, value: string, required: boolean) {
+  if (!required) return true;
+  const v = value.trim();
+  if (v.length === 0) return false;
+  if (label.toLowerCase().startsWith("phone")) return v.replace(/\D/g, "").length >= 7;
+  if (label.toLowerCase().startsWith("email")) return /^\S+@\S+\.\S+$/.test(v);
+  return v.length >= 3;
+}
 
 export type Contact = {
   address: string;
@@ -113,8 +123,12 @@ function Field({
   textarea?: boolean;
 }) {
   const [focused, setFocused] = useState(false);
+  const [touched, setTouched] = useState(false);
   const filled = value.length > 0;
   const floating = focused || filled;
+  const valid = isValid(label, value, !!required);
+  const showInvalid = touched && !focused && !!required && !valid;
+  const showValid = touched && !focused && !!required && valid;
 
   return (
     <label className="block">
@@ -125,7 +139,7 @@ function Field({
               ? { scale: [1, 1.15, 1], color: "oklch(0.52 0.16 145)" }
               : { scale: 1, color: filled ? "oklch(0.52 0.16 145)" : "oklch(0.43 0.04 230)" }
           }
-          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.35, ease: EASE_OUT_QUINT }}
           className="absolute left-3.5 top-3.5 pointer-events-none"
         >
           <Icon className="h-[18px] w-[18px]" />
@@ -141,7 +155,7 @@ function Field({
               ? "oklch(0.23 0.05 230)"
               : "oklch(0.43 0.04 230)",
           }}
-          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.22, ease: EASE_OUT_QUINT }}
           className="absolute left-10 top-3 origin-left text-sm font-semibold pointer-events-none bg-[var(--surface-elevated)] px-1 -ml-1"
         >
           {label}
@@ -153,24 +167,72 @@ function Field({
             value={value}
             onChange={(e) => onChange(e.target.value)}
             onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
+            onBlur={() => {
+              setFocused(false);
+              setTouched(true);
+            }}
             placeholder={focused ? placeholder : undefined}
             rows={3}
-            className="w-full pl-10 pr-3.5 pt-5 pb-3 rounded-2xl border border-line bg-[var(--surface-elevated)] text-ink-950 placeholder:text-ink-700/50 resize-none focus:border-grass-500 focus:ring-2 focus:ring-grass-500/20 outline-none transition-all"
+            aria-invalid={showInvalid || undefined}
+            className={`w-full pl-10 pr-10 pt-5 pb-3 rounded-2xl border bg-[var(--surface-elevated)] text-ink-950 placeholder:text-ink-700/50 resize-none focus:ring-2 outline-none transition-all ${
+              showInvalid
+                ? "border-[oklch(0.78_0.16_25)] focus:border-[oklch(0.65_0.18_25)] focus:ring-[oklch(0.78_0.16_25)]/20"
+                : "border-line focus:border-grass-500 focus:ring-grass-500/20"
+            }`}
           />
         ) : (
           <input
             value={value}
             onChange={(e) => onChange(e.target.value)}
             onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
+            onBlur={() => {
+              setFocused(false);
+              setTouched(true);
+            }}
             type={type}
             placeholder={focused ? placeholder : undefined}
             autoComplete={autoComplete}
             required={required}
-            className="w-full pl-10 pr-3.5 pt-5 pb-3 rounded-2xl border border-line bg-[var(--surface-elevated)] text-ink-950 placeholder:text-ink-700/50 focus:border-grass-500 focus:ring-2 focus:ring-grass-500/20 outline-none transition-all"
+            aria-invalid={showInvalid || undefined}
+            className={`w-full pl-10 pr-10 pt-5 pb-3 rounded-2xl border bg-[var(--surface-elevated)] text-ink-950 placeholder:text-ink-700/50 focus:ring-2 outline-none transition-all ${
+              showInvalid
+                ? "border-[oklch(0.78_0.16_25)] focus:border-[oklch(0.65_0.18_25)] focus:ring-[oklch(0.78_0.16_25)]/20"
+                : "border-line focus:border-grass-500 focus:ring-grass-500/20"
+            }`}
           />
         )}
+
+        <span
+          className="absolute right-3.5 top-3.5 pointer-events-none h-[18px] w-[18px]"
+          aria-hidden
+        >
+          <AnimatePresence mode="wait">
+            {showValid && (
+              <motion.span
+                key="valid"
+                initial={{ scale: 0, rotate: -30, opacity: 0 }}
+                animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                exit={{ scale: 0, opacity: 0 }}
+                transition={{ type: "spring", stiffness: 320, damping: 18 }}
+                className="absolute inset-0 inline-flex items-center justify-center text-grass-700"
+              >
+                <Check className="h-[18px] w-[18px]" strokeWidth={3} />
+              </motion.span>
+            )}
+            {showInvalid && (
+              <motion.span
+                key="invalid"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1, x: [0, -2, 2, -1, 1, 0] }}
+                exit={{ scale: 0, opacity: 0 }}
+                transition={{ duration: 0.4 }}
+                className="absolute inset-0 inline-flex items-center justify-center text-[oklch(0.55_0.18_25)]"
+              >
+                <AlertCircle className="h-[18px] w-[18px]" />
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </span>
       </div>
     </label>
   );

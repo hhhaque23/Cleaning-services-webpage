@@ -1,7 +1,7 @@
 import type { Variants } from "framer-motion";
 
-export const EASE_OUT_QUINT = [0.22, 1, 0.36, 1] as const;
-export const EASE_OUT_QUART = [0.25, 1, 0.5, 1] as const;
+export const EASE_OUT_QUINT: [number, number, number, number] = [0.22, 1, 0.36, 1];
+export const EASE_OUT_QUART: [number, number, number, number] = [0.25, 1, 0.5, 1];
 export const EASE_SOFT_SPRING = { type: "spring", stiffness: 220, damping: 26 } as const;
 
 export const DUR_FAST = 0.35;

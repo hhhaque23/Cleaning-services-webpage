@@ -18,6 +18,7 @@ import type { Slot } from "./StepSchedule";
 import { SuccessCheck } from "./SuccessCheck";
 import { Confetti } from "../motion/Confetti";
 import { SplitText } from "../motion/SplitText";
+import { EASE_OUT_QUINT } from "../motion/motion-primitives";
 import { MagneticButton } from "../motion/MagneticButton";
 
 type Props = {
@@ -57,7 +58,7 @@ export function StepSuccess({ contact, slot, total, bookingId }: Props) {
     <motion.div
       initial={{ opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.55, ease: EASE_OUT_QUINT }}
       className="relative text-center py-2"
     >
       <div className="relative">
@@ -84,7 +85,7 @@ export function StepSuccess({ contact, slot, total, bookingId }: Props) {
       <motion.div
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.55, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.55, delay: 0.85, ease: EASE_OUT_QUINT }}
         className="mt-7 max-w-md mx-auto text-left rounded-2xl bg-[var(--surface)] border border-line shadow-card overflow-hidden"
       >
         <div className="px-5 py-4 bg-ink-50 border-b border-line flex items-center justify-between gap-3">
@@ -208,7 +209,7 @@ function Row({
     <motion.li
       variants={{
         hidden: { opacity: 0, x: -10 },
-        show: { opacity: 1, x: 0, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } },
+        show: { opacity: 1, x: 0, transition: { duration: 0.35, ease: EASE_OUT_QUINT } },
       }}
       className="flex items-center gap-3 px-5 py-3"
     >

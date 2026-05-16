@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { useMemo } from "react";
+import { EASE_OUT_QUINT } from "./motion-primitives";
 
 type ConfettiProps = {
   count?: number;
@@ -59,7 +60,7 @@ export function Confetti({
           key={p.i}
           initial={{ x: 0, y: 0, opacity: 1, scale: 0.6, rotate: 0 }}
           animate={{ x: p.x, y: p.y, opacity: 0, scale: 1, rotate: p.rot }}
-          transition={{ duration, ease: [0.22, 1, 0.36, 1], delay: p.delay }}
+          transition={{ duration, ease: EASE_OUT_QUINT, delay: p.delay }}
           style={{
             position: "absolute",
             width: p.size,

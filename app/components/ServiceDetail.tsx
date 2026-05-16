@@ -18,6 +18,7 @@ import { TIER_SLUG } from "@/lib/tiers";
 import { SplitText } from "./motion/SplitText";
 import { MagneticButton } from "./motion/MagneticButton";
 import { Aurora } from "./motion/Aurora";
+import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 type IncludedGroup = { title: string; items: string[] };
 
@@ -271,7 +272,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
               </motion.div>
 
               <h1 className="mt-4 font-display font-extrabold text-hero text-balance text-ink-950 leading-[1.02] tracking-[-0.028em]">
-                <SplitText as="span" mode="word" trigger="load" stagger={0.06}>
+                <SplitText as="span" mode="word" trigger="view" stagger={0.06}>
                   {`${meta.label}.`}
                 </SplitText>
               </h1>
@@ -337,7 +338,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.8, delay: 0.25, ease: EASE_OUT_QUINT }}
               className="relative"
             >
               <motion.div
@@ -359,7 +360,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                 style={reduce ? undefined : { y: badgeY }}
                 initial={{ opacity: 0, scale: 0.85, rotate: -4 }}
                 animate={{ opacity: 1, scale: 1, rotate: -3 }}
-                transition={{ duration: 0.7, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.7, delay: 0.7, ease: EASE_OUT_QUINT }}
                 className="absolute -top-4 -right-4 sm:-top-6 sm:-right-6"
               >
                 <div className="relative rounded-2xl bg-[var(--surface)] border border-line shadow-card px-4 py-3 flex items-center gap-3">
@@ -393,7 +394,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.75, ease: EASE_OUT_QUINT }}
             className="relative w-full aspect-[21/9] sm:aspect-[24/9] overflow-hidden rounded-[1.5rem] mb-16 shadow-card"
           >
             <Image
@@ -460,7 +461,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                       transition: {
                         duration: 0.55,
                         delay: gi * 0.08,
-                        ease: [0.22, 1, 0.36, 1],
+                        ease: EASE_OUT_QUINT,
                         staggerChildren: 0.05,
                         delayChildren: gi * 0.08 + 0.2,
                       },
@@ -477,7 +478,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                         key={item}
                         variants={{
                           hidden: { opacity: 0, x: -8 },
-                          show: { opacity: 1, x: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
+                          show: { opacity: 1, x: 0, transition: { duration: 0.45, ease: EASE_OUT_QUINT } },
                         }}
                         className="flex items-start gap-2.5 text-[15px] text-ink-800"
                       >
@@ -495,7 +496,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                             initial={{ pathLength: 0, opacity: 0 }}
                             whileInView={{ pathLength: 1, opacity: 1 }}
                             viewport={{ once: true, margin: "-20px" }}
-                            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                            transition={{ duration: 0.5, ease: EASE_OUT_QUINT }}
                           />
                         </motion.svg>
                         {item}
@@ -532,7 +533,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                 key={b.label}
                 variants={{
                   hidden: { opacity: 0, y: 18 },
-                  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+                  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_OUT_QUINT } },
                 }}
                 className="grid sm:grid-cols-[6rem_1fr] gap-3 sm:gap-10 py-8 first:pt-0 last:pb-0 items-baseline group"
               >

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, animate, motion, useMotionValue, useTransform } from "framer-motion";
+import { EASE_OUT_QUINT } from "../motion/motion-primitives";
 
 export function PriceTicker({ value, className = "" }: { value: number; className?: string }) {
   const motionVal = useMotionValue(value);
@@ -20,7 +21,7 @@ export function PriceTicker({ value, className = "" }: { value: number; classNam
     const diff = Math.round(value - prev.current);
     const controls = animate(motionVal, value, {
       duration: 0.45,
-      ease: [0.22, 1, 0.36, 1],
+      ease: EASE_OUT_QUINT,
     });
     const unsub = rounded.on("change", (v) => setDisplay(v));
 
@@ -64,7 +65,7 @@ export function PriceTicker({ value, className = "" }: { value: number; classNam
             initial={{ opacity: 0, y: 6, scale: 0.96 }}
             animate={{ opacity: 1, y: -28, scale: 1 }}
             exit={{ opacity: 0, y: -36, scale: 0.96 }}
-            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.85, ease: EASE_OUT_QUINT }}
             className={`pointer-events-none absolute left-full top-2 ml-2 inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-xs font-bold tabular-nums whitespace-nowrap ${
               delta.amount < 0
                 ? "bg-grass-500/20 text-grass-300"

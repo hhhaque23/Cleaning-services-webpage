@@ -6,6 +6,7 @@ import { useCallback, useRef } from "react";
 import { ArrowRight, Phone, Sparkles, CalendarClock } from "lucide-react";
 import { SplitText } from "./motion/SplitText";
 import { MagneticButton } from "./motion/MagneticButton";
+import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 const COMMITMENT_FRAGMENTS = [
   "$0 today",
@@ -43,7 +44,7 @@ export function FinalCTA() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.75, ease: EASE_OUT_QUINT }}
           className="relative rounded-[2rem] bg-ink-950 text-[var(--surface)] p-8 sm:p-12 lg:p-16 overflow-hidden shadow-lift"
         >
           <motion.div
@@ -78,7 +79,7 @@ export function FinalCTA() {
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: 1.05, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, delay: 1.05, ease: EASE_OUT_QUINT }}
               className="mt-6 text-lead text-[oklch(0.985_0.006_220/0.78)] leading-relaxed max-w-2xl text-pretty"
             >
               Take 60 seconds. Configure your home, pick a slot, confirm. We&apos;ll text you within
@@ -119,7 +120,7 @@ export function FinalCTA() {
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: 1.45, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, delay: 1.45, ease: EASE_OUT_QUINT }}
               className="mt-10 flex flex-col sm:flex-row gap-3"
             >
               <MagneticButton as="div" radius={140} strength={0.34}>
@@ -152,7 +153,7 @@ export function FinalCTA() {
             initial={{ opacity: 0, y: 18, rotate: -3 }}
             whileInView={{ opacity: 1, y: 0, rotate: -2 }}
             viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.8, delay: 0.6, ease: EASE_OUT_QUINT }}
             className="hidden md:flex absolute top-10 right-10 max-w-[16rem]"
           >
             <motion.div

@@ -7,6 +7,7 @@ import { ShieldCheck, RotateCcw, Leaf, UserCheck, Lock, ArrowRight } from "lucid
 import { PHOTOS } from "@/lib/unsplash";
 import { MagneticButton } from "./motion/MagneticButton";
 import { SplitText } from "./motion/SplitText";
+import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 const SECONDARY = [
   { icon: ShieldCheck, label: "$2M insured", body: "Bonded and fully insured." },
@@ -34,7 +35,7 @@ export function Guarantee() {
             initial={{ opacity: 0, x: -22 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.8, ease: EASE_OUT_QUINT }}
             className="relative"
           >
             <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-lift">
@@ -62,7 +63,7 @@ export function Guarantee() {
               initial={{ opacity: 0, scale: 0.92, rotate: -6 }}
               whileInView={{ opacity: 1, scale: 1, rotate: -4 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.4, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: 0.4, duration: 0.6, ease: EASE_OUT_QUINT }}
               whileHover={reduce ? undefined : { rotate: 0, scale: 1.04 }}
               className="absolute -top-4 -right-3 sm:-right-6 bg-[var(--surface)] rounded-2xl px-4 py-3 shadow-card border border-line cursor-default"
             >
@@ -111,7 +112,7 @@ export function Guarantee() {
                   initial={{ scale: 0.5, opacity: 0, rotate: -45 }}
                   whileInView={{ scale: 1, opacity: 1, rotate: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.6, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.6, delay: 0.9, ease: EASE_OUT_QUINT }}
                   className="inline-flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-[oklch(0.78_0.16_145/0.18)] text-grass-300"
                 >
                   <RotateCcw className="h-5 w-5" />
@@ -157,7 +158,7 @@ export function Guarantee() {
                     initial={{ scale: 0.6, opacity: 0 }}
                     whileInView={{ scale: 1, opacity: 1 }}
                     viewport={{ once: true, margin: "-60px" }}
-                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], type: "spring", stiffness: 280, damping: 16 }}
+                    transition={{ duration: 0.45, ease: EASE_OUT_QUINT, type: "spring", stiffness: 280, damping: 16 }}
                     className="inline-flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-[oklch(0.65_0.13_220/0.08)] text-ink-700 mt-0.5 group-hover:bg-grass-500/15 group-hover:text-grass-700 transition-colors duration-300"
                   >
                     <t.icon className="h-4 w-4" />

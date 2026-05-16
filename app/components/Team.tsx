@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { BadgeCheck } from "lucide-react";
 import { PHOTOS } from "@/lib/unsplash";
+import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 export function Team() {
   const reduce = useReducedMotion();
@@ -19,7 +20,7 @@ export function Team() {
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.65, ease: EASE_OUT_QUINT }}
           className="max-w-2xl"
         >
           <div className="inline-flex items-center gap-1.5 rounded-full bg-ink-100 text-ink-800 text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">
@@ -53,7 +54,7 @@ export function Team() {
                     y: 0,
                     rotate: 0,
                     scale: 1,
-                    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+                    transition: { duration: 0.6, ease: EASE_OUT_QUINT },
                   },
                 }}
                 className="group"

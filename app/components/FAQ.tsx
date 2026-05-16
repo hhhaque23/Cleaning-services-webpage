@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus, MessageCircleQuestion } from "lucide-react";
+import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 const FAQS = [
   {
@@ -110,7 +111,7 @@ export function FAQ() {
                         initial={{ y: 8, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: 4, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
+                        transition={{ duration: 0.3, ease: EASE_OUT_QUINT, delay: 0.05 }}
                         className="pb-6 pr-12 text-ink-800 leading-relaxed text-[15px] sm:text-base max-w-xl"
                       >
                         {f.a}

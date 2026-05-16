@@ -1,13 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { EASE_OUT_QUINT } from "../motion/motion-primitives";
 
 export function SuccessCheck() {
   return (
     <motion.div
       initial={{ scale: 0.6, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.55, ease: EASE_OUT_QUINT }}
       className="relative mx-auto inline-flex h-24 w-24 items-center justify-center"
     >
       <motion.span
@@ -20,7 +21,7 @@ export function SuccessCheck() {
       <motion.span
         initial={{ scale: 0.85 }}
         animate={{ scale: 1 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.5, ease: EASE_OUT_QUINT }}
         className="absolute inset-0 rounded-full bg-grass-500/18 ring-1 ring-grass-500/35"
         aria-hidden="true"
       />
@@ -37,7 +38,7 @@ export function SuccessCheck() {
           fill="oklch(0.62 0.17 145)"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          transition={{ duration: 0.45, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.45, delay: 0.1, ease: EASE_OUT_QUINT }}
           style={{ transformOrigin: "48px 48px" }}
         />
         <motion.path
@@ -50,7 +51,7 @@ export function SuccessCheck() {
           initial={{ pathLength: 0, opacity: 0 }}
           animate={{ pathLength: 1, opacity: 1 }}
           transition={{
-            pathLength: { duration: 0.5, delay: 0.45, ease: [0.22, 1, 0.36, 1] },
+            pathLength: { duration: 0.5, delay: 0.45, ease: EASE_OUT_QUINT },
             opacity: { duration: 0.05, delay: 0.45 },
           }}
         />
