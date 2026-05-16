@@ -6,7 +6,10 @@
   /* OKLCH tokens. Every neutral carries a faint cyan tint, never pure #fff or #000. */
   --surface: oklch(0.985 0.006 220);
   --surface-elevated: oklch(0.995 0.004 220);
-  --surface-tint: oklch(0.965 0.012 220);
+  /* Tinted band, visibly darker than --surface so alternating sections create rhythm
+     without going SaaS-slab. */
+  --surface-tint: oklch(0.93 0.02 220);
+  --surface-warm: oklch(0.95 0.025 95);
 
   --ink: oklch(0.23 0.05 230);
   --ink-deep: oklch(0.15 0.045 230);

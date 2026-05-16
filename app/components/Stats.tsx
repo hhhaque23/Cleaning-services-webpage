@@ -48,7 +48,16 @@ function Counter({
 export function Stats() {
   return (
     <section className="relative py-20 sm:py-28 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+      <div
+        aria-hidden="true"
+        className="absolute -top-24 -left-32 h-[28rem] w-[28rem] rounded-full bg-[oklch(0.78_0.16_145/0.1)] blur-3xl pointer-events-none"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute bottom-0 right-0 h-[20rem] w-[20rem] rounded-full bg-[oklch(0.65_0.13_220/0.08)] blur-3xl pointer-events-none"
+      />
+
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid lg:grid-cols-[1.3fr_1fr] gap-10 lg:gap-16 items-end">
           <motion.div
             initial={{ opacity: 0, y: 18 }}

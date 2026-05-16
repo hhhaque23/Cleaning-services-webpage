@@ -33,8 +33,20 @@ const SYMBOLS: Record<string, React.FC> = {
 
 export function HowItWorks() {
   return (
-    <section id="how" className="relative py-20 sm:py-28 scroll-mt-24">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+    <section
+      id="how"
+      className="relative py-20 sm:py-28 scroll-mt-24 bg-[var(--surface-tint)] overflow-hidden"
+    >
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-grid-faint bg-grid-32 opacity-60 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -top-32 -right-20 h-[26rem] w-[26rem] rounded-full bg-[oklch(0.78_0.16_145/0.12)] blur-3xl"
+      />
+
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -66,7 +78,7 @@ export function HowItWorks() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="relative rounded-[1.5rem] border border-line bg-[var(--surface-elevated)] overflow-hidden"
+                className="relative rounded-[1.5rem] border border-line-strong/40 bg-[var(--surface)] overflow-hidden shadow-soft"
               >
                 <div className="relative h-44 sm:h-48 lg:h-52 flex items-center justify-center bg-gradient-to-b from-[oklch(0.96_0.022_146)] to-[oklch(0.985_0.006_220)] overflow-hidden">
                   <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--surface)] text-ink-950 text-[10px] font-bold uppercase tracking-[0.14em] px-2.5 py-1 ring-1 ring-line-strong/60">

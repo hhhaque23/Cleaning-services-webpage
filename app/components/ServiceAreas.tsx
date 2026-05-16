@@ -24,8 +24,12 @@ const AREAS: { name: string; primary?: boolean }[] = [
 
 export function ServiceAreas() {
   return (
-    <section id="areas" className="relative py-16 sm:py-20 scroll-mt-24">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+    <section id="areas" className="relative py-16 sm:py-20 scroll-mt-24 bg-[var(--surface-tint)] overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="absolute -bottom-24 right-0 h-[22rem] w-[22rem] rounded-full bg-[oklch(0.78_0.16_145/0.1)] blur-3xl"
+      />
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-16 items-start">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
