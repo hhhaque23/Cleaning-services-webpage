@@ -370,11 +370,16 @@ function CalendarGlyph() {
 // ---- Glyph 03: Relax ---------------------------------------------------
 function MoonGlyph() {
   const stars = [
+    // Left side (around the open mouth of the crescent)
     { cx: 58, cy: 26, size: 8, delay: 0.4 },
     { cx: 38, cy: 56, size: 6, delay: 0.7 },
     { cx: 62, cy: 88, size: 5, delay: 1.0 },
     { cx: 28, cy: 38, size: 4, delay: 0.55 },
     { cx: 80, cy: 96, size: 4, delay: 0.9 },
+    // Right side (past the moon's back)
+    { cx: 178, cy: 32, size: 6, delay: 0.5 },
+    { cx: 188, cy: 64, size: 5, delay: 0.85 },
+    { cx: 172, cy: 96, size: 4, delay: 1.05 },
   ];
   return (
     <motion.svg
