@@ -5,14 +5,14 @@ import { ScrollProgressRail } from "./components/motion/ScrollProgressRail";
 
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+  weight: ["600", "700", "800"],
   variable: "--font-display",
   display: "swap",
 });
 
 const sans = Hanken_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   variable: "--font-sans",
   display: "swap",
 });

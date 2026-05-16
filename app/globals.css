@@ -53,8 +53,14 @@ body {
     radial-gradient(ellipse 90% 50% at 50% 0%, oklch(0.91 0.025 220 / 0.55), transparent 60%),
     radial-gradient(ellipse 70% 60% at 100% 100%, oklch(0.93 0.03 145 / 0.45), transparent 60%),
     radial-gradient(ellipse 70% 60% at 0% 80%, oklch(0.91 0.025 220 / 0.4), transparent 60%);
-  background-attachment: fixed;
   min-height: 100vh;
+}
+/* background-attachment: fixed is expensive on iOS Safari (repaint per scroll).
+   Keep it only on desktop where the cost is negligible. */
+@media (min-width: 1024px) and (hover: hover) {
+  body {
+    background-attachment: fixed;
+  }
 }
 
 *:focus-visible {
@@ -211,5 +217,34 @@ input[type="range"]::-moz-range-thumb {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* Suspend continuous infinite-loop animations on mobile to preserve battery
+   and frame rate. Entrance animations + step transitions remain. */
+@media (max-width: 768px) {
+  .animate-blob-drift,
+  .animate-marquee,
+  .animate-pulse-ring,
+  .animate-ken-burns,
+  .animate-tile-drift,
+  .animate-aurora-shift,
+  .animate-border-spin,
+  .animate-halo-rotate,
+  .animate-spotlight-pulse,
+  .animate-star-twinkle {
+    animation: none !important;
+  }
+}
+@media (prefers-reduced-data: reduce) {
+  .animate-blob-drift,
+  .animate-marquee,
+  .animate-pulse-ring,
+  .animate-ken-burns,
+  .animate-tile-drift,
+  .animate-aurora-shift,
+  .animate-border-spin,
+  .animate-halo-rotate {
+    animation: none !important;
   }
 }

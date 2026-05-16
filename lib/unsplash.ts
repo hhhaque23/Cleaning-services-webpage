@@ -1,14 +1,17 @@
 // Unsplash URLs tuned for weight vs. clarity at the rendered breakpoints.
-// w=1600 q=78 is visually indistinguishable from w=2400 q=85 at 1080p but
-// drops file size ~55%. Portraits display at 240 px max; w=900 covers
-// retina. Avatars stay tiny.
+// auto=format gives AVIF/WebP when supported. w=N is the upstream resize.
+//
+// Sizes are deliberately conservative: hero photos display at ~560px wide on
+// desktop, ~400px on mobile. w=1200 covers 2x retina. q=72 is visually
+// indistinguishable from q=85 at common viewing sizes but cuts ~30% off byte
+// weight. Portraits and avatars are sized for their actual display rect.
 
 const hero = (id: string) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1600&q=78`;
+  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1200&q=72`;
 const portrait = (id: string) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=900&q=78`;
+  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=600&q=72`;
 const avatar = (id: string) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=400&q=85`;
+  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=200&q=78`;
 
 export const PHOTOS = {
   hero: hero("1583847268964-b28dc8f51f92"),
