@@ -79,8 +79,9 @@ export const PHOTOS = {
   heroThumb2: hero(ID.bathroomTub),
   heroThumb3: hero(ID.bedroomVelvet),
 
-  // Stats big photo tile
+  // Stats big photo tile + section-header photo (filling white-space)
   statsBigTile: hero(ID.livingBeams),
+  statsHeader: hero(ID.livingLeatherSofa),
 
   // PhotoQuote
   photoQuote: hero(ID.livingMidCentury),

@@ -20,22 +20,41 @@ export function Stats() {
   return (
     <section className="relative py-24 sm:py-32 overflow-hidden">
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
-          className="max-w-2xl"
-        >
-          <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
-            Since 2019, across metro Detroit
-          </div>
-          <h2 className="mt-3 font-display font-extrabold text-display-1 text-balance text-ink-950 leading-[1.05]">
-            Numbers from a team that{" "}
-            <span className="italic font-medium text-ink-700">mostly</span> hasn&apos;t changed
-            since year one.
-          </h2>
-        </motion.div>
+        <div className="grid lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-14 items-center">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
+          >
+            <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
+              Since 2019, across metro Detroit
+            </div>
+            <h2 className="mt-3 font-display font-extrabold text-display-1 text-balance text-ink-950 leading-[1.05]">
+              Numbers from a team that{" "}
+              <span className="italic font-medium text-ink-700">mostly</span> hasn&apos;t changed
+              since year one.
+            </h2>
+          </motion.div>
+
+          <motion.figure
+            initial={{ opacity: 0, scale: 0.96, y: 16 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.75, ease: EASE_OUT_QUINT, delay: 0.1 }}
+            className="relative aspect-[4/5] rounded-[1.5rem] overflow-hidden shadow-card hidden md:block"
+          >
+            <Image
+              src={PHOTOS.statsHeader}
+              alt="A warm living room cleaned and ready"
+              fill
+              sizes="(min-width: 1024px) 32vw, 90vw"
+              className="object-cover"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-tr from-[oklch(0.11_0.04_230/0.18)] via-transparent to-transparent" />
+          </motion.figure>
+        </div>
 
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-[auto_auto] gap-4 sm:gap-5">
           <BigPhotoTile />
