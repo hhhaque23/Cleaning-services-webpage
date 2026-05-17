@@ -114,7 +114,7 @@ function BigPhotoTile() {
       className="relative col-span-1 sm:col-span-2 lg:col-span-2 lg:row-span-2 rounded-[1.5rem] overflow-hidden shadow-card aspect-[4/5] sm:aspect-auto sm:min-h-[28rem]"
     >
       <Image
-        src={PHOTOS.bathroom}
+        src={PHOTOS.hallway}
         alt="A bathroom on a quiet weekday afternoon after a Pristine clean"
         fill
         sizes="(min-width: 1024px) 50vw, 100vw"
@@ -306,33 +306,48 @@ function ClockFace() {
         />
       ))}
 
-      {/* Hour hand — pointing roughly to 10 (classic 10:10 pose) */}
-      <line
-        x1="50"
-        y1="50"
-        x2="34"
-        y2="38"
-        stroke="oklch(0.23 0.05 230)"
-        strokeWidth="3.4"
-        strokeLinecap="round"
-      />
+      {/* Hour hand — anchored near 10 (10:10 classic ad pose), with a very
+          gentle oscillation so the clock feels alive. */}
+      <motion.g
+        style={{ originX: "50px", originY: "50px" }}
+        animate={reduce ? undefined : { rotate: [-1, 1.2, -1] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <line
+          x1="50"
+          y1="50"
+          x2="34"
+          y2="38"
+          stroke="oklch(0.23 0.05 230)"
+          strokeWidth="3.4"
+          strokeLinecap="round"
+        />
+      </motion.g>
 
-      {/* Minute hand — pointing to 2 (classic 10:10 pose) */}
-      <line
-        x1="50"
-        y1="50"
-        x2="68"
-        y2="34"
-        stroke="oklch(0.23 0.05 230)"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-      />
+      {/* Minute hand — pointing to 2 (10:10 pose) with a softer oscillation
+          slightly offset in phase from the hour hand for natural motion. */}
+      <motion.g
+        style={{ originX: "50px", originY: "50px" }}
+        animate={reduce ? undefined : { rotate: [-1.5, 2, -1.5] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <line
+          x1="50"
+          y1="50"
+          x2="68"
+          y2="34"
+          stroke="oklch(0.23 0.05 230)"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+        />
+      </motion.g>
 
-      {/* Sweeping second hand — full revolution every 10s (visual pace) */}
+      {/* Second hand — full revolution every 60s (true clock pace, "moving
+          a tiny bit each second"). */}
       <motion.g
         style={{ originX: "50px", originY: "50px" }}
         animate={reduce ? undefined : { rotate: 360 }}
-        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
       >
         <line
           x1="50"

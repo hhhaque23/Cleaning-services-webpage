@@ -40,7 +40,7 @@ export function Guarantee() {
           >
             <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-lift">
               <Image
-                src={PHOTOS.livingRoom}
+                src={PHOTOS.loungeCorner}
                 alt="Pristine living room after a clean, late afternoon light through the window"
                 fill
                 sizes="(min-width: 1024px) 520px, 100vw"

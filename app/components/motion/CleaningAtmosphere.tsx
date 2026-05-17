@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { useMemo } from "react";
+import { PHOTOS } from "@/lib/unsplash";
 
 // Deterministic pseudo-random so SSR + CSR markup match on first paint.
 function mulberry32(seed: number) {
@@ -15,127 +17,72 @@ function mulberry32(seed: number) {
   };
 }
 
-type Sparkle = {
+// One photo per tile, every tile is a different image. Positions chosen so
+// tiles cluster around the edges of the viewport and stay clear of the
+// vertical center where most copy + buttons live.
+type PhotoTile = {
+  src: string;
+  alt: string;
+  // % of viewport
   x: number;
   y: number;
-  size: number;
-  opacity: number;
+  w: number; // tile width in vw
   rotate: number;
-  twinkleDelay: number;
-  twinkleDuration: number;
-  tint: "grass" | "cyan" | "warm";
-  twinkles: boolean;
+  delay: number;
+  drift: boolean;
 };
 
-type Bubble = {
-  x: number;
-  y: number;
-  size: number;
-  opacity: number;
-  driftDelay: number;
-  driftDuration: number;
-  tint: "grass" | "cyan";
-  drifts: boolean;
-};
+function buildTiles(): PhotoTile[] {
+  // Distinct photos pulled from the collage thumbnails.
+  const distinct = [
+    { src: PHOTOS.collage.kitchen, alt: "Bright modern kitchen after a clean" },
+    { src: PHOTOS.collage.bathroom, alt: "Sparkling bathroom" },
+    { src: PHOTOS.collage.bedroom, alt: "Bedroom in morning light" },
+    { src: PHOTOS.collage.livingRoom, alt: "Tidy living room" },
+    { src: PHOTOS.collage.diningRoom, alt: "Dining room set for service" },
+    { src: PHOTOS.collage.hallway, alt: "Polished hallway" },
+    { src: PHOTOS.collage.loungeCorner, alt: "Living room corner" },
+    { src: PHOTOS.collage.windowSeat, alt: "Window seat in afternoon light" },
+    { src: PHOTOS.collage.kitchenAlt, alt: "White kitchen counter" },
+    { src: PHOTOS.collage.bathroomAlt, alt: "Tiled bathroom" },
+    { src: PHOTOS.collage.livingRoomAlt, alt: "Mid-century living room" },
+    { src: PHOTOS.collage.bedroomAlt, alt: "Warm bedroom" },
+  ];
 
-const TINT_FILL: Record<Sparkle["tint"], string> = {
-  grass: "oklch(0.68 0.18 145)",
-  cyan: "oklch(0.65 0.13 220)",
-  warm: "oklch(0.78 0.14 95)",
-};
+  // Hand-tuned positions: edges of the viewport, off-page slightly so tiles
+  // peek into the visible area without blocking center content.
+  // [x%, y%, w(vw)]
+  const positions: [number, number, number][] = [
+    [-3, 8, 14],     // top-left
+    [86, 12, 13],    // top-right
+    [-4, 38, 11],    // mid-left
+    [88, 42, 12],    // mid-right
+    [-6, 66, 13],    // lower-left
+    [90, 70, 11],    // lower-right
+    [4, 92, 12],     // bottom-left-ish
+    [78, 92, 13],    // bottom-right-ish
+    [-5, 18, 9],     // small top-left accent
+    [92, 28, 8],     // small top-right accent
+    [-4, 78, 9],     // small bottom-left accent
+    [93, 84, 10],    // small bottom-right accent
+  ];
 
-const BUBBLE_FILL: Record<Bubble["tint"], string> = {
-  grass: "oklch(0.78 0.16 145)",
-  cyan: "oklch(0.72 0.12 220)",
-};
-
-function seedSparkles(count: number): Sparkle[] {
-  const rand = mulberry32(11);
-  const out: Sparkle[] = [];
-  const tints: Sparkle["tint"][] = ["grass", "cyan", "warm"];
-  for (let i = 0; i < count; i++) {
-    out.push({
-      x: rand() * 100,
-      y: rand() * 100,
-      size: 4 + rand() * 7,
-      opacity: 0.08 + rand() * 0.07,
-      rotate: rand() * 90 - 45,
-      twinkleDelay: rand() * 6,
-      twinkleDuration: 3 + rand() * 4,
-      tint: tints[Math.floor(rand() * tints.length)],
-      twinkles: rand() < 0.45,
-    });
-  }
-  return out;
-}
-
-function seedBubbles(count: number): Bubble[] {
-  const rand = mulberry32(31);
-  const out: Bubble[] = [];
-  const tints: Bubble["tint"][] = ["grass", "cyan"];
-  for (let i = 0; i < count; i++) {
-    out.push({
-      x: rand() * 100,
-      y: rand() * 100,
-      size: 22 + rand() * 50,
-      opacity: 0.04 + rand() * 0.07,
-      driftDelay: rand() * 10,
-      driftDuration: 14 + rand() * 12,
-      tint: tints[Math.floor(rand() * tints.length)],
-      drifts: rand() < 0.35,
-    });
-  }
-  return out;
-}
-
-function SparkleGlyph({ size, fill, rotate }: { size: number; fill: string; rotate: number }) {
-  // 4-point star matching the Pristine logo glyph.
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill={fill}
-      style={{ transform: `rotate(${rotate}deg)` }}
-      aria-hidden
-    >
-      <path d="M12 2 L13.5 9.2 Q14 10.2 15 10.5 L22 12 L15 13.5 Q14 13.8 13.5 14.8 L12 22 L10.5 14.8 Q10 13.8 9 13.5 L2 12 L9 10.5 Q10 10.2 10.5 9.2 Z" />
-    </svg>
-  );
-}
-
-function BubbleGlyph({ size, fill }: { size: number; fill: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 100 100" aria-hidden>
-      <defs>
-        <radialGradient id={`bub-${size}-${fill.length}`} cx="32%" cy="28%" r="65%">
-          <stop offset="0%" stopColor="oklch(0.985 0.006 220 / 0.85)" />
-          <stop offset="55%" stopColor={fill} stopOpacity="0.55" />
-          <stop offset="100%" stopColor={fill} stopOpacity="0.08" />
-        </radialGradient>
-      </defs>
-      <circle cx="50" cy="50" r="44" fill={`url(#bub-${size}-${fill.length})`} />
-      <circle
-        cx="36"
-        cy="32"
-        r="9"
-        fill="oklch(0.985 0.006 220 / 0.7)"
-        opacity="0.85"
-      />
-      <circle
-        cx="62"
-        cy="22"
-        r="3"
-        fill="oklch(0.985 0.006 220 / 0.9)"
-      />
-    </svg>
-  );
+  const rand = mulberry32(7);
+  return positions.map(([x, y, w], i) => ({
+    src: distinct[i % distinct.length].src,
+    alt: distinct[i % distinct.length].alt,
+    x,
+    y,
+    w,
+    rotate: (rand() - 0.5) * 8, // ±4 deg
+    delay: rand() * 6,
+    drift: rand() < 0.5,
+  }));
 }
 
 export function CleaningAtmosphere() {
   const reduce = useReducedMotion();
-  const sparkles = useMemo(() => seedSparkles(24), []);
-  const bubbles = useMemo(() => seedBubbles(10), []);
+  const tiles = useMemo(() => buildTiles(), []);
 
   return (
     <div
@@ -149,80 +96,86 @@ export function CleaningAtmosphere() {
         contain: "paint",
       }}
     >
-      {/* Bubbles sit underneath sparkles */}
-      {bubbles.map((b, i) => {
-        const fill = BUBBLE_FILL[b.tint];
-        const node = <BubbleGlyph size={b.size} fill={fill} />;
-        const baseStyle: React.CSSProperties = {
-          position: "absolute",
-          left: `${b.x}%`,
-          top: `${b.y}%`,
-          opacity: b.opacity,
-          transform: "translate(-50%, -50%)",
-          willChange: b.drifts && !reduce ? "transform" : undefined,
+      {tiles.map((t, i) => {
+        // Per-tile inner styles: rounded card, soft shadow, hard mask so the
+        // photo doesn't dominate (gradient overlay to ink-deep at low alpha).
+        const innerStyle: React.CSSProperties = {
+          width: `${t.w}vw`,
+          aspectRatio: "4 / 5",
+          minWidth: 96,
+          minHeight: 120,
+          borderRadius: 20,
+          overflow: "hidden",
+          boxShadow:
+            "0 18px 50px -28px oklch(0.15 0.045 230 / 0.4), 0 2px 12px -6px oklch(0.15 0.045 230 / 0.15)",
+          position: "relative",
+          willChange: t.drift && !reduce ? "transform" : undefined,
         };
-        if (b.drifts && !reduce) {
+
+        const wrapperStyle: React.CSSProperties = {
+          position: "absolute",
+          left: `${t.x}%`,
+          top: `${t.y}%`,
+          transform: `translate(-50%, -50%) rotate(${t.rotate}deg)`,
+          opacity: 0.55,
+        };
+
+        const inner = (
+          <div style={innerStyle}>
+            <Image
+              src={t.src}
+              alt=""
+              fill
+              sizes="20vw"
+              className="object-cover"
+              loading="lazy"
+            />
+            {/* Light overlay so the photo recedes into the page surface. */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "linear-gradient(180deg, oklch(0.97 0.012 220 / 0.35) 0%, oklch(0.97 0.012 220 / 0.55) 60%, oklch(0.97 0.012 220 / 0.7) 100%)",
+              }}
+            />
+          </div>
+        );
+
+        if (t.drift && !reduce) {
           return (
             <motion.div
-              key={`b-${i}`}
-              style={baseStyle}
-              animate={{ y: [0, -20, 0], x: [0, 6, 0] }}
+              key={i}
+              style={wrapperStyle}
+              animate={{ y: [0, -10, 0], rotate: [t.rotate, t.rotate + 1.2, t.rotate] }}
               transition={{
-                duration: b.driftDuration,
+                duration: 14 + (i % 4) * 2,
                 repeat: Infinity,
                 ease: "easeInOut",
-                delay: b.driftDelay,
+                delay: t.delay,
               }}
             >
-              {node}
+              {inner}
             </motion.div>
           );
         }
+
         return (
-          <div key={`b-${i}`} style={baseStyle}>
-            {node}
+          <div key={i} style={wrapperStyle}>
+            {inner}
           </div>
         );
       })}
 
-      {/* Sparkles */}
-      {sparkles.map((s, i) => {
-        const fill = TINT_FILL[s.tint];
-        const node = <SparkleGlyph size={s.size} fill={fill} rotate={s.rotate} />;
-        const baseStyle: React.CSSProperties = {
+      {/* Soft surface wash on top so center content reads cleanly. */}
+      <div
+        style={{
           position: "absolute",
-          left: `${s.x}%`,
-          top: `${s.y}%`,
-          opacity: s.opacity,
-          transform: "translate(-50%, -50%)",
-          willChange: s.twinkles && !reduce ? "opacity, transform" : undefined,
-        };
-        if (s.twinkles && !reduce) {
-          return (
-            <motion.div
-              key={`s-${i}`}
-              style={baseStyle}
-              animate={{
-                opacity: [s.opacity * 0.4, s.opacity * 1.4, s.opacity * 0.4],
-                scale: [0.85, 1.15, 0.85],
-              }}
-              transition={{
-                duration: s.twinkleDuration,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: s.twinkleDelay,
-              }}
-            >
-              {node}
-            </motion.div>
-          );
-        }
-        return (
-          <div key={`s-${i}`} style={baseStyle}>
-            {node}
-          </div>
-        );
-      })}
+          inset: 0,
+          background:
+            "radial-gradient(ellipse 60% 50% at 50% 40%, oklch(0.97 0.012 220 / 0.45), transparent 75%)",
+        }}
+      />
     </div>
   );
 }

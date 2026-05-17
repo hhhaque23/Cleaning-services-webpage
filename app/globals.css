@@ -49,18 +49,12 @@ body {
 }
 
 body {
+  /* The cleaning-photo collage in <CleaningAtmosphere /> provides the page
+     theme. We keep only a very faint warm wash on the body so the page
+     doesn't read as plain white when the collage is suspended. */
   background-image:
-    radial-gradient(ellipse 90% 50% at 50% 0%, oklch(0.91 0.025 220 / 0.55), transparent 60%),
-    radial-gradient(ellipse 70% 60% at 100% 100%, oklch(0.93 0.03 145 / 0.45), transparent 60%),
-    radial-gradient(ellipse 70% 60% at 0% 80%, oklch(0.91 0.025 220 / 0.4), transparent 60%);
+    radial-gradient(ellipse 80% 50% at 50% 0%, oklch(0.91 0.02 220 / 0.25), transparent 65%);
   min-height: 100vh;
-}
-/* background-attachment: fixed is expensive on iOS Safari (repaint per scroll).
-   Keep it only on desktop where the cost is negligible. */
-@media (min-width: 1024px) and (hover: hover) {
-  body {
-    background-attachment: fixed;
-  }
 }
 
 *:focus-visible {

@@ -2,10 +2,24 @@
 
 import Link from "next/link";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { ArrowDownRight } from "lucide-react";
 import { MagneticButton } from "./motion/MagneticButton";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
+
+function useEdgeGlow() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const onMouseMove = useCallback((e: React.MouseEvent) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    el.style.setProperty("--gx", `${x}%`);
+    el.style.setProperty("--gy", `${y}%`);
+  }, []);
+  return { ref, onMouseMove };
+}
 
 const STEPS = [
   {
@@ -103,40 +117,14 @@ export function HowItWorks() {
             {STEPS.map((s, i) => {
               const Glyph = SYMBOLS[s.n];
               return (
-                <motion.li
+                <StepCard
                   key={s.n}
-                  initial={{ opacity: 0, y: 22 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.55, delay: i * 0.1, ease: EASE_OUT_QUINT }}
-                  className="relative"
-                >
-                  <motion.div
-                    style={reduce ? undefined : { y: cardYs[i] }}
-                    className="relative rounded-[1.5rem] border border-line-strong/40 bg-[var(--surface)] overflow-hidden shadow-soft hover:shadow-card transition-shadow"
-                  >
-                    <div className="relative h-44 sm:h-48 lg:h-52 flex items-center justify-center bg-gradient-to-b from-[oklch(0.96_0.022_146)] to-[oklch(0.985_0.006_220)] overflow-hidden">
-                      <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--surface)] text-ink-950 text-[10px] font-bold uppercase tracking-[0.14em] px-2.5 py-1 ring-1 ring-line-strong/60">
-                        <span className="inline-block h-1 w-1 rounded-full bg-grass-500" />
-                        Step {s.n}
-                      </span>
-                      <Glyph />
-                    </div>
-
-                    <div className="px-6 pt-6 pb-7">
-                      <h3 className="font-display font-extrabold text-2xl tracking-[-0.02em] text-ink-950">
-                        {s.title}
-                      </h3>
-                      <p className="mt-2 text-[15px] text-[var(--ink-soft,oklch(0.43_0.04_230))] leading-relaxed text-pretty">
-                        {s.body}
-                      </p>
-                      <div className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-grass-700">
-                        <ArrowDownRight className="h-3.5 w-3.5" />
-                        {s.accent}
-                      </div>
-                    </div>
-                  </motion.div>
-                </motion.li>
+                  step={s}
+                  index={i}
+                  Glyph={Glyph}
+                  cardY={cardYs[i]}
+                  reduce={!!reduce}
+                />
               );
             })}
           </ol>
@@ -165,6 +153,79 @@ export function HowItWorks() {
         </motion.div>
       </div>
     </section>
+  );
+}
+
+type StepCardProps = {
+  step: { n: string; title: string; body: string; accent: string };
+  index: number;
+  Glyph: React.FC;
+  cardY: import("framer-motion").MotionValue<number>;
+  reduce: boolean;
+};
+
+function StepCard({ step, index, Glyph, cardY, reduce }: StepCardProps) {
+  const { ref, onMouseMove } = useEdgeGlow();
+  return (
+    <motion.li
+      initial={{ opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.55, delay: index * 0.1, ease: EASE_OUT_QUINT }}
+      className="relative"
+    >
+      <motion.div
+        ref={ref}
+        onMouseMove={onMouseMove}
+        style={reduce ? undefined : { y: cardY }}
+        className="group/glow relative rounded-[1.5rem] bg-[var(--surface)] shadow-soft hover:shadow-card transition-shadow"
+      >
+        {/* Edge glow ring — radial gradient masked to a 2px border ring,
+            cursor position drives where the bright spot sits. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -inset-px rounded-[inherit] opacity-0 group-hover/glow:opacity-100 transition-opacity duration-300"
+          style={{
+            background:
+              "radial-gradient(220px circle at var(--gx, 50%) var(--gy, 50%), oklch(0.78 0.16 145 / 0.85), oklch(0.65 0.13 220 / 0.45) 38%, transparent 70%)",
+            padding: 1.5,
+            WebkitMask:
+              "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+            WebkitMaskComposite: "xor",
+            maskComposite: "exclude",
+          }}
+        />
+
+        {/* Static base border (visible when not hovering) */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 rounded-[inherit] border border-line-strong/40 group-hover/glow:border-transparent transition-colors duration-300"
+        />
+
+        <div className="relative rounded-[inherit] overflow-hidden">
+          <div className="relative h-44 sm:h-48 lg:h-52 flex items-center justify-center bg-gradient-to-b from-[oklch(0.96_0.022_146)] to-[oklch(0.985_0.006_220)] overflow-hidden">
+            <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--surface)] text-ink-950 text-[10px] font-bold uppercase tracking-[0.14em] px-2.5 py-1 ring-1 ring-line-strong/60">
+              <span className="inline-block h-1 w-1 rounded-full bg-grass-500" />
+              Step {step.n}
+            </span>
+            <Glyph />
+          </div>
+
+          <div className="px-6 pt-6 pb-7">
+            <h3 className="font-display font-extrabold text-2xl tracking-[-0.02em] text-ink-950">
+              {step.title}
+            </h3>
+            <p className="mt-2 text-[15px] text-[var(--ink-soft,oklch(0.43_0.04_230))] leading-relaxed text-pretty">
+              {step.body}
+            </p>
+            <div className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-grass-700">
+              <ArrowDownRight className="h-3.5 w-3.5" />
+              {step.accent}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </motion.li>
   );
 }
 

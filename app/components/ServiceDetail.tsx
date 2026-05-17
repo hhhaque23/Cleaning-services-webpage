@@ -39,9 +39,9 @@ type TierContent = {
 
 const CONTENT: Record<Tier, TierContent> = {
   Standard: {
-    hero: PHOTOS.livingRoom,
+    hero: PHOTOS.livingRoomAlt,
     heroAlt: "A sunlit living room, the standard finish",
-    includesPhoto: PHOTOS.livingRoom,
+    includesPhoto: PHOTOS.kitchen,
     includesAlt: "A living room mid-afternoon, dusted and vacuumed",
     Icon: Sparkles,
     palette: "cyan",
@@ -103,9 +103,9 @@ const CONTENT: Record<Tier, TierContent> = {
     durationHint: "Typical 2 bed / 1 bath: 1.5 to 2 hours.",
   },
   Deep: {
-    hero: PHOTOS.bathroom,
+    hero: PHOTOS.bathroomBright,
     heroAlt: "A bright bathroom with detailed surfaces, after a deep clean",
-    includesPhoto: PHOTOS.livingRoom,
+    includesPhoto: PHOTOS.diningRoom,
     includesAlt: "A living room freshly deep-cleaned, including baseboards and vents",
     Icon: Hammer,
     palette: "grass",
@@ -164,7 +164,7 @@ const CONTENT: Record<Tier, TierContent> = {
   MoveInOut: {
     hero: PHOTOS.emptyRoom,
     heroAlt: "An empty room ready for the next tenant, freshly cleaned",
-    includesPhoto: PHOTOS.bedroom,
+    includesPhoto: PHOTOS.bedroomAlt,
     includesAlt: "A bedroom emptied and turned, ready for handover",
     Icon: KeyRound,
     palette: "mixed",
