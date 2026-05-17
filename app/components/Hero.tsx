@@ -164,17 +164,17 @@ export function Hero() {
             >
               <div className="flex items-center gap-2.5">
                 <div className="flex -space-x-1.5">
-                  {[1, 2, 3].map((i) => (
+                  {[PHOTOS.kitchen, PHOTOS.bathroomBright, PHOTOS.bedroomAlt].map((src, i) => (
                     <span
                       key={i}
-                      className="inline-flex h-7 w-7 rounded-full ring-2 ring-[var(--surface)] overflow-hidden bg-ink-100"
+                      className="inline-flex h-7 w-7 rounded-full ring-2 ring-[var(--surface)] overflow-hidden bg-ink-100 relative"
                     >
                       <Image
-                        src={PHOTOS.team[i].photo}
+                        src={src}
                         alt=""
                         aria-hidden="true"
-                        width={28}
-                        height={28}
+                        fill
+                        sizes="28px"
                         className="object-cover"
                       />
                     </span>
@@ -186,7 +186,7 @@ export function Hero() {
                       <Star key={i} className="h-3 w-3 fill-grass-500 stroke-grass-500" />
                     ))}
                   </div>
-                  <div className="text-xs text-ink-700 font-medium">4.9 from 2,300+ reviews</div>
+                  <div className="text-xs text-ink-700 font-medium">4.9 from 2,300+ cleans</div>
                 </div>
               </div>
             </motion.div>

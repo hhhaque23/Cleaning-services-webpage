@@ -2,9 +2,55 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { BadgeCheck } from "lucide-react";
+import { BadgeCheck, Clock } from "lucide-react";
 import { PHOTOS } from "@/lib/unsplash";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
+
+type Job = {
+  src: string;
+  room: string;
+  city: string;
+  tier: string;
+  when: string;
+};
+
+const JOBS: Job[] = [
+  {
+    src: PHOTOS.kitchen,
+    room: "Kitchen",
+    city: "Troy",
+    tier: "Standard",
+    when: "Yesterday",
+  },
+  {
+    src: PHOTOS.bathroomBright,
+    room: "Bathroom",
+    city: "Rochester",
+    tier: "Deep",
+    when: "2 days ago",
+  },
+  {
+    src: PHOTOS.bedroomAlt,
+    room: "Bedroom",
+    city: "Birmingham",
+    tier: "Biweekly",
+    when: "3 days ago",
+  },
+  {
+    src: PHOTOS.diningRoom,
+    room: "Dining",
+    city: "Bloomfield Hills",
+    tier: "Standard",
+    when: "4 days ago",
+  },
+  {
+    src: PHOTOS.livingRoomAlt,
+    room: "Living",
+    city: "Royal Oak",
+    tier: "Weekly",
+    when: "5 days ago",
+  },
+];
 
 export function Team() {
   const reduce = useReducedMotion();
@@ -20,14 +66,15 @@ export function Team() {
           className="max-w-2xl"
         >
           <div className="inline-flex items-center gap-1.5 rounded-full bg-ink-100 text-ink-800 text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">
-            <BadgeCheck className="h-3.5 w-3.5" /> Meet your cleaners
+            <BadgeCheck className="h-3.5 w-3.5" /> Recent jobs
           </div>
           <h2 className="mt-4 font-display font-extrabold text-display-1 tracking-[-0.022em] text-ink-950">
-            The same trusted face,{" "}
-            <span className="italic font-medium text-ink-700">every visit.</span>
+            Real homes,{" "}
+            <span className="italic font-medium text-ink-700">cleaned this week.</span>
           </h2>
           <p className="mt-4 text-ink-800/80 text-lg leading-relaxed">
-            We hire locally, train relentlessly, and pay above market. No subcontractors, ever.
+            A small slice of the rooms we&apos;ve handed back to their owners over the last few days
+            across metro Detroit.
           </p>
         </motion.div>
 
@@ -38,11 +85,11 @@ export function Team() {
           variants={{ show: { transition: { staggerChildren: 0.1 } } }}
           className="mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5"
         >
-          {PHOTOS.team.map((m, i) => {
-            const dir = i % 2 === 0 ? 1.6 : -1.6;
+          {JOBS.map((j, i) => {
+            const dir = i % 2 === 0 ? 1.4 : -1.4;
             return (
               <motion.li
-                key={m.name}
+                key={`${j.room}-${j.city}`}
                 variants={{
                   hidden: { opacity: 0, y: 22, rotate: dir, scale: 0.96 },
                   show: {
@@ -73,24 +120,22 @@ export function Team() {
                   className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-soft group-hover:shadow-lift transition-shadow"
                 >
                   <Image
-                    src={m.photo}
-                    alt={m.name}
+                    src={j.src}
+                    alt={`${j.room} cleaned in ${j.city}`}
                     fill
                     sizes="(min-width: 1024px) 220px, 45vw"
                     className="object-cover transition-transform duration-700 ease-out-quint group-hover:scale-110"
                   />
-                  <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink-950/95 via-ink-950/40 to-transparent transition-opacity duration-500" />
+                  <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink-950/95 via-ink-950/40 to-transparent" />
                   <div className="absolute bottom-3 left-3 right-3 text-white">
-                    <div className="font-display font-bold text-base">{m.name}</div>
-                    <motion.div
-                      initial={false}
-                      className="text-xs text-white/85 mt-0.5"
-                    >
-                      {m.role}
-                    </motion.div>
+                    <div className="font-display font-bold text-base">{j.room}</div>
+                    <div className="text-xs text-white/85 mt-0.5">
+                      {j.city} · {j.tier}
+                    </div>
                   </div>
                   <div className="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full bg-white/90 backdrop-blur-sm text-ink-950 text-[10px] font-bold uppercase tracking-wider px-2 py-1">
-                    <BadgeCheck className="h-3 w-3 text-grass-700" /> Vetted
+                    <Clock className="h-3 w-3 text-grass-700" />
+                    {j.when}
                   </div>
                 </motion.div>
               </motion.li>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 import { PHOTOS } from "@/lib/unsplash";
@@ -101,37 +100,32 @@ function ReviewCard({ r }: { r: Review }) {
       <blockquote className="relative mt-3 text-ink-900 text-[16px] sm:text-[17px] leading-[1.55] font-medium">
         &ldquo;{r.body}&rdquo;
       </blockquote>
-      <figcaption className="relative mt-5 flex items-center gap-3 text-sm">
-        <span className="relative h-9 w-9 flex-none rounded-full overflow-hidden ring-2 ring-[var(--surface)]">
-          <Image src={r.photo} alt="" aria-hidden="true" fill sizes="36px" className="object-cover" />
-        </span>
-        <span className="leading-tight min-w-0">
-          <span className="block font-semibold text-ink-950 truncate">
-            {r.name}
-            <span className="text-ink-faint font-normal"> · {r.city}</span>
+      <figcaption className="relative mt-5 flex flex-col gap-1.5 text-sm">
+        <div className="flex items-center gap-1 text-grass-700">
+          {[0, 1, 2, 3, 4].map((i) => (
+            <motion.span
+              key={i}
+              initial={{ opacity: 0, scale: 0 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-20px" }}
+              transition={{
+                duration: 0.3,
+                delay: i * 0.06,
+                type: "spring",
+                stiffness: 320,
+                damping: 16,
+              }}
+            >
+              <Star className="h-3.5 w-3.5 fill-grass-500 stroke-grass-500" />
+            </motion.span>
+          ))}
+          <span className="ml-2 text-[11px] uppercase tracking-wider text-ink-700 font-semibold">
+            {r.service}
           </span>
-          <span className="mt-0.5 flex items-center gap-1 text-grass-700">
-            {[0, 1, 2, 3, 4].map((i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-20px" }}
-                transition={{
-                  duration: 0.3,
-                  delay: i * 0.06,
-                  type: "spring",
-                  stiffness: 320,
-                  damping: 16,
-                }}
-              >
-                <Star className="h-3 w-3 fill-grass-500 stroke-grass-500" />
-              </motion.span>
-            ))}
-            <span className="ml-1.5 text-[11px] uppercase tracking-wider text-ink-700 font-semibold">
-              {r.service}
-            </span>
-          </span>
+        </div>
+        <span className="font-semibold text-ink-950">
+          {r.name}
+          <span className="text-ink-faint font-normal"> · {r.city}</span>
         </span>
       </figcaption>
     </motion.figure>

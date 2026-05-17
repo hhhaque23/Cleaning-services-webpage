@@ -1,16 +1,20 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { MapPin, Clock, Sparkles } from "lucide-react";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 import { MagneticButton } from "./motion/MagneticButton";
+import { CountUp } from "./motion/CountUp";
+import { PHOTOS } from "@/lib/unsplash";
 
 type City = { name: string; minutes: number };
 
+// Sorted ascending by minutes — used directly for distance-ordered wave reveal.
 const CITIES: City[] = [
   { name: "Rochester", minutes: 5 },
-  { name: "Auburn Hills", minutes: 9 },
   { name: "Lake Orion", minutes: 8 },
+  { name: "Auburn Hills", minutes: 9 },
   { name: "Troy", minutes: 11 },
   { name: "Shelby Twp", minutes: 12 },
   { name: "Bloomfield Twp", minutes: 14 },
@@ -25,6 +29,14 @@ const CITIES: City[] = [
   { name: "Berkley", minutes: 24 },
 ];
 
+const HQ_PHOTOS = [
+  PHOTOS.kitchen,
+  PHOTOS.bathroomBright,
+  PHOTOS.diningRoom,
+  PHOTOS.bedroomAlt,
+  PHOTOS.livingRoomAlt,
+];
+
 export function ServiceAreas() {
   const viewport = { once: true, margin: "-60px" } as const;
   const reduce = useReducedMotion();
@@ -34,7 +46,6 @@ export function ServiceAreas() {
       id="areas"
       className="relative py-24 sm:py-32 scroll-mt-24 bg-[var(--surface-tint)] overflow-hidden"
     >
-
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -67,20 +78,28 @@ export function ServiceAreas() {
         >
           <div className="absolute inset-0 noise opacity-40 pointer-events-none" />
 
-          <div className="relative grid sm:grid-cols-[1fr_auto] items-center gap-6">
+          <div className="relative grid lg:grid-cols-[1fr_auto] items-center gap-8">
             <div className="flex items-start gap-4">
               <span className="relative inline-flex h-14 w-14 flex-none items-center justify-center rounded-2xl bg-[oklch(0.68_0.18_145/0.2)] text-grass-300">
                 {!reduce && (
-                  <motion.span
-                    aria-hidden
-                    animate={{ scale: [1, 1.4, 1], opacity: [0.6, 0, 0.6] }}
-                    transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut" }}
-                    className="absolute inset-0 rounded-2xl bg-grass-500/30"
-                  />
+                  <>
+                    <motion.span
+                      aria-hidden
+                      animate={{ scale: [1, 2.2, 2.2], opacity: [0.55, 0, 0] }}
+                      transition={{ duration: 2.6, repeat: Infinity, ease: "easeOut" }}
+                      className="absolute inset-0 rounded-2xl border border-grass-500/55"
+                    />
+                    <motion.span
+                      aria-hidden
+                      animate={{ scale: [1, 2.2, 2.2], opacity: [0.4, 0, 0] }}
+                      transition={{ duration: 2.6, repeat: Infinity, ease: "easeOut", delay: 1.3 }}
+                      className="absolute inset-0 rounded-2xl border border-grass-500/45"
+                    />
+                  </>
                 )}
                 <MapPin className="relative h-6 w-6" strokeWidth={2.2} />
               </span>
-              <div>
+              <div className="min-w-0">
                 <div className="inline-flex items-center gap-1.5 rounded-full bg-grass-500/15 text-grass-300 text-[10px] font-bold uppercase tracking-[0.14em] px-2.5 py-1">
                   <span className="inline-block h-1 w-1 rounded-full bg-grass-300" />
                   Headquarters
@@ -88,15 +107,36 @@ export function ServiceAreas() {
                 <div className="mt-2 font-display font-extrabold text-2xl sm:text-3xl tracking-[-0.022em]">
                   Rochester Hills, MI
                 </div>
-                <p className="mt-1 text-white/75 text-sm sm:text-base leading-relaxed">
+                <p className="mt-1 text-white/75 text-sm sm:text-base leading-relaxed max-w-md">
                   Our home base. Crews dispatched from here cover{" "}
                   <span className="font-semibold text-white">15 nearby neighborhoods</span>,{" "}
                   typically within the hour.
                 </p>
+
+                {/* HQ photo strip — 5 thumbnails inside the dark card */}
+                <div className="mt-4 grid grid-cols-5 gap-1.5 max-w-md">
+                  {HQ_PHOTOS.map((src, i) => (
+                    <div
+                      key={i}
+                      className="relative aspect-square rounded-md overflow-hidden ring-1 ring-white/10"
+                    >
+                      <Image
+                        src={src}
+                        alt=""
+                        aria-hidden
+                        fill
+                        sizes="60px"
+                        className="object-cover opacity-85"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink-950/40 to-transparent" />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-3 sm:grid-cols-1 sm:auto-rows-min gap-3 sm:gap-2 text-center sm:text-right">
+            <div className="grid grid-cols-3 lg:grid-cols-1 lg:auto-rows-min gap-2 lg:gap-2 text-center lg:text-right">
               <Stat label="Crews" value="14" />
               <Stat label="Zip codes" value="22" />
               <Stat label="Coverage radius" value="25 mi" />
@@ -104,15 +144,15 @@ export function ServiceAreas() {
           </div>
         </motion.div>
 
-        {/* City grid */}
+        {/* City grid — distance-ordered wave reveal */}
         <motion.ul
           initial="hidden"
           whileInView="show"
           viewport={viewport}
-          variants={{ show: { transition: { staggerChildren: 0.04, delayChildren: 0.2 } } }}
+          variants={{ show: { transition: { staggerChildren: 0.05, delayChildren: 0.2 } } }}
           className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3"
         >
-          {CITIES.map((c) => (
+          {CITIES.map((c, i) => (
             <motion.li
               key={c.name}
               variants={{
@@ -120,27 +160,11 @@ export function ServiceAreas() {
                 show: {
                   opacity: 1,
                   y: 0,
-                  transition: { duration: 0.4, ease: EASE_OUT_QUINT },
+                  transition: { duration: 0.45, ease: EASE_OUT_QUINT },
                 },
               }}
             >
-              <MagneticButton as="div" radius={40} strength={0.18}>
-                <div className="group relative rounded-2xl border border-line-strong/40 bg-[var(--surface-elevated)] px-4 py-3.5 hover:border-grass-500/50 hover:shadow-card transition-all cursor-default">
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="font-display font-bold text-ink-950 text-[15px] tracking-[-0.01em] truncate">
-                      {c.name}
-                    </div>
-                    <span className="relative inline-flex h-1.5 w-1.5 flex-none">
-                      <span className="absolute inset-0 rounded-full bg-grass-500/40 group-hover:bg-grass-500 transition-colors" />
-                      <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-grass-500 group-hover:scale-125 transition-transform" />
-                    </span>
-                  </div>
-                  <div className="mt-1.5 inline-flex items-center gap-1 text-xs text-ink-700 font-medium tabular-nums">
-                    <Clock className="h-3 w-3 text-ink-faint" />
-                    {c.minutes} min from HQ
-                  </div>
-                </div>
-              </MagneticButton>
+              <CityCard city={c} index={i} reduce={!!reduce} />
             </motion.li>
           ))}
         </motion.ul>
@@ -164,6 +188,45 @@ export function ServiceAreas() {
         </motion.div>
       </div>
     </section>
+  );
+}
+
+function CityCard({ city, index, reduce }: { city: City; index: number; reduce: boolean }) {
+  // Continuous pulse delay scales with distance from HQ — closer cities pulse
+  // first, then it ripples outward. Reads as "live dispatch heatmap."
+  const pulseDelay = (city.minutes / 4) % 4;
+
+  return (
+    <MagneticButton as="div" radius={40} strength={0.18}>
+      <div className="group relative rounded-2xl border border-line-strong/40 bg-[var(--surface-elevated)] px-4 py-3.5 hover:border-grass-500/50 hover:shadow-card transition-all cursor-default overflow-hidden">
+        <div className="flex items-center justify-between gap-2">
+          <div className="font-display font-bold text-ink-950 text-[15px] tracking-[-0.01em] truncate">
+            {city.name}
+          </div>
+          <span className="relative inline-flex h-2 w-2 flex-none">
+            {!reduce && (
+              <motion.span
+                aria-hidden
+                animate={{ scale: [1, 2.4, 2.4], opacity: [0.6, 0, 0] }}
+                transition={{
+                  duration: 2.4,
+                  repeat: Infinity,
+                  ease: "easeOut",
+                  delay: pulseDelay,
+                }}
+                className="absolute inset-0 rounded-full bg-grass-500"
+              />
+            )}
+            <span className="relative inline-block h-2 w-2 rounded-full bg-grass-500 group-hover:scale-125 transition-transform" />
+          </span>
+        </div>
+        <div className="mt-1.5 inline-flex items-center gap-1 text-xs text-ink-700 font-medium tabular-nums">
+          <Clock className="h-3 w-3 text-ink-faint" />
+          <CountUp to={city.minutes} duration={1.2 + index * 0.05} />
+          <span>min from HQ</span>
+        </div>
+      </div>
+    </MagneticButton>
   );
 }
 

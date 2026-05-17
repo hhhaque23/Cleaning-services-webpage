@@ -1,11 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useCallback, useRef } from "react";
 import { ArrowDownRight } from "lucide-react";
 import { MagneticButton } from "./motion/MagneticButton";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
+import { PHOTOS } from "@/lib/unsplash";
 
 function useEdgeGlow() {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -27,18 +29,21 @@ const STEPS = [
     title: "Configure",
     body: "Pick a tier, set rooms and add-ons. The price is live. No hidden fees, no quote forms.",
     accent: "Tap. Drag. Done.",
+    photos: [PHOTOS.kitchen, PHOTOS.bathroomBright],
   },
   {
     n: "02",
     title: "Schedule",
     body: "Open dates and time windows are shown in real time. Same-day available when slots are open.",
     accent: "It's a live calendar.",
+    photos: [PHOTOS.bedroomAlt, PHOTOS.diningRoom],
   },
   {
     n: "03",
     title: "Relax",
     body: "We text within 15 minutes with your cleaner's photo. You're charged only after the clean is approved.",
     accent: "Sleep in tomorrow.",
+    photos: [PHOTOS.livingRoomAlt, PHOTOS.hallway],
   },
 ];
 
@@ -153,7 +158,7 @@ export function HowItWorks() {
 }
 
 type StepCardProps = {
-  step: { n: string; title: string; body: string; accent: string };
+  step: { n: string; title: string; body: string; accent: string; photos: string[] };
   index: number;
   Glyph: React.FC;
   cardY: import("framer-motion").MotionValue<number>;
@@ -207,7 +212,7 @@ function StepCard({ step, index, Glyph, cardY, reduce }: StepCardProps) {
             <Glyph />
           </div>
 
-          <div className="px-6 pt-6 pb-7">
+          <div className="px-6 pt-6 pb-6">
             <h3 className="font-display font-extrabold text-2xl tracking-[-0.02em] text-ink-950">
               {step.title}
             </h3>
@@ -217,6 +222,24 @@ function StepCard({ step, index, Glyph, cardY, reduce }: StepCardProps) {
             <div className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-grass-700">
               <ArrowDownRight className="h-3.5 w-3.5" />
               {step.accent}
+            </div>
+            <div className="mt-5 grid grid-cols-2 gap-2">
+              {step.photos.map((src, i) => (
+                <div
+                  key={i}
+                  className="relative aspect-[4/3] rounded-lg overflow-hidden ring-1 ring-line"
+                >
+                  <Image
+                    src={src}
+                    alt=""
+                    aria-hidden
+                    fill
+                    sizes="(min-width: 1024px) 14vw, 30vw"
+                    className="object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from "framer-motion";
 import { useCallback, useRef } from "react";
@@ -7,6 +8,13 @@ import { ArrowRight, Phone, Sparkles, CalendarClock } from "lucide-react";
 import { SplitText } from "./motion/SplitText";
 import { MagneticButton } from "./motion/MagneticButton";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
+import { PHOTOS } from "@/lib/unsplash";
+
+const CTA_PHOTOS = [
+  { src: PHOTOS.kitchen, alt: "A kitchen after a Pristine clean" },
+  { src: PHOTOS.bathroomBright, alt: "A bathroom after a Pristine clean" },
+  { src: PHOTOS.bedroomAlt, alt: "A bedroom after a Pristine clean" },
+];
 
 const COMMITMENT_FRAGMENTS = [
   "$0 today",
@@ -52,6 +60,39 @@ export function FinalCTA() {
             style={{ background: spotlight }}
             className="absolute inset-0 pointer-events-none"
           />
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-60px" }}
+            variants={{ show: { transition: { staggerChildren: 0.08 } } }}
+            className="relative grid grid-cols-3 gap-3 mb-8"
+          >
+            {CTA_PHOTOS.map((p) => (
+              <motion.div
+                key={p.src}
+                variants={{
+                  hidden: { opacity: 0, y: 14 },
+                  show: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.55, ease: EASE_OUT_QUINT },
+                  },
+                }}
+                className="relative aspect-[4/5] rounded-xl overflow-hidden ring-1 ring-white/10"
+              >
+                <Image
+                  src={p.src}
+                  alt={p.alt}
+                  fill
+                  sizes="(min-width: 1024px) 22vw, 30vw"
+                  className="object-cover opacity-75"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink-950/85 via-ink-950/35 to-transparent" />
+              </motion.div>
+            ))}
+          </motion.div>
+
           <div className="relative">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-[oklch(0.985_0.006_220/0.1)] backdrop-blur-sm text-[var(--surface)] text-[11px] font-semibold px-3 py-1.5 uppercase tracking-[0.14em]">
               <Sparkles className="h-3.5 w-3.5 text-grass-300" /> Same-day available

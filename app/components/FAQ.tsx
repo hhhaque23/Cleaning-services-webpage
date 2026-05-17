@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { Plus, MessageCircleQuestion } from "lucide-react";
+import { Plus, MessageCircleQuestion, Phone } from "lucide-react";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
+import { PHOTOS } from "@/lib/unsplash";
 
 const FAQS = [
   {
@@ -40,24 +43,63 @@ export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (
     <section id="faq" className="relative py-24 sm:py-32 scroll-mt-24">
-      <div className="mx-auto max-w-3xl px-5 sm:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.65 }}
-          className="max-w-xl"
-        >
-          <div className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
-            <MessageCircleQuestion className="h-3.5 w-3.5" /> Questions, answered
-          </div>
-          <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance leading-[1.05]">
-            Everything you&apos;d ask{" "}
-            <span className="italic font-medium text-ink-700">before booking.</span>
-          </h2>
-        </motion.div>
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="grid lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-16 items-start">
+          <div className="lg:sticky lg:top-24 space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.65, ease: EASE_OUT_QUINT }}
+            >
+              <div className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
+                <MessageCircleQuestion className="h-3.5 w-3.5" /> Questions, answered
+              </div>
+              <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance leading-[1.05]">
+                Everything you&apos;d ask{" "}
+                <span className="italic font-medium text-ink-700">before booking.</span>
+              </h2>
+            </motion.div>
 
-        <ul className="mt-12 divide-y divide-line">
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, ease: EASE_OUT_QUINT, delay: 0.1 }}
+              className="relative aspect-[4/5] rounded-[1.75rem] overflow-hidden shadow-card"
+            >
+              <Image
+                src={PHOTOS.windowSeat}
+                alt="A bright clean room with a window seat"
+                fill
+                sizes="(min-width: 1024px) 36vw, 100vw"
+                className="object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-ink-950/15 to-transparent" />
+              <div className="absolute bottom-5 left-5 right-5 text-white">
+                <div className="text-[11px] uppercase tracking-[0.14em] font-semibold text-grass-300">
+                  Still curious?
+                </div>
+                <p className="mt-1.5 font-display font-bold text-xl leading-[1.2] max-w-xs">
+                  Text a real human at{" "}
+                  <Link
+                    href="tel:+12485550199"
+                    className="underline underline-offset-4 hover:text-grass-300 transition-colors"
+                  >
+                    (248) 555-0199
+                  </Link>
+                  .
+                </p>
+                <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-white/85">
+                  <Phone className="h-3.5 w-3.5" />
+                  Replies usually within 15 minutes
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          <ul className="divide-y divide-line">
           {FAQS.map((f, i) => {
             const isOpen = open === i;
             return (
@@ -122,7 +164,8 @@ export function FAQ() {
               </motion.li>
             );
           })}
-        </ul>
+          </ul>
+        </div>
       </div>
     </section>
   );
