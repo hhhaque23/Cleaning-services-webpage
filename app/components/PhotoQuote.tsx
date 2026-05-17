@@ -37,7 +37,7 @@ export function PhotoQuote() {
               className="absolute inset-0"
             >
               <Image
-                src={PHOTOS.livingRoom}
+                src={PHOTOS.photoQuote}
                 alt="A sunlit living room, mid-afternoon, after a recurring clean"
                 fill
                 sizes="(min-width: 1024px) 540px, 100vw"

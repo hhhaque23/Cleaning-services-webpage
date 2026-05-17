@@ -164,7 +164,7 @@ export function Hero() {
             >
               <div className="flex items-center gap-2.5">
                 <div className="flex -space-x-1.5">
-                  {[PHOTOS.kitchen, PHOTOS.bathroomBright, PHOTOS.bedroomAlt].map((src, i) => (
+                  {[PHOTOS.heroThumb1, PHOTOS.heroThumb2, PHOTOS.heroThumb3].map((src, i) => (
                     <span
                       key={i}
                       className="inline-flex h-7 w-7 rounded-full ring-2 ring-[var(--surface)] overflow-hidden bg-ink-100 relative"

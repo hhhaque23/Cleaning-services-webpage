@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
-import { PHOTOS } from "@/lib/unsplash";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 type Review = {
@@ -11,7 +10,6 @@ type Review = {
   city: string;
   service: string;
   body: string;
-  photo: string;
 };
 
 const REVIEWS: Review[] = [
@@ -21,7 +19,6 @@ const REVIEWS: Review[] = [
     service: "Biweekly",
     body:
       "Booked at 10pm Sunday, cleaner showed up Monday morning. The same person every two weeks since. I forgot what doing chores even feels like.",
-    photo: PHOTOS.reviewers.sarah,
   },
   {
     name: "Daniel K.",
@@ -29,7 +26,6 @@ const REVIEWS: Review[] = [
     service: "Move-out",
     body:
       "Landlord refunded my full deposit, no questions asked. The photo report at the end was worth the price by itself.",
-    photo: PHOTOS.reviewers.daniel,
   },
   {
     name: "Lena P.",
@@ -37,7 +33,6 @@ const REVIEWS: Review[] = [
     service: "Deep clean",
     body:
       "I have a labrador and a 2-year-old. They got pet hair out of corners I didn't know existed. Eco products didn't bother either of them.",
-    photo: PHOTOS.reviewers.lena,
   },
   {
     name: "Aman S.",
@@ -45,7 +40,6 @@ const REVIEWS: Review[] = [
     service: "Weekly",
     body:
       "The price calculator was honest. Final invoice matched it exactly. No 'oh by the way' charges. Refreshing.",
-    photo: PHOTOS.reviewers.aman,
   },
   {
     name: "Chloe R.",
@@ -53,7 +47,6 @@ const REVIEWS: Review[] = [
     service: "Standard",
     body:
       "Texted me 14 minutes after I booked. Cleaner had a photo and bio. Felt like meeting a neighbor, not a stranger.",
-    photo: PHOTOS.reviewers.chloe,
   },
   {
     name: "Nathan G.",
@@ -61,7 +54,6 @@ const REVIEWS: Review[] = [
     service: "Move-in",
     body:
       "We bought a place the previous owner had cats in for 15 years. They turned it around in 6 hours. Smells like a hotel now.",
-    photo: PHOTOS.reviewers.nathan,
   },
   {
     name: "Rachel D.",
@@ -69,7 +61,6 @@ const REVIEWS: Review[] = [
     service: "Biweekly",
     body:
       "My cleaner remembers that I prefer the kitchen left to last. Tiny detail, huge difference. Subscribed for over a year now.",
-    photo: PHOTOS.reviewers.rachel,
   },
   {
     name: "Omar L.",
@@ -77,7 +68,6 @@ const REVIEWS: Review[] = [
     service: "Deep clean",
     body:
       "They missed a spot above the fridge. Texted them at 9pm, they came back at 8am the next day. That's a real guarantee.",
-    photo: PHOTOS.reviewers.omar,
   },
 ];
 

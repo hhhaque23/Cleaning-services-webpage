@@ -3,19 +3,14 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Camera } from "lucide-react";
-import { PHOTOS } from "@/lib/unsplash";
+import { ALL_PHOTOS } from "@/lib/unsplash";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
-const TILES: { src: string; label: string; sub: string }[] = [
-  { src: PHOTOS.kitchen, label: "Kitchen", sub: "Troy · Standard" },
-  { src: PHOTOS.bathroomBright, label: "Bathroom", sub: "Rochester · Deep" },
-  { src: PHOTOS.bedroomAlt, label: "Bedroom", sub: "Birmingham · Biweekly" },
-  { src: PHOTOS.diningRoom, label: "Dining", sub: "Bloomfield · Standard" },
-  { src: PHOTOS.livingRoomAlt, label: "Living", sub: "Auburn Hills · Weekly" },
-  { src: PHOTOS.hallway, label: "Hallway", sub: "Rochester Hills · Move-out" },
-  { src: PHOTOS.bathroomAlt, label: "Bathroom", sub: "Madison Heights · Deep" },
-  { src: PHOTOS.windowSeat, label: "Living", sub: "Royal Oak · Biweekly" },
-];
+// 8 distinct photos for the grid. Indices chosen so within this grid every
+// photo is unique, and to minimize repeat with other home-page sections.
+const TILE_INDICES = [9, 11, 12, 17, 22, 1, 7, 18];
+
+const TILES = TILE_INDICES.map((i) => ALL_PHOTOS[i]);
 
 export function RecentTransformations() {
   return (

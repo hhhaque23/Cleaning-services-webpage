@@ -29,21 +29,21 @@ const STEPS = [
     title: "Configure",
     body: "Pick a tier, set rooms and add-ons. The price is live. No hidden fees, no quote forms.",
     accent: "Tap. Drag. Done.",
-    photos: [PHOTOS.kitchen, PHOTOS.bathroomBright],
+    photos: [PHOTOS.step1a, PHOTOS.step1b],
   },
   {
     n: "02",
     title: "Schedule",
     body: "Open dates and time windows are shown in real time. Same-day available when slots are open.",
     accent: "It's a live calendar.",
-    photos: [PHOTOS.bedroomAlt, PHOTOS.diningRoom],
+    photos: [PHOTOS.step2a, PHOTOS.step2b],
   },
   {
     n: "03",
     title: "Relax",
     body: "We text within 15 minutes with your cleaner's photo. You're charged only after the clean is approved.",
     accent: "Sleep in tomorrow.",
-    photos: [PHOTOS.livingRoomAlt, PHOTOS.hallway],
+    photos: [PHOTOS.step3a, PHOTOS.step3b],
   },
 ];
 

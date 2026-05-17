@@ -6,51 +6,7 @@ import { BadgeCheck, Clock } from "lucide-react";
 import { PHOTOS } from "@/lib/unsplash";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
-type Job = {
-  src: string;
-  room: string;
-  city: string;
-  tier: string;
-  when: string;
-};
-
-const JOBS: Job[] = [
-  {
-    src: PHOTOS.kitchen,
-    room: "Kitchen",
-    city: "Troy",
-    tier: "Standard",
-    when: "Yesterday",
-  },
-  {
-    src: PHOTOS.bathroomBright,
-    room: "Bathroom",
-    city: "Rochester",
-    tier: "Deep",
-    when: "2 days ago",
-  },
-  {
-    src: PHOTOS.bedroomAlt,
-    room: "Bedroom",
-    city: "Birmingham",
-    tier: "Biweekly",
-    when: "3 days ago",
-  },
-  {
-    src: PHOTOS.diningRoom,
-    room: "Dining",
-    city: "Bloomfield Hills",
-    tier: "Standard",
-    when: "4 days ago",
-  },
-  {
-    src: PHOTOS.livingRoomAlt,
-    room: "Living",
-    city: "Royal Oak",
-    tier: "Weekly",
-    when: "5 days ago",
-  },
-];
+const JOBS = [PHOTOS.team1, PHOTOS.team2, PHOTOS.team3, PHOTOS.team4, PHOTOS.team5];
 
 export function Team() {
   const reduce = useReducedMotion();

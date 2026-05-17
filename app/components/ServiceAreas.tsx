@@ -30,11 +30,11 @@ const CITIES: City[] = [
 ];
 
 const HQ_PHOTOS = [
-  PHOTOS.kitchen,
-  PHOTOS.bathroomBright,
-  PHOTOS.diningRoom,
-  PHOTOS.bedroomAlt,
-  PHOTOS.livingRoomAlt,
+  PHOTOS.hq1,
+  PHOTOS.hq2,
+  PHOTOS.hq3,
+  PHOTOS.hq4,
+  PHOTOS.hq5,
 ];
 
 export function ServiceAreas() {

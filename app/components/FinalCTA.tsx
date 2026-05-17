@@ -11,9 +11,9 @@ import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 import { PHOTOS } from "@/lib/unsplash";
 
 const CTA_PHOTOS = [
-  { src: PHOTOS.kitchen, alt: "A kitchen after a Pristine clean" },
-  { src: PHOTOS.bathroomBright, alt: "A bathroom after a Pristine clean" },
-  { src: PHOTOS.bedroomAlt, alt: "A bedroom after a Pristine clean" },
+  { src: PHOTOS.ctaOne, alt: "A living room after a Pristine clean" },
+  { src: PHOTOS.ctaTwo, alt: "A kitchen after a Pristine clean" },
+  { src: PHOTOS.ctaThree, alt: "A home exterior at dusk" },
 ];
 
 const COMMITMENT_FRAGMENTS = [

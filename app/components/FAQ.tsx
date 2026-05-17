@@ -69,7 +69,7 @@ export function FAQ() {
               className="relative aspect-[4/5] rounded-[1.75rem] overflow-hidden shadow-card"
             >
               <Image
-                src={PHOTOS.windowSeat}
+                src={PHOTOS.faqFeature}
                 alt="A bright clean room with a window seat"
                 fill
                 sizes="(min-width: 1024px) 36vw, 100vw"

@@ -78,7 +78,7 @@ export function SubscriptionCallout() {
               <div className="relative grid grid-cols-3 gap-2 mb-7">
                 <div className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-soft">
                   <Image
-                    src={PHOTOS.kitchen}
+                    src={PHOTOS.subOne}
                     alt="A kitchen on a subscribed biweekly visit"
                     fill
                     sizes="(min-width: 1024px) 14vw, 28vw"
@@ -88,7 +88,7 @@ export function SubscriptionCallout() {
                 </div>
                 <div className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-soft mt-4">
                   <Image
-                    src={PHOTOS.bathroomBright}
+                    src={PHOTOS.subTwo}
                     alt="A bathroom on a recurring deep clean"
                     fill
                     sizes="(min-width: 1024px) 14vw, 28vw"
@@ -98,7 +98,7 @@ export function SubscriptionCallout() {
                 </div>
                 <div className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-soft">
                   <Image
-                    src={PHOTOS.bedroomAlt}
+                    src={PHOTOS.subThree}
                     alt="A bedroom finished on a weekly schedule"
                     fill
                     sizes="(min-width: 1024px) 14vw, 28vw"

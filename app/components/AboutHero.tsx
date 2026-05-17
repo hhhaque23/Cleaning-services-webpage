@@ -89,7 +89,7 @@ export function AboutHero() {
           >
             <div className="relative aspect-[5/6] rounded-[2rem] overflow-hidden shadow-lift">
               <Image
-                src={PHOTOS.windowSeat}
+                src={PHOTOS.aboutHero}
                 alt="A sunlit living room, late afternoon, after a Pristine clean"
                 fill
                 priority

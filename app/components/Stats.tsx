@@ -105,7 +105,7 @@ function BigPhotoTile() {
       className="relative col-span-1 sm:col-span-2 lg:col-span-2 lg:row-span-2 rounded-[1.5rem] overflow-hidden shadow-card aspect-[4/5] sm:aspect-auto sm:min-h-[28rem]"
     >
       <Image
-        src={PHOTOS.hallway}
+        src={PHOTOS.statsBigTile}
         alt="A bathroom on a quiet weekday afternoon after a Pristine clean"
         fill
         sizes="(min-width: 1024px) 50vw, 100vw"
