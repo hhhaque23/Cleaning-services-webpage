@@ -39,6 +39,21 @@ function availabilityFor(dateIdx: number, win: Slot["window"]) {
   return map[win][dateIdx] ?? 3;
 }
 
+// When the user picks a date, prefer their previously-selected window if
+// it still has open slots for the new date. Otherwise fall back to the
+// first window with open slots so we never write a fully-booked slot into
+// state (which would let canAdvance() pass on a logically invalid booking).
+function firstAvailableWindow(
+  dateIdx: number,
+  preferred: Slot["window"] | undefined,
+): Slot["window"] {
+  if (preferred && availabilityFor(dateIdx, preferred) > 0) return preferred;
+  for (const w of WINDOWS) {
+    if (availabilityFor(dateIdx, w.id) > 0) return w.id;
+  }
+  return WINDOWS[0].id;
+}
+
 export function StepSchedule({ selected, onSelect }: Props) {
   const dates = useMemo(() => nextDates(7), []);
   const reduce = useReducedMotion();
@@ -94,7 +109,10 @@ export function StepSchedule({ selected, onSelect }: Props) {
                 whileHover={reduce ? undefined : { y: -2 }}
                 whileTap={reduce ? undefined : { scale: 0.97 }}
                 onClick={() =>
-                  onSelect({ dateISO: iso, window: selected?.window ?? "morning" })
+                  onSelect({
+                    dateISO: iso,
+                    window: firstAvailableWindow(i, selected?.window),
+                  })
                 }
                 className={`relative rounded-2xl px-2 py-3 text-center transition-all cursor-pointer ${
                   active

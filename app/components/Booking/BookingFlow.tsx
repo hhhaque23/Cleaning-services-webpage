@@ -74,6 +74,7 @@ export function BookingFlow() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [bookingId, setBookingId] = useState<string | null>(null);
   const formCardRef = useRef<HTMLDivElement | null>(null);
 
   // When the step changes, scroll the form card back to the top so the user
@@ -86,7 +87,17 @@ export function BookingFlow() {
     const top = el.getBoundingClientRect().top + window.scrollY - 24;
     window.scrollTo({ top, behavior: "smooth" });
   }, [step]);
-  const [bookingId, setBookingId] = useState<string | null>(null);
+
+  // Deterministic unlock of the Continue/Back button after a step change.
+  // We used to rely on AnimatePresence's onExitComplete, but that callback
+  // can be swallowed in React 18 strict mode or when an exit animation is
+  // interrupted, leaving the button stuck disabled. A timer keyed on `step`
+  // guarantees the lock clears.
+  useEffect(() => {
+    if (!isTransitioning) return;
+    const t = setTimeout(() => setIsTransitioning(false), 300);
+    return () => clearTimeout(t);
+  }, [step, isTransitioning]);
 
   async function submitBooking() {
     if (!slot) return;
@@ -177,7 +188,7 @@ export function BookingFlow() {
             </div>
 
             <div className="px-5 sm:px-7 py-6 sm:py-8 min-h-[28rem]">
-              <AnimatePresence mode="wait" onExitComplete={() => setIsTransitioning(false)}>
+              <AnimatePresence mode="wait">
                 {step === 1 && (
                   <motion.div
                     key="s1"
