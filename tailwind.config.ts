@@ -116,6 +116,10 @@ const config: Config = {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
         },
+        "grid-flow": {
+          "0%": { backgroundPosition: "0 0, 0 0" },
+          "100%": { backgroundPosition: "0 72px, 0 72px" },
+        },
       },
       animation: {
         "blob-drift": "blob-drift 18s cubic-bezier(0.45, 0, 0.55, 1) infinite",
@@ -130,6 +134,7 @@ const config: Config = {
         "spotlight-pulse": "spotlight-pulse 5s ease-in-out infinite",
         "star-twinkle": "star-twinkle 3s ease-in-out infinite",
         "halo-rotate": "halo-rotate 18s linear infinite",
+        "grid-flow": "grid-flow 8s linear infinite",
       },
       backgroundImage: {
         "grid-faint":
