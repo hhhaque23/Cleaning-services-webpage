@@ -4,7 +4,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import { MapPin, Clock, Sparkles } from "lucide-react";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 import { MagneticButton } from "./motion/MagneticButton";
-import { Aurora } from "./motion/Aurora";
 
 type City = { name: string; minutes: number };
 
@@ -35,7 +34,6 @@ export function ServiceAreas() {
       id="areas"
       className="relative py-24 sm:py-32 scroll-mt-24 bg-[var(--surface-tint)] overflow-hidden"
     >
-      <Aurora palette="grass" intensity="subtle" blur={90} blobs={2} />
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div

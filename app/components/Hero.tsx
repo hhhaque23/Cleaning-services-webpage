@@ -9,7 +9,6 @@ import { PHOTOS } from "@/lib/unsplash";
 import { HeroVideo } from "./HeroVideo";
 import { SplitText } from "./motion/SplitText";
 import { MagneticButton } from "./motion/MagneticButton";
-import { Aurora } from "./motion/Aurora";
 import { EASE_OUT_QUINT, fadeUp } from "./motion/motion-primitives";
 
 const stagger = {
@@ -31,18 +30,16 @@ export function Hero() {
     <section
       id="top"
       ref={ref}
-      className="relative overflow-hidden pt-28 sm:pt-32 lg:pt-40 pb-20 sm:pb-28 lg:pb-36"
+      className="relative overflow-hidden pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 lg:pb-24 min-h-[88vh] flex items-center"
     >
       <HeroVideo />
 
-      <Aurora palette="mixed" intensity="subtle" blur={120} blobs={2} />
-
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 relative">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 relative w-full">
         <motion.div
           variants={stagger}
           initial="hidden"
           animate="show"
-          className="grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-16 items-center"
+          className="grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14 items-center"
         >
           <div>
             <motion.div variants={fadeUp} className="flex items-center gap-2.5">

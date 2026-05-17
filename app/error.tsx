@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { AlertTriangle, Home, RotateCcw } from "lucide-react";
-import { Aurora } from "./components/motion/Aurora";
 import { SplitText } from "./components/motion/SplitText";
 import { MagneticButton } from "./components/motion/MagneticButton";
 
@@ -22,7 +21,6 @@ export default function GlobalError({
     <main className="relative">
       <section className="relative pt-36 sm:pt-44 pb-24 min-h-[80vh] overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-grid-faint bg-grid-32 [mask-image:radial-gradient(ellipse_at_top,black_25%,transparent_70%)]" />
-        <Aurora palette="warm" intensity="subtle" blur={120} blobs={2} />
 
         <div className="relative mx-auto max-w-3xl px-5 sm:px-8 text-center">
           <div className="inline-flex items-center gap-1.5 rounded-full bg-[oklch(0.94_0.08_75)] text-[oklch(0.42_0.16_70)] text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">

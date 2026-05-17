@@ -27,7 +27,6 @@ import {
 import { TIER_META } from "@/app/components/Booking/pricing";
 import { SplitText } from "@/app/components/motion/SplitText";
 import { MagneticButton } from "@/app/components/motion/MagneticButton";
-import { Aurora } from "@/app/components/motion/Aurora";
 import { Confetti } from "@/app/components/motion/Confetti";
 import { EASE_OUT_QUINT } from "@/app/components/motion/motion-primitives";
 
@@ -99,12 +98,6 @@ export function TrackingView({ booking }: { booking: Booking }) {
   return (
     <section className="relative pt-32 sm:pt-36 pb-20 overflow-hidden">
       <div className="absolute inset-0 -z-10 bg-grid-faint bg-grid-32 [mask-image:radial-gradient(ellipse_at_top,black_25%,transparent_70%)]" />
-      <Aurora
-        palette={isCompleted ? "grass" : isCancelled ? "warm" : "cyan"}
-        intensity="subtle"
-        blur={140}
-        blobs={2}
-      />
 
       <div className="relative mx-auto max-w-3xl px-5 sm:px-8">
         <motion.div

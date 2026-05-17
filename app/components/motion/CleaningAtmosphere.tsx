@@ -49,22 +49,14 @@ function buildTiles(): PhotoTile[] {
     { src: PHOTOS.collage.bedroomAlt, alt: "Warm bedroom" },
   ];
 
-  // Hand-tuned positions: edges of the viewport, off-page slightly so tiles
-  // peek into the visible area without blocking center content.
+  // Just four tiles: one at each corner, mostly off-page so only a thin slice
+  // peeks into the viewport. Decoration, not content.
   // [x%, y%, w(vw)]
   const positions: [number, number, number][] = [
-    [-3, 8, 14],     // top-left
-    [86, 12, 13],    // top-right
-    [-4, 38, 11],    // mid-left
-    [88, 42, 12],    // mid-right
-    [-6, 66, 13],    // lower-left
-    [90, 70, 11],    // lower-right
-    [4, 92, 12],     // bottom-left-ish
-    [78, 92, 13],    // bottom-right-ish
-    [-5, 18, 9],     // small top-left accent
-    [92, 28, 8],     // small top-right accent
-    [-4, 78, 9],     // small bottom-left accent
-    [93, 84, 10],    // small bottom-right accent
+    [-8, 12, 11],    // top-left, mostly off-page
+    [92, 18, 10],    // top-right, mostly off-page
+    [-7, 78, 11],    // bottom-left, mostly off-page
+    [94, 82, 10],    // bottom-right, mostly off-page
   ];
 
   const rand = mulberry32(7);
@@ -117,7 +109,7 @@ export function CleaningAtmosphere() {
           left: `${t.x}%`,
           top: `${t.y}%`,
           transform: `translate(-50%, -50%) rotate(${t.rotate}deg)`,
-          opacity: 0.55,
+          opacity: 0.35,
         };
 
         const inner = (

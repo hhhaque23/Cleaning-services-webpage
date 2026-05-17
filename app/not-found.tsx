@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
-import { Aurora } from "./components/motion/Aurora";
 import { SplitText } from "./components/motion/SplitText";
 import { MagneticButton } from "./components/motion/MagneticButton";
 import { ArrowRight, Home, Sparkles } from "lucide-react";
@@ -12,7 +11,6 @@ export default function NotFound() {
       <Navbar />
       <section className="relative pt-36 sm:pt-44 pb-24 overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-grid-faint bg-grid-32 [mask-image:radial-gradient(ellipse_at_top,black_25%,transparent_70%)]" />
-        <Aurora palette="mixed" intensity="subtle" blur={120} blobs={2} />
 
         <div className="relative mx-auto max-w-3xl px-5 sm:px-8 text-center">
           <div className="inline-flex items-center gap-1.5 rounded-full bg-grass-500/12 text-grass-700 text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">

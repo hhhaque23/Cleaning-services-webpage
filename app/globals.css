@@ -32,10 +32,10 @@
   --ink-spotlight-veil: oklch(0.65 0.13 220 / 0.18);
 
   /* Fluid type scale */
-  --type-hero: clamp(2.75rem, 6.2vw, 5.5rem);
-  --type-display-1: clamp(2.25rem, 4vw, 3.6rem);
-  --type-display-2: clamp(1.6rem, 2.6vw, 2.15rem);
-  --type-lead: clamp(1.05rem, 1.2vw, 1.2rem);
+  --type-hero: clamp(3rem, 7vw, 6.5rem);
+  --type-display-1: clamp(2.4rem, 4.4vw, 4rem);
+  --type-display-2: clamp(1.7rem, 2.8vw, 2.4rem);
+  --type-lead: clamp(1.1rem, 1.3vw, 1.3rem);
 }
 
 html,

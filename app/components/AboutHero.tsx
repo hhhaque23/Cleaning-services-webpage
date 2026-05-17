@@ -5,7 +5,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ShieldCheck, Users, MapPin } from "lucide-react";
 import { PHOTOS } from "@/lib/unsplash";
 import { SplitText } from "./motion/SplitText";
-import { Aurora } from "./motion/Aurora";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 export function AboutHero() {
@@ -14,7 +13,6 @@ export function AboutHero() {
   return (
     <section className="relative overflow-hidden pt-32 sm:pt-36 lg:pt-44 pb-16 sm:pb-20">
       <div className="absolute inset-0 -z-10 bg-grid-faint bg-grid-32 [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_75%)]" />
-      <Aurora palette="mixed" intensity="subtle" blur={120} blobs={2} />
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-14 items-center">

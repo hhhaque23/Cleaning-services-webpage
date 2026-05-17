@@ -17,7 +17,6 @@ import { TIER_META, type Tier } from "./Booking/pricing";
 import { TIER_SLUG } from "@/lib/tiers";
 import { SplitText } from "./motion/SplitText";
 import { MagneticButton } from "./motion/MagneticButton";
-import { Aurora } from "./motion/Aurora";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 type IncludedGroup = { title: string; items: string[] };
@@ -257,7 +256,6 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
         className="relative overflow-hidden pt-32 sm:pt-36 lg:pt-44 pb-20 sm:pb-24"
       >
         <div className="absolute inset-0 -z-10 bg-grid-faint bg-grid-32 [mask-image:radial-gradient(ellipse_at_top,black_25%,transparent_70%)]" />
-        <Aurora palette={c.palette} intensity="subtle" blur={130} blobs={2} />
 
         <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
           <div className="grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-14 items-center">
@@ -511,7 +509,6 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
       </section>
 
       <section className="relative py-24 sm:py-28 bg-ink-50/50 overflow-hidden">
-        <Aurora palette={c.palette} intensity="subtle" blur={140} blobs={2} />
         <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
           <div className="text-[11px] uppercase tracking-[0.14em] font-semibold text-grass-700">
             Best for

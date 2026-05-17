@@ -180,15 +180,15 @@ function StepCard({ step, index, Glyph, cardY, reduce }: StepCardProps) {
         style={reduce ? undefined : { y: cardY }}
         className="group/glow relative rounded-[1.5rem] bg-[var(--surface)] shadow-soft hover:shadow-card transition-shadow"
       >
-        {/* Edge glow ring — radial gradient masked to a 2px border ring,
-            cursor position drives where the bright spot sits. */}
+        {/* Subtle edge highlight — only shows on hover, cursor drives bright spot.
+            Uses ink-deep tint (not grass) so it doesn't read as a "green box". */}
         <div
           aria-hidden
           className="pointer-events-none absolute -inset-px rounded-[inherit] opacity-0 group-hover/glow:opacity-100 transition-opacity duration-300"
           style={{
             background:
-              "radial-gradient(220px circle at var(--gx, 50%) var(--gy, 50%), oklch(0.78 0.16 145 / 0.85), oklch(0.65 0.13 220 / 0.45) 38%, transparent 70%)",
-            padding: 1.5,
+              "radial-gradient(140px circle at var(--gx, 50%) var(--gy, 50%), oklch(0.23 0.05 230 / 0.5), transparent 70%)",
+            padding: 1,
             WebkitMask:
               "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
             WebkitMaskComposite: "xor",
@@ -196,10 +196,10 @@ function StepCard({ step, index, Glyph, cardY, reduce }: StepCardProps) {
           }}
         />
 
-        {/* Static base border (visible when not hovering) */}
+        {/* Static base border */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-[inherit] border border-line-strong/40 group-hover/glow:border-transparent transition-colors duration-300"
+          className="pointer-events-none absolute inset-0 rounded-[inherit] border border-line-strong/40"
         />
 
         <div className="relative rounded-[inherit] overflow-hidden">

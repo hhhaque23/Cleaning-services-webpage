@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowRight, Repeat, Sparkles, TrendingDown, Check } from "lucide-react";
 import { MagneticButton } from "./motion/MagneticButton";
-import { Aurora } from "./motion/Aurora";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 type Freq = "one-time" | "biweekly" | "weekly";
@@ -71,7 +70,6 @@ export function SubscriptionCallout() {
           transition={{ duration: 0.7, ease: EASE_OUT_QUINT }}
           className="relative rounded-[2rem] bg-[var(--surface-tint)] text-ink-950 p-6 sm:p-10 lg:p-14 overflow-hidden border border-line-strong/40 shadow-card"
         >
-          <Aurora palette="grass" intensity="subtle" blobs={2} blur={140} />
 
           <div className="relative grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14 items-start">
             <div>
