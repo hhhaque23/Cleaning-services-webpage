@@ -11,10 +11,6 @@ export function Team() {
 
   return (
     <section className="relative py-20 sm:py-28 bg-ink-50/40 overflow-hidden">
-      <div
-        aria-hidden
-        className="absolute top-1/4 right-0 h-[20rem] w-[20rem] rounded-full bg-[oklch(0.65_0.13_220/0.07)] blur-3xl pointer-events-none"
-      />
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 14 }}

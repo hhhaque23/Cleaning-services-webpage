@@ -79,14 +79,6 @@ export function Footer() {
       </div>
 
       {/* Aurora background blob */}
-      <div
-        aria-hidden
-        className="absolute top-1/3 -left-32 h-[20rem] w-[20rem] rounded-full bg-[oklch(0.4_0.08_230/0.35)] blur-3xl pointer-events-none"
-      />
-      <div
-        aria-hidden
-        className="absolute bottom-0 right-0 h-[16rem] w-[16rem] rounded-full bg-[oklch(0.68_0.18_145/0.18)] blur-3xl pointer-events-none"
-      />
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8 pt-16 pb-10">
         <div className="grid lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-10 lg:gap-12">

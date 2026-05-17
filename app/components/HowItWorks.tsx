@@ -73,10 +73,6 @@ export function HowItWorks() {
         aria-hidden="true"
         className="absolute inset-0 bg-grid-faint bg-grid-32 opacity-60 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]"
       />
-      <div
-        aria-hidden="true"
-        className="absolute -top-32 -right-20 h-[26rem] w-[26rem] rounded-full bg-[oklch(0.78_0.16_145/0.12)] blur-3xl"
-      />
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div

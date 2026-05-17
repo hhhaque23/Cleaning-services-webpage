@@ -19,15 +19,6 @@ const RECENT_BOOKINGS = [
 export function Stats() {
   return (
     <section className="relative py-24 sm:py-32 overflow-hidden">
-      <div
-        aria-hidden
-        className="absolute -top-32 -left-32 h-[28rem] w-[28rem] rounded-full bg-[oklch(0.78_0.16_145/0.1)] blur-3xl pointer-events-none"
-      />
-      <div
-        aria-hidden
-        className="absolute bottom-0 right-0 h-[24rem] w-[24rem] rounded-full bg-[oklch(0.65_0.13_220/0.08)] blur-3xl pointer-events-none"
-      />
-
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

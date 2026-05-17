@@ -2,6 +2,7 @@ import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { TrustBar } from "./components/TrustBar";
 import { Stats } from "./components/Stats";
+import { RecentTransformations } from "./components/RecentTransformations";
 import { HowItWorks } from "./components/HowItWorks";
 import { SubscriptionCallout } from "./components/SubscriptionCallout";
 import { PhotoQuote } from "./components/PhotoQuote";
@@ -15,6 +16,7 @@ export default function Page() {
       <Hero />
       <TrustBar />
       <Stats />
+      <RecentTransformations />
       <HowItWorks />
       <SubscriptionCallout />
       <PhotoQuote />

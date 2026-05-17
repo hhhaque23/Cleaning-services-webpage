@@ -22,13 +22,6 @@ export function Guarantee() {
   return (
     <section className="relative py-24 sm:py-32 overflow-hidden">
       {/* Diagonal accent shape in the seam */}
-      <motion.div
-        aria-hidden
-        animate={reduce ? undefined : { rotate: 360 }}
-        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[40rem] w-[40rem] rounded-[30%] bg-gradient-to-br from-[oklch(0.68_0.18_145/0.07)] via-[oklch(0.65_0.13_220/0.04)] to-transparent blur-3xl pointer-events-none"
-      />
-
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-16 items-center">
           <motion.div
@@ -106,7 +99,6 @@ export function Guarantee() {
               className="mt-8 rounded-[1.75rem] bg-ink-950 text-[var(--surface)] p-7 sm:p-8 relative overflow-hidden shadow-lift"
             >
               <div className="absolute inset-0 noise opacity-50 pointer-events-none" />
-              <div className="absolute -top-20 -right-16 h-56 w-56 rounded-full bg-[oklch(0.78_0.16_145/0.25)] blur-3xl" />
               <div className="relative flex items-start gap-4">
                 <motion.span
                   initial={{ scale: 0.5, opacity: 0, rotate: -45 }}

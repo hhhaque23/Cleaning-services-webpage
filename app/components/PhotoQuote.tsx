@@ -26,10 +26,6 @@ export function PhotoQuote() {
       ref={ref}
       className="relative py-20 sm:py-28 bg-[var(--surface-tint)] overflow-hidden"
     >
-      <div
-        aria-hidden="true"
-        className="absolute -bottom-32 -left-24 h-[24rem] w-[24rem] rounded-full bg-[oklch(0.78_0.16_145/0.1)] blur-3xl"
-      />
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <motion.figure

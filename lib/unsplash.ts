@@ -25,7 +25,7 @@ const HOME_IDS = {
   bathroomAlt: "1620626011761-996317b8d101", // tiled bathroom
   bedroomAlt: "1522708323590-d24dbb6b0267",  // bedroom warm light
   hallway: "1565183997392-2f6f122e5912",     // hallway
-  loungeCorner: "1556909195-bff893d56098",   // living room corner
+  loungeCorner: "1565538810643-b5bdb714032a", // bright corner interior
   windowSeat: "1493809842364-78817add7ffb",  // window seat light
   livingRoomAlt: "1502672260266-1c1ef2d93688", // mid-century living
   bathroomBright: "1560185009-5bf9f2849488", // bright bathroom alt

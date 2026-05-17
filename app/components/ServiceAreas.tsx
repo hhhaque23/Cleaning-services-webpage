@@ -66,8 +66,6 @@ export function ServiceAreas() {
           className="mt-12 relative rounded-[1.75rem] bg-ink-950 text-white p-7 sm:p-9 shadow-lift overflow-hidden"
         >
           <div className="absolute inset-0 noise opacity-40 pointer-events-none" />
-          <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-[oklch(0.68_0.18_145/0.3)] blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-[oklch(0.65_0.13_220/0.18)] blur-3xl pointer-events-none" />
 
           <div className="relative grid sm:grid-cols-[1fr_auto] items-center gap-6">
             <div className="flex items-start gap-4">

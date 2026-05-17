@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowRight, Repeat, Sparkles, TrendingDown, Check } from "lucide-react";
 import { MagneticButton } from "./motion/MagneticButton";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
+import { PHOTOS } from "@/lib/unsplash";
 
 type Freq = "one-time" | "biweekly" | "weekly";
 
@@ -73,6 +75,39 @@ export function SubscriptionCallout() {
 
           <div className="relative grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14 items-start">
             <div>
+              <div className="relative grid grid-cols-3 gap-2 mb-7">
+                <div className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-soft">
+                  <Image
+                    src={PHOTOS.kitchen}
+                    alt="A kitchen on a subscribed biweekly visit"
+                    fill
+                    sizes="(min-width: 1024px) 14vw, 28vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950/30 to-transparent" />
+                </div>
+                <div className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-soft mt-4">
+                  <Image
+                    src={PHOTOS.bathroomBright}
+                    alt="A bathroom on a recurring deep clean"
+                    fill
+                    sizes="(min-width: 1024px) 14vw, 28vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950/30 to-transparent" />
+                </div>
+                <div className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-soft">
+                  <Image
+                    src={PHOTOS.bedroomAlt}
+                    alt="A bedroom finished on a weekly schedule"
+                    fill
+                    sizes="(min-width: 1024px) 14vw, 28vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950/30 to-transparent" />
+                </div>
+              </div>
+
               <div className="inline-flex items-center gap-1.5 rounded-full bg-grass-500/12 text-grass-700 text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">
                 <Repeat className="h-3.5 w-3.5" /> Set it &amp; forget it
               </div>

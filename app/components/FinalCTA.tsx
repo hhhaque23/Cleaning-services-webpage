@@ -52,9 +52,6 @@ export function FinalCTA() {
             style={{ background: spotlight }}
             className="absolute inset-0 pointer-events-none"
           />
-          <div className="absolute -top-40 -left-32 h-[28rem] w-[28rem] rounded-full bg-[oklch(0.4_0.08_230/0.4)] blur-3xl" />
-          <div className="absolute -bottom-32 -right-24 h-[24rem] w-[24rem] rounded-full bg-[oklch(0.68_0.18_145/0.32)] blur-3xl" />
-
           <div className="relative">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-[oklch(0.985_0.006_220/0.1)] backdrop-blur-sm text-[var(--surface)] text-[11px] font-semibold px-3 py-1.5 uppercase tracking-[0.14em]">
               <Sparkles className="h-3.5 w-3.5 text-grass-300" /> Same-day available
