@@ -240,7 +240,8 @@ input[type="range"]::-moz-range-thumb {
   .animate-border-spin,
   .animate-halo-rotate,
   .animate-spotlight-pulse,
-  .animate-star-twinkle {
+  .animate-star-twinkle,
+  .animate-grid-flow {
     animation: none !important;
   }
 }
@@ -252,7 +253,8 @@ input[type="range"]::-moz-range-thumb {
   .animate-tile-drift,
   .animate-aurora-shift,
   .animate-border-spin,
-  .animate-halo-rotate {
+  .animate-halo-rotate,
+  .animate-grid-flow {
     animation: none !important;
   }
 }
