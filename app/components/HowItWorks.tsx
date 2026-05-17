@@ -1,13 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useCallback, useRef } from "react";
 import { ArrowDownRight } from "lucide-react";
 import { MagneticButton } from "./motion/MagneticButton";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
-import { PHOTOS } from "@/lib/unsplash";
 
 function useEdgeGlow() {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -29,25 +27,22 @@ const STEPS = [
     title: "Configure",
     body: "Pick a tier, set rooms and add-ons. The price is live. No hidden fees, no quote forms.",
     accent: "Tap. Drag. Done.",
-    photos: [PHOTOS.step1a, PHOTOS.step1b],
   },
   {
     n: "02",
     title: "Schedule",
     body: "Open dates and time windows are shown in real time. Same-day available when slots are open.",
     accent: "It's a live calendar.",
-    photos: [PHOTOS.step2a, PHOTOS.step2b],
   },
   {
     n: "03",
     title: "Relax",
     body: "We text within 15 minutes with your cleaner's photo. You're charged only after the clean is approved.",
     accent: "Sleep in tomorrow.",
-    photos: [PHOTOS.step3a, PHOTOS.step3b],
   },
 ];
 
-const SYMBOLS: Record<string, React.FC> = {
+const SYMBOLS: Record<string, React.FC<{ delay?: number }>> = {
   "01": SliderGlyph,
   "02": CalendarGlyph,
   "03": MoonGlyph,
@@ -158,9 +153,9 @@ export function HowItWorks() {
 }
 
 type StepCardProps = {
-  step: { n: string; title: string; body: string; accent: string; photos: string[] };
+  step: { n: string; title: string; body: string; accent: string };
   index: number;
-  Glyph: React.FC;
+  Glyph: React.FC<{ delay?: number }>;
   cardY: import("framer-motion").MotionValue<number>;
   reduce: boolean;
 };
@@ -181,15 +176,14 @@ function StepCard({ step, index, Glyph, cardY, reduce }: StepCardProps) {
         style={reduce ? undefined : { y: cardY }}
         className="group/glow relative rounded-[1.5rem] bg-[var(--surface)] shadow-soft hover:shadow-card transition-shadow"
       >
-        {/* Subtle edge highlight — only shows on hover, cursor drives bright spot.
-            Uses ink-deep tint (not grass) so it doesn't read as a "green box". */}
+        {/* Cursor-tracked edge glow — grass + cyan blend, only shows on hover. */}
         <div
           aria-hidden
           className="pointer-events-none absolute -inset-px rounded-[inherit] opacity-0 group-hover/glow:opacity-100 transition-opacity duration-300"
           style={{
             background:
-              "radial-gradient(140px circle at var(--gx, 50%) var(--gy, 50%), oklch(0.23 0.05 230 / 0.5), transparent 70%)",
-            padding: 1,
+              "radial-gradient(220px circle at var(--gx, 50%) var(--gy, 50%), oklch(0.78 0.16 145 / 0.95), oklch(0.65 0.13 220 / 0.55) 45%, transparent 75%)",
+            padding: 1.5,
             WebkitMask:
               "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
             WebkitMaskComposite: "xor",
@@ -209,10 +203,10 @@ function StepCard({ step, index, Glyph, cardY, reduce }: StepCardProps) {
               <span className="inline-block h-1 w-1 rounded-full bg-grass-500" />
               Step {step.n}
             </span>
-            <Glyph />
+            <Glyph delay={index * 1.2} />
           </div>
 
-          <div className="px-6 pt-6 pb-6">
+          <div className="px-6 pt-6 pb-7">
             <h3 className="font-display font-extrabold text-2xl tracking-[-0.02em] text-ink-950">
               {step.title}
             </h3>
@@ -223,24 +217,6 @@ function StepCard({ step, index, Glyph, cardY, reduce }: StepCardProps) {
               <ArrowDownRight className="h-3.5 w-3.5" />
               {step.accent}
             </div>
-            <div className="mt-5 grid grid-cols-2 gap-2">
-              {step.photos.map((src, i) => (
-                <div
-                  key={i}
-                  className="relative aspect-[4/3] rounded-lg overflow-hidden ring-1 ring-line"
-                >
-                  <Image
-                    src={src}
-                    alt=""
-                    aria-hidden
-                    fill
-                    sizes="(min-width: 1024px) 14vw, 30vw"
-                    className="object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </motion.div>
@@ -249,7 +225,7 @@ function StepCard({ step, index, Glyph, cardY, reduce }: StepCardProps) {
 }
 
 // ---- Glyph 01: Configure ------------------------------------------------
-function SliderGlyph() {
+function SliderGlyph({ delay = 0 }: { delay?: number }) {
   const viewport = { once: true, margin: "-40px" };
   return (
     <motion.svg
@@ -261,7 +237,7 @@ function SliderGlyph() {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={viewport}
-      transition={{ duration: 0.4 }}
+      transition={{ duration: 0.4, delay }}
     >
       <line x1="14" y1="34" x2="186" y2="34" stroke="oklch(0.88 0.022 220)" strokeWidth="4" strokeLinecap="round" />
       <motion.line
@@ -274,7 +250,7 @@ function SliderGlyph() {
         initial={{ x2: 14 }}
         whileInView={{ x2: 132 }}
         viewport={viewport}
-        transition={{ duration: 1.4, ease: EASE_OUT_QUINT, delay: 0.15 }}
+        transition={{ duration: 1.4, ease: EASE_OUT_QUINT, delay: delay + 0.15 }}
       />
       <motion.circle
         cy="34"
@@ -285,7 +261,7 @@ function SliderGlyph() {
         initial={{ cx: 14 }}
         whileInView={{ cx: 132 }}
         viewport={viewport}
-        transition={{ duration: 1.4, ease: EASE_OUT_QUINT, delay: 0.15 }}
+        transition={{ duration: 1.4, ease: EASE_OUT_QUINT, delay: delay + 0.15 }}
       />
 
       <line x1="14" y1="68" x2="186" y2="68" stroke="oklch(0.88 0.022 220)" strokeWidth="3" strokeLinecap="round" />
@@ -299,7 +275,7 @@ function SliderGlyph() {
         initial={{ x2: 14 }}
         whileInView={{ x2: 84 }}
         viewport={viewport}
-        transition={{ duration: 1.4, ease: EASE_OUT_QUINT, delay: 0.5 }}
+        transition={{ duration: 1.4, ease: EASE_OUT_QUINT, delay: delay + 0.5 }}
       />
       <motion.circle
         cy="68"
@@ -308,14 +284,14 @@ function SliderGlyph() {
         initial={{ cx: 14 }}
         whileInView={{ cx: 84 }}
         viewport={viewport}
-        transition={{ duration: 1.4, ease: EASE_OUT_QUINT, delay: 0.5 }}
+        transition={{ duration: 1.4, ease: EASE_OUT_QUINT, delay: delay + 0.5 }}
       />
     </motion.svg>
   );
 }
 
 // ---- Glyph 02: Schedule -------------------------------------------------
-function CalendarGlyph() {
+function CalendarGlyph({ delay = 0 }: { delay?: number }) {
   const cols = 7;
   const cellSize = 22;
   const gap = 3;
@@ -367,7 +343,7 @@ function CalendarGlyph() {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={viewport}
-      transition={{ duration: 0.4 }}
+      transition={{ duration: 0.4, delay }}
     >
       {"SMTWTFS".split("").map((d, i) => (
         <text
@@ -425,6 +401,7 @@ function CalendarGlyph() {
                 duration: DURATION,
                 times: [0, t(clickT), t(clickT + 0.25), t(clickT + 0.55)],
                 ease: "easeOut",
+                delay,
               }}
             />
             <motion.circle
@@ -440,6 +417,7 @@ function CalendarGlyph() {
                 duration: DURATION,
                 times: [0, t(clickT), t(clickT + 0.25), t(clickT + 0.55)],
                 ease: "easeOut",
+                delay,
               }}
             />
             <motion.rect
@@ -463,6 +441,7 @@ function CalendarGlyph() {
                 duration: DURATION,
                 times: [0, t(clickT), t(clickT + 0.2)],
                 ease: "linear",
+                delay,
               }}
             />
             <motion.path
@@ -479,6 +458,7 @@ function CalendarGlyph() {
                 duration: DURATION,
                 times: [0, t(clickT + 0.15), t(clickT + 0.5)],
                 ease: EASE_OUT_QUINT,
+                delay,
               }}
             />
           </g>
@@ -489,7 +469,7 @@ function CalendarGlyph() {
         initial={{ x: cursorX[0], y: cursorY[0], opacity: 0 }}
         whileInView={{ x: cursorX, y: cursorY, opacity: cursorOpacity }}
         viewport={viewport}
-        transition={{ duration: DURATION, times: cursorTimes, ease: EASE_OUT_QUINT }}
+        transition={{ duration: DURATION, times: cursorTimes, ease: EASE_OUT_QUINT, delay }}
       >
         <path
           d="M 0 0 L 0 14 L 4 11 L 7 17 L 9 16 L 6 10 L 11 10 Z"
@@ -504,7 +484,7 @@ function CalendarGlyph() {
 }
 
 // ---- Glyph 03: Relax ---------------------------------------------------
-function MoonGlyph() {
+function MoonGlyph({ delay = 0 }: { delay?: number }) {
   const stars = [
     { cx: 58, cy: 26, size: 8, delay: 0.4 },
     { cx: 38, cy: 56, size: 6, delay: 0.7 },
@@ -525,7 +505,7 @@ function MoonGlyph() {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.4 }}
+      transition={{ duration: 0.4, delay }}
     >
       <defs>
         <mask id="moon-cutout" maskUnits="userSpaceOnUse">
@@ -543,12 +523,12 @@ function MoonGlyph() {
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.65, delay: 0.15, ease: EASE_OUT_QUINT }}
+        transition={{ duration: 0.65, delay: delay + 0.15, ease: EASE_OUT_QUINT }}
         style={{ transformOrigin: "124px 62px" }}
       />
 
       {stars.map((s, i) => (
-        <Twinkle key={i} {...s} />
+        <Twinkle key={i} cx={s.cx} cy={s.cy} size={s.size} delay={delay + s.delay} />
       ))}
     </motion.svg>
   );
