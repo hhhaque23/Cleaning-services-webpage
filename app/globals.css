@@ -49,12 +49,26 @@ body {
 }
 
 body {
-  /* The cleaning-photo collage in <CleaningAtmosphere /> provides the page
-     theme. We keep only a very faint warm wash on the body so the page
-     doesn't read as plain white when the collage is suspended. */
-  background-image:
-    radial-gradient(ellipse 80% 50% at 50% 0%, oklch(0.91 0.02 220 / 0.25), transparent 65%);
+  /* Page-wide diagonal gradient: cool cyan top-left -> warm cream middle ->
+     deeper cyan bottom-right. Sits behind every section so the page never
+     reads as plain white. Section backgrounds (--surface-tint, dark cards)
+     layer on top correctly. */
+  background:
+    linear-gradient(
+      155deg,
+      oklch(0.97 0.014 220) 0%,
+      oklch(0.95 0.024 95 / 0.55) 45%,
+      oklch(0.93 0.024 220) 100%
+    ) var(--surface);
   min-height: 100vh;
+}
+
+/* background-attachment: fixed is GPU-cheap on desktop but causes scroll
+   repaint jank on iOS Safari. Restrict to large pointer-capable viewports. */
+@media (min-width: 1024px) and (hover: hover) {
+  body {
+    background-attachment: fixed;
+  }
 }
 
 *:focus-visible {
