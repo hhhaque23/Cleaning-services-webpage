@@ -188,57 +188,28 @@ export function BookingFlow() {
             </div>
 
             <div className="px-5 sm:px-7 py-6 sm:py-8 min-h-[28rem]">
-              <AnimatePresence mode="wait">
-                {step === 1 && (
-                  <motion.div
-                    key="s1"
-                    initial={{ opacity: 0, x: 16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -16 }}
-                    transition={{ duration: 0.22, ease: EASE_OUT_QUINT }}
-                  >
-                    <StepConfigure config={config} setConfig={setConfig} />
-                  </motion.div>
-                )}
-                {step === 2 && (
-                  <motion.div
-                    key="s2"
-                    initial={{ opacity: 0, x: 16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -16 }}
-                    transition={{ duration: 0.22, ease: EASE_OUT_QUINT }}
-                  >
-                    <StepSchedule selected={slot} onSelect={setSlot} />
-                  </motion.div>
-                )}
-                {step === 3 && (
-                  <motion.div
-                    key="s3"
-                    initial={{ opacity: 0, x: 16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -16 }}
-                    transition={{ duration: 0.22, ease: EASE_OUT_QUINT }}
-                  >
-                    <StepConfirm contact={contact} setContact={setContact} />
-                  </motion.div>
-                )}
+              {/* Keyed remount (no AnimatePresence) so `animate` always fires
+                  after a step change. AnimatePresence + mode="wait" was
+                  intermittently leaving the entering wrapper stuck at
+                  `initial: opacity 0`, rendering the panel body blank. */}
+              <motion.div
+                key={`step-${step}`}
+                initial={{ opacity: 0, x: 16 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.28, ease: EASE_OUT_QUINT }}
+              >
+                {step === 1 && <StepConfigure config={config} setConfig={setConfig} />}
+                {step === 2 && <StepSchedule selected={slot} onSelect={setSlot} />}
+                {step === 3 && <StepConfirm contact={contact} setContact={setContact} />}
                 {step === 4 && (
-                  <motion.div
-                    key="s4"
-                    initial={{ opacity: 0, scale: 0.96 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.96 }}
-                    transition={{ duration: 0.45, ease: EASE_OUT_QUINT }}
-                  >
-                    <StepSuccess
-                      contact={contact}
-                      slot={slot}
-                      total={price.total}
-                      bookingId={bookingId}
-                    />
-                  </motion.div>
+                  <StepSuccess
+                    contact={contact}
+                    slot={slot}
+                    total={price.total}
+                    bookingId={bookingId}
+                  />
                 )}
-              </AnimatePresence>
+              </motion.div>
             </div>
 
             {step !== 4 && (
