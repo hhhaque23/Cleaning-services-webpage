@@ -33,15 +33,23 @@ export function Spotlight({
   const reduce = useReducedMotion();
   const x = useMotionValue(50);
   const y = useMotionValue(30);
+  const rafRef = useRef<number | null>(null);
+  const pendingRef = useRef<{ clientX: number; clientY: number } | null>(null);
 
   const handleMove = useCallback(
     (e: React.MouseEvent) => {
       if (!follow || reduce) return;
-      const el = ref.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      x.set(((e.clientX - rect.left) / rect.width) * 100);
-      y.set(((e.clientY - rect.top) / rect.height) * 100);
+      pendingRef.current = { clientX: e.clientX, clientY: e.clientY };
+      if (rafRef.current !== null) return;
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null;
+        const el = ref.current;
+        const ev = pendingRef.current;
+        if (!el || !ev) return;
+        const rect = el.getBoundingClientRect();
+        x.set(((ev.clientX - rect.left) / rect.width) * 100);
+        y.set(((ev.clientY - rect.top) / rect.height) * 100);
+      });
     },
     [follow, reduce, x, y],
   );

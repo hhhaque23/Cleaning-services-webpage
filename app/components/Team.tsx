@@ -59,20 +59,8 @@ export function Team() {
                 className="group"
               >
                 <motion.div
-                  animate={
-                    reduce
-                      ? undefined
-                      : {
-                          y: [0, -6, 0],
-                        }
-                  }
-                  transition={{
-                    duration: 5 + i * 0.4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: i * 0.25,
-                  }}
                   whileHover={reduce ? undefined : { y: -8 }}
+                  transition={{ duration: 0.4, ease: EASE_OUT_QUINT }}
                   className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-soft group-hover:shadow-lift transition-shadow"
                 >
                   <Image

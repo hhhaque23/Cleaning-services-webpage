@@ -34,25 +34,34 @@ export function MagneticButton({
   const y = useMotionValue(0);
   const sx = useSpring(x, { stiffness: 220, damping: 22, mass: 0.4 });
   const sy = useSpring(y, { stiffness: 220, damping: 22, mass: 0.4 });
+  // rAF-gate mousemove so we update at most once per frame even when the
+  // pointer device fires events faster than 60Hz (gaming mice, trackpads).
+  const rafRef = useRef<number | null>(null);
+  const pendingRef = useRef<{ clientX: number; clientY: number } | null>(null);
 
   const handleMove = useCallback(
     (e: React.MouseEvent) => {
       if (reduce) return;
-      const el = ref.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = e.clientX - cx;
-      const dy = e.clientY - cy;
-      const dist = Math.hypot(dx, dy);
-      if (dist > radius) {
-        x.set(0);
-        y.set(0);
-        return;
-      }
-      x.set(dx * strength);
-      y.set(dy * strength);
+      pendingRef.current = { clientX: e.clientX, clientY: e.clientY };
+      if (rafRef.current !== null) return;
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null;
+        const el = ref.current;
+        const ev = pendingRef.current;
+        if (!el || !ev) return;
+        const rect = el.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = ev.clientX - cx;
+        const dy = ev.clientY - cy;
+        if (Math.hypot(dx, dy) > radius) {
+          x.set(0);
+          y.set(0);
+          return;
+        }
+        x.set(dx * strength);
+        y.set(dy * strength);
+      });
     },
     [radius, strength, reduce, x, y],
   );

@@ -20,15 +20,23 @@ export function FinalCTA() {
   const reduce = useReducedMotion();
   const mx = useMotionValue(50);
   const my = useMotionValue(35);
+  const rafRef = useRef<number | null>(null);
+  const pendingRef = useRef<{ clientX: number; clientY: number } | null>(null);
 
   const handleMove = useCallback(
     (e: React.MouseEvent) => {
       if (reduce) return;
-      const el = ref.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      mx.set(((e.clientX - rect.left) / rect.width) * 100);
-      my.set(((e.clientY - rect.top) / rect.height) * 100);
+      pendingRef.current = { clientX: e.clientX, clientY: e.clientY };
+      if (rafRef.current !== null) return;
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null;
+        const el = ref.current;
+        const ev = pendingRef.current;
+        if (!el || !ev) return;
+        const rect = el.getBoundingClientRect();
+        mx.set(((ev.clientX - rect.left) / rect.width) * 100);
+        my.set(((ev.clientY - rect.top) / rect.height) * 100);
+      });
     },
     [mx, my, reduce],
   );

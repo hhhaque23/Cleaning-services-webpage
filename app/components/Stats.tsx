@@ -337,9 +337,11 @@ function ClockFace() {
       {/* Minute hand — pointing to 2 (10:10 pose) with a softer oscillation
           slightly offset in phase from the hour hand for natural motion. */}
       <motion.g
-        style={{ originX: "50px", originY: "50px" }}
-        animate={reduce ? undefined : { rotate: [-1.5, 2, -1.5] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          transformOrigin: "50px 50px",
+          transformBox: "fill-box",
+          animation: reduce ? undefined : "clock-minute-tick 9s ease-in-out infinite",
+        }}
       >
         <line
           x1="50"
@@ -352,12 +354,14 @@ function ClockFace() {
         />
       </motion.g>
 
-      {/* Second hand — full revolution every 60s (true clock pace, "moving
-          a tiny bit each second"). */}
+      {/* Second hand — full revolution every 60s. Pure CSS keyframe so the
+          rotation runs on the compositor with zero per-frame JS. */}
       <motion.g
-        style={{ originX: "50px", originY: "50px" }}
-        animate={reduce ? undefined : { rotate: 360 }}
-        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+        style={{
+          transformOrigin: "50px 50px",
+          transformBox: "fill-box",
+          animation: reduce ? undefined : "clock-second 60s linear infinite",
+        }}
       >
         <line
           x1="50"

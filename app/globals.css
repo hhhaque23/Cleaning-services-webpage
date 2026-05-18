@@ -218,6 +218,66 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
 }
 
+/* Pastel-ribbon background drift — CSS keyframes (GPU-compositor friendly,
+   no per-frame JS). Each ribbon has its own keyframe so they never align
+   into a single moving mass. The universal prefers-reduced-motion rule
+   below auto-disables these. The mobile rule further down ditto. */
+@keyframes pr-sky {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25%      { transform: translate3d(28px, -14px, 0); }
+  50%      { transform: translate3d(0, 0, 0); }
+  75%      { transform: translate3d(-28px, 14px, 0); }
+}
+@keyframes pr-teal1 {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25%      { transform: translate3d(22px, -10px, 0); }
+  50%      { transform: translate3d(0, 0, 0); }
+  75%      { transform: translate3d(-22px, 10px, 0); }
+}
+@keyframes pr-teal2 {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25%      { transform: translate3d(-24px, 10px, 0); }
+  50%      { transform: translate3d(0, 0, 0); }
+  75%      { transform: translate3d(24px, -10px, 0); }
+}
+@keyframes pr-cream {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25%      { transform: translate3d(-20px, 14px, 0); }
+  50%      { transform: translate3d(0, 0, 0); }
+  75%      { transform: translate3d(20px, -14px, 0); }
+}
+@keyframes pr-peach {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25%      { transform: translate3d(32px, -12px, 0); }
+  50%      { transform: translate3d(0, 0, 0); }
+  75%      { transform: translate3d(-32px, 12px, 0); }
+}
+@keyframes pr-rose {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25%      { transform: translate3d(26px, -8px, 0); }
+  50%      { transform: translate3d(0, 0, 0); }
+  75%      { transform: translate3d(-26px, 8px, 0); }
+}
+.pr-anim-sky      { animation: pr-sky    48s ease-in-out infinite; }
+.pr-anim-teal1    { animation: pr-teal1  52s ease-in-out infinite -2s; }
+.pr-anim-teal2    { animation: pr-teal2  58s ease-in-out infinite -4s; }
+.pr-anim-cream    { animation: pr-cream  56s ease-in-out infinite; }
+.pr-anim-peach    { animation: pr-peach  64s ease-in-out infinite -1s; }
+.pr-anim-rose     { animation: pr-rose   44s ease-in-out infinite -3s; }
+.pr-anim-rainbow1 { animation: pr-sky    48s ease-in-out infinite; }
+.pr-anim-rainbow2 { animation: pr-cream  56s ease-in-out infinite; }
+
+/* Clock-face hand animations (Stats.tsx) — pure CSS so the perpetual
+   rotation runs on the compositor without any per-frame React work. */
+@keyframes clock-second {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes clock-minute-tick {
+  0%, 100% { transform: rotate(-1.5deg); }
+  50%      { transform: rotate(2deg); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -241,7 +301,15 @@ input[type="range"]::-moz-range-thumb {
   .animate-halo-rotate,
   .animate-spotlight-pulse,
   .animate-star-twinkle,
-  .animate-grid-flow {
+  .animate-grid-flow,
+  .pr-anim-sky,
+  .pr-anim-teal1,
+  .pr-anim-teal2,
+  .pr-anim-cream,
+  .pr-anim-peach,
+  .pr-anim-rose,
+  .pr-anim-rainbow1,
+  .pr-anim-rainbow2 {
     animation: none !important;
   }
 }

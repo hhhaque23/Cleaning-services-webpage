@@ -9,14 +9,22 @@ import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 function useEdgeGlow() {
   const ref = useRef<HTMLDivElement | null>(null);
+  const rafRef = useRef<number | null>(null);
+  const pendingRef = useRef<{ x: number; y: number } | null>(null);
   const onMouseMove = useCallback((e: React.MouseEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    el.style.setProperty("--gx", `${x}%`);
-    el.style.setProperty("--gy", `${y}%`);
+    pendingRef.current = { x: e.clientX, y: e.clientY };
+    if (rafRef.current !== null) return;
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null;
+      const el = ref.current;
+      const p = pendingRef.current;
+      if (!el || !p) return;
+      const rect = el.getBoundingClientRect();
+      const x = ((p.x - rect.left) / rect.width) * 100;
+      const y = ((p.y - rect.top) / rect.height) * 100;
+      el.style.setProperty("--gx", `${x}%`);
+      el.style.setProperty("--gy", `${y}%`);
+    });
   }, []);
   return { ref, onMouseMove };
 }
