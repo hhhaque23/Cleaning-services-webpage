@@ -119,11 +119,11 @@ body {
     border-color: var(--line-strong);
   }
 
-  /* Reserved decisively: floating overlay cards above photography. */
+  /* Floating overlay cards above photography. Dropped the backdrop-filter
+     blur — too costly when content scrolls behind. The higher base alpha
+     keeps text legibility. */
   .glass {
-    background: oklch(0.985 0.006 220 / 0.78);
-    backdrop-filter: saturate(160%) blur(14px);
-    -webkit-backdrop-filter: saturate(160%) blur(14px);
+    background: oklch(0.985 0.006 220 / 0.94);
     border: 1px solid oklch(0.92 0.012 220 / 0.7);
   }
 

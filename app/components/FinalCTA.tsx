@@ -161,11 +161,7 @@ export function FinalCTA() {
             transition={{ duration: 0.8, delay: 0.6, ease: EASE_OUT_QUINT }}
             className="hidden md:flex absolute top-10 right-10 max-w-[16rem]"
           >
-            <motion.div
-              animate={reduce ? undefined : { y: [0, -6, 0], rotate: [-2, -1, -2] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="rounded-2xl bg-[oklch(0.985_0.006_220/0.95)] text-ink-950 px-4 py-3.5 shadow-lift backdrop-blur-sm flex items-center gap-3 origin-center"
-            >
+            <div className="rounded-2xl bg-[oklch(0.985_0.006_220/0.97)] text-ink-950 px-4 py-3.5 shadow-lift flex items-center gap-3 origin-center">
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-grass-500/15 text-grass-700">
                 <CalendarClock className="h-5 w-5" />
               </span>
@@ -175,7 +171,7 @@ export function FinalCTA() {
                 </div>
                 <div className="text-sm font-bold text-ink-950">Today 3:30 PM</div>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         </motion.div>
       </div>
