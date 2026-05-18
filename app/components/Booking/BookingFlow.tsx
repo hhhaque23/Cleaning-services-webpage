@@ -152,7 +152,6 @@ export function BookingFlow() {
 
   return (
     <section id="booking" className="relative py-20 sm:py-28 scroll-mt-24">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-ink-50/60 via-transparent to-ink-50/60" />
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 14 }}

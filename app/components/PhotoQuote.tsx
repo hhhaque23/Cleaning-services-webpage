@@ -24,7 +24,7 @@ export function PhotoQuote() {
   return (
     <section
       ref={ref}
-      className="relative py-20 sm:py-28 bg-[var(--surface-tint)] overflow-hidden"
+      className="relative py-20 sm:py-28 overflow-hidden"
     >
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">

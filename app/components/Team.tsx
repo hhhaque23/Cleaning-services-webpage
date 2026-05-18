@@ -12,7 +12,7 @@ export function Team() {
   const reduce = useReducedMotion();
 
   return (
-    <section className="relative py-20 sm:py-28 bg-ink-50/40 overflow-hidden">
+    <section className="relative py-20 sm:py-28 overflow-hidden">
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 14 }}

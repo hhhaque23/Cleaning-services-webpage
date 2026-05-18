@@ -14,7 +14,7 @@ const TILES = TILE_INDICES.map((i) => ALL_PHOTOS[i]);
 
 export function RecentTransformations() {
   return (
-    <section className="relative py-20 sm:py-28 bg-[var(--surface-tint)] overflow-hidden">
+    <section className="relative py-20 sm:py-28 overflow-hidden">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 14 }}

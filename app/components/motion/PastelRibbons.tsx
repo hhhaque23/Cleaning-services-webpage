@@ -101,7 +101,7 @@ export function PastelRibbons() {
           d="M 1440 0 L 1440 540 C 1290 510, 1180 450, 1040 420 C 880 388, 740 470, 580 388 C 440 305, 290 245, 150 285 C 65 308, 20 240, 0 130 L 0 0 Z"
           fill="url(#rb-sky)"
           filter="url(#rb-shadow)"
-          animate={reduce ? undefined : { x: [0, 9, 0, -9, 0], y: [0, -5, 0, 5, 0] }}
+          animate={reduce ? undefined : { x: [0, 28, 0, -28, 0], y: [0, -14, 0, 14, 0] }}
           transition={{ duration: 48, repeat: Infinity, ease: "easeInOut" }}
         />
 
@@ -110,7 +110,7 @@ export function PastelRibbons() {
           d="M 1440 290 C 1290 370, 1170 320, 1020 400 C 880 470, 760 410, 620 480 C 500 540, 400 510, 280 470 L 280 590 C 420 620, 580 600, 720 570 C 900 530, 1060 580, 1230 540 C 1340 510, 1410 480, 1440 460 Z"
           fill="url(#rb-teal1)"
           filter="url(#rb-shadow)"
-          animate={reduce ? undefined : { x: [0, 6, 0, -6, 0], y: [0, -3, 0, 3, 0] }}
+          animate={reduce ? undefined : { x: [0, 22, 0, -22, 0], y: [0, -10, 0, 10, 0] }}
           transition={{ duration: 52, repeat: Infinity, ease: "easeInOut", delay: 2 }}
         />
 
@@ -119,7 +119,7 @@ export function PastelRibbons() {
           d="M 1440 400 C 1320 460, 1220 430, 1100 470 C 980 510, 860 470, 740 510 L 740 600 C 880 580, 1020 590, 1160 570 C 1280 555, 1370 540, 1440 530 Z"
           fill="url(#rb-teal2)"
           opacity="0.85"
-          animate={reduce ? undefined : { x: [0, -7, 0, 7, 0], y: [0, 3, 0, -3, 0] }}
+          animate={reduce ? undefined : { x: [0, -24, 0, 24, 0], y: [0, 10, 0, -10, 0] }}
           transition={{ duration: 58, repeat: Infinity, ease: "easeInOut", delay: 4 }}
         />
 
@@ -128,7 +128,7 @@ export function PastelRibbons() {
           d="M 0 900 L 0 360 C 130 420, 280 400, 440 450 C 620 500, 760 580, 920 600 C 1100 620, 1240 560, 1360 620 C 1410 645, 1440 700, 1440 770 L 1440 900 Z"
           fill="url(#rb-cream)"
           filter="url(#rb-shadow)"
-          animate={reduce ? undefined : { x: [0, -7, 0, 7, 0], y: [0, 5, 0, -5, 0] }}
+          animate={reduce ? undefined : { x: [0, -20, 0, 20, 0], y: [0, 14, 0, -14, 0] }}
           transition={{ duration: 56, repeat: Infinity, ease: "easeInOut" }}
         />
 
@@ -136,7 +136,7 @@ export function PastelRibbons() {
         <motion.path
           d="M 0 580 C 180 540, 360 620, 540 640 C 720 660, 880 600, 1080 640 C 1240 670, 1360 720, 1440 700 L 1440 780 C 1280 790, 1080 740, 880 760 C 660 780, 440 740, 240 720 C 130 710, 50 670, 0 640 Z"
           fill="url(#rb-peach)"
-          animate={reduce ? undefined : { x: [0, 11, 0, -11, 0], y: [0, -4, 0, 4, 0] }}
+          animate={reduce ? undefined : { x: [0, 32, 0, -32, 0], y: [0, -12, 0, 12, 0] }}
           transition={{ duration: 64, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           style={{ mixBlendMode: "screen" }}
         />
@@ -145,7 +145,7 @@ export function PastelRibbons() {
         <motion.path
           d="M 0 740 C 200 770, 400 780, 620 760 C 820 740, 1020 700, 1240 720 C 1340 730, 1410 740, 1440 750 L 1440 900 L 0 900 Z"
           fill="url(#rb-rose)"
-          animate={reduce ? undefined : { x: [0, 8, 0, -8, 0] }}
+          animate={reduce ? undefined : { x: [0, 26, 0, -26, 0], y: [0, -8, 0, 8, 0] }}
           transition={{ duration: 44, repeat: Infinity, ease: "easeInOut", delay: 3 }}
         />
 
@@ -157,7 +157,7 @@ export function PastelRibbons() {
           strokeWidth="3.5"
           strokeLinecap="round"
           opacity="0.7"
-          animate={reduce ? undefined : { x: [0, 9, 0, -9, 0], y: [0, -5, 0, 5, 0] }}
+          animate={reduce ? undefined : { x: [0, 28, 0, -28, 0], y: [0, -14, 0, 14, 0] }}
           transition={{ duration: 48, repeat: Infinity, ease: "easeInOut" }}
         />
 
@@ -169,7 +169,7 @@ export function PastelRibbons() {
           strokeWidth="2.5"
           strokeLinecap="round"
           opacity="0.5"
-          animate={reduce ? undefined : { x: [0, -7, 0, 7, 0], y: [0, 5, 0, -5, 0] }}
+          animate={reduce ? undefined : { x: [0, -20, 0, 20, 0], y: [0, 14, 0, -14, 0] }}
           transition={{ duration: 56, repeat: Infinity, ease: "easeInOut" }}
         />
       </svg>

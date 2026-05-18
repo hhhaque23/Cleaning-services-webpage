@@ -508,7 +508,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
         </div>
       </section>
 
-      <section className="relative py-24 sm:py-28 bg-ink-50/50 overflow-hidden">
+      <section className="relative py-24 sm:py-28 overflow-hidden">
         <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
           <div className="text-[11px] uppercase tracking-[0.14em] font-semibold text-grass-700">
             Best for

@@ -44,7 +44,7 @@ export function ServiceAreas() {
   return (
     <section
       id="areas"
-      className="relative py-24 sm:py-32 scroll-mt-24 bg-[var(--surface-tint)] overflow-hidden"
+      className="relative py-24 sm:py-32 scroll-mt-24 overflow-hidden"
     >
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
