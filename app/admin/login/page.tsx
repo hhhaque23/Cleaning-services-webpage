@@ -49,13 +49,15 @@ function LoginInner() {
     <div className="min-h-screen flex flex-col items-center justify-center px-5 py-12">
       <div className="w-full max-w-sm">
         <div className="flex items-center justify-center">
-          <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-ink-900 to-ink-950 shadow-ring">
+          <span className="inline-flex items-center gap-2.5 rounded-2xl bg-gradient-to-br from-ink-900 to-ink-950 pl-3 pr-5 py-2.5 shadow-ring">
             <SpectreMark size={32} alt="Spectre Cleaning Solutions" />
+            <span className="font-display font-bold text-xl text-white">
+              Spectre<span className="font-medium text-accent-400"> Cleaning</span>
+            </span>
           </span>
         </div>
         <div className="mt-5 text-center">
-          <div className="text-[11px] uppercase tracking-[0.18em] text-ink-600 font-semibold">Spectre</div>
-          <h1 className="mt-1 font-display font-extrabold text-3xl text-ink-950 tracking-tight">
+          <h1 className="font-display font-extrabold text-3xl text-ink-950 tracking-tight">
             Operations
           </h1>
           <p className="mt-2 text-sm text-ink-700">

@@ -29,15 +29,13 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-40 bg-[var(--surface)]/85 backdrop-blur-md border-b border-line">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
           <Link href="/admin" className="flex items-center gap-2.5 cursor-pointer">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-ink-900 to-ink-950 shadow-ring">
+            <span className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-br from-ink-900 to-ink-950 pl-1.5 pr-3 py-1.5 shadow-ring">
               <SpectreMark size={22} alt="Spectre Cleaning Solutions" />
-            </span>
-            <span className="leading-tight">
-              <span className="block text-[10px] uppercase tracking-[0.18em] text-ink-600 font-semibold">
-                Spectre
+              <span className="font-display font-bold text-sm text-white">
+                Spectre<span className="font-medium text-accent-400"> Cleaning</span>
               </span>
-              <span className="block font-display font-bold text-base text-ink-950">Operations</span>
             </span>
+            <span className="hidden sm:block text-sm font-semibold text-ink-700">Operations</span>
           </Link>
 
           <nav className="flex items-center gap-1">

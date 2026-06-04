@@ -134,15 +134,15 @@ export function Navbar() {
           <div className="flex items-center justify-between px-4 sm:px-5 py-2.5">
             <Link
               href="/"
-              className="flex items-center gap-2.5 cursor-pointer"
+              className="flex items-center cursor-pointer"
               aria-label="Spectre Cleaning Solutions home"
             >
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-ink-900 to-ink-950 shadow-ring">
-                <SpectreMark size={26} alt="Spectre Cleaning Solutions" />
-              </span>
-              <span className="font-display font-bold text-[15px] sm:text-base tracking-tight text-ink-950">
-                Spectre
-                <span className="font-medium text-accent-600"> Cleaning</span>
+              <span className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-br from-ink-900 to-ink-950 pl-2 pr-3.5 py-1.5 shadow-ring">
+                <SpectreMark size={28} alt="Spectre Cleaning Solutions" />
+                <span className="font-display font-bold text-[15px] sm:text-base tracking-tight text-white">
+                  Spectre
+                  <span className="font-medium text-accent-400"> Cleaning</span>
+                </span>
               </span>
             </Link>
 
