@@ -14,9 +14,15 @@ type SpectreMarkProps = {
   className?: string;
   size?: number | string;
   alt?: string;
+  priority?: boolean;
 };
 
-export function SpectreMark({ className, size = 24, alt = "Spectre Cleaning" }: SpectreMarkProps) {
+export function SpectreMark({
+  className,
+  size = 24,
+  alt = "Spectre Cleaning",
+  priority = false,
+}: SpectreMarkProps) {
   const h = typeof size === "number" ? size : parseInt(size, 10) || 24;
   return (
     <Image
@@ -25,6 +31,7 @@ export function SpectreMark({ className, size = 24, alt = "Spectre Cleaning" }: 
       width={GHOST_W}
       height={GHOST_H}
       unoptimized
+      priority={priority}
       className={className}
       style={{ height: h, width: "auto" }}
     />

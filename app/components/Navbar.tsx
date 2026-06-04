@@ -127,22 +127,22 @@ export function Navbar() {
         <div
           className={`mx-auto max-w-6xl rounded-2xl transition-all duration-300 ${
             scrolled
-              ? "bg-[oklch(0.93_0.018_220/0.97)] border border-line-strong/70 shadow-card"
-              : "bg-[oklch(0.91_0.02_220/0.94)] border border-line-strong/60 shadow-soft"
+              ? "bg-[oklch(0.15_0.035_245/0.96)] border border-white/10 shadow-card"
+              : "bg-[oklch(0.16_0.035_245/0.88)] border border-white/10 shadow-soft"
           }`}
         >
           <div className="flex items-center justify-between px-4 sm:px-5 py-2.5">
             <Link
               href="/"
-              className="flex items-center cursor-pointer"
+              className="flex items-center gap-2.5 cursor-pointer"
               aria-label="Spectre Cleaning Solutions home"
             >
-              <span className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-br from-ink-900 to-ink-950 pl-2 pr-3.5 py-1.5 shadow-ring">
-                <SpectreMark size={28} alt="Spectre Cleaning Solutions" />
-                <span className="font-display font-bold text-[15px] sm:text-base tracking-tight text-white">
-                  Spectre
-                  <span className="font-medium text-accent-400"> Cleaning</span>
-                </span>
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/5 ring-1 ring-white/10">
+                <SpectreMark size={26} alt="Spectre Cleaning Solutions" priority />
+              </span>
+              <span className="font-display font-bold text-[15px] sm:text-base tracking-tight text-white">
+                Spectre
+                <span className="font-medium text-accent-400"> Cleaning</span>
               </span>
             </Link>
 
@@ -159,13 +159,13 @@ export function Navbar() {
                     href={l.href}
                     onMouseEnter={() => setHovered(l.href)}
                     className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-colors cursor-pointer ${
-                      active ? "text-ink-950" : "text-ink-800/80 hover:text-ink-950"
+                      active ? "text-white" : "text-white/70 hover:text-white"
                     }`}
                   >
                     {isHovered && (
                       <motion.span
                         layoutId="nav-hover-pill"
-                        className="absolute inset-0 -z-10 rounded-lg bg-ink-100/55"
+                        className="absolute inset-0 -z-10 rounded-lg bg-white/10"
                         transition={{ type: "spring", stiffness: 320, damping: 30 }}
                       />
                     )}
@@ -185,7 +185,7 @@ export function Navbar() {
             <div className="flex items-center gap-2">
               <a
                 href={`mailto:${SITE.email}`}
-                className="hidden lg:inline-flex items-center text-sm font-medium text-ink-800/80 hover:text-ink-950 px-3 py-3 rounded-lg transition-colors cursor-pointer"
+                className="hidden lg:inline-flex items-center text-sm font-medium text-white/70 hover:text-white px-3 py-3 rounded-lg transition-colors cursor-pointer"
               >
                 Email us
               </a>
@@ -193,7 +193,7 @@ export function Navbar() {
               <MagneticButton as="div" radius={70} strength={0.22} className="hidden sm:inline-flex">
                 <Link
                   href="/admin/login"
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-[var(--surface)]/70 hover:bg-[var(--surface)] border border-line-strong/60 hover:border-ink-700/50 text-ink-800 hover:text-ink-950 text-sm font-semibold px-3.5 py-3 transition-all cursor-pointer"
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 hover:border-white/25 text-white/85 hover:text-white text-sm font-semibold px-3.5 py-3 transition-all cursor-pointer"
                 >
                   <ShieldCheck className="h-3.5 w-3.5" />
                   Ops
@@ -217,7 +217,7 @@ export function Navbar() {
                 aria-expanded={open}
                 aria-controls="mobile-nav"
                 onClick={() => setOpen(true)}
-                className="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-lg text-ink-900 hover:bg-ink-100/60 transition-colors cursor-pointer"
+                className="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-lg text-white hover:bg-white/10 transition-colors cursor-pointer"
               >
                 <Menu className="h-5 w-5" />
               </button>
@@ -250,18 +250,18 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.35, ease: EASE_OUT_QUINT }}
-              className="absolute right-0 top-0 h-full w-[85%] max-w-sm bg-[var(--surface)] p-6 shadow-2xl overflow-hidden"
+              className="absolute right-0 top-0 h-full w-[85%] max-w-sm bg-ink-950 p-6 shadow-2xl overflow-hidden"
             >
               <div
                 aria-hidden
                 className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-[oklch(0.58_0.15_238/0.18)] blur-3xl animate-halo-rotate"
               />
               <div className="relative flex items-center justify-between">
-                <span className="font-display font-bold text-ink-950">Menu</span>
+                <span className="font-display font-bold text-white">Menu</span>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-lg hover:bg-ink-100 cursor-pointer"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-white/80 hover:text-white hover:bg-white/10 cursor-pointer"
                   aria-label="Close menu"
                 >
                   <X className="h-5 w-5" />
@@ -287,7 +287,7 @@ export function Navbar() {
                         href={l.href}
                         onClick={() => setOpen(false)}
                         className={`relative flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-colors cursor-pointer ${
-                          active ? "bg-ink-100/70 text-ink-950" : "text-ink-900 hover:bg-ink-100/40"
+                          active ? "bg-white/10 text-white" : "text-white/80 hover:bg-white/5"
                         }`}
                       >
                         {l.label}
@@ -322,7 +322,7 @@ export function Navbar() {
                   <Link
                     href="/admin/login"
                     onClick={() => setOpen(false)}
-                    className="mt-2 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-[var(--surface-elevated)] border border-line-strong/60 text-ink-800 text-sm font-semibold px-4 py-3 transition-colors cursor-pointer"
+                    className="mt-2 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-white/10 border border-white/15 text-white/85 text-sm font-semibold px-4 py-3 transition-colors cursor-pointer"
                   >
                     <ShieldCheck className="h-4 w-4" />
                     Ops sign-in
@@ -334,7 +334,7 @@ export function Navbar() {
                     hidden: { opacity: 0 },
                     show: { opacity: 1 },
                   }}
-                  className="mt-2 text-center text-sm text-ink-700 hover:text-ink-950 break-all cursor-pointer"
+                  className="mt-2 text-center text-sm text-white/60 hover:text-white break-all cursor-pointer"
                 >
                   Or email {SITE.email}
                 </motion.a>
