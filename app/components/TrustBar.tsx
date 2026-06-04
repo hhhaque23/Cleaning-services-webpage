@@ -29,10 +29,10 @@ export function TrustBar() {
       />
 
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 w-16 sm:w-24 z-10 pointer-events-none bg-gradient-to-r from-[var(--surface)] to-transparent" />
-        <div className="absolute inset-y-0 right-0 w-16 sm:w-24 z-10 pointer-events-none bg-gradient-to-l from-[var(--surface)] to-transparent" />
+        <div className="absolute inset-y-0 left-0 w-16 sm:w-24 z-10 pointer-events-none bg-gradient-to-r from-[var(--surface-elevated)] to-transparent" />
+        <div className="absolute inset-y-0 right-0 w-16 sm:w-24 z-10 pointer-events-none bg-gradient-to-l from-[var(--surface-elevated)] to-transparent" />
 
-        <div className="group flex overflow-hidden border-y border-line py-5">
+        <div className="group flex overflow-hidden bg-[var(--surface-elevated)] border-y border-line-strong py-5 shadow-[0_14px_36px_-24px_oklch(0.15_0.045_230/0.45)]">
           <motion.div
             animate={reduce ? undefined : { x: ["0%", "-50%"] }}
             transition={{ duration: 38, repeat: Infinity, ease: "linear" }}

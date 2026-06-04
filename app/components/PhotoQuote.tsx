@@ -47,7 +47,7 @@ export function PhotoQuote() {
             <div className="absolute inset-0 bg-gradient-to-br from-[oklch(0.13_0.045_230/0.18)] via-transparent to-[oklch(0.13_0.045_230/0.08)]" />
           </motion.figure>
 
-          <div className="relative">
+          <div className="relative card p-7 sm:p-10">
             <motion.span
               aria-hidden="true"
               initial={{ opacity: 0, scale: 0.6, rotate: -8 }}

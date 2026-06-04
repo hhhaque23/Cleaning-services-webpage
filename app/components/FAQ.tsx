@@ -99,7 +99,7 @@ export function FAQ() {
             </motion.div>
           </div>
 
-          <ul className="divide-y divide-line">
+          <ul className="space-y-3 sm:space-y-4">
           {FAQS.map((f, i) => {
             const isOpen = open === i;
             return (
@@ -109,7 +109,7 @@ export function FAQ() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.45, delay: i * 0.04 }}
-                className="group/item"
+                className="group/item card px-5 sm:px-6 overflow-hidden"
               >
                 <button
                   type="button"

@@ -4,8 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Mail, MapPin, Star, ShieldCheck, Leaf, Clock, Sparkles, Pin, Calculator } from "lucide-react";
+import Image from "next/image";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
-import { SpectreMark } from "./SpectreMark";
 import { SITE } from "@/lib/site";
 
 type FooterLink = { label: string; href: string; external?: boolean };
@@ -109,18 +109,21 @@ export function Footer() {
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8 pt-16 pb-10">
         <div className="grid lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-10 lg:gap-12">
           <div>
-            <Link href="/" className="inline-flex items-center gap-2.5 cursor-pointer group">
+            <Link href="/" className="inline-flex items-center cursor-pointer group">
               <motion.span
-                whileHover={reduce ? undefined : { rotate: 8 }}
+                whileHover={reduce ? undefined : { scale: 1.03 }}
                 transition={{ type: "spring", stiffness: 320, damping: 16 }}
-                className="relative inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 ring-1 ring-white/10 text-white"
+                className="inline-flex items-center"
               >
-                <SpectreMark size={24} className="text-white" />
+                <Image
+                  src="/spectre-lockup.png"
+                  alt="Spectre Cleaning Solutions"
+                  width={524}
+                  height={360}
+                  unoptimized
+                  className="h-14 w-auto"
+                />
               </motion.span>
-              <span className="font-display font-bold text-lg">
-                Spectre
-                <span className="font-medium text-white/70"> Cleaning</span>
-              </span>
             </Link>
             <p className="mt-4 text-white/70 leading-relaxed max-w-sm">
               {SITE.area}&apos;s no-friction home &amp; office cleaning. Transparent

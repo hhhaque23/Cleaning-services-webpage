@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { Lock, ArrowRight, FlaskConical } from "lucide-react";
-import { SpectreMark } from "../../components/SpectreMark";
+import Image from "next/image";
 
 function LoginInner() {
   const router = useRouter();
@@ -49,15 +49,19 @@ function LoginInner() {
     <div className="min-h-screen flex flex-col items-center justify-center px-5 py-12">
       <div className="w-full max-w-sm">
         <div className="flex items-center justify-center">
-          <span className="relative inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-ink-800 to-ink-950 text-white">
-            <SpectreMark size={26} className="text-white" />
+          <span className="inline-flex items-center rounded-2xl bg-gradient-to-br from-ink-900 to-ink-950 px-5 py-3.5 shadow-ring">
+            <Image
+              src="/spectre-lockup.png"
+              alt="Spectre Cleaning Solutions"
+              width={524}
+              height={360}
+              unoptimized
+              className="h-12 w-auto"
+            />
           </span>
         </div>
         <div className="mt-5 text-center">
-          <div className="text-[11px] uppercase tracking-[0.18em] text-ink-600 font-semibold">
-            Spectre
-          </div>
-          <h1 className="mt-1 font-display font-extrabold text-3xl text-ink-950 tracking-tight">
+          <h1 className="font-display font-extrabold text-3xl text-ink-950 tracking-tight">
             Operations
           </h1>
           <p className="mt-2 text-sm text-ink-700">

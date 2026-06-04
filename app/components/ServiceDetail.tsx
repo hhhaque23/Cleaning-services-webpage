@@ -444,7 +444,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
               )}
             </div>
 
-            <div className="divide-y divide-line-strong/40">
+            <div className="space-y-4">
               {c.included.map((group, gi) => (
                 <motion.div
                   key={group.title}
@@ -465,7 +465,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                       },
                     },
                   }}
-                  className="grid sm:grid-cols-[10rem_1fr] gap-3 sm:gap-8 py-8 first:pt-0 last:pb-0"
+                  className="card grid sm:grid-cols-[10rem_1fr] gap-3 sm:gap-8 p-5 sm:p-7"
                 >
                   <div className="font-display font-bold text-lg text-ink-950 leading-tight">
                     {group.title}
@@ -523,7 +523,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
             whileInView="show"
             viewport={{ once: true, margin: "-60px" }}
             variants={{ show: { transition: { staggerChildren: 0.1 } } }}
-            className="mt-12 divide-y divide-line-strong/40"
+            className="mt-12 space-y-4"
           >
             {c.bestFor.map((b, bi) => (
               <motion.li
@@ -532,7 +532,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                   hidden: { opacity: 0, y: 18 },
                   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_OUT_QUINT } },
                 }}
-                className="grid sm:grid-cols-[6rem_1fr] gap-3 sm:gap-10 py-8 first:pt-0 last:pb-0 items-baseline group"
+                className="card grid sm:grid-cols-[6rem_1fr] gap-3 sm:gap-10 p-5 sm:p-6 items-baseline group"
               >
                 <motion.div
                   whileHover={{ scale: 1.05, color: "oklch(0.43 0.14 242)" }}

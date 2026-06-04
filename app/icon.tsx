@@ -24,8 +24,8 @@ export default function Icon() {
             fill="#EEF4F8"
             d="M4 10 a8 8 0 0 1 16 0 v9 a2 2 0 0 1 -4 0 a2 2 0 0 1 -4 0 a2 2 0 0 1 -4 0 a2 2 0 0 1 -4 0 Z"
           />
-          <circle cx="9.2" cy="10.7" r="1.2" fill="#0E1F2B" />
-          <circle cx="14.8" cy="10.7" r="1.2" fill="#0E1F2B" />
+          <path fill="#0E1F2B" d="M7.2 9.4 C9 10 10.6 10.9 11.7 12.2 C10 11.9 8.3 11.2 7 10.4 Z" />
+          <path fill="#0E1F2B" d="M16.8 9.4 C15 10 13.4 10.9 12.3 12.2 C14 11.9 15.7 11.2 17 10.4 Z" />
         </svg>
         <div
           style={{

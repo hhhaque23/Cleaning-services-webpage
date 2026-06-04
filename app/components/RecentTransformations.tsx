@@ -52,7 +52,7 @@ export function RecentTransformations() {
                 show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE_OUT_QUINT } },
               }}
             >
-              <figure className="group relative aspect-[4/5] rounded-2xl overflow-hidden shadow-soft hover:shadow-card transition-shadow cursor-default">
+              <figure className="group relative aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-line-strong shadow-card hover:shadow-lift transition-shadow cursor-default">
                 <Image
                   src={t.src}
                   alt={`${t.label} · ${t.sub}`}
