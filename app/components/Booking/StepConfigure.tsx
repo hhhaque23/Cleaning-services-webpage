@@ -135,7 +135,7 @@ export function StepConfigure({ config, setConfig }: Props) {
                     className="absolute -inset-px rounded-2xl pointer-events-none"
                     style={{
                       background:
-                        "radial-gradient(ellipse at top right, oklch(0.68 0.18 145 / 0.35), transparent 70%)",
+                        "radial-gradient(ellipse at top right, oklch(0.58 0.15 238 / 0.35), transparent 70%)",
                     }}
                   />
                 )}
@@ -245,7 +245,7 @@ export function StepConfigure({ config, setConfig }: Props) {
                     className="absolute inset-0 -z-10 rounded-2xl pointer-events-none"
                     style={{
                       background:
-                        "radial-gradient(ellipse at center, oklch(0.68 0.18 145 / 0.08), transparent 70%)",
+                        "radial-gradient(ellipse at center, oklch(0.58 0.15 238 / 0.08), transparent 70%)",
                     }}
                   />
                 )}

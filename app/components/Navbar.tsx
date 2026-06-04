@@ -4,9 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sparkles, ShieldCheck } from "lucide-react";
+import { Menu, X, ShieldCheck } from "lucide-react";
 import { MagneticButton } from "./motion/MagneticButton";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
+import { SpectreMark } from "./SpectreMark";
+import { SITE } from "@/lib/site";
 
 const LINKS = [
   { href: "/about", label: "About" },
@@ -133,15 +135,14 @@ export function Navbar() {
             <Link
               href="/"
               className="flex items-center gap-2 group cursor-pointer"
-              aria-label="Pristine Cleaning Co. home"
+              aria-label="Spectre Cleaning Solutions home"
             >
-              <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-ink-700 to-ink-950 text-[var(--surface)] shadow-ring">
-                <Sparkles className="h-4 w-4" strokeWidth={2.4} />
-                <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-grass-500 ring-2 ring-[var(--surface)]" />
+              <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-ink-800 to-ink-950 text-white shadow-ring">
+                <SpectreMark size={20} className="text-white" />
               </span>
               <span className="font-display font-bold text-[15px] sm:text-base tracking-tight text-ink-950">
-                Pristine
-                <span className="font-medium text-ink-700"> Cleaning Co.</span>
+                Spectre
+                <span className="font-medium text-ink-700"> Cleaning</span>
               </span>
             </Link>
 
@@ -172,7 +173,7 @@ export function Navbar() {
                     {active && (
                       <motion.span
                         layoutId="nav-underline"
-                        className="absolute left-2.5 right-2.5 -bottom-0.5 h-[3px] rounded-full bg-grass-500 shadow-[0_2px_8px_-1px_oklch(0.68_0.18_145/0.6)]"
+                        className="absolute left-2.5 right-2.5 -bottom-0.5 h-[3px] rounded-full bg-grass-500 shadow-[0_2px_8px_-1px_oklch(0.58_0.15_238/0.6)]"
                         transition={{ duration: 0.35, ease: EASE_OUT_QUINT }}
                       />
                     )}
@@ -183,10 +184,10 @@ export function Navbar() {
 
             <div className="flex items-center gap-2">
               <a
-                href="tel:+12485550199"
+                href={`mailto:${SITE.email}`}
                 className="hidden lg:inline-flex items-center text-sm font-medium text-ink-800/80 hover:text-ink-950 px-3 py-3 rounded-lg transition-colors cursor-pointer"
               >
-                (248) 555-0199
+                Email us
               </a>
 
               <MagneticButton as="div" radius={70} strength={0.22} className="hidden sm:inline-flex">
@@ -253,7 +254,7 @@ export function Navbar() {
             >
               <div
                 aria-hidden
-                className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-[oklch(0.68_0.18_145/0.18)] blur-3xl animate-halo-rotate"
+                className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-[oklch(0.58_0.15_238/0.18)] blur-3xl animate-halo-rotate"
               />
               <div className="relative flex items-center justify-between">
                 <span className="font-display font-bold text-ink-950">Menu</span>
@@ -291,7 +292,7 @@ export function Navbar() {
                       >
                         {l.label}
                         {active && (
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-grass-500 shadow-[0_0_0_3px_oklch(0.68_0.18_145/0.18)]" />
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-grass-500 shadow-[0_0_0_3px_oklch(0.58_0.15_238/0.18)]" />
                         )}
                       </Link>
                     </motion.div>
@@ -328,14 +329,14 @@ export function Navbar() {
                   </Link>
                 </motion.div>
                 <motion.a
-                  href="tel:+12485550199"
+                  href={`mailto:${SITE.email}`}
                   variants={{
                     hidden: { opacity: 0 },
                     show: { opacity: 1 },
                   }}
-                  className="mt-2 text-center text-sm text-ink-700 hover:text-ink-950 cursor-pointer"
+                  className="mt-2 text-center text-sm text-ink-700 hover:text-ink-950 break-all cursor-pointer"
                 >
-                  Or call (248) 555-0199
+                  Or email {SITE.email}
                 </motion.a>
               </motion.nav>
             </motion.div>

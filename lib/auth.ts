@@ -1,10 +1,10 @@
-const COOKIE = "pristine_admin";
+const COOKIE = "spectre_admin";
 const TTL_SECONDS = 60 * 60 * 12; // 12 hours
 
 // When ADMIN_PASSWORD is unset we run in DEMO mode: any non-empty password
 // works. Tokens are still signed (with this constant) so direct admin URL
 // access without going through /admin/login still gets bounced to login.
-const DEMO_SECRET = "pristine-demo-secret-set-ADMIN_PASSWORD-to-lock";
+const DEMO_SECRET = "spectre-demo-secret-set-ADMIN_PASSWORD-to-lock";
 
 function getSecret(): string {
   const pw = process.env.ADMIN_PASSWORD;

@@ -8,8 +8,8 @@ const ITEMS = [
   { icon: BadgeCheck, label: "Every cleaner background-checked" },
   { icon: Leaf, label: "EPA Safer Choice products" },
   { icon: Clock, label: "24-hour re-clean guarantee" },
-  { icon: MapPin, label: "Rochester Hills · metro Detroit" },
-  { icon: Star, label: "4.9 average · 2,300+ reviews" },
+  { icon: MapPin, label: "Oakland County · metro Detroit" },
+  { icon: Star, label: "Top-rated on Thumbtack" },
 ];
 
 const ROW = [...ITEMS, ...ITEMS];

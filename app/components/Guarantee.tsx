@@ -34,7 +34,7 @@ export function Guarantee() {
             <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-lift">
               <Image
                 src={PHOTOS.guarantee}
-                alt="Pristine living room after a clean, late afternoon light through the window"
+                alt="Spotless living room after a clean, late afternoon light through the window"
                 fill
                 sizes="(min-width: 1024px) 520px, 100vw"
                 className="object-cover"
@@ -46,7 +46,7 @@ export function Guarantee() {
                 </div>
                 <blockquote className="mt-2 font-display font-extrabold text-display-2 tracking-[-0.02em] leading-[1.1]">
                   <SplitText mode="word" stagger={0.05}>
-                    {"“If it's not pristine, we come back. Free.”"}
+                    {"“If it's not spotless, we come back. Free.”"}
                   </SplitText>
                 </blockquote>
               </div>
@@ -105,7 +105,7 @@ export function Guarantee() {
                   whileInView={{ scale: 1, opacity: 1, rotate: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{ duration: 0.6, delay: 0.9, ease: EASE_OUT_QUINT }}
-                  className="inline-flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-[oklch(0.78_0.16_145/0.18)] text-grass-300"
+                  className="inline-flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-[oklch(0.72_0.12_233/0.18)] text-grass-300"
                 >
                   <RotateCcw className="h-5 w-5" />
                 </motion.span>

@@ -535,7 +535,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                 className="grid sm:grid-cols-[6rem_1fr] gap-3 sm:gap-10 py-8 first:pt-0 last:pb-0 items-baseline group"
               >
                 <motion.div
-                  whileHover={{ scale: 1.05, color: "oklch(0.52 0.16 145)" }}
+                  whileHover={{ scale: 1.05, color: "oklch(0.43 0.14 242)" }}
                   className="font-display font-extrabold text-4xl text-grass-700 tabular-nums origin-left cursor-default"
                 >
                   {String(bi + 1).padStart(2, "0")}

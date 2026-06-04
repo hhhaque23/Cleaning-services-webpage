@@ -53,18 +53,18 @@ async function ensureSchema() {
 // Stashed on globalThis so the singleton survives Next.js module duplication
 // across route bundles. Lost on every server restart, by design.
 const globalRef = globalThis as unknown as {
-  __pristineBookings?: Map<string, Booking>;
+  __spectreBookings?: Map<string, Booking>;
 };
 const memory: Map<string, Booking> =
-  globalRef.__pristineBookings ?? new Map<string, Booking>();
-globalRef.__pristineBookings = memory;
+  globalRef.__spectreBookings ?? new Map<string, Booking>();
+globalRef.__spectreBookings = memory;
 
 function makeId() {
   const chars = "23456789ABCDEFGHJKMNPQRSTUVWXYZ";
   let s = "";
   for (let i = 0; i < 6; i++)
     s += chars[Math.floor(Math.random() * chars.length)];
-  return `PR-${s}`;
+  return `SP-${s}`;
 }
 
 function rowToBooking(r: Record<string, unknown>): Booking {

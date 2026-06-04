@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 
 export function generateMetadata({ params }: Props): Metadata {
   return {
-    title: `Booking ${params.id} · Pristine Cleaning Co.`,
+    title: `Booking ${params.id} · Spectre Cleaning Solutions`,
     robots: { index: false, follow: false },
   };
 }

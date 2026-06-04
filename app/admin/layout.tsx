@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { AdminShell } from "./_AdminShell";
 
 export const metadata: Metadata = {
-  title: "Operations · Pristine Cleaning Co.",
+  title: "Operations · Spectre Cleaning Solutions",
   robots: { index: false, follow: false },
 };
 

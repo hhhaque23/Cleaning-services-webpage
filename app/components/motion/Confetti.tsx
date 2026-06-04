@@ -12,8 +12,8 @@ type ConfettiProps = {
 };
 
 const COLORS = [
-  "oklch(0.68 0.18 145)",
-  "oklch(0.78 0.16 145)",
+  "oklch(0.58 0.15 238)",
+  "oklch(0.72 0.12 233)",
   "oklch(0.65 0.13 220)",
   "oklch(0.85 0.14 75)",
 ];

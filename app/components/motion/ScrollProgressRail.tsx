@@ -19,7 +19,7 @@ export function ScrollProgressRail() {
         transformOrigin: "0 50%",
         scaleX: sy,
         background:
-          "linear-gradient(90deg, oklch(0.65 0.13 220) 0%, oklch(0.68 0.18 145) 100%)",
+          "linear-gradient(90deg, oklch(0.65 0.13 220) 0%, oklch(0.58 0.15 238) 100%)",
         pointerEvents: "none",
       }}
     />

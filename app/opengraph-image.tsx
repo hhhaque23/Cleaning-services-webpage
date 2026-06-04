@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Pristine Cleaning Co. · Book a cleaner in 60 seconds";
+export const alt = "Spectre Cleaning Solutions · Book a cleaner in 60 seconds";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -14,7 +14,7 @@ export default function OpenGraphImage() {
           height: "100%",
           backgroundColor: "#0E1F2B",
           backgroundImage:
-            "radial-gradient(ellipse 80% 60% at 80% 20%, rgba(60, 183, 99, 0.35), transparent 65%), radial-gradient(ellipse 80% 60% at 10% 80%, rgba(26, 161, 182, 0.35), transparent 65%)",
+            "radial-gradient(ellipse 80% 60% at 80% 20%, rgba(76, 198, 230, 0.35), transparent 65%), radial-gradient(ellipse 80% 60% at 10% 80%, rgba(40, 110, 200, 0.32), transparent 65%)",
           color: "#F6FBFC",
           display: "flex",
           flexDirection: "column",
@@ -26,27 +26,23 @@ export default function OpenGraphImage() {
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <div
             style={{
-              width: 56,
-              height: 56,
-              background: "#F6FBFC",
-              borderRadius: 14,
+              width: 64,
+              height: 64,
+              background: "linear-gradient(135deg, #264453 0%, #0B1622 100%)",
+              borderRadius: 16,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               position: "relative",
             }}
           >
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#0E1F2B"
-              strokeWidth="2.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z" />
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+              <path
+                fill="#EEF4F8"
+                d="M4 10 a8 8 0 0 1 16 0 v9 a2 2 0 0 1 -4 0 a2 2 0 0 1 -4 0 a2 2 0 0 1 -4 0 a2 2 0 0 1 -4 0 Z"
+              />
+              <circle cx="9.2" cy="10.7" r="1.2" fill="#0E1F2B" />
+              <circle cx="14.8" cy="10.7" r="1.2" fill="#0E1F2B" />
             </svg>
             <div
               style={{
@@ -55,7 +51,7 @@ export default function OpenGraphImage() {
                 right: -3,
                 width: 14,
                 height: 14,
-                background: "#3CB763",
+                background: "#4CC6E6",
                 borderRadius: "50%",
                 border: "3px solid #0E1F2B",
               }}
@@ -63,10 +59,10 @@ export default function OpenGraphImage() {
           </div>
           <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
             <span style={{ fontSize: 28, fontWeight: 700, letterSpacing: "-0.02em" }}>
-              Pristine
+              Spectre
             </span>
             <span style={{ fontSize: 22, fontWeight: 500, color: "rgba(246, 251, 252, 0.7)" }}>
-              Cleaning Co.
+              Cleaning Solutions
             </span>
           </div>
         </div>
@@ -78,8 +74,8 @@ export default function OpenGraphImage() {
               alignItems: "center",
               gap: 10,
               alignSelf: "flex-start",
-              background: "rgba(60, 183, 99, 0.18)",
-              color: "#9FDEB1",
+              background: "rgba(76, 198, 230, 0.18)",
+              color: "#A9E2F1",
               padding: "8px 16px",
               borderRadius: 999,
               fontSize: 18,
@@ -92,7 +88,7 @@ export default function OpenGraphImage() {
               style={{
                 width: 8,
                 height: 8,
-                background: "#5DCB86",
+                background: "#4CC6E6",
                 borderRadius: "50%",
               }}
             />
@@ -110,7 +106,7 @@ export default function OpenGraphImage() {
             }}
           >
             <span>Your home, spotless. Booked in&nbsp;</span>
-            <span style={{ color: "#5DCB86" }}>60 seconds.</span>
+            <span style={{ color: "#5BB8E6" }}>60 seconds.</span>
           </div>
           <div
             style={{
@@ -120,7 +116,7 @@ export default function OpenGraphImage() {
               lineHeight: 1.4,
             }}
           >
-            Rochester Hills · metro Detroit · transparent pricing · vetted cleaners · 24-hour
+            Oakland County · metro Detroit · transparent pricing · vetted cleaners · 24-hour
             re-clean guarantee.
           </div>
         </div>

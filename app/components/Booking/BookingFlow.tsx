@@ -433,7 +433,7 @@ function ProgressRail({ step }: { step: 1 | 2 | 3 | 4 }) {
                 animate={{
                   scale: active ? 1.05 : 1,
                   backgroundColor: done
-                    ? "oklch(0.68 0.18 145)"
+                    ? "oklch(0.58 0.15 238)"
                     : active
                     ? "oklch(0.15 0.045 230)"
                     : "oklch(0.94 0.018 220)",

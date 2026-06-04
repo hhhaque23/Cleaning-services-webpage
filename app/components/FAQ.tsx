@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { Plus, MessageCircleQuestion, Phone } from "lucide-react";
+import { Plus, MessageCircleQuestion, Mail } from "lucide-react";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 import { PHOTOS } from "@/lib/unsplash";
+import { SITE } from "@/lib/site";
 
 const FAQS = [
   {
@@ -82,17 +82,17 @@ export function FAQ() {
                   Still curious?
                 </div>
                 <p className="mt-1.5 font-display font-bold text-xl leading-[1.2] max-w-xs">
-                  Text a real human at{" "}
-                  <Link
-                    href="tel:+12485550199"
-                    className="underline underline-offset-4 hover:text-grass-300 transition-colors"
+                  Email a real human at{" "}
+                  <a
+                    href={`mailto:${SITE.email}`}
+                    className="underline underline-offset-4 decoration-2 hover:text-accent-300 transition-colors break-all"
                   >
-                    (248) 555-0199
-                  </Link>
+                    {SITE.email}
+                  </a>
                   .
                 </p>
                 <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-white/85">
-                  <Phone className="h-3.5 w-3.5" />
+                  <Mail className="h-3.5 w-3.5" />
                   Replies usually within 15 minutes
                 </div>
               </div>

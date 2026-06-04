@@ -19,6 +19,7 @@ import { SuccessCheck } from "./SuccessCheck";
 import { Confetti } from "../motion/Confetti";
 import { SplitText } from "../motion/SplitText";
 import { EASE_OUT_QUINT } from "../motion/motion-primitives";
+import { SITE } from "@/lib/site";
 import { MagneticButton } from "../motion/MagneticButton";
 
 type Props = {
@@ -183,12 +184,12 @@ export function StepSuccess({ contact, slot, total, bookingId }: Props) {
         transition={{ delay: 1.4, duration: 0.4 }}
         className="mt-5 text-sm text-ink-700"
       >
-        Need to change something? Reply STOP-free to our text or call{" "}
+        Need to change something? Just reply to our confirmation text, or email{" "}
         <a
-          href="tel:+12485550199"
-          className="font-semibold text-ink-950 underline underline-offset-4 hover:text-grass-700 cursor-pointer"
+          href={`mailto:${SITE.email}`}
+          className="font-semibold text-ink-950 underline underline-offset-4 hover:text-accent-700 cursor-pointer break-all"
         >
-          (248) 555-0199
+          {SITE.email}
         </a>
         .
       </motion.p>

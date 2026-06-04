@@ -65,7 +65,7 @@ export function StepConfirm({ contact, setContact }: Props) {
         <Field
           icon={Phone}
           label="Phone"
-          placeholder="(248) 555-0199"
+          placeholder="Best number to text you"
           value={contact.phone}
           onChange={(v) => update({ phone: v })}
           type="tel"
@@ -136,8 +136,8 @@ function Field({
         <motion.span
           animate={
             focused
-              ? { scale: [1, 1.15, 1], color: "oklch(0.52 0.16 145)" }
-              : { scale: 1, color: filled ? "oklch(0.52 0.16 145)" : "oklch(0.43 0.04 230)" }
+              ? { scale: [1, 1.15, 1], color: "oklch(0.43 0.14 242)" }
+              : { scale: 1, color: filled ? "oklch(0.43 0.14 242)" : "oklch(0.43 0.04 230)" }
           }
           transition={{ duration: 0.35, ease: EASE_OUT_QUINT }}
           className="absolute left-3.5 top-3.5 pointer-events-none"
@@ -150,7 +150,7 @@ function Field({
             y: floating ? -10 : 6,
             scale: floating ? 0.82 : 1,
             color: focused
-              ? "oklch(0.52 0.16 145)"
+              ? "oklch(0.43 0.14 242)"
               : filled
               ? "oklch(0.23 0.05 230)"
               : "oklch(0.43 0.04 230)",

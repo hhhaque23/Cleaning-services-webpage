@@ -125,7 +125,7 @@ function BigPhotoTile() {
     >
       <Image
         src={PHOTOS.statsBigTile}
-        alt="A bathroom on a quiet weekday afternoon after a Pristine clean"
+        alt="A bathroom on a quiet weekday afternoon after a Spectre clean"
         fill
         sizes="(min-width: 1024px) 50vw, 100vw"
         className="object-cover animate-ken-burns"
@@ -182,7 +182,7 @@ function Sparkline() {
       <motion.path
         d="M 4 28 L 28 22 L 52 25 L 76 18 L 100 20 L 124 12 L 148 14 L 172 6 L 196 8"
         fill="none"
-        stroke="oklch(0.68 0.18 145)"
+        stroke="oklch(0.58 0.15 238)"
         strokeWidth="2.4"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -201,8 +201,8 @@ function Sparkline() {
       />
       <defs>
         <linearGradient id="spark-fill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="oklch(0.68 0.18 145 / 0.25)" />
-          <stop offset="100%" stopColor="oklch(0.68 0.18 145 / 0)" />
+          <stop offset="0%" stopColor="oklch(0.58 0.15 238 / 0.25)" />
+          <stop offset="100%" stopColor="oklch(0.58 0.15 238 / 0)" />
         </linearGradient>
       </defs>
     </svg>
@@ -368,16 +368,16 @@ function ClockFace() {
           y1="56"
           x2="50"
           y2="16"
-          stroke="oklch(0.68 0.18 145)"
+          stroke="oklch(0.58 0.15 238)"
           strokeWidth="1.6"
           strokeLinecap="round"
         />
-        <circle cx="50" cy="16" r="2" fill="oklch(0.68 0.18 145)" />
+        <circle cx="50" cy="16" r="2" fill="oklch(0.58 0.15 238)" />
       </motion.g>
 
       {/* Center pivot */}
       <circle cx="50" cy="50" r="2.6" fill="oklch(0.13 0.045 230)" />
-      <circle cx="50" cy="50" r="1" fill="oklch(0.68 0.18 145)" />
+      <circle cx="50" cy="50" r="1" fill="oklch(0.58 0.15 238)" />
     </svg>
   );
 }

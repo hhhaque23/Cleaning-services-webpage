@@ -35,7 +35,7 @@ export function SuccessCheck() {
           cx="48"
           cy="48"
           r="34"
-          fill="oklch(0.62 0.17 145)"
+          fill="oklch(0.58 0.15 238)"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.45, delay: 0.1, ease: EASE_OUT_QUINT }}

@@ -23,7 +23,7 @@ export function AboutHero() {
               transition={{ duration: 0.55, ease: EASE_OUT_QUINT }}
               className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold"
             >
-              About Pristine
+              About Spectre
             </motion.div>
             <h1 className="mt-3 font-display font-extrabold text-hero text-balance text-ink-950 leading-[1.02] tracking-[-0.028em]">
               <SplitText as="span" mode="word" trigger="view" stagger={0.06}>
@@ -50,8 +50,8 @@ export function AboutHero() {
               transition={{ duration: 0.6, delay: 0.85, ease: EASE_OUT_QUINT }}
               className="mt-6 max-w-xl text-lead text-ink-700 leading-relaxed text-pretty"
             >
-              No subcontractors, no surge pricing, no chase calls. Pristine is a small local crew
-              that has cleaned more than 12,000 homes around Rochester Hills since 2019, paid above
+              No surge pricing and no chase calls. Spectre Cleaning is a small local crew
+              that has cleaned thousands of homes and offices around Oakland County, paid above
               market, and trained relentlessly.
             </motion.p>
 
@@ -90,7 +90,7 @@ export function AboutHero() {
             <div className="relative aspect-[5/6] rounded-[2rem] overflow-hidden shadow-lift">
               <Image
                 src={PHOTOS.aboutHero}
-                alt="A sunlit living room, late afternoon, after a Pristine clean"
+                alt="A sunlit living room, late afternoon, after a Spectre clean"
                 fill
                 priority
                 sizes="(min-width: 1024px) 520px, 100vw"

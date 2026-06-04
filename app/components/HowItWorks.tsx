@@ -190,7 +190,7 @@ function StepCard({ step, index, Glyph, cardY, reduce }: StepCardProps) {
           className="pointer-events-none absolute -inset-px rounded-[inherit] opacity-0 group-hover/glow:opacity-100 transition-opacity duration-300"
           style={{
             background:
-              "radial-gradient(220px circle at var(--gx, 50%) var(--gy, 50%), oklch(0.78 0.16 145 / 0.95), oklch(0.65 0.13 220 / 0.55) 45%, transparent 75%)",
+              "radial-gradient(220px circle at var(--gx, 50%) var(--gy, 50%), oklch(0.72 0.12 233 / 0.95), oklch(0.65 0.13 220 / 0.55) 45%, transparent 75%)",
             padding: 1.5,
             WebkitMask:
               "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
@@ -252,7 +252,7 @@ function SliderGlyph({ delay = 0 }: { delay?: number }) {
         x1="14"
         y1="34"
         y2="34"
-        stroke="oklch(0.62 0.17 145)"
+        stroke="oklch(0.58 0.15 238)"
         strokeWidth="4"
         strokeLinecap="round"
         initial={{ x2: 14 }}
@@ -277,7 +277,7 @@ function SliderGlyph({ delay = 0 }: { delay?: number }) {
         x1="14"
         y1="68"
         y2="68"
-        stroke="oklch(0.62 0.17 145 / 0.7)"
+        stroke="oklch(0.58 0.15 238 / 0.7)"
         strokeWidth="3"
         strokeLinecap="round"
         initial={{ x2: 14 }}
@@ -288,7 +288,7 @@ function SliderGlyph({ delay = 0 }: { delay?: number }) {
       <motion.circle
         cy="68"
         r="8"
-        fill="oklch(0.62 0.17 145)"
+        fill="oklch(0.58 0.15 238)"
         initial={{ cx: 14 }}
         whileInView={{ cx: 84 }}
         viewport={viewport}
@@ -400,7 +400,7 @@ function CalendarGlyph({ delay = 0 }: { delay?: number }) {
               cx={c.x}
               cy={c.y}
               r={cellSize * 1.15}
-              fill="oklch(0.68 0.18 145 / 0.18)"
+              fill="oklch(0.58 0.15 238 / 0.18)"
               style={{ transformOrigin: `${c.x}px ${c.y}px` }}
               initial={{ scale: 0.5, opacity: 0 }}
               whileInView={{ scale: [0.5, 0.5, 1.2, 1], opacity: [0, 0, 1, 0.7] }}
@@ -416,7 +416,7 @@ function CalendarGlyph({ delay = 0 }: { delay?: number }) {
               cx={c.x}
               cy={c.y}
               r={cellSize * 0.85}
-              fill="oklch(0.68 0.18 145 / 0.32)"
+              fill="oklch(0.58 0.15 238 / 0.32)"
               style={{ transformOrigin: `${c.x}px ${c.y}px` }}
               initial={{ scale: 0.5, opacity: 0 }}
               whileInView={{ scale: [0.5, 0.5, 1.15, 1], opacity: [0, 0, 1, 0.7] }}
@@ -441,7 +441,7 @@ function CalendarGlyph({ delay = 0 }: { delay?: number }) {
                 fill: [
                   "oklch(0.91 0.022 220)",
                   "oklch(0.91 0.022 220)",
-                  "oklch(0.62 0.17 145)",
+                  "oklch(0.58 0.15 238)",
                 ],
               }}
               viewport={viewport}
@@ -553,7 +553,7 @@ function Twinkle({ cx, cy, size, delay }: { cx: number; cy: number; size: number
     >
       <path
         d={`M${cx} ${cy - size} L${cx + size * 0.35} ${cy - size * 0.35} L${cx + size} ${cy} L${cx + size * 0.35} ${cy + size * 0.35} L${cx} ${cy + size} L${cx - size * 0.35} ${cy + size * 0.35} L${cx - size} ${cy} L${cx - size * 0.35} ${cy - size * 0.35} Z`}
-        fill="oklch(0.62 0.17 145)"
+        fill="oklch(0.58 0.15 238)"
       />
     </motion.g>
   );

@@ -18,7 +18,7 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!tier) return { title: "Not found" };
   const meta = TIER_META[tier];
   return {
-    title: `${meta.label} · Pristine Cleaning Co.`,
+    title: `${meta.label} · Spectre Cleaning Solutions`,
     description: `${meta.label} cleaning details and pricing. ${meta.tagline}. Book online in 60 seconds.`,
   };
 }

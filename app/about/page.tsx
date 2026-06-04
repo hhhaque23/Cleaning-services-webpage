@@ -10,9 +10,9 @@ import { FinalCTA } from "../components/FinalCTA";
 import { AboutHero } from "../components/AboutHero";
 
 export const metadata: Metadata = {
-  title: "About · Pristine Cleaning Co.",
+  title: "About · Spectre Cleaning Solutions",
   description:
-    "Real cleaners, real homes, real guarantee. Meet the team, the promise, and the reviews behind every Pristine clean.",
+    "Real cleaners, real homes, real guarantee. Meet the team, the promise, and the reviews behind every Spectre clean.",
 };
 
 export default function AboutPage() {

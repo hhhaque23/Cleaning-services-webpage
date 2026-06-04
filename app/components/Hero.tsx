@@ -4,8 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
-import { ArrowRight, Check, CalendarClock, Star, ShieldCheck, Leaf, Zap } from "lucide-react";
+import { ArrowRight, Check, CalendarClock, Star, ShieldCheck, Leaf, Zap, Calculator } from "lucide-react";
 import { PHOTOS } from "@/lib/unsplash";
+import { SITE } from "@/lib/site";
 import { HeroVideo } from "./HeroVideo";
 import { SplitText } from "./motion/SplitText";
 import { MagneticButton } from "./motion/MagneticButton";
@@ -73,7 +74,7 @@ export function Hero() {
               variants={fadeUp}
               className="mt-7 max-w-xl text-lead text-ink-700 leading-relaxed text-pretty"
             >
-              Rochester Hills&apos; only cleaning service you can actually book like a delivery order.
+              Oakland County&apos;s home &amp; office cleaning you can actually book like a delivery order.
               Transparent pricing, vetted cleaners, same-day availability. No phone tag, no quote
               forms, no two-day reply windows.
             </motion.p>
@@ -93,12 +94,15 @@ export function Hero() {
                 </Link>
               </MagneticButton>
               <MagneticButton as="div" radius={100} strength={0.2}>
-                <Link
-                  href="/about"
+                <a
+                  href={SITE.calculatorUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--surface-elevated)] hover:bg-[var(--surface)] border border-line text-ink-950 font-semibold px-7 py-[1.05rem] text-[15px] transition-all duration-300 ease-out-quint cursor-pointer"
                 >
-                  Why us
-                </Link>
+                  Instant quote
+                  <Calculator className="h-4 w-4" />
+                </a>
               </MagneticButton>
             </motion.div>
 
@@ -186,7 +190,7 @@ export function Hero() {
                       <Star key={i} className="h-3 w-3 fill-grass-500 stroke-grass-500" />
                     ))}
                   </div>
-                  <div className="text-xs text-ink-700 font-medium">4.9 from 2,300+ cleans</div>
+                  <div className="text-xs text-ink-700 font-medium">Top-rated on Thumbtack</div>
                 </div>
               </div>
             </motion.div>
@@ -197,7 +201,7 @@ export function Hero() {
               transition={{ delay: 1.15, duration: 0.6, ease: EASE_OUT_QUINT }}
               className="absolute -bottom-4 sm:-bottom-6 left-4 right-4 sm:left-10 sm:right-10 glass rounded-2xl px-4 py-3.5 shadow-card hidden sm:flex items-center gap-3"
             >
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[oklch(0.78_0.16_145/0.18)] text-grass-700">
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[oklch(0.72_0.12_233/0.18)] text-grass-700">
                 <CalendarClock className="h-5 w-5" />
               </span>
               <div className="leading-tight">

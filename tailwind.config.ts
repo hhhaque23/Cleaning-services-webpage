@@ -24,13 +24,32 @@ const config: Config = {
           900: "oklch(0.18 0.048 230 / <alpha-value>)",
           950: "oklch(0.13 0.045 230 / <alpha-value>)",
         },
+        // Spectre accent — cool cyan-blue from the logo. Buttons, active
+        // states, stars, highlights.
+        accent: {
+          300: "oklch(0.83 0.085 230 / <alpha-value>)",
+          400: "oklch(0.72 0.12 233 / <alpha-value>)",
+          500: "oklch(0.58 0.15 238 / <alpha-value>)",
+          600: "oklch(0.5 0.155 240 / <alpha-value>)",
+          700: "oklch(0.43 0.14 242 / <alpha-value>)",
+          800: "oklch(0.35 0.115 243 / <alpha-value>)",
+        },
+        // Brushed-silver neutral for the ghost / chrome moments.
+        steel: {
+          200: "oklch(0.9 0.012 235 / <alpha-value>)",
+          300: "oklch(0.82 0.015 235 / <alpha-value>)",
+          400: "oklch(0.7 0.018 238 / <alpha-value>)",
+          500: "oklch(0.58 0.02 238 / <alpha-value>)",
+        },
+        // Legacy alias — repointed to the spectre blue so any stray `grass-*`
+        // renders on-brand (cool) rather than green.
         grass: {
-          300: "oklch(0.85 0.14 145 / <alpha-value>)",
-          400: "oklch(0.78 0.16 145 / <alpha-value>)",
-          500: "oklch(0.68 0.18 145 / <alpha-value>)",
-          600: "oklch(0.6 0.17 145 / <alpha-value>)",
-          700: "oklch(0.52 0.16 145 / <alpha-value>)",
-          800: "oklch(0.44 0.14 145 / <alpha-value>)",
+          300: "oklch(0.83 0.085 230 / <alpha-value>)",
+          400: "oklch(0.72 0.12 233 / <alpha-value>)",
+          500: "oklch(0.58 0.15 238 / <alpha-value>)",
+          600: "oklch(0.5 0.155 240 / <alpha-value>)",
+          700: "oklch(0.43 0.14 242 / <alpha-value>)",
+          800: "oklch(0.35 0.115 243 / <alpha-value>)",
         },
         cyan: {
           DEFAULT: "oklch(0.65 0.13 220 / <alpha-value>)",
@@ -57,9 +76,9 @@ const config: Config = {
         lift: "0 1px 0 oklch(0.15 0.045 230 / 0.04), 0 30px 60px -25px oklch(0.15 0.045 230 / 0.35)",
         glow: "0 40px 80px -30px oklch(0.65 0.13 220 / 0.55)",
         ring: "0 0 0 1px oklch(0.65 0.13 220 / 0.18), 0 24px 60px -24px oklch(0.65 0.13 220 / 0.4)",
-        commit: "0 18px 40px -16px oklch(0.52 0.16 145 / 0.55)",
+        commit: "0 18px 40px -16px oklch(0.5 0.155 240 / 0.55)",
         spotlight: "0 40px 120px -20px oklch(0.65 0.13 220 / 0.45)",
-        "commit-glow": "0 0 0 1px oklch(0.68 0.18 145 / 0.35), 0 24px 60px -18px oklch(0.68 0.18 145 / 0.6)",
+        "commit-glow": "0 0 0 1px oklch(0.58 0.15 238 / 0.35), 0 24px 60px -18px oklch(0.58 0.15 238 / 0.6)",
       },
       keyframes: {
         "blob-drift": {
@@ -72,8 +91,8 @@ const config: Config = {
           "100%": { transform: "translateX(-50%)" },
         },
         "pulse-ring": {
-          "0%": { boxShadow: "0 0 0 0 oklch(0.68 0.18 145 / 0.55)" },
-          "100%": { boxShadow: "0 0 0 14px oklch(0.68 0.18 145 / 0)" },
+          "0%": { boxShadow: "0 0 0 0 oklch(0.58 0.15 238 / 0.55)" },
+          "100%": { boxShadow: "0 0 0 14px oklch(0.58 0.15 238 / 0)" },
         },
         "ken-burns": {
           "0%, 100%": { transform: "scale(1.04) translate(-1%, -1%)" },

@@ -8,7 +8,8 @@ export type AddOn =
   | "windows"
   | "petHair"
   | "laundry"
-  | "baseboards";
+  | "baseboards"
+  | "organization";
 
 export const TIER_META: Record<
   Tier,
@@ -47,6 +48,7 @@ export const ADDON_META: Record<
   petHair: { label: "Pet hair", price: 20, hint: "Furniture & corners" },
   laundry: { label: "Laundry load", price: 15, hint: "Wash, dry, fold" },
   baseboards: { label: "Baseboards", price: 30, hint: "Hand-wiped" },
+  organization: { label: "Organization", price: 40, hint: "Declutter & tidy systems" },
 };
 
 export const FREQUENCY_META: Record<

@@ -80,7 +80,7 @@ export function ServiceAreas() {
 
           <div className="relative grid lg:grid-cols-[1fr_auto] items-center gap-8">
             <div className="flex items-start gap-4">
-              <span className="relative inline-flex h-14 w-14 flex-none items-center justify-center rounded-2xl bg-[oklch(0.68_0.18_145/0.2)] text-grass-300">
+              <span className="relative inline-flex h-14 w-14 flex-none items-center justify-center rounded-2xl bg-[oklch(0.58_0.15_238/0.2)] text-grass-300">
                 {!reduce && (
                   <>
                     <motion.span

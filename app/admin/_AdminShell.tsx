@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Sparkles, LayoutDashboard, LogOut } from "lucide-react";
+import { LayoutDashboard, LogOut } from "lucide-react";
 import { useTransition } from "react";
+import { SpectreMark } from "../components/SpectreMark";
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -28,13 +29,12 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-40 bg-[var(--surface)]/85 backdrop-blur-md border-b border-line">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
           <Link href="/admin" className="flex items-center gap-2.5 cursor-pointer">
-            <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-ink-800 to-ink-950 text-[var(--surface)]">
-              <Sparkles className="h-4 w-4" strokeWidth={2.4} />
-              <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-grass-500 ring-2 ring-[var(--surface)]" />
+            <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-ink-800 to-ink-950 text-white">
+              <SpectreMark size={20} className="text-white" />
             </span>
             <span className="leading-tight">
               <span className="block text-[10px] uppercase tracking-[0.18em] text-ink-600 font-semibold">
-                Pristine
+                Spectre
               </span>
               <span className="block font-display font-bold text-base text-ink-950">
                 Operations

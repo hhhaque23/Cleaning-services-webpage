@@ -19,14 +19,14 @@ const sans = Hanken_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Pristine Cleaning Co. · Book a cleaner in 60 seconds",
+  metadataBase: new URL("https://spectrecleaningsolutions.com"),
+  title: "Spectre Cleaning Solutions · Book a cleaner in 60 seconds",
   description:
-    "Rochester Hills and metro Detroit's no-friction home cleaning. Transparent pricing, same-day availability, eco-friendly products. Book online in under a minute.",
-  metadataBase: new URL("https://pristine.example.com"),
+    "Oakland County's no-friction home & office cleaning. Transparent pricing, same-day availability, eco-friendly products. Book online in under a minute.",
   openGraph: {
-    title: "Pristine Cleaning Co.",
+    title: "Spectre Cleaning Solutions",
     description:
-      "Book a vetted cleaner in 60 seconds. Transparent pricing. Same-day availability. Rochester Hills and metro Detroit.",
+      "Book a vetted cleaner in 60 seconds. Transparent pricing. Same-day availability. Oakland County and metro Detroit.",
     type: "website",
   },
 };

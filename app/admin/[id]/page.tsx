@@ -135,9 +135,9 @@ export default async function AdminBookingDetail({ params }: Props) {
           {booking.frequency !== "onetime" && (
             <section className="relative rounded-2xl bg-ink-950 text-white p-6 shadow-card overflow-hidden">
               <div className="absolute inset-0 noise opacity-30 pointer-events-none" />
-              <div className="absolute -top-16 -right-16 h-44 w-44 rounded-full bg-[oklch(0.68_0.18_145/0.32)] blur-3xl pointer-events-none" />
+              <div className="absolute -top-16 -right-16 h-44 w-44 rounded-full bg-[oklch(0.58_0.15_238/0.32)] blur-3xl pointer-events-none" />
               <div className="relative flex items-start gap-4">
-                <span className="inline-flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-[oklch(0.68_0.18_145/0.2)] text-grass-300">
+                <span className="inline-flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-[oklch(0.58_0.15_238/0.2)] text-grass-300">
                   <Repeat className="h-5 w-5" />
                 </span>
                 <div className="flex-1 min-w-0">

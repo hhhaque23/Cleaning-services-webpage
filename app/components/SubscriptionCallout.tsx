@@ -244,7 +244,7 @@ function FreqCard({
           className="absolute inset-0 -z-10 rounded-2xl"
           style={{
             background:
-              "radial-gradient(ellipse at top right, oklch(0.68 0.18 145 / 0.18), transparent 60%)",
+              "radial-gradient(ellipse at top right, oklch(0.58 0.15 238 / 0.18), transparent 60%)",
           }}
         />
       )}

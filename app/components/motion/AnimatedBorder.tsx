@@ -43,7 +43,7 @@ export function AnimatedBorder({
           inset: -thickness,
           borderRadius: `calc(${radius} + ${thickness}px)`,
           background:
-            "conic-gradient(from 0deg, oklch(0.65 0.13 220 / 0.0) 0deg, oklch(0.65 0.13 220 / 0.7) 60deg, oklch(0.68 0.18 145 / 0.7) 180deg, oklch(0.65 0.13 220 / 0.0) 280deg, oklch(0.65 0.13 220 / 0.0) 360deg)",
+            "conic-gradient(from 0deg, oklch(0.65 0.13 220 / 0.0) 0deg, oklch(0.65 0.13 220 / 0.7) 60deg, oklch(0.58 0.15 238 / 0.7) 180deg, oklch(0.65 0.13 220 / 0.0) 280deg, oklch(0.65 0.13 220 / 0.0) 360deg)",
           opacity: active ? 1 : 0,
           transition: "opacity 280ms cubic-bezier(0.22, 1, 0.36, 1)",
           animationDuration: `${speed}s`,

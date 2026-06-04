@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Star, Quote } from "lucide-react";
+import { Star, Quote, Pin, ArrowRight } from "lucide-react";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
+import { SITE } from "@/lib/site";
 
 type Review = {
   name: string;
@@ -83,7 +84,7 @@ function ReviewCard({ r }: { r: Review }) {
         className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at top right, oklch(0.68 0.18 145 / 0.12), transparent 70%)",
+            "radial-gradient(ellipse at top right, oklch(0.58 0.15 238 / 0.12), transparent 70%)",
         }}
       />
       <Quote className="relative h-6 w-6 text-grass-500/55" strokeWidth={2.2} />
@@ -164,13 +165,19 @@ export function Reviews() {
               Real homes, real reviews
             </div>
             <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance leading-[1.05]">
-              2,300+ five-star cleans{" "}
-              <span className="italic font-medium text-ink-700">across metro Detroit.</span>
+              Five-star cleans{" "}
+              <span className="italic font-medium text-ink-700">across Oakland County.</span>
             </h2>
           </div>
-          <p className="text-ink-700 lg:text-right max-w-xs">
-            We don&apos;t curate. Every neighborhood, every tier.
-          </p>
+          <a
+            href={SITE.reviewsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 self-start lg:self-end rounded-xl border border-line-strong bg-[var(--surface-elevated)] hover:bg-[var(--surface)] px-4 py-2.5 text-sm font-semibold text-ink-950 whitespace-nowrap transition-colors cursor-pointer"
+          >
+            <Pin className="h-4 w-4 text-accent-600" /> Read all on Thumbtack
+            <ArrowRight className="h-4 w-4" />
+          </a>
         </motion.div>
       </div>
 

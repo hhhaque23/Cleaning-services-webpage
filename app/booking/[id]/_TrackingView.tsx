@@ -28,6 +28,7 @@ import { TIER_META } from "@/app/components/Booking/pricing";
 import { SplitText } from "@/app/components/motion/SplitText";
 import { MagneticButton } from "@/app/components/motion/MagneticButton";
 import { Confetti } from "@/app/components/motion/Confetti";
+import { SITE } from "@/lib/site";
 import { EASE_OUT_QUINT } from "@/app/components/motion/motion-primitives";
 
 const WINDOW_LABEL: Record<string, string> = {
@@ -209,17 +210,16 @@ export function TrackingView({ booking }: { booking: Booking }) {
           className="mt-12 rounded-2xl border border-line bg-[var(--surface-elevated)] p-5"
         >
           <div className="flex items-start gap-3">
-            <span className="inline-flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-grass-500/15 text-grass-700">
-              <Sparkles className="h-4 w-4" />
+            <span className="inline-flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-accent-500/15 text-accent-700">
+              <Mail className="h-4 w-4" />
             </span>
             <div className="text-sm text-ink-800 leading-relaxed">
-              <span className="font-semibold text-ink-950">Need to change or cancel?</span> Text or
-              call{" "}
+              <span className="font-semibold text-ink-950">Need to change or cancel?</span> Email{" "}
               <a
-                href="tel:+12485550199"
-                className="font-semibold text-ink-950 underline underline-offset-4 hover:text-grass-700"
+                href={`mailto:${SITE.email}`}
+                className="font-semibold text-ink-950 underline underline-offset-4 hover:text-accent-700 break-all"
               >
-                (248) 555-0199
+                {SITE.email}
               </a>{" "}
               and quote{" "}
               <span className="font-mono font-semibold text-ink-950">{booking.id}</span>. We re-clean

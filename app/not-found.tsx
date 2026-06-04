@@ -19,7 +19,7 @@ export default function NotFound() {
 
           <h1 className="mt-5 font-display font-extrabold text-hero text-balance text-ink-950 leading-[1.02] tracking-[-0.028em]">
             <SplitText as="span" mode="word" trigger="load" stagger={0.06}>
-              {"Page not pristine."}
+              {"This page vanished."}
             </SplitText>
           </h1>
 
