@@ -401,7 +401,7 @@ function SidebarPricing({
           <div className="mt-6 rounded-2xl bg-white/5 border border-white/10 p-4 text-sm text-ink-100/85 leading-relaxed flex items-start gap-2.5">
             <Check className="h-4 w-4 flex-none mt-0.5 text-grass-400" strokeWidth={3} />
             <span>
-              No charge until your home is clean. If anything&apos;s missed, we return within 24 hours, free.
+              If anything&apos;s missed, we&apos;ll make it right within 24 hours — free.
             </span>
           </div>
         </div>

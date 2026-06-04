@@ -4,12 +4,12 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ShieldCheck, Leaf, BadgeCheck, Clock, MapPin, Star } from "lucide-react";
 
 const ITEMS = [
-  { icon: ShieldCheck, label: "Bonded · $2M insured" },
-  { icon: BadgeCheck, label: "Every cleaner background-checked" },
-  { icon: Leaf, label: "EPA Safer Choice products" },
+  { icon: ShieldCheck, label: "Locally owned & operated" },
+  { icon: BadgeCheck, label: "Vetted, local cleaners" },
+  { icon: Leaf, label: "Eco-friendly, pet-safe products" },
   { icon: Clock, label: "24-hour re-clean guarantee" },
   { icon: MapPin, label: "Oakland County · metro Detroit" },
-  { icon: Star, label: "Top-rated on Thumbtack" },
+  { icon: Star, label: "5★ on Thumbtack" },
 ];
 
 const ROW = [...ITEMS, ...ITEMS];

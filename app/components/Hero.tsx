@@ -42,7 +42,11 @@ export function Hero() {
           animate="show"
           className="grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14 items-center"
         >
-          <div>
+          <div className="relative isolate">
+            <div
+              aria-hidden
+              className="absolute -inset-x-6 -inset-y-10 -z-10 rounded-[3rem] bg-[radial-gradient(ellipse_at_center,oklch(0.97_0.012_220)_0%,oklch(0.97_0.012_220/0.5)_45%,transparent_72%)] blur-2xl"
+            />
             <motion.div variants={fadeUp} className="flex items-center gap-2.5">
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-grass-500">
                 <span className="absolute inset-0 rounded-full animate-pulse-ring" />
@@ -153,9 +157,9 @@ export function Hero() {
                 </span>
                 <div className="leading-tight">
                   <div className="text-[10px] uppercase tracking-[0.08em] text-ink-600 font-semibold">
-                    Bonded and insured
+                    Locally owned
                   </div>
-                  <div className="text-sm font-semibold text-ink-950">$2M coverage</div>
+                  <div className="text-sm font-semibold text-ink-950">Oakland County, MI</div>
                 </div>
               </div>
             </motion.div>
@@ -190,7 +194,7 @@ export function Hero() {
                       <Star key={i} className="h-3 w-3 fill-grass-500 stroke-grass-500" />
                     ))}
                   </div>
-                  <div className="text-xs text-ink-700 font-medium">Top-rated on Thumbtack</div>
+                  <div className="text-xs text-ink-700 font-medium">10+ on Thumbtack</div>
                 </div>
               </div>
             </motion.div>
@@ -246,10 +250,10 @@ export function Hero() {
               />
               <div className="leading-tight">
                 <div className="text-[10px] uppercase tracking-[0.08em] text-ink-600 font-semibold">
-                  Live
+                  Recent
                 </div>
                 <div className="text-[12px] font-semibold text-ink-950">
-                  Booked 2 min ago · Troy
+                  Recently booked · Troy
                 </div>
               </div>
               <Zap className="h-3.5 w-3.5 text-grass-600" />

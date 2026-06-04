@@ -157,8 +157,7 @@ export default function OfficeServicePage() {
               <Check className="h-5 w-5 mt-0.5 flex-none text-accent-700" strokeWidth={3} />
               <p className="text-[15px] text-ink-800 leading-relaxed max-w-xl">
                 Recurring schedules get a locked rate and the same crew each visit.
-                Insured and bonded, with a certificate available for your building on
-                request.
+                Every clean is backed by our 24-hour re-clean guarantee.
               </p>
             </div>
             <a

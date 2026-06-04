@@ -50,9 +50,9 @@ export function AboutHero() {
               transition={{ duration: 0.6, delay: 0.85, ease: EASE_OUT_QUINT }}
               className="mt-6 max-w-xl text-lead text-ink-700 leading-relaxed text-pretty"
             >
-              No surge pricing and no chase calls. Spectre Cleaning is a small local crew
-              that has cleaned thousands of homes and offices around Oakland County, paid above
-              market, and trained relentlessly.
+              No surge pricing and no chase calls. Spectre Cleaning is a new, locally-owned
+              Oakland County crew. We&apos;ve cleaned 50+ homes so far, we show up on time, and we
+              treat your place like our own.
             </motion.p>
 
             <motion.ul
@@ -62,9 +62,9 @@ export function AboutHero() {
               className="mt-8 flex flex-wrap gap-3"
             >
               {[
-                { icon: Users, label: "Locally hired team of 14" },
-                { icon: ShieldCheck, label: "$2M insured, fully bonded" },
-                { icon: MapPin, label: "Serving 16 metro Detroit suburbs" },
+                { icon: Users, label: "New & locally owned" },
+                { icon: ShieldCheck, label: "24-hour re-clean guarantee" },
+                { icon: MapPin, label: "Serving Oakland County" },
               ].map((b) => (
                 <motion.li
                   key={b.label}
@@ -124,9 +124,9 @@ export function AboutHero() {
               className="absolute -bottom-3 -left-3 sm:-bottom-5 sm:-left-5 bg-[var(--surface)] rounded-2xl px-4 py-3 shadow-card border border-line"
             >
               <div className="text-[10px] uppercase tracking-[0.1em] font-bold text-ink-600">
-                BBB rating
+                On Thumbtack
               </div>
-              <div className="font-display font-extrabold text-3xl text-ink-950 leading-none">A+</div>
+              <div className="font-display font-extrabold text-3xl text-ink-950 leading-none">5★</div>
             </motion.div>
           </motion.div>
         </div>

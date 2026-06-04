@@ -45,7 +45,7 @@ const STEPS = [
   {
     n: "03",
     title: "Relax",
-    body: "We text within 15 minutes with your cleaner's photo. You're charged only after the clean is approved.",
+    body: "We text within 15 minutes with your cleaner's photo. Then sit back — we'll take it from here.",
     accent: "Sleep in tomorrow.",
   },
 ];

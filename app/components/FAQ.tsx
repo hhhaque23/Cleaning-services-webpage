@@ -15,7 +15,7 @@ const FAQS = [
   },
   {
     q: "What cleaning products do you use?",
-    a: "Our default kit is EPA Safer Choice certified: non-toxic, pet-safe, and low-fume. If you have allergies or prefer fragrance-free, leave a note at booking and we'll match it.",
+    a: "Our default products are non-toxic, pet-safe, and low-fume. If you have allergies or prefer fragrance-free, leave a note at booking and we'll match it.",
   },
   {
     q: "Do I have to be home during the clean?",
@@ -27,11 +27,11 @@ const FAQS = [
   },
   {
     q: "How does subscription billing work?",
-    a: "Same flat rate, charged automatically after each clean. You'll get a receipt by text and email. Pause, skip, or cancel any time. No contracts, no fees.",
+    a: "Same flat rate, billed securely each visit. You'll get a receipt by text and email. Pause, skip, or cancel any time. No contracts, no fees.",
   },
   {
-    q: "Are you really insured and bonded?",
-    a: "Yes: $2M liability, full bonding, and workers' comp on every cleaner. We can email a certificate to you or your landlord on request.",
+    q: "You're new — why should I book you?",
+    a: "We're a locally-owned Oakland County crew building our reputation one clean at a time. Every clean is backed by our 24-hour re-clean guarantee, and you can read our real reviews on Thumbtack.",
   },
   {
     q: "What if my cleaner is late or cancels?",

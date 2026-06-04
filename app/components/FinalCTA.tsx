@@ -10,8 +10,8 @@ import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 import { SITE } from "@/lib/site";
 
 const COMMITMENT_FRAGMENTS = [
-  "$0 today",
-  "charged after the clean",
+  "transparent pricing",
+  "secure online payment",
   "24h satisfaction guarantee",
   "cancel anytime",
 ];

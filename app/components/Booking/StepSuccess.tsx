@@ -96,7 +96,7 @@ export function StepSuccess({ contact, slot, total, bookingId }: Props) {
             </div>
             <div className="mt-1 font-display font-bold text-xl text-ink-950">
               ${total.toLocaleString()}
-              <span className="text-sm text-ink-700 font-medium"> · charged after the clean</span>
+              <span className="text-sm text-ink-700 font-medium"> · secure online payment</span>
             </div>
           </div>
           {bookingId && (

@@ -84,7 +84,7 @@ export function SubscriptionCallout() {
                     sizes="(min-width: 1024px) 14vw, 28vw"
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950/30 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950/45 to-transparent" />
                 </div>
                 <div className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-soft mt-4">
                   <Image
@@ -94,7 +94,7 @@ export function SubscriptionCallout() {
                     sizes="(min-width: 1024px) 14vw, 28vw"
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950/30 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950/45 to-transparent" />
                 </div>
                 <div className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-soft">
                   <Image
@@ -104,7 +104,7 @@ export function SubscriptionCallout() {
                     sizes="(min-width: 1024px) 14vw, 28vw"
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950/30 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950/45 to-transparent" />
                 </div>
               </div>
 

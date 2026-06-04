@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
-import { Team } from "../components/Team";
 import { Guarantee } from "../components/Guarantee";
 import { Reviews } from "../components/Reviews";
 import { ServiceAreas } from "../components/ServiceAreas";
@@ -12,7 +11,7 @@ import { AboutHero } from "../components/AboutHero";
 export const metadata: Metadata = {
   title: "About · Spectre Cleaning Solutions",
   description:
-    "Real cleaners, real homes, real guarantee. Meet the team, the promise, and the reviews behind every Spectre clean.",
+    "A new, locally-owned Oakland County cleaning crew. The promise and the reviews behind every Spectre clean.",
 };
 
 export default function AboutPage() {
@@ -20,7 +19,6 @@ export default function AboutPage() {
     <main className="relative">
       <Navbar />
       <AboutHero />
-      <Team />
       <Guarantee />
       <Reviews />
       <ServiceAreas />

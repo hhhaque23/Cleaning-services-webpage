@@ -28,12 +28,12 @@ export function Stats() {
             transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
           >
             <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
-              Since 2019, across metro Detroit
+              New &amp; locally owned · Oakland County
             </div>
             <h2 className="mt-3 font-display font-extrabold text-display-1 text-balance text-ink-950 leading-[1.05]">
-              Numbers from a team that{" "}
-              <span className="italic font-medium text-ink-700">mostly</span> hasn&apos;t changed
-              since year one.
+              A new Oakland County crew,{" "}
+              <span className="italic font-medium text-ink-700">building trust</span> one clean
+              at a time.
             </h2>
           </motion.div>
 
@@ -72,19 +72,13 @@ export function Stats() {
           className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-ink-600 border-t border-line pt-6"
         >
           <span className="inline-flex items-center gap-2">
-            <TrendingUp className="h-4 w-4 text-grass-600" />
-            <span className="font-semibold text-ink-950">
-              <CountUp to={3.4} decimals={1} duration={1.2} suffix="x" />
-            </span>
-            <span>more reviews than the next local competitor</span>
+            <ShieldCheck className="h-4 w-4 text-grass-600" />
+            <span className="font-semibold text-ink-950">Locally owned &amp; operated</span>
           </span>
           <span className="text-line-strong">·</span>
-          <span>
-            Featured in{" "}
-            <span className="text-ink-950 font-semibold">Hour Detroit</span>,{" "}
-            <span className="text-ink-950 font-semibold">Crain&apos;s</span>, and{" "}
-            <span className="text-ink-950 font-semibold">Rochester Patch</span>
-          </span>
+          <span>Eco-friendly, pet-safe products</span>
+          <span className="text-line-strong">·</span>
+          <span>Backed by our 24-hour re-clean guarantee</span>
         </motion.div>
       </div>
     </section>
@@ -139,12 +133,12 @@ function BigPhotoTile() {
         </div>
         <div className="mt-3 flex items-baseline gap-2 font-display font-extrabold text-[var(--surface)] leading-[0.92] tracking-[-0.04em]">
           <span className="text-[clamp(3.5rem,8vw,7rem)] tabular-nums">
-            <CountUp to={12384} duration={2.2} />
+            <CountUp to={50} duration={1.6} />
           </span>
           <span className="text-[clamp(1.5rem,3vw,2.5rem)] text-grass-300">+</span>
         </div>
         <p className="mt-2 text-[var(--surface)]/85 leading-relaxed max-w-md text-sm sm:text-base">
-          homes cleaned across metro Detroit since 2019.
+          homes cleaned across Oakland County — and counting.
         </p>
       </div>
     </motion.div>
@@ -156,7 +150,7 @@ function BigCounterTile() {
     <TileShell className="col-span-1 sm:col-span-2 lg:col-span-2 p-6 sm:p-7 flex flex-col justify-between min-h-[12rem]" delay={0.05}>
       <div className="flex items-start justify-between">
         <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
-          Rebook rate
+          Satisfaction
         </div>
         <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-grass-500/12 text-grass-700">
           <TrendingUp className="h-4 w-4" />
@@ -164,12 +158,12 @@ function BigCounterTile() {
       </div>
       <div className="mt-4 flex items-baseline gap-2 font-display font-extrabold text-ink-950 leading-none tracking-[-0.03em]">
         <span className="text-[clamp(3.25rem,7vw,5.5rem)] tabular-nums">
-          <CountUp to={92} duration={1.4} />
+          <CountUp to={100} duration={1.4} />
         </span>
         <span className="text-2xl text-ink-600 font-medium">%</span>
       </div>
       <p className="mt-3 text-sm text-ink-700 leading-relaxed">
-        of first-time customers book a second clean within 30 days.
+        guaranteed — miss a spot and we re-clean it free within 24 hours.
       </p>
       <Sparkline />
     </TileShell>
@@ -216,11 +210,11 @@ function RatingTile() {
         <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
           Average rating
         </div>
-        <span className="text-[10px] text-ink-faint font-medium">2,300+ reviews</span>
+        <span className="text-[10px] text-ink-faint font-medium">10+ on Thumbtack</span>
       </div>
       <div className="font-display font-extrabold text-ink-950 leading-none tracking-[-0.02em]">
         <span className="text-5xl tabular-nums">
-          <CountUp to={4.9} decimals={1} duration={1.4} />
+          <CountUp to={5.0} decimals={1} duration={1.4} />
         </span>
         <span className="text-2xl text-ink-600 font-medium">/5</span>
       </div>
@@ -406,7 +400,7 @@ function LiveTickerTile() {
         </span>
         <div className="min-w-0">
           <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
-            Live · just booked
+            Recently booked
           </div>
           <div className="relative h-7 mt-0.5">
             <AnimatePresence mode="wait">
@@ -421,8 +415,6 @@ function LiveTickerTile() {
                 <span>{b.tier}</span>
                 <span className="text-ink-faint mx-1.5">·</span>
                 <span>{b.city}</span>
-                <span className="text-ink-faint mx-1.5">·</span>
-                <span className="text-ink-600 text-sm font-medium tabular-nums">{b.min} min ago</span>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -430,7 +422,7 @@ function LiveTickerTile() {
       </div>
       <div className="hidden sm:inline-flex items-center gap-1.5 text-xs text-ink-700">
         <ShieldCheck className="h-3.5 w-3.5 text-grass-600" />
-        Verified booking
+        Oakland County
       </div>
     </TileShell>
   );

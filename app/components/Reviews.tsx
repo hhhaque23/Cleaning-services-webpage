@@ -13,6 +13,7 @@ type Review = {
   body: string;
 };
 
+// Placeholder reviews — swap these for real Thumbtack reviews as they come in.
 const REVIEWS: Review[] = [
   {
     name: "Sarah M.",
@@ -34,41 +35,6 @@ const REVIEWS: Review[] = [
     service: "Deep clean",
     body:
       "I have a labrador and a 2-year-old. They got pet hair out of corners I didn't know existed. Eco products didn't bother either of them.",
-  },
-  {
-    name: "Aman S.",
-    city: "Bloomfield Hills",
-    service: "Weekly",
-    body:
-      "The price calculator was honest. Final invoice matched it exactly. No 'oh by the way' charges. Refreshing.",
-  },
-  {
-    name: "Chloe R.",
-    city: "Auburn Hills",
-    service: "Standard",
-    body:
-      "Texted me 14 minutes after I booked. Cleaner had a photo and bio. Felt like meeting a neighbor, not a stranger.",
-  },
-  {
-    name: "Nathan G.",
-    city: "Royal Oak",
-    service: "Move-in",
-    body:
-      "We bought a place the previous owner had cats in for 15 years. They turned it around in 6 hours. Smells like a hotel now.",
-  },
-  {
-    name: "Rachel D.",
-    city: "Rochester",
-    service: "Biweekly",
-    body:
-      "My cleaner remembers that I prefer the kitchen left to last. Tiny detail, huge difference. Subscribed for over a year now.",
-  },
-  {
-    name: "Omar L.",
-    city: "Sterling Heights",
-    service: "Deep clean",
-    body:
-      "They missed a spot above the fridge. Texted them at 9pm, they came back at 8am the next day. That's a real guarantee.",
   },
 ];
 
@@ -124,8 +90,8 @@ function ReviewCard({ r }: { r: Review }) {
 }
 
 export function Reviews() {
-  const rowA = REVIEWS.slice(0, 5);
-  const rowB = REVIEWS.slice(3, 8);
+  const rowA = REVIEWS;
+  const rowB = [...REVIEWS].reverse();
   const sectionRef = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -168,6 +134,9 @@ export function Reviews() {
               Five-star cleans{" "}
               <span className="italic font-medium text-ink-700">across Oakland County.</span>
             </h2>
+            <p className="mt-3 text-ink-700 text-lg leading-relaxed">
+              10+ five-star reviews on Thumbtack — and growing.
+            </p>
           </div>
           <a
             href={SITE.reviewsUrl}

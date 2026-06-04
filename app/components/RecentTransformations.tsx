@@ -26,13 +26,13 @@ export function RecentTransformations() {
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
               <Camera className="h-3.5 w-3.5 text-grass-700" />
-              <span>From real cleans</span>
+              <span>The Spectre standard</span>
             </div>
             <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance leading-[1.05]">
-              Recent transformations.
+              The clean you can expect.
             </h2>
             <p className="mt-3 text-ink-700 text-lg leading-relaxed">
-              A small sample of homes we&apos;ve cleaned in the last few weeks across metro Detroit.
+              The standard we bring to every Oakland County home — every room, every time.
             </p>
           </div>
         </motion.div>
@@ -64,9 +64,6 @@ export function RecentTransformations() {
                 <div className="absolute inset-0 bg-gradient-to-t from-ink-950/85 via-ink-950/15 to-transparent" />
                 <figcaption className="absolute bottom-3 left-3 right-3 text-white">
                   <div className="font-display font-bold text-base leading-tight">{t.label}</div>
-                  <div className="mt-0.5 text-[11px] uppercase tracking-wider text-white/75 font-semibold">
-                    {t.sub}
-                  </div>
                 </figcaption>
               </figure>
             </motion.li>

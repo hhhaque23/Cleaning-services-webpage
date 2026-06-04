@@ -212,7 +212,7 @@ const CONTENT: Record<Tier, TierContent> = {
         title: "On completion",
         items: [
           "Photo report sent by text",
-          "Optional certificate for landlord or buyer",
+          "Move-out summary for your landlord, on request",
         ],
       },
     ],

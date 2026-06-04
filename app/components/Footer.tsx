@@ -42,10 +42,10 @@ const NAV: { title: string; links: FooterLink[] }[] = [
 ];
 
 const MARQUEE_ITEMS = [
-  { icon: Star, label: "Top-rated on Thumbtack" },
-  { icon: ShieldCheck, label: "Bonded · $2M insured" },
+  { icon: Star, label: "5★ on Thumbtack" },
+  { icon: ShieldCheck, label: "Locally owned & operated" },
   { icon: MapPin, label: "Oakland County · metro Detroit" },
-  { icon: Leaf, label: "EPA Safer Choice products" },
+  { icon: Leaf, label: "Eco-friendly, pet-safe products" },
   { icon: Clock, label: "Same-day available" },
   { icon: Sparkles, label: "Booked like delivery" },
 ];
@@ -183,7 +183,7 @@ export function Footer() {
 
         <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-xs text-white/60">
-            © {new Date().getFullYear()} {SITE.name}. Bonded, insured, locally owned.
+            © {new Date().getFullYear()} {SITE.name}. Locally owned &amp; operated.
           </div>
           <div className="flex items-center gap-3">
             <motion.a

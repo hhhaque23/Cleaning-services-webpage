@@ -39,7 +39,7 @@ export function StepConfirm({ contact, setContact }: Props) {
         className="text-sm text-ink-800"
       >
         <span className="font-semibold text-ink-950">Last step.</span> We&apos;ll text you within 15
-        minutes to lock it in. No charge until your clean is complete.
+        minutes to confirm your booking.
       </motion.div>
 
       <div className="grid sm:grid-cols-[1fr_140px] gap-3">

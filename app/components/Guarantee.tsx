@@ -10,9 +10,9 @@ import { SplitText } from "./motion/SplitText";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 const SECONDARY = [
-  { icon: ShieldCheck, label: "$2M insured", body: "Bonded and fully insured." },
-  { icon: Leaf, label: "Eco and pet-safe", body: "EPA Safer Choice products." },
-  { icon: UserCheck, label: "Background-checked", body: "Every cleaner, every visit." },
+  { icon: ShieldCheck, label: "Locally owned", body: "Owner-led Oakland County crew." },
+  { icon: Leaf, label: "Eco and pet-safe", body: "Plant-based, low-fume products." },
+  { icon: UserCheck, label: "Vetted cleaners", body: "Hand-picked, local, reliable." },
   { icon: Lock, label: "Key and code safe", body: "Encrypted access notes." },
 ];
 
@@ -61,9 +61,9 @@ export function Guarantee() {
               className="absolute -top-4 -right-3 sm:-right-6 bg-[var(--surface)] rounded-2xl px-4 py-3 shadow-card border border-line cursor-default"
             >
               <div className="text-[10px] uppercase tracking-[0.1em] font-bold text-ink-600">
-                Better Business
+                On Thumbtack
               </div>
-              <div className="font-display font-extrabold text-2xl text-ink-950">A+</div>
+              <div className="font-display font-extrabold text-2xl text-ink-950">5★</div>
             </motion.div>
           </motion.div>
 
