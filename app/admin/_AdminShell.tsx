@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { LayoutDashboard, LogOut } from "lucide-react";
 import { useTransition } from "react";
-import Image from "next/image";
+import { SpectreMark } from "../components/SpectreMark";
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -29,17 +29,15 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-40 bg-[var(--surface)]/85 backdrop-blur-md border-b border-line">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
           <Link href="/admin" className="flex items-center gap-2.5 cursor-pointer">
-            <span className="inline-flex items-center rounded-lg bg-gradient-to-br from-ink-900 to-ink-950 px-2.5 py-1.5 shadow-ring">
-              <Image
-                src="/spectre-lockup.png"
-                alt="Spectre Cleaning Solutions"
-                width={524}
-                height={360}
-                unoptimized
-                className="h-9 w-auto"
-              />
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-ink-900 to-ink-950 shadow-ring">
+              <SpectreMark size={22} alt="Spectre Cleaning Solutions" />
             </span>
-            <span className="font-display font-bold text-base text-ink-950">Operations</span>
+            <span className="leading-tight">
+              <span className="block text-[10px] uppercase tracking-[0.18em] text-ink-600 font-semibold">
+                Spectre
+              </span>
+              <span className="block font-display font-bold text-base text-ink-950">Operations</span>
+            </span>
           </Link>
 
           <nav className="flex items-center gap-1">
