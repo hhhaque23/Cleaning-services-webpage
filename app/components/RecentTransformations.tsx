@@ -32,7 +32,7 @@ export function RecentTransformations() {
               The clean you can expect.
             </h2>
             <p className="mt-3 text-ink-700 text-lg leading-relaxed">
-              The standard we bring to every Oakland County home — every room, every time.
+              The standard we bring to every Washtenaw County home — every room, every time.
             </p>
           </div>
         </motion.div>

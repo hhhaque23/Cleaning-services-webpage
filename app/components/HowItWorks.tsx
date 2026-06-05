@@ -39,8 +39,8 @@ const STEPS = [
   {
     n: "02",
     title: "Schedule",
-    body: "Open dates and time windows are shown in real time. Same-day available when slots are open.",
-    accent: "It's a live calendar.",
+    body: "Browse open dates and time windows, and grab the one that fits. Same-day available when slots are open.",
+    accent: "An interactive calendar.",
   },
   {
     n: "03",
@@ -206,7 +206,7 @@ function StepCard({ step, index, Glyph, cardY, reduce }: StepCardProps) {
         />
 
         <div className="relative rounded-[inherit] overflow-hidden">
-          <div className="relative h-44 sm:h-48 lg:h-52 flex items-center justify-center bg-gradient-to-b from-[oklch(0.96_0.022_146)] to-[oklch(0.985_0.006_220)] overflow-hidden">
+          <div className="relative h-44 sm:h-48 lg:h-52 flex items-center justify-center bg-gradient-to-b from-[oklch(0.96_0.022_233)] to-[oklch(0.985_0.006_220)] overflow-hidden">
             <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--surface)] text-ink-950 text-[10px] font-bold uppercase tracking-[0.14em] px-2.5 py-1 ring-1 ring-line-strong/60">
               <span className="inline-block h-1 w-1 rounded-full bg-grass-500" />
               Step {step.n}

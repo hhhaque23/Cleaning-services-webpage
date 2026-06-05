@@ -11,6 +11,8 @@ export const SITE = {
     "https://www.thumbtack.com/profile/services/580837431035707392/reviews",
   /** BookingKoala instant-quote calculator. */
   calculatorUrl: "https://storied-sherbet-1cc616.netlify.app/",
-  area: "Oakland County, MI",
-  areaLong: "Oakland County · serving metro Detroit",
+  area: "Washtenaw County, MI",
+  areaLong: "Ann Arbor & Washtenaw County",
+  /** Where the business is based. */
+  hq: "Ann Arbor, MI",
 } as const;

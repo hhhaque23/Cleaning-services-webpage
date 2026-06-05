@@ -1,6 +1,6 @@
-# Pristine Cleaning Co.
+# Spectre Cleaning Solutions
 
-Premium animated landing page for a Rochester Hills / metro Detroit cleaning service. Next.js 14 + Tailwind + Framer Motion. Fully functional live-pricing booking flow.
+Premium animated landing page for a Washtenaw County, MI cleaning service (based in Ann Arbor). Next.js 14 + Tailwind + Framer Motion. Fully functional live-pricing booking flow.
 
 ## Run locally
 

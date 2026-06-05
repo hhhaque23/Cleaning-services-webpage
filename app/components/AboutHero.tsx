@@ -51,8 +51,8 @@ export function AboutHero() {
               className="mt-6 max-w-xl text-lead text-ink-700 leading-relaxed text-pretty"
             >
               No surge pricing and no chase calls. Spectre Cleaning is a new, locally-owned
-              Oakland County crew. We&apos;ve cleaned 50+ homes so far, we show up on time, and we
-              treat your place like our own.
+              Washtenaw County crew, based in Ann Arbor. We&apos;ve cleaned 50+ homes so far, we show
+              up on time, and we treat your place like our own.
             </motion.p>
 
             <motion.ul
@@ -64,7 +64,7 @@ export function AboutHero() {
               {[
                 { icon: Users, label: "New & locally owned" },
                 { icon: ShieldCheck, label: "24-hour re-clean guarantee" },
-                { icon: MapPin, label: "Serving Oakland County" },
+                { icon: MapPin, label: "Serving Washtenaw County" },
               ].map((b) => (
                 <motion.li
                   key={b.label}

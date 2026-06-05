@@ -44,7 +44,7 @@ const NAV: { title: string; links: FooterLink[] }[] = [
 const MARQUEE_ITEMS = [
   { icon: Star, label: "5★ on Thumbtack" },
   { icon: ShieldCheck, label: "Locally owned & operated" },
-  { icon: MapPin, label: "Oakland County · metro Detroit" },
+  { icon: MapPin, label: "Ann Arbor · Washtenaw County" },
   { icon: Leaf, label: "Eco-friendly, pet-safe products" },
   { icon: Clock, label: "Same-day available" },
   { icon: Sparkles, label: "Booked like delivery" },
@@ -206,10 +206,10 @@ export function Footer() {
             >
               <Pin className="h-4 w-4" />
             </motion.a>
-            <a href="#" className="text-xs text-white/60 hover:text-white cursor-pointer">
+            <a href="/privacy" className="text-xs text-white/60 hover:text-white cursor-pointer">
               Privacy
             </a>
-            <a href="#" className="text-xs text-white/60 hover:text-white cursor-pointer">
+            <a href="/terms" className="text-xs text-white/60 hover:text-white cursor-pointer">
               Terms
             </a>
           </div>

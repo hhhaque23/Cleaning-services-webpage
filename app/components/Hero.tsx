@@ -52,8 +52,8 @@ export function Hero() {
                 <span className="absolute inset-0 rounded-full animate-pulse-ring" />
               </span>
               <span className="text-sm font-medium text-ink-700">
-                Next available slot{" "}
-                <span className="font-semibold text-ink-950">tomorrow, 9:00 AM</span>
+                Now booking{" "}
+                <span className="font-semibold text-ink-950">same-day &amp; next-day slots</span>
               </span>
             </motion.div>
 
@@ -78,7 +78,7 @@ export function Hero() {
               variants={fadeUp}
               className="mt-7 max-w-xl text-lead text-ink-700 leading-relaxed text-pretty"
             >
-              Oakland County&apos;s home &amp; office cleaning you can actually book like a delivery order.
+              Washtenaw County&apos;s home &amp; office cleaning you can actually book like a delivery order.
               Transparent pricing, vetted cleaners, same-day availability. No phone tag, no quote
               forms, no two-day reply windows.
             </motion.p>
@@ -159,7 +159,7 @@ export function Hero() {
                   <div className="text-[10px] uppercase tracking-[0.08em] text-ink-600 font-semibold">
                     Locally owned
                   </div>
-                  <div className="text-sm font-semibold text-ink-950">Oakland County, MI</div>
+                  <div className="text-sm font-semibold text-ink-950">Ann Arbor, MI</div>
                 </div>
               </div>
             </motion.div>
@@ -210,10 +210,10 @@ export function Hero() {
               </span>
               <div className="leading-tight">
                 <div className="text-[10px] uppercase tracking-[0.08em] text-ink-600 font-semibold">
-                  Today&apos;s schedule
+                  Scheduling
                 </div>
                 <div className="text-sm font-semibold text-ink-950">
-                  3 slots left, same-day available
+                  Same-day often available
                 </div>
               </div>
               <MagneticButton as="div" radius={50} strength={0.18} className="ml-auto">
@@ -221,7 +221,7 @@ export function Hero() {
                   href="/book"
                   className="inline-flex items-center gap-1 text-sm font-semibold text-ink-700 hover:text-ink-950 cursor-pointer"
                 >
-                  Grab one
+                  Book now
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </MagneticButton>
@@ -250,10 +250,10 @@ export function Hero() {
               />
               <div className="leading-tight">
                 <div className="text-[10px] uppercase tracking-[0.08em] text-ink-600 font-semibold">
-                  Recent
+                  Serving
                 </div>
                 <div className="text-[12px] font-semibold text-ink-950">
-                  Recently booked · Troy
+                  Ann Arbor · Ypsilanti
                 </div>
               </div>
               <Zap className="h-3.5 w-3.5 text-grass-600" />

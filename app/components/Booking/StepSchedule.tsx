@@ -79,8 +79,8 @@ export function StepSchedule({ selected, onSelect }: Props) {
           )}
         </span>
         <span>
-          <span className="font-semibold text-ink-950">Live availability.</span> We block slots in
-          real time. What you see is what&apos;s open.
+          <span className="font-semibold text-ink-950">Pick your slot.</span> Choose a day and time
+          window that works, and we&apos;ll confirm your booking by email.
         </span>
       </div>
 

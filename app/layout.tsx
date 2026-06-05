@@ -22,11 +22,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://spectrecleaningsolutions.com"),
   title: "Spectre Cleaning Solutions · Book a cleaner in 60 seconds",
   description:
-    "Oakland County's no-friction home & office cleaning. Transparent pricing, same-day availability, eco-friendly products. Book online in under a minute.",
+    "Washtenaw County's no-friction home & office cleaning. Transparent pricing, same-day availability, eco-friendly products. Book online in under a minute.",
   openGraph: {
     title: "Spectre Cleaning Solutions",
     description:
-      "Book a vetted cleaner in 60 seconds. Transparent pricing. Same-day availability. Oakland County and metro Detroit.",
+      "Book a vetted cleaner in 60 seconds. Transparent pricing. Same-day availability. Ann Arbor and Washtenaw County.",
     type: "website",
   },
 };

@@ -79,8 +79,8 @@ export function PhotoQuote() {
                 className="inline-block h-px w-10 bg-line-strong origin-left"
               />
               <span className="font-semibold text-ink-950">Lena P.</span>
-              <span className="text-ink-faint">·</span>
-              <span>Birmingham, biweekly since 2024</span>
+              <span className="text-ink-600">·</span>
+              <span>Saline, biweekly regular</span>
             </motion.figcaption>
           </div>
         </div>

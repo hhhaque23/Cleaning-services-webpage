@@ -1,4 +1,4 @@
-# Pristine Cleaning Co. — Design
+# Spectre Cleaning Solutions — Design
 
 ## Aesthetic lane
 
@@ -6,14 +6,14 @@ Premium-utilitarian consumer brand with theatrical motion. Stripe-meets-DoorDash
 
 Named references:
 - **Stripe** for the booking-flow sidebar pricing pattern, digit-roll precision, and trust-via-precision.
-- **DoorDash / Caviar** for the "order it like delivery" mental model and confident green commitment color.
+- **DoorDash / Caviar** for the "order it like delivery" mental model and a confident commitment-color accent (Spectre blue).
 - **Linear** for spotlight + aurora ambience on dark surfaces.
 - **Vercel** for aurora gradient backdrops and motion-rich hero treatments.
 - **Notion 2024 marketing** for tinted off-white surfaces and decisive type.
 
 ## Color strategy
 
-A single deep teal anchors identity across navbar, dark surfaces, type, and the booking sidebar. Saturated green is the action color, used with conviction on every commitment CTA. The off-white surface is a tinted off-white, never pure `#fff`. Backdrops use aurora blob layers (subtle, blurred grass + cyan) for ambient warmth on light surfaces and cursor-following radial spotlights on dark surfaces.
+A single deep navy anchors identity across navbar, dark surfaces, type, and the booking sidebar. A saturated Spectre blue (hue ~238) is the action color, used with conviction on every commitment CTA. The off-white surface is a tinted off-white, never pure `#fff`. Backdrops use aurora blob layers (subtle, blurred blue + cyan) for ambient depth on light surfaces and cursor-following radial spotlights on dark surfaces. Note: the legacy `--grass*` tokens below were repointed to Spectre blue during the rebrand, so component classes named `grass-*` now render blue.
 
 ### Tokens (OKLCH)
 

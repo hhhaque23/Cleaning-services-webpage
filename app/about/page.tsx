@@ -11,7 +11,7 @@ import { AboutHero } from "../components/AboutHero";
 export const metadata: Metadata = {
   title: "About · Spectre Cleaning Solutions",
   description:
-    "A new, locally-owned Oakland County cleaning crew. The promise and the reviews behind every Spectre clean.",
+    "A new, locally-owned Washtenaw County cleaning crew based in Ann Arbor. The promise and the reviews behind every Spectre clean.",
 };
 
 export default function AboutPage() {

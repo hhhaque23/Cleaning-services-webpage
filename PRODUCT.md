@@ -1,4 +1,4 @@
-# Pristine Cleaning Co.
+# Spectre Cleaning Solutions
 
 ## Register
 
@@ -6,11 +6,11 @@ brand
 
 ## Product Purpose
 
-A home cleaning service for Rochester Hills and metro Detroit. Booking flips a normally annoying errand (phone tag, vague quotes, two-day reply windows) into something you order like food delivery. The site's job is to take a curious visitor and produce a confirmed booking in under sixty seconds, with no human contact required.
+A home cleaning service for Washtenaw County, MI, based in Ann Arbor. Booking flips a normally annoying errand (phone tag, vague quotes, two-day reply windows) into something you order like food delivery. The site's job is to take a curious visitor and produce a confirmed booking in under sixty seconds, with no human contact required.
 
 ## Users
 
-- **Busy professionals and families** in Rochester Hills and adjacent suburbs. Late 20s through 50s. Household income above $80k. Time is worth more than $40/hour to them. They are convenience shopping, not price shopping.
+- **Busy professionals and families** in Washtenaw County and the Ann Arbor area (Ann Arbor, Ypsilanti, Saline, Dexter, and nearby). Late 20s through 50s. Household income above $80k. Time is worth more than $40/hour to them. They are convenience shopping, not price shopping.
 - **Move-in / move-out customers.** Renters wanting deposits back, homeowners staging a sale, landlords flipping units. Different urgency, same need: fast, reliable, no phone calls.
 
 ## Tone

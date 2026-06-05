@@ -1,8 +1,8 @@
-# Pristine Cleaning Co. — Handoff
+# Spectre Cleaning Solutions — Handoff
 
 ## Mission
 
-A premium home-cleaning service site for **Rochester Hills, MI** that converts a curious visitor into a confirmed booking in under sixty seconds, without phone calls or quote forms. Two surfaces from the start:
+A premium home-cleaning service site for **Washtenaw County, MI** (based in Ann Arbor) that converts a curious visitor into a confirmed booking in under sixty seconds, without phone calls or quote forms. Two surfaces from the start:
 
 - **Customer side** — landing page, live-pricing booking flow, customer tracking page after they submit.
 - **Operator side** — password-protected ops dashboard at `/admin` showing every incoming booking with status workflow (new → confirmed → scheduled → completed / cancelled).
@@ -80,7 +80,7 @@ Deployed on Railway at `https://cleaning-services-webpage-production.up.railway.
 The user iterated heavily on visual direction. Watch for:
 
 - **HowItWorks SVG glyphs** — three custom animated symbols (slider, calendar with cursor-click + grass glow + checkmark, moon with stars on both sides). All play once on view-in. User has redirected this section 6+ times; further redirects likely.
-- **ServiceAreas map** — Oakland County outline with 16 city dots, dashed grass lines fanning from Rochester Hills HQ. Single parent-viewport observer with cascading framer-motion variants (fixed the missing-label bug where individual `whileInView` observers on `<text>` elements failed). HQ has a continuously pulsing halo. South-band labels still dense; if more redirects come, consider leader lines or alternating font sizes.
+- **ServiceAreas** — HQ feature card (Ann Arbor, MI) plus a distance-ordered grid of 15 Washtenaw-area cities, each a card with a "min from HQ" drive-time and a pulsing dispatch dot. Cascading framer-motion variants on a single parent-viewport observer. (Service area switched from Oakland County to Washtenaw County once the owner confirmed the Ann Arbor base.)
 - **Subscription panel** — converted from drenched grass to tinted-surface + three animated grass/cyan corner orbs. User explicitly preferred this approach over the green slab.
 - **Color rhythm** — user oscillated between "too white" and "too SaaS slab." Current landing is: `--surface` for most sections, `--surface-tint` for HowItWorks / PhotoQuote / ServiceAreas, drenched dark for FinalCTA and Footer, hero photo. Subscription and ServiceAreas use animated grass corner shapes instead of grass backgrounds.
 

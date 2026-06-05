@@ -8,7 +8,7 @@ const ITEMS = [
   { icon: BadgeCheck, label: "Vetted, local cleaners" },
   { icon: Leaf, label: "Eco-friendly, pet-safe products" },
   { icon: Clock, label: "24-hour re-clean guarantee" },
-  { icon: MapPin, label: "Oakland County · metro Detroit" },
+  { icon: MapPin, label: "Ann Arbor · Washtenaw County" },
   { icon: Star, label: "5★ on Thumbtack" },
 ];
 

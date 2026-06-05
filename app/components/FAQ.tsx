@@ -31,7 +31,7 @@ const FAQS = [
   },
   {
     q: "You're new — why should I book you?",
-    a: "We're a locally-owned Oakland County crew building our reputation one clean at a time. Every clean is backed by our 24-hour re-clean guarantee, and you can read our real reviews on Thumbtack.",
+    a: "We're a locally-owned Washtenaw County crew, based in Ann Arbor, building our reputation one clean at a time. Every clean is backed by our 24-hour re-clean guarantee, and you can read our real reviews on Thumbtack.",
   },
   {
     q: "What if my cleaner is late or cancels?",

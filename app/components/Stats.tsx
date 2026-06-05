@@ -9,11 +9,11 @@ import { CountUp } from "./motion/CountUp";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 const RECENT_BOOKINGS = [
-  { city: "Troy", tier: "Deep clean", min: 2 },
-  { city: "Bloomfield Hills", tier: "Standard", min: 4 },
-  { city: "Rochester", tier: "Move-out", min: 7 },
-  { city: "Birmingham", tier: "Biweekly", min: 11 },
-  { city: "Auburn Hills", tier: "Standard", min: 16 },
+  { city: "Ann Arbor", tier: "Deep clean", min: 2 },
+  { city: "Ypsilanti", tier: "Standard", min: 4 },
+  { city: "Saline", tier: "Move-out", min: 7 },
+  { city: "Dexter", tier: "Biweekly", min: 11 },
+  { city: "Chelsea", tier: "Standard", min: 16 },
 ];
 
 export function Stats() {
@@ -28,10 +28,10 @@ export function Stats() {
             transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
           >
             <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
-              New &amp; locally owned · Oakland County
+              New &amp; locally owned · Washtenaw County
             </div>
             <h2 className="mt-3 font-display font-extrabold text-display-1 text-balance text-ink-950 leading-[1.05]">
-              A new Oakland County crew,{" "}
+              A new Washtenaw County crew,{" "}
               <span className="italic font-medium text-ink-700">building trust</span> one clean
               at a time.
             </h2>
@@ -138,7 +138,7 @@ function BigPhotoTile() {
           <span className="text-[clamp(1.5rem,3vw,2.5rem)] text-grass-300">+</span>
         </div>
         <p className="mt-2 text-[var(--surface)]/85 leading-relaxed max-w-md text-sm sm:text-base">
-          homes cleaned across Oakland County — and counting.
+          homes cleaned across Washtenaw County — and counting.
         </p>
       </div>
     </motion.div>
@@ -210,7 +210,7 @@ function RatingTile() {
         <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
           Average rating
         </div>
-        <span className="text-[10px] text-ink-faint font-medium">10+ on Thumbtack</span>
+        <span className="text-[10px] text-ink-600 font-medium">10+ on Thumbtack</span>
       </div>
       <div className="font-display font-extrabold text-ink-950 leading-none tracking-[-0.02em]">
         <span className="text-5xl tabular-nums">
@@ -400,7 +400,7 @@ function LiveTickerTile() {
         </span>
         <div className="min-w-0">
           <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
-            Recently booked
+            Across Washtenaw County
           </div>
           <div className="relative h-7 mt-0.5">
             <AnimatePresence mode="wait">
@@ -413,7 +413,7 @@ function LiveTickerTile() {
                 className="absolute inset-x-0 font-display font-bold text-ink-950 truncate min-w-0"
               >
                 <span>{b.tier}</span>
-                <span className="text-ink-faint mx-1.5">·</span>
+                <span className="text-ink-500 mx-1.5">·</span>
                 <span>{b.city}</span>
               </motion.div>
             </AnimatePresence>
@@ -422,7 +422,7 @@ function LiveTickerTile() {
       </div>
       <div className="hidden sm:inline-flex items-center gap-1.5 text-xs text-ink-700">
         <ShieldCheck className="h-3.5 w-3.5 text-grass-600" />
-        Oakland County
+        Washtenaw County
       </div>
     </TileShell>
   );

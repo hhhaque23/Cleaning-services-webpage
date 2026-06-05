@@ -17,21 +17,21 @@ type Review = {
 const REVIEWS: Review[] = [
   {
     name: "Sarah M.",
-    city: "Rochester Hills",
+    city: "Ann Arbor",
     service: "Biweekly",
     body:
       "Booked at 10pm Sunday, cleaner showed up Monday morning. The same person every two weeks since. I forgot what doing chores even feels like.",
   },
   {
     name: "Daniel K.",
-    city: "Troy",
+    city: "Ypsilanti",
     service: "Move-out",
     body:
       "Landlord refunded my full deposit, no questions asked. The photo report at the end was worth the price by itself.",
   },
   {
     name: "Lena P.",
-    city: "Birmingham",
+    city: "Saline",
     service: "Deep clean",
     body:
       "I have a labrador and a 2-year-old. They got pet hair out of corners I didn't know existed. Eco products didn't bother either of them.",
@@ -43,7 +43,7 @@ function ReviewCard({ r }: { r: Review }) {
     <motion.figure
       whileHover={{ y: -4 }}
       transition={{ duration: 0.25, ease: EASE_OUT_QUINT }}
-      className="group relative w-[22rem] sm:w-[26rem] flex-none mr-6 sm:mr-8 rounded-2xl bg-[var(--surface-elevated)] border border-line hover:border-grass-500/40 shadow-soft hover:shadow-card transition-all p-6"
+      className="group relative w-[20rem] sm:w-[26rem] flex-none mr-6 sm:mr-8 rounded-2xl bg-[var(--surface-elevated)] border border-line hover:border-grass-500/40 shadow-soft hover:shadow-card transition-all p-6"
     >
       <div
         aria-hidden
@@ -82,7 +82,7 @@ function ReviewCard({ r }: { r: Review }) {
         </div>
         <span className="font-semibold text-ink-950">
           {r.name}
-          <span className="text-ink-faint font-normal"> · {r.city}</span>
+          <span className="text-ink-600 font-normal"> · {r.city}</span>
         </span>
       </figcaption>
     </motion.figure>
@@ -132,7 +132,7 @@ export function Reviews() {
             </div>
             <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance leading-[1.05]">
               Five-star cleans{" "}
-              <span className="italic font-medium text-ink-700">across Oakland County.</span>
+              <span className="italic font-medium text-ink-700">across Washtenaw County.</span>
             </h2>
             <p className="mt-3 text-ink-700 text-lg leading-relaxed">
               10+ five-star reviews on Thumbtack — and growing.

@@ -12,21 +12,21 @@ type City = { name: string; minutes: number };
 
 // Sorted ascending by minutes — used directly for distance-ordered wave reveal.
 const CITIES: City[] = [
-  { name: "Rochester", minutes: 5 },
-  { name: "Lake Orion", minutes: 8 },
-  { name: "Auburn Hills", minutes: 9 },
-  { name: "Troy", minutes: 11 },
-  { name: "Shelby Twp", minutes: 12 },
-  { name: "Bloomfield Twp", minutes: 14 },
-  { name: "Bloomfield Hills", minutes: 16 },
-  { name: "Oxford", minutes: 16 },
-  { name: "Madison Heights", minutes: 17 },
-  { name: "Sterling Heights", minutes: 18 },
-  { name: "Birmingham", minutes: 18 },
-  { name: "Clawson", minutes: 20 },
-  { name: "Royal Oak", minutes: 22 },
-  { name: "Beverly Hills", minutes: 22 },
-  { name: "Berkley", minutes: 24 },
+  { name: "Ann Arbor", minutes: 5 },
+  { name: "Barton Hills", minutes: 7 },
+  { name: "Scio Twp", minutes: 9 },
+  { name: "Pittsfield Twp", minutes: 10 },
+  { name: "Ypsilanti", minutes: 12 },
+  { name: "Saline", minutes: 15 },
+  { name: "Dexter", minutes: 16 },
+  { name: "Superior Twp", minutes: 16 },
+  { name: "Whitmore Lake", minutes: 18 },
+  { name: "Webster Twp", minutes: 18 },
+  { name: "Milan", minutes: 20 },
+  { name: "Chelsea", minutes: 22 },
+  { name: "Salem Twp", minutes: 23 },
+  { name: "Manchester", minutes: 25 },
+  { name: "Sharon Twp", minutes: 27 },
 ];
 
 const HQ_PHOTOS = [
@@ -59,11 +59,11 @@ export function ServiceAreas() {
             <span>Where we clean</span>
           </div>
           <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance leading-[1.05]">
-            Based in Rochester Hills.{" "}
-            <span className="italic font-medium text-ink-700">Serving Oakland County.</span>
+            Based in Ann Arbor.{" "}
+            <span className="italic font-medium text-ink-700">Serving Washtenaw County.</span>
           </h2>
           <p className="mt-4 text-ink-700 text-lg leading-relaxed max-w-md">
-            Sixteen neighborhoods, dispatch within the hour. Outside our zone? Drop your ZIP at
+            Fifteen neighborhoods, a short drive from home base. Outside our zone? Drop your ZIP at
             checkout and we&apos;ll tell you in 60 seconds.
           </p>
         </motion.div>
@@ -105,12 +105,12 @@ export function ServiceAreas() {
                   Headquarters
                 </div>
                 <div className="mt-2 font-display font-extrabold text-2xl sm:text-3xl tracking-[-0.022em]">
-                  Rochester Hills, MI
+                  Ann Arbor, MI
                 </div>
                 <p className="mt-1 text-white/75 text-sm sm:text-base leading-relaxed max-w-md">
-                  Our home base. Crews dispatched from here cover{" "}
-                  <span className="font-semibold text-white">15 nearby neighborhoods</span>,{" "}
-                  typically within the hour.
+                  Our home base. From here we cover{" "}
+                  <span className="font-semibold text-white">15 nearby neighborhoods</span>{" "}
+                  across Washtenaw County, most within a short drive.
                 </p>
 
                 {/* HQ photo strip — 5 thumbnails inside the dark card */}
@@ -137,9 +137,9 @@ export function ServiceAreas() {
             </div>
 
             <div className="grid grid-cols-3 lg:grid-cols-1 lg:auto-rows-min gap-2 lg:gap-2 text-center lg:text-right">
-              <Stat label="Crews" value="14" />
-              <Stat label="Zip codes" value="22" />
-              <Stat label="Coverage radius" value="25 mi" />
+              <Stat label="Cities" value="15" />
+              <Stat label="Avg. drive" value="15 min" />
+              <Stat label="Book in" value="60 sec" />
             </div>
           </div>
         </motion.div>
@@ -178,11 +178,11 @@ export function ServiceAreas() {
         >
           <span className="inline-flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-grass-600" />
-            <span className="font-semibold text-ink-950">16 neighborhoods</span>
+            <span className="font-semibold text-ink-950">15 neighborhoods</span>
             <span>covered</span>
           </span>
           <span className="text-line-strong">·</span>
-          <span>Dispatch within the hour, most slots</span>
+          <span>A short drive from Ann Arbor</span>
           <span className="text-line-strong">·</span>
           <span>Same-day available when slots are open</span>
         </motion.div>

@@ -116,7 +116,7 @@ export default function OpenGraphImage() {
               lineHeight: 1.4,
             }}
           >
-            Oakland County · metro Detroit · transparent pricing · vetted cleaners · 24-hour
+            Ann Arbor · Washtenaw County · transparent pricing · vetted cleaners · 24-hour
             re-clean guarantee.
           </div>
         </div>

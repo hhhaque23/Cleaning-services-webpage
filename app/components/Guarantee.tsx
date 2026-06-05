@@ -10,7 +10,7 @@ import { SplitText } from "./motion/SplitText";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 const SECONDARY = [
-  { icon: ShieldCheck, label: "Locally owned", body: "Owner-led Oakland County crew." },
+  { icon: ShieldCheck, label: "Locally owned", body: "Owner-led, Ann Arbor based." },
   { icon: Leaf, label: "Eco and pet-safe", body: "Plant-based, low-fume products." },
   { icon: UserCheck, label: "Vetted cleaners", body: "Hand-picked, local, reliable." },
   { icon: Lock, label: "Key and code safe", body: "Encrypted access notes." },
