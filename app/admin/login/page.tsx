@@ -2,24 +2,8 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useFormStatus } from "react-dom";
 import { Lock, ArrowRight, FlaskConical } from "lucide-react";
 import { SpectreMark } from "../../components/SpectreMark";
-import { signIn } from "./actions";
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-ink-950 hover:bg-ink-800 disabled:bg-ink-300 disabled:cursor-not-allowed text-[var(--surface)] font-semibold px-5 py-3.5 transition-colors cursor-pointer"
-    >
-      {pending ? "Signing in…" : "Sign in"}
-      {!pending && <ArrowRight className="h-4 w-4" />}
-    </button>
-  );
-}
 
 function LoginInner() {
   const params = useSearchParams();
@@ -65,8 +49,11 @@ function LoginInner() {
           </div>
         )}
 
-        <form action={signIn} className="mt-8 space-y-4">
-          <input type="hidden" name="next" value={next} />
+        {/* Native browser form POST → /api/admin/login returns a 303 with the
+            session cookie set on the same response. No fetch / client nav, so
+            nothing can race the cookie before the redirect to /admin. */}
+        <form method="POST" action="/api/admin/login" className="mt-8 space-y-4">
+          <input type="hidden" name="next" defaultValue={next} key={next} />
           <label className="block">
             <span className="block text-xs font-semibold uppercase tracking-wider text-ink-700/80 mb-1.5">
               Admin password
@@ -92,7 +79,13 @@ function LoginInner() {
             </div>
           )}
 
-          <SubmitButton />
+          <button
+            type="submit"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-ink-950 hover:bg-ink-800 text-[var(--surface)] font-semibold px-5 py-3.5 transition-colors cursor-pointer"
+          >
+            Sign in
+            <ArrowRight className="h-4 w-4" />
+          </button>
         </form>
       </div>
     </div>
