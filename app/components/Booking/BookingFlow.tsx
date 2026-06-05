@@ -187,7 +187,7 @@ export function BookingFlow() {
         {mode === "office" ? (
           <OfficeQuotePanel />
         ) : (
-        <div className="mt-12 grid lg:grid-cols-[1.4fr_1fr] gap-6 lg:gap-8 items-start">
+        <div className="mt-6 grid lg:grid-cols-[1.4fr_1fr] gap-6 lg:gap-8 items-start">
           <motion.div
             ref={formCardRef}
             initial={{ opacity: 0, y: 18 }}
@@ -344,7 +344,7 @@ function OfficeQuotePanel() {
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: EASE_OUT_QUINT }}
-      className="mt-10 max-w-2xl mx-auto rounded-3xl bg-[var(--surface-elevated)] border border-line shadow-card p-7 sm:p-10 text-center"
+      className="mt-6 max-w-2xl mx-auto rounded-3xl bg-[var(--surface-elevated)] border border-line shadow-card p-7 sm:p-10 text-center"
     >
       <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-grass-500/12 text-grass-700">
         <Building2 className="h-6 w-6" />

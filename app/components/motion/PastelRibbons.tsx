@@ -125,15 +125,6 @@ export function PastelRibbons() {
           strokeLinecap="round"
           opacity="0.7"
         />
-        <path
-          className="pr-anim-rainbow2"
-          d="M 0 360 C 130 420, 280 400, 440 450 C 620 500, 760 580, 920 600 C 1100 620, 1240 560, 1360 620"
-          fill="none"
-          stroke="url(#rb-rainbow)"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          opacity="0.5"
-        />
       </svg>
     </div>
   );
