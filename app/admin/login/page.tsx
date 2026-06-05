@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { Lock, ArrowRight, FlaskConical } from "lucide-react";
 import { SpectreMark } from "../../components/SpectreMark";
 
 function LoginInner() {
-  const router = useRouter();
   const params = useSearchParams();
   const next = params?.get("next") || "/admin";
 
@@ -37,8 +36,13 @@ function LoginInner() {
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Wrong password");
       }
-      router.push(next);
-      router.refresh();
+      // Hard navigation (not router.push): forces a fresh top-level request that
+      // carries the just-set session cookie through middleware. The soft client
+      // nav could race the cookie and bounce back to login ("nothing happens").
+      const target =
+        next.startsWith("/") && !next.startsWith("//") ? next : "/admin";
+      window.location.assign(target);
+      return; // leave submitting=true; the document is being replaced
     } catch (e) {
       setError(e instanceof Error ? e.message : "Sign in failed");
       setSubmitting(false);

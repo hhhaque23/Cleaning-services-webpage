@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getBooking, STATUS_META } from "@/lib/bookings";
+import { getCleaners } from "@/lib/settings";
 import { ADDON_META, FREQUENCY_META, TIER_META, type Frequency } from "../../components/Booking/pricing";
 import {
   ArrowLeft,
@@ -13,6 +14,7 @@ import {
   Repeat,
 } from "lucide-react";
 import { StatusActions } from "./StatusActions";
+import { ManageBooking } from "./ManageBooking";
 
 const CADENCE_DAYS: Record<Frequency, number> = {
   onetime: 0,
@@ -45,6 +47,8 @@ export default async function AdminBookingDetail({ params }: Props) {
   const id = params.id.toUpperCase();
   const booking = await getBooking(id);
   if (!booking) notFound();
+
+  const cleaners = await getCleaners();
 
   const tier = TIER_META[booking.tier];
   const freq = FREQUENCY_META[booking.frequency];
@@ -228,6 +232,8 @@ export default async function AdminBookingDetail({ params }: Props) {
               <StatusActions id={booking.id} current={booking.status} />
             </div>
           </section>
+
+          <ManageBooking booking={booking} cleaners={cleaners} />
 
           <section className="rounded-2xl bg-[var(--surface-elevated)] ring-1 ring-line p-5">
             <div className="flex items-start gap-3">

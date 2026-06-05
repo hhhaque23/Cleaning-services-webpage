@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, LogOut } from "lucide-react";
+import { LayoutDashboard, CalendarDays, Settings, LogOut } from "lucide-react";
 import { useTransition } from "react";
 import { SpectreMark } from "../components/SpectreMark";
 
@@ -39,17 +39,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           </Link>
 
           <nav className="flex items-center gap-1">
-            <Link
-              href="/admin"
-              className={`inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-lg transition-colors cursor-pointer ${
-                pathname === "/admin"
-                  ? "bg-ink-100 text-ink-950"
-                  : "text-ink-700 hover:bg-ink-50 hover:text-ink-950"
-              }`}
-            >
-              <LayoutDashboard className="h-4 w-4" />
-              Bookings
-            </Link>
+            <NavLink href="/admin" active={pathname === "/admin"} icon={LayoutDashboard} label="Bookings" />
+            <NavLink href="/admin/calendar" active={pathname === "/admin/calendar"} icon={CalendarDays} label="Calendar" />
+            <NavLink href="/admin/settings" active={pathname === "/admin/settings"} icon={Settings} label="Settings" />
             <button
               type="button"
               onClick={logout}
@@ -65,5 +57,29 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
       <main className="flex-1">{children}</main>
     </div>
+  );
+}
+
+function NavLink({
+  href,
+  active,
+  icon: Icon,
+  label,
+}: {
+  href: string;
+  active: boolean;
+  icon: typeof LayoutDashboard;
+  label: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 text-sm font-medium rounded-lg transition-colors cursor-pointer ${
+        active ? "bg-ink-100 text-ink-950" : "text-ink-700 hover:bg-ink-50 hover:text-ink-950"
+      }`}
+    >
+      <Icon className="h-4 w-4" />
+      <span className="hidden sm:inline">{label}</span>
+    </Link>
   );
 }

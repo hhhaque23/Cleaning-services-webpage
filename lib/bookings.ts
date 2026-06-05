@@ -186,6 +186,165 @@ export async function updateBookingStatus(
   return updated;
 }
 
+export type SlotWindow = "morning" | "midday" | "afternoon";
+
+const SLOT_WINDOWS: SlotWindow[] = ["morning", "midday", "afternoon"];
+
+function emptyDay(): Record<SlotWindow, number> {
+  return { morning: 0, midday: 0, afternoon: 0 };
+}
+
+function rowDateKey(v: unknown): string {
+  return v instanceof Date ? v.toISOString().slice(0, 10) : String(v);
+}
+
+// Count NON-cancelled bookings per (date, window) for the given dates.
+// Returns a complete grid (every requested date present, all windows zeroed).
+export async function slotUsage(
+  dateISOs: string[]
+): Promise<Record<string, Record<SlotWindow, number>>> {
+  const grid: Record<string, Record<SlotWindow, number>> = {};
+  for (const d of dateISOs) grid[d] = emptyDay();
+  if (dateISOs.length === 0) return grid;
+
+  const client = getSql();
+  if (client) {
+    await ensureSchema();
+    const rows = await client`
+      SELECT slot_date, slot_window, COUNT(*)::int AS n
+      FROM bookings
+      WHERE status <> 'cancelled' AND slot_date = ANY(${dateISOs})
+      GROUP BY slot_date, slot_window
+    `;
+    for (const r of rows) {
+      const d = rowDateKey(r.slot_date);
+      const w = r.slot_window as SlotWindow;
+      if (grid[d] && SLOT_WINDOWS.includes(w)) grid[d][w] = Number(r.n);
+    }
+    return grid;
+  }
+
+  for (const b of memory.values()) {
+    if (b.status === "cancelled") continue;
+    const w = b.slotWindow as SlotWindow;
+    if (grid[b.slotDate] && SLOT_WINDOWS.includes(w)) grid[b.slotDate][w] += 1;
+  }
+  return grid;
+}
+
+// Count NON-cancelled bookings in a single (date, window), optionally excluding
+// one booking id (used by ops reschedule so a booking never conflicts with itself).
+export async function countSlot(
+  dateISO: string,
+  window: SlotWindow,
+  excludeId?: string
+): Promise<number> {
+  const client = getSql();
+  if (client) {
+    await ensureSchema();
+    const rows = excludeId
+      ? await client`SELECT COUNT(*)::int AS n FROM bookings WHERE status <> 'cancelled' AND slot_date = ${dateISO} AND slot_window = ${window} AND id <> ${excludeId}`
+      : await client`SELECT COUNT(*)::int AS n FROM bookings WHERE status <> 'cancelled' AND slot_date = ${dateISO} AND slot_window = ${window}`;
+    return Number(rows[0]?.n ?? 0);
+  }
+  let n = 0;
+  for (const b of memory.values()) {
+    if (b.status === "cancelled") continue;
+    if (b.slotDate === dateISO && b.slotWindow === window && b.id !== excludeId) n++;
+  }
+  return n;
+}
+
+export async function listBookingsInRange(
+  startISO: string,
+  endISO: string
+): Promise<Booking[]> {
+  const client = getSql();
+  if (client) {
+    await ensureSchema();
+    const rows = await client`
+      SELECT * FROM bookings
+      WHERE slot_date BETWEEN ${startISO} AND ${endISO}
+      ORDER BY slot_date, slot_window, created_at
+    `;
+    return rows.map(rowToBooking);
+  }
+  return Array.from(memory.values())
+    .filter((b) => b.slotDate >= startISO && b.slotDate <= endISO)
+    .sort((a, b) =>
+      a.slotDate === b.slotDate
+        ? a.slotWindow.localeCompare(b.slotWindow)
+        : a.slotDate.localeCompare(b.slotDate)
+    );
+}
+
+export type BookingPatch = Partial<{
+  slotDate: string;
+  slotWindow: SlotWindow;
+  address: string;
+  apt: string | null;
+  notes: string | null;
+  tier: Booking["tier"];
+  bedrooms: number;
+  bathrooms: number;
+  sqft: number;
+  floors: number;
+  frequency: Booking["frequency"];
+  addOns: string[];
+  priceSubtotal: number;
+  priceDiscount: number;
+  priceTotal: number;
+  status: BookingStatus;
+  assignedTo: string | null;
+}>;
+
+const PATCH_COL: Record<string, string> = {
+  slotDate: "slot_date",
+  slotWindow: "slot_window",
+  address: "address",
+  apt: "apt",
+  notes: "notes",
+  tier: "tier",
+  bedrooms: "bedrooms",
+  bathrooms: "bathrooms",
+  sqft: "sqft",
+  floors: "floors",
+  frequency: "frequency",
+  addOns: "add_ons",
+  priceSubtotal: "price_subtotal",
+  priceDiscount: "price_discount",
+  priceTotal: "price_total",
+  status: "status",
+  assignedTo: "assigned_to",
+};
+
+// General-purpose admin update: reschedule, edit details, status, assignment.
+export async function updateBooking(
+  id: string,
+  patch: BookingPatch
+): Promise<Booking | null> {
+  const keys = (Object.keys(patch) as (keyof BookingPatch)[]).filter(
+    (k) => k in PATCH_COL
+  );
+  if (keys.length === 0) return getBooking(id);
+
+  const client = getSql();
+  if (client) {
+    await ensureSchema();
+    const snake: Record<string, unknown> = {};
+    for (const k of keys) snake[PATCH_COL[k as string]] = patch[k];
+    const rows = await client`
+      UPDATE bookings SET ${client(snake)} WHERE id = ${id} RETURNING *
+    `;
+    return rows[0] ? rowToBooking(rows[0]) : null;
+  }
+  const existing = memory.get(id);
+  if (!existing) return null;
+  const updated: Booking = { ...existing, ...(patch as Partial<Booking>) };
+  memory.set(id, updated);
+  return updated;
+}
+
 export async function bookingStats(): Promise<{
   todayCount: number;
   weekCount: number;
