@@ -41,27 +41,24 @@ function NumberStepper({
   max: number;
 }) {
   return (
-    <div className="flex items-center justify-between rounded-2xl border border-line bg-[var(--surface)] px-4 py-3.5 shadow-soft hover:shadow-card transition-shadow">
-      <div className="flex items-center gap-3">
-        <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-ink-100 text-ink-700">
+    <div className="flex flex-row sm:flex-col items-center justify-between sm:justify-center gap-3 sm:gap-4 rounded-2xl border border-line bg-[var(--surface)] px-4 py-3.5 sm:px-3 sm:py-5 shadow-soft hover:shadow-card transition-shadow">
+      <div className="flex items-center gap-3 sm:flex-col sm:gap-2 sm:text-center min-w-0">
+        <span className="inline-flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-ink-100 text-ink-700">
           <Icon className="h-[18px] w-[18px]" />
         </span>
-        <div className="leading-tight">
-          <div className="text-sm font-semibold text-ink-950">{label}</div>
-          <div className="text-xs text-ink-700/80">Pick a number</div>
-        </div>
+        <div className="text-sm font-semibold text-ink-950 truncate max-w-full">{label}</div>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 sm:gap-1.5 flex-none">
         <button
           type="button"
           onClick={() => onChange(Math.max(min, value - 1))}
           disabled={value <= min}
           aria-label={`Decrease ${label}`}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-[var(--surface)] text-ink-800 hover:bg-ink-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer active:scale-95"
+          className="inline-flex h-11 w-11 sm:h-10 sm:w-10 items-center justify-center rounded-xl border border-line bg-[var(--surface)] text-ink-800 hover:bg-ink-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer active:scale-95"
         >
           <Minus className="h-4 w-4" />
         </button>
-        <div className="relative w-10 h-8 overflow-hidden">
+        <div className="relative w-9 sm:w-7 h-8 overflow-hidden">
           <AnimatePresence initial={false} mode="popLayout">
             <motion.span
               key={value}
@@ -80,7 +77,7 @@ function NumberStepper({
           onClick={() => onChange(Math.min(max, value + 1))}
           disabled={value >= max}
           aria-label={`Increase ${label}`}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-ink-950 text-white hover:bg-ink-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer active:scale-95"
+          className="inline-flex h-11 w-11 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-ink-950 text-white hover:bg-ink-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer active:scale-95"
         >
           <Plus className="h-4 w-4" />
         </button>
