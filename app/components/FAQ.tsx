@@ -11,7 +11,7 @@ import { SITE } from "@/lib/site";
 const FAQS = [
   {
     q: "Is the price I see online really the price I pay?",
-    a: "Yes, to the dollar. The calculator runs the same math we charge. The only way the price changes is if you change the booking yourself before the cleaner arrives.",
+    a: "Yes, to the dollar. The price you build on the booking page is exactly what we charge. The only way it changes is if you change the booking yourself before the cleaner arrives.",
   },
   {
     q: "What cleaning products do you use?",
@@ -22,16 +22,12 @@ const FAQS = [
     a: "Not at all. Leave a key, a code, or a note. Most of our recurring clients aren't home; we let ourselves in, lock up, and text you when we're done.",
   },
   {
-    q: "What does the 24-hour guarantee actually mean?",
-    a: "If anything's missed or below standard, text or call us within 24 hours. We send a cleaner back the next day to redo it. No charge, no negotiation.",
-  },
-  {
     q: "How does subscription billing work?",
     a: "Same flat rate, billed securely each visit. You'll get a receipt by text and email. Pause, skip, or cancel any time. No contracts, no fees.",
   },
   {
     q: "You're new — why should I book you?",
-    a: "We're a locally-owned Washtenaw County crew, based in Ann Arbor, building our reputation one clean at a time. Every clean is backed by our 24-hour re-clean guarantee, and you can read our real reviews on Thumbtack.",
+    a: "We're a locally-owned Washtenaw County crew, based in Ann Arbor, building our reputation one clean at a time. You can read our real reviews on Thumbtack.",
   },
   {
     q: "What if my cleaner is late or cancels?",

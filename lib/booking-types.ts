@@ -36,6 +36,7 @@ export type Booking = {
   bedrooms: number;
   bathrooms: number;
   sqft: number;
+  floors: number;
   frequency: "onetime" | "monthly" | "biweekly" | "weekly";
   addOns: string[];
   slotDate: string;

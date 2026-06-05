@@ -94,8 +94,7 @@ export function StepConfirm({ contact, setContact }: Props) {
       />
 
       <p className="text-xs text-ink-700/80 pt-1">
-        By confirming you agree to our service terms and the 24-hour re-clean guarantee. We never
-        share your info.
+        By confirming you agree to our service terms. We never share your info.
       </p>
     </div>
   );

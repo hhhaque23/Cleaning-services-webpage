@@ -49,12 +49,6 @@ export default function TermsPage() {
             provider for each visit.
           </p>
 
-          <h2>Our 24-hour re-clean guarantee</h2>
-          <p>
-            We want you happy with the result. If we miss a spot, tell us within
-            24 hours and we will come back and re-clean that area free of charge.
-          </p>
-
           <h2>Rescheduling and cancellation</h2>
           <p>
             Plans change. Please give us at least 24 hours notice to reschedule or

@@ -9,7 +9,7 @@ import {
   useMotionValue,
   useReducedMotion,
 } from "framer-motion";
-import { ArrowLeft, ArrowRight, Calculator, Receipt, ShieldCheck, Sparkles, Check } from "lucide-react";
+import { ArrowLeft, ArrowRight, Building2, Calculator, Home, Mail, Receipt, Sparkles, Check } from "lucide-react";
 import {
   computePrice,
   FREQUENCY_META,
@@ -18,6 +18,7 @@ import {
   type Frequency,
 } from "./pricing";
 import { SLUG_TO_TIER } from "@/lib/tiers";
+import { SITE } from "@/lib/site";
 import { PriceTicker } from "./PriceTicker";
 import { StepConfigure } from "./StepConfigure";
 import { StepSchedule, type Slot } from "./StepSchedule";
@@ -40,6 +41,7 @@ const DEFAULT_CONFIG: BookingConfig = {
   bedrooms: 2,
   bathrooms: 1,
   sqft: 1400,
+  floors: 1,
   frequency: "biweekly",
   addOns: [],
 };
@@ -67,7 +69,11 @@ export function BookingFlow() {
     };
   }, [params]);
 
+  const initialMode: "residential" | "office" =
+    params?.get("type") === "office" ? "office" : "residential";
+
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
+  const [mode, setMode] = useState<"residential" | "office">(initialMode);
   const [config, setConfig] = useState<BookingConfig>(initialConfig);
   const [slot, setSlot] = useState<Slot | null>(null);
   const [contact, setContact] = useState<Contact>(DEFAULT_CONTACT);
@@ -113,6 +119,7 @@ export function BookingFlow() {
           bedrooms: config.bedrooms,
           bathrooms: config.bathrooms,
           sqft: config.sqft,
+          floors: config.floors,
           frequency: config.frequency,
           addOns: config.addOns,
           slotDate: slot.dateISO,
@@ -173,6 +180,13 @@ export function BookingFlow() {
           </p>
         </motion.div>
 
+        <div className="mt-8 flex justify-center">
+          <ModeToggle mode={mode} onChange={setMode} />
+        </div>
+
+        {mode === "office" ? (
+          <OfficeQuotePanel />
+        ) : (
         <div className="mt-12 grid lg:grid-cols-[1.4fr_1fr] gap-6 lg:gap-8 items-start">
           <motion.div
             ref={formCardRef}
@@ -278,8 +292,87 @@ export function BookingFlow() {
             slot={slot}
           />
         </div>
+        )}
       </div>
     </section>
+  );
+}
+
+function ModeToggle({
+  mode,
+  onChange,
+}: {
+  mode: "residential" | "office";
+  onChange: (m: "residential" | "office") => void;
+}) {
+  const OPTIONS = [
+    { id: "residential" as const, label: "Residential", icon: Home },
+    { id: "office" as const, label: "Office", icon: Building2 },
+  ];
+  return (
+    <div
+      role="tablist"
+      aria-label="Booking type"
+      className="inline-flex rounded-2xl border border-line bg-[var(--surface)] p-1 shadow-soft"
+    >
+      {OPTIONS.map((o) => {
+        const active = mode === o.id;
+        const Icon = o.icon;
+        return (
+          <button
+            key={o.id}
+            type="button"
+            role="tab"
+            aria-selected={active}
+            onClick={() => onChange(o.id)}
+            className={`inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-colors cursor-pointer ${
+              active ? "bg-ink-950 text-white shadow-lift" : "text-ink-700 hover:text-ink-950"
+            }`}
+          >
+            <Icon className="h-4 w-4" />
+            {o.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function OfficeQuotePanel() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: EASE_OUT_QUINT }}
+      className="mt-10 max-w-2xl mx-auto rounded-3xl bg-[var(--surface-elevated)] border border-line shadow-card p-7 sm:p-10 text-center"
+    >
+      <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-grass-500/12 text-grass-700">
+        <Building2 className="h-6 w-6" />
+      </span>
+      <h3 className="mt-5 font-display font-extrabold text-2xl sm:text-3xl tracking-[-0.02em] text-ink-950">
+        Every office is different.
+      </h3>
+      <p className="mt-3 text-ink-700 leading-relaxed">
+        Tell us about your space and we&apos;ll quote it. Square footage, number of floors,
+        restrooms, and how often you want it cleaned — a couple of sentences is plenty.
+      </p>
+      <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
+        <a
+          href={`mailto:${SITE.email}?subject=Office%20cleaning%20quote`}
+          className="inline-flex items-center justify-center gap-2 rounded-2xl bg-ink-950 hover:bg-ink-800 text-white font-semibold px-6 py-3.5 text-[15px] shadow-lift transition-colors cursor-pointer"
+        >
+          <Mail className="h-4 w-4" />
+          Email for a quote
+        </a>
+        <a
+          href="/services/office"
+          className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--surface)] hover:bg-white border border-line text-ink-950 font-semibold px-6 py-3.5 text-[15px] transition-colors cursor-pointer"
+        >
+          See what&apos;s covered
+          <ArrowRight className="h-4 w-4" />
+        </a>
+      </div>
+    </motion.div>
   );
 }
 
@@ -348,8 +441,7 @@ function SidebarPricing({
               Your price
             </span>
             <span className="inline-flex items-center gap-1 rounded-full bg-white/10 text-white text-[11px] font-semibold px-2.5 py-1">
-              <ShieldCheck className="h-3 w-3" />
-              Guaranteed
+              Flat rate
             </span>
           </div>
           <div className="mt-1.5 flex items-baseline gap-1.5">
@@ -378,7 +470,7 @@ function SidebarPricing({
             <SumRow label="Service" value={tierLabel} />
             <SumRow
               label="Home size"
-              value={`${config.bedrooms} bd · ${config.bathrooms} ba · ${config.sqft.toLocaleString()} sqft`}
+              value={`${config.bedrooms} bd · ${config.bathrooms} ba · ${config.sqft.toLocaleString()} sqft${config.floors > 1 ? ` · ${config.floors} floors` : ""}`}
             />
             <SumRow label="Frequency" value={freq.label} />
             <SumRow
@@ -397,13 +489,6 @@ function SidebarPricing({
               />
             )}
           </ul>
-
-          <div className="mt-6 rounded-2xl bg-white/5 border border-white/10 p-4 text-sm text-ink-100/85 leading-relaxed flex items-start gap-2.5">
-            <Check className="h-4 w-4 flex-none mt-0.5 text-grass-400" strokeWidth={3} />
-            <span>
-              If anything&apos;s missed, we&apos;ll make it right within 24 hours — free.
-            </span>
-          </div>
         </div>
       </div>
     </motion.aside>

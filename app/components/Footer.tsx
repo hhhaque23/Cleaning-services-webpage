@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { Mail, MapPin, Star, ShieldCheck, Leaf, Clock, Sparkles, Pin, Calculator } from "lucide-react";
+import { Mail, MapPin, Star, ShieldCheck, Leaf, Clock, Sparkles, Pin } from "lucide-react";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 import { SpectreMark } from "./SpectreMark";
 import { SITE } from "@/lib/site";
@@ -34,7 +34,6 @@ const NAV: { title: string; links: FooterLink[] }[] = [
     title: "Get started",
     links: [
       { label: "Book a clean", href: "/book" },
-      { label: "Instant quote", href: SITE.calculatorUrl, external: true },
       { label: "Email us", href: `mailto:${SITE.email}` },
       { label: "Service areas", href: "/about#areas" },
     ],
@@ -186,16 +185,6 @@ export function Footer() {
             © {new Date().getFullYear()} {SITE.name}. Locally owned &amp; operated.
           </div>
           <div className="flex items-center gap-3">
-            <motion.a
-              href={SITE.calculatorUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={reduce ? undefined : { y: -2 }}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-white/10 hover:bg-white/20 transition-colors cursor-pointer px-3 py-2 text-xs font-medium"
-            >
-              <Calculator className="h-4 w-4" />
-              Instant quote
-            </motion.a>
             <motion.a
               href={SITE.reviewsUrl}
               target="_blank"

@@ -41,7 +41,7 @@ export function AboutHero() {
                 delay={0.6}
                 className="italic font-medium text-ink-700"
               >
-                {"Real guarantee."}
+                {"Real results."}
               </SplitText>
             </h1>
             <motion.p
@@ -63,7 +63,7 @@ export function AboutHero() {
             >
               {[
                 { icon: Users, label: "New & locally owned" },
-                { icon: ShieldCheck, label: "24-hour re-clean guarantee" },
+                { icon: ShieldCheck, label: "Vetted local cleaners" },
                 { icon: MapPin, label: "Serving Washtenaw County" },
               ].map((b) => (
                 <motion.li

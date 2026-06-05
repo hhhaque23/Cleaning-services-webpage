@@ -109,9 +109,6 @@ export const PHOTOS = {
   // AboutHero
   aboutHero: hero(ID.livingMustardVintage),
 
-  // Guarantee
-  guarantee: hero(ID.livingStoneCorner),
-
   // FAQ feature photo
   faqFeature: hero(ID.livingTraditionalBrown),
 

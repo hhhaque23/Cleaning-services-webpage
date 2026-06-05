@@ -3,7 +3,6 @@ import Image from "next/image";
 import {
   ArrowRight,
   Building2,
-  Calculator,
   Mail,
   Check,
   Monitor,
@@ -22,7 +21,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Office cleaning · Spectre Cleaning Solutions",
   description:
-    "Commercial and office cleaning across Washtenaw County. Recurring or one-time, custom-quoted for your space. Get an instant estimate or email us.",
+    "Commercial and office cleaning across Washtenaw County. Recurring or one-time, custom-quoted for your space. Email us for a quote.",
 };
 
 const COVERED = [
@@ -85,21 +84,12 @@ export default function OfficeServicePage() {
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <a
-                  href={SITE.calculatorUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-accent-500 hover:bg-accent-600 text-white font-semibold px-7 py-3.5 text-[15px] shadow-commit transition-all duration-300 ease-out-quint cursor-pointer"
-                >
-                  <Calculator className="h-4 w-4" />
-                  Get an instant quote
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 ease-out-quint group-hover:translate-x-1" />
-                </a>
-                <a
                   href={`mailto:${SITE.email}?subject=Office%20cleaning%20quote`}
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--surface-elevated)] hover:bg-white border border-line text-ink-950 font-semibold px-7 py-3.5 text-[15px] transition-all duration-300 ease-out-quint cursor-pointer"
+                  className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-accent-500 hover:bg-accent-600 text-white font-semibold px-7 py-3.5 text-[15px] shadow-commit transition-all duration-300 ease-out-quint cursor-pointer"
                 >
                   <Mail className="h-4 w-4" />
                   Email for a quote
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 ease-out-quint group-hover:translate-x-1" />
                 </a>
               </div>
             </div>
@@ -157,16 +147,13 @@ export default function OfficeServicePage() {
               <Check className="h-5 w-5 mt-0.5 flex-none text-accent-700" strokeWidth={3} />
               <p className="text-[15px] text-ink-800 leading-relaxed max-w-xl">
                 Recurring schedules get a locked rate and the same crew each visit.
-                Every clean is backed by our 24-hour re-clean guarantee.
               </p>
             </div>
             <a
-              href={SITE.calculatorUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={`mailto:${SITE.email}?subject=Office%20cleaning%20quote`}
               className="inline-flex items-center gap-1.5 self-start rounded-xl bg-ink-950 hover:bg-ink-900 text-white text-sm font-semibold px-5 py-3 whitespace-nowrap transition-colors cursor-pointer"
             >
-              <Calculator className="h-4 w-4" /> Estimate my office
+              <Mail className="h-4 w-4" /> Email for a quote
             </a>
           </div>
         </div>

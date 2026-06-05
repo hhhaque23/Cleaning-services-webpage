@@ -212,6 +212,7 @@ function BookingRow({ booking }: { booking: Booking }) {
             </div>
             <div className="mt-0.5 text-xs text-ink-700">
               {booking.bedrooms} bd · {booking.bathrooms} ba · {booking.sqft.toLocaleString()} sqft
+              {booking.floors > 1 ? ` · ${booking.floors} fl` : ""}
             </div>
           </div>
 

@@ -66,19 +66,24 @@ export type BookingConfig = {
   bedrooms: number;
   bathrooms: number;
   sqft: number;
+  floors: number;
   frequency: Frequency;
   addOns: AddOn[];
 };
 
+/** Each floor above the first adds this fraction to room cost. Owner-tunable. */
+export const PER_EXTRA_FLOOR = 0.08;
+
 export function computePrice(config: BookingConfig) {
   const tier = TIER_META[config.tier];
   const sqftMultiplier = 1 + Math.max(0, (config.sqft - 1000) / 1000) * 0.1;
+  const floorMultiplier = 1 + Math.max(0, config.floors - 1) * PER_EXTRA_FLOOR;
   const roomCost =
     tier.base +
     tier.perBedroom * config.bedrooms +
     tier.perBathroom * config.bathrooms;
   const addOnCost = config.addOns.reduce((sum, a) => sum + ADDON_META[a].price, 0);
-  const subtotal = roomCost * sqftMultiplier + addOnCost;
+  const subtotal = roomCost * sqftMultiplier * floorMultiplier + addOnCost;
   const discount = FREQUENCY_META[config.frequency].discount;
   const total = subtotal * (1 - discount);
   return {
@@ -94,6 +99,7 @@ export function startingPrice(tier: Tier) {
     bedrooms: 2,
     bathrooms: 1,
     sqft: 1000,
+    floors: 1,
     frequency: "onetime",
     addOns: [],
   }).total;

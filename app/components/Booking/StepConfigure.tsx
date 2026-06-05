@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Minus, Plus, Bed, Bath, Ruler, Sparkles, Hammer, KeyRound, Check } from "lucide-react";
+import { Minus, Plus, Bed, Bath, Layers, Ruler, Sparkles, Hammer, KeyRound, Check } from "lucide-react";
 import {
   ADDON_META,
   FREQUENCY_META,
@@ -164,7 +164,7 @@ export function StepConfigure({ config, setConfig }: Props) {
         </div>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
+      <div className="grid sm:grid-cols-3 gap-3 sm:gap-4">
         <NumberStepper
           label="Bedrooms"
           icon={Bed}
@@ -180,6 +180,14 @@ export function StepConfigure({ config, setConfig }: Props) {
           onChange={(n) => update({ bathrooms: n })}
           min={1}
           max={6}
+        />
+        <NumberStepper
+          label="Floors"
+          icon={Layers}
+          value={config.floors}
+          onChange={(n) => update({ floors: n })}
+          min={1}
+          max={4}
         />
       </div>
 

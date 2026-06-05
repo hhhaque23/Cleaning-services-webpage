@@ -174,7 +174,7 @@ export default async function AdminBookingDetail({ params }: Props) {
               </Field>
               <Field label="Frequency">{freq.label}</Field>
               <Field label="Home">
-                {booking.bedrooms} bd · {booking.bathrooms} ba
+                {booking.bedrooms} bd · {booking.bathrooms} ba · {booking.floors} fl
                 <div className="mt-0.5 text-sm font-normal text-ink-700">
                   {booking.sqft.toLocaleString()} sqft
                 </div>

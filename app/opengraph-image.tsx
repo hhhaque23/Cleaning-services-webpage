@@ -116,8 +116,7 @@ export default function OpenGraphImage() {
               lineHeight: 1.4,
             }}
           >
-            Ann Arbor · Washtenaw County · transparent pricing · vetted cleaners · 24-hour
-            re-clean guarantee.
+            Ann Arbor · Washtenaw County · transparent pricing · vetted cleaners.
           </div>
         </div>
       </div>

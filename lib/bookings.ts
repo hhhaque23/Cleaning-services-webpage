@@ -35,6 +35,7 @@ async function ensureSchema() {
         bedrooms INT NOT NULL,
         bathrooms INT NOT NULL,
         sqft INT NOT NULL,
+        floors INT NOT NULL DEFAULT 1,
         frequency TEXT NOT NULL,
         add_ons TEXT[] NOT NULL DEFAULT '{}',
         slot_date DATE NOT NULL,
@@ -44,7 +45,11 @@ async function ensureSchema() {
         price_total INT NOT NULL,
         assigned_to TEXT
       )
-    `.then(() => undefined);
+    `
+      .then(() =>
+        client`ALTER TABLE bookings ADD COLUMN IF NOT EXISTS floors INT NOT NULL DEFAULT 1`
+      )
+      .then(() => undefined);
   }
   return schemaReady;
 }
@@ -81,6 +86,7 @@ function rowToBooking(r: Record<string, unknown>): Booking {
     bedrooms: r.bedrooms as number,
     bathrooms: r.bathrooms as number,
     sqft: r.sqft as number,
+    floors: (r.floors as number) ?? 1,
     frequency: r.frequency as Booking["frequency"],
     addOns: (r.add_ons as string[]) ?? [],
     slotDate:
@@ -103,12 +109,12 @@ export async function createBooking(input: NewBooking): Promise<Booking> {
     const rows = await client`
       INSERT INTO bookings (
         id, email, phone, address, apt, notes, tier,
-        bedrooms, bathrooms, sqft, frequency, add_ons,
+        bedrooms, bathrooms, sqft, floors, frequency, add_ons,
         slot_date, slot_window, price_subtotal, price_discount, price_total
       ) VALUES (
         ${id}, ${input.email}, ${input.phone}, ${input.address},
         ${input.apt}, ${input.notes}, ${input.tier},
-        ${input.bedrooms}, ${input.bathrooms}, ${input.sqft},
+        ${input.bedrooms}, ${input.bathrooms}, ${input.sqft}, ${input.floors},
         ${input.frequency}, ${input.addOns},
         ${input.slotDate}, ${input.slotWindow},
         ${input.priceSubtotal}, ${input.priceDiscount}, ${input.priceTotal}

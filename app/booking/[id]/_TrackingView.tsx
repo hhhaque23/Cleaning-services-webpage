@@ -46,7 +46,7 @@ function statusBlurb(s: BookingStatus): string {
     case "scheduled":
       return "You're on the route for today. Watch for a text when the cleaner is on their way.";
     case "completed":
-      return "Hope your place feels like it should. Reply to our text within 24 hours if anything needs another pass, free.";
+      return "Hope your place feels like it should. Reply to our text if anything needs attention.";
     case "cancelled":
       return "This booking was cancelled. If that's not what you wanted, give us a call and we'll re-open it.";
   }
@@ -222,8 +222,7 @@ export function TrackingView({ booking }: { booking: Booking }) {
                 {SITE.email}
               </a>{" "}
               and quote{" "}
-              <span className="font-mono font-semibold text-ink-950">{booking.id}</span>. We re-clean
-              for free within 24 hours if anything was missed.
+              <span className="font-mono font-semibold text-ink-950">{booking.id}</span>.
             </div>
           </div>
         </motion.div>

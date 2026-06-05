@@ -4,9 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
-import { ArrowRight, Check, CalendarClock, Star, ShieldCheck, Leaf, Zap, Calculator } from "lucide-react";
+import { ArrowRight, Check, CalendarClock, Star, ShieldCheck, Leaf, Zap } from "lucide-react";
 import { PHOTOS } from "@/lib/unsplash";
-import { SITE } from "@/lib/site";
 import { HeroVideo } from "./HeroVideo";
 import { SplitText } from "./motion/SplitText";
 import { MagneticButton } from "./motion/MagneticButton";
@@ -97,17 +96,6 @@ export function Hero() {
                   <ArrowRight className="relative h-4 w-4 transition-transform duration-300 ease-out-quint group-hover:translate-x-1" />
                 </Link>
               </MagneticButton>
-              <MagneticButton as="div" radius={100} strength={0.2}>
-                <a
-                  href={SITE.calculatorUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--surface-elevated)] hover:bg-[var(--surface)] border border-line text-ink-950 font-semibold px-7 py-[1.05rem] text-[15px] transition-all duration-300 ease-out-quint cursor-pointer"
-                >
-                  Instant quote
-                  <Calculator className="h-4 w-4" />
-                </a>
-              </MagneticButton>
             </motion.div>
 
             <motion.ul
@@ -116,7 +104,7 @@ export function Hero() {
             >
               {[
                 "No quote forms",
-                "24-hour re-clean guarantee",
+                "Same-day often available",
                 "Eco and pet-safe products",
               ].map((b) => (
                 <li key={b} className="flex items-center gap-1.5">

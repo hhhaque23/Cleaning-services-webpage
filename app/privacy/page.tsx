@@ -49,9 +49,8 @@ export default function PrivacyPage() {
           <h2>How we use it</h2>
           <p>
             To confirm and schedule your booking, to send a cleaner to the right
-            place, to contact you about your appointment, and to stand behind our
-            24-hour re-clean guarantee. That is it. We do not sell your
-            information, and we do not send marketing you did not ask for.
+            place, and to contact you about your appointment. That is it. We do not
+            sell your information, and we do not send marketing you did not ask for.
           </p>
 
           <h2>Who we share it with</h2>

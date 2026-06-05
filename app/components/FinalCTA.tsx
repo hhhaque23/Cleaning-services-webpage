@@ -3,16 +3,14 @@
 import Link from "next/link";
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from "framer-motion";
 import { useCallback, useRef } from "react";
-import { ArrowRight, Sparkles, CalendarClock, Calculator } from "lucide-react";
+import { ArrowRight, Sparkles, CalendarClock } from "lucide-react";
 import { SplitText } from "./motion/SplitText";
 import { MagneticButton } from "./motion/MagneticButton";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
-import { SITE } from "@/lib/site";
 
 const COMMITMENT_FRAGMENTS = [
   "transparent pricing",
   "secure online payment",
-  "24h satisfaction guarantee",
   "cancel anytime",
 ];
 
@@ -141,17 +139,6 @@ export function FinalCTA() {
                   <span className="relative">Get my price</span>
                   <ArrowRight className="relative h-5 w-5 transition-transform duration-300 ease-out-quint group-hover:translate-x-1" />
                 </Link>
-              </MagneticButton>
-              <MagneticButton as="div" radius={100} strength={0.22}>
-                <a
-                  href={SITE.calculatorUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[oklch(0.985_0.006_220/0.1)] hover:bg-[oklch(0.985_0.006_220/0.18)] text-[var(--surface)] font-semibold px-7 py-4 text-[15px] transition-all duration-300 ease-out-quint cursor-pointer"
-                >
-                  <Calculator className="h-4 w-4" />
-                  Instant quote
-                </a>
               </MagneticButton>
             </motion.div>
           </div>

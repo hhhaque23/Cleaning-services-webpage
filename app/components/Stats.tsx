@@ -77,8 +77,6 @@ export function Stats() {
           </span>
           <span className="text-line-strong">·</span>
           <span>Eco-friendly, pet-safe products</span>
-          <span className="text-line-strong">·</span>
-          <span>Backed by our 24-hour re-clean guarantee</span>
         </motion.div>
       </div>
     </section>
@@ -163,7 +161,7 @@ function BigCounterTile() {
         <span className="text-2xl text-ink-600 font-medium">%</span>
       </div>
       <p className="mt-3 text-sm text-ink-700 leading-relaxed">
-        guaranteed — miss a spot and we re-clean it free within 24 hours.
+        the bar we hold every clean to — every room, every visit.
       </p>
       <Sparkline />
     </TileShell>

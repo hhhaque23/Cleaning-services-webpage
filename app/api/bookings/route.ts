@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     return bad("Invalid JSON body");
   }
 
-  const required = ["email", "phone", "address", "tier", "bedrooms", "bathrooms", "sqft", "frequency", "slotDate", "slotWindow", "priceSubtotal", "priceDiscount", "priceTotal"] as const;
+  const required = ["email", "phone", "address", "tier", "bedrooms", "bathrooms", "sqft", "floors", "frequency", "slotDate", "slotWindow", "priceSubtotal", "priceDiscount", "priceTotal"] as const;
   for (const k of required) {
     if (body[k] === undefined || body[k] === null || body[k] === "")
       return bad(`Missing field: ${k}`);
@@ -53,6 +53,7 @@ export async function POST(req: Request) {
     bedrooms: Number(body.bedrooms),
     bathrooms: Number(body.bathrooms),
     sqft: Number(body.sqft),
+    floors: Math.min(4, Math.max(1, Number(body.floors))),
     frequency: freq as NewBooking["frequency"],
     addOns,
     slotDate: String(body.slotDate),
