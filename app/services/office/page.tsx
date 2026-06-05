@@ -107,7 +107,7 @@ export default function OfficeServicePage() {
             <div className="relative">
               <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-lift border border-line-strong/30">
                 <Image
-                  src={PHOTOS.moveHero}
+                  src={PHOTOS.officeHero}
                   alt="A bright, freshly cleaned commercial space ready for the work day"
                   fill
                   priority

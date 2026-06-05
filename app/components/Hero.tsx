@@ -134,7 +134,7 @@ export function Hero() {
             >
               <Image
                 src={PHOTOS.hero}
-                alt="Sunlit living room with white sofa and clean wood floors, just finished by our team"
+                alt="A bright, vaulted living room with a brick fireplace, just finished by our team"
                 fill
                 priority
                 fetchPriority="high"

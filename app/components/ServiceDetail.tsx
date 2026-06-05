@@ -39,9 +39,9 @@ type TierContent = {
 const CONTENT: Record<Tier, TierContent> = {
   Standard: {
     hero: PHOTOS.standardHero,
-    heroAlt: "A sunlit living room, the standard finish",
+    heroAlt: "A cozy living room with a stone fireplace, the standard finish",
     includesPhoto: PHOTOS.standardIncludes,
-    includesAlt: "A living room mid-afternoon, dusted and vacuumed",
+    includesAlt: "A kitchen wiped down and tidied on a standard clean",
     Icon: Sparkles,
     palette: "cyan",
     oneLiner:
@@ -162,9 +162,9 @@ const CONTENT: Record<Tier, TierContent> = {
   },
   MoveInOut: {
     hero: PHOTOS.moveHero,
-    heroAlt: "An empty room ready for the next tenant, freshly cleaned",
+    heroAlt: "A bright living room, freshly cleaned and ready for move-in",
     includesPhoto: PHOTOS.moveIncludes,
-    includesAlt: "A bedroom emptied and turned, ready for handover",
+    includesAlt: "A freshly cleaned bedroom, ready for handover",
     Icon: KeyRound,
     palette: "mixed",
     oneLiner:

@@ -1,6 +1,8 @@
 // Unsplash photo IDs — every one of these has been downloaded and viewed.
-// All show interiors or exteriors of clean homes. ZERO people, zero face-art,
-// zero product shots. If you add an ID, view it first.
+// Theme: traditional MICHIGAN / Midwest-suburban homes (brick colonials, warm
+// wood, classic interiors, fall/winter exteriors) + real OFFICES. ZERO people,
+// zero faces, zero product shots, zero readable text/brand. If you add an ID,
+// download and view it first, and check it crops well at the slot's aspect.
 
 const hero = (id: string) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1200&q=72`;
@@ -13,119 +15,141 @@ const avatar = (id: string) =>
 const thumb = (id: string) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=480&q=70`;
 
-// Verified-clean interior / exterior IDs. Index-stable: do not reorder.
+// Verified traditional Midwest interiors/exteriors + offices.
 const ID = {
-  livingSofaWhite: "1583847268964-b28dc8f51f92",       // 0 - hero
-  livingGreySofa: "1493663284031-b7e3aefcae8e",        // 1
-  bathroomWhite: "1552321554-5fefe8c9ef14",            // 2
-  livingFlowerArt: "1505691938895-1758d7feb511",       // 3
-  livingFireplaceView: "1560448204-e02f11c3d0e2",      // 4
-  kitchenWhiteStove: "1556912173-3bb406ef7e77",        // 5
-  bathroomTub: "1620626011761-996317b8d101",           // 6
-  livingSmallApt: "1522708323590-d24dbb6b0267",        // 7
-  kitchenPendants: "1565538810643-b5bdb714032a",       // 8
-  livingBlueCouch: "1493809842364-78817add7ffb",       // 9
-  livingMidCentury: "1502672260266-1c1ef2d93688",      // 10
-  livingChairsFireplace: "1560185009-5bf9f2849488",    // 11
-  livingBlackSofa: "1513694203232-719a280e022f",       // 12
-  livingLeatherSofa: "1554995207-c18c203602cb",        // 13
-  kitchenMonochrome: "1484154218962-a197022b5858",     // 14
-  livingArchway: "1567016376408-0226e4d0c1ea",         // 15
-  livingGreenBeige: "1616137422495-1e9e46e2aa77",      // 16
-  livingPampas: "1631679706909-1844bbd07221",          // 17
-  livingBeams: "1600210491892-03d54c0aaf87",           // 18
-  exteriorDusk: "1494526585095-c41746248156",          // 19
-  bedroomVelvet: "1540518614846-7eded433c457",         // 20
-  bedroomPlants: "1571508601891-ca5e7a713859",         // 21
-  exteriorMountain: "1568605114967-8130f3a36994",      // 22
+  // Living / great rooms
+  livingArchVaultGrey: "1560185009-dddeb820c7b7",      // bright brick-arch vaulted, grey sofa
+  livingArchVaultBeige: "1560185013-ead8277ef8ea",     // brick-arch vaulted, beige + blue chairs
+  livingStoneFireplace: "1696814543693-31fcf942ccb7",  // stone fireplace, leather club chair
+  livingWhiteStone: "1612031737124-28aeae3f2863",      // white stacked-stone fireplace
+  livingStoneCorner: "1612152598218-9acf01c968e3",     // stone corner fireplace, bright
+  livingMustardVintage: "1724026502211-ff953e813194",  // dark-wood trim, mustard velvet sofa
+  livingWoodPanelFloral: "1635108198418-584af95a2b6f", // wood-panel great room, floral chairs
+  livingTraditionalBrown: "1560449752-3fd4bdbe7df0",   // traditional, brown sofa, bookshelf
+
+  // Kitchens
+  kitchenCreamNavy: "1701421047855-d7bafd8d6f69",      // cream shaker + navy island
+  kitchenFarmhouse: "1719569019031-ca8fb2911e2d",      // cream farmhouse, cafe curtains
+  kitchenCreamGranite: "1588796460733-82d656bfbc49",   // classic cream + granite, pendants
+  kitchenCharcoal: "1600489000022-c2086d79f9d4",       // charcoal lowers, subway tile
+
+  // Bathrooms
+  bathFarmhouseVanity: "1604769319166-010643ace337",   // shiplap, wood double vanity
+  bathSubwayPedestal: "1560448075-bb485b067938",       // classic subway tile, pedestal sink
+  bathMasterWood: "1507086182422-97bd7ca2413b",        // master bath, reclaimed-wood ceiling
+
+  // Bedrooms
+  bedBlueFourPoster: "1651766231012-8d8a4b2e20dc",     // light-blue master, wood four-poster
+  bedGreyMaster: "1560185893-a55cbc8c57e8",            // grey master, warm wood floors
+  bedVelvetSofa: "1600494448655-ae58f58bb945",         // bright bedroom, velvet sofa
+  bedSunnyBay: "1499916078039-922301b0eb9b",           // sunny bay-window bedroom, plants
+
+  // Exteriors (Michigan suburban)
+  extStoneColonial: "1688307193832-a6f711942705",      // stone/brick colonial, white columns
+  extBrickPorch: "1601041597271-71988152f98b",         // red brick, white columned porch
+  extCraftsmanFall: "1605450195878-3b5c4e70163c",      // craftsman in autumn foliage
+  extBrickTurret: "1635823316459-dcdf55edb133",        // red brick home with turret
+  extSnowClapboard: "1520099823969-e9c747f601a4",      // white clapboard house in snow
+
+  // Offices / commercial
+  officeOpenPlan: "1572521165329-b197f9ea3da6",        // bright open-plan office
+  officeWorkstations: "1637665627832-dcd730049fbb",    // tidy white-desk workstations
+  officeConferenceWood: "1497366811353-6870744d04b2",  // warm wood conference table
+  officeConferenceBright: "1462826303086-329426d1aef5",// big bright conference room
 } as const;
 
-// Flat list of all 23 distinct photos — useful for grids that need many.
+// Flat list for grids. Index-stable: do not reorder (RecentTransformations
+// references specific indices). label is shown; sub is alt-text flavor only.
 export const ALL_PHOTOS: { src: string; thumb: string; label: string; sub: string }[] = [
-  { src: hero(ID.livingSofaWhite),       thumb: thumb(ID.livingSofaWhite),       label: "Living room",  sub: "Sunlit · Ann Arbor" },
-  { src: hero(ID.livingGreySofa),        thumb: thumb(ID.livingGreySofa),        label: "Living room",  sub: "Standard · Ypsilanti" },
-  { src: hero(ID.bathroomWhite),         thumb: thumb(ID.bathroomWhite),         label: "Bathroom",     sub: "Deep · Saline" },
-  { src: hero(ID.livingFlowerArt),       thumb: thumb(ID.livingFlowerArt),       label: "Living room",  sub: "Biweekly · Dexter" },
-  { src: hero(ID.livingFireplaceView),   thumb: thumb(ID.livingFireplaceView),   label: "Open plan",    sub: "Standard · Chelsea" },
-  { src: hero(ID.kitchenWhiteStove),     thumb: thumb(ID.kitchenWhiteStove),     label: "Kitchen",      sub: "Deep · Saline" },
-  { src: hero(ID.bathroomTub),           thumb: thumb(ID.bathroomTub),           label: "Bathroom",     sub: "Move-out · Chelsea" },
-  { src: hero(ID.livingSmallApt),        thumb: thumb(ID.livingSmallApt),        label: "Apartment",    sub: "Weekly · Milan" },
-  { src: hero(ID.kitchenPendants),       thumb: thumb(ID.kitchenPendants),       label: "Kitchen",      sub: "Standard · Pittsfield Twp" },
-  { src: hero(ID.livingBlueCouch),       thumb: thumb(ID.livingBlueCouch),       label: "Living room",  sub: "Biweekly · Whitmore Lake" },
-  { src: hero(ID.livingMidCentury),      thumb: thumb(ID.livingMidCentury),      label: "Living room",  sub: "Standard · Milan" },
-  { src: hero(ID.livingChairsFireplace), thumb: thumb(ID.livingChairsFireplace), label: "Sunroom",      sub: "Deep · Superior Twp" },
-  { src: hero(ID.livingBlackSofa),       thumb: thumb(ID.livingBlackSofa),       label: "Small living", sub: "Biweekly · Milan" },
-  { src: hero(ID.livingLeatherSofa),     thumb: thumb(ID.livingLeatherSofa),     label: "Open plan",    sub: "Standard · Saline" },
-  { src: hero(ID.kitchenMonochrome),     thumb: thumb(ID.kitchenMonochrome),     label: "Kitchen",      sub: "Move-out · Dexter" },
-  { src: hero(ID.livingArchway),         thumb: thumb(ID.livingArchway),         label: "Living nook",  sub: "Standard · Manchester" },
-  { src: hero(ID.livingGreenBeige),      thumb: thumb(ID.livingGreenBeige),      label: "Open plan",    sub: "Weekly · Ypsilanti" },
-  { src: hero(ID.livingPampas),          thumb: thumb(ID.livingPampas),          label: "Living room",  sub: "Biweekly · Manchester" },
-  { src: hero(ID.livingBeams),           thumb: thumb(ID.livingBeams),           label: "Great room",   sub: "Deep · Scio Twp" },
-  { src: hero(ID.exteriorDusk),          thumb: thumb(ID.exteriorDusk),          label: "Exterior",     sub: "Move-in · Superior Twp" },
-  { src: hero(ID.bedroomVelvet),         thumb: thumb(ID.bedroomVelvet),         label: "Bedroom",      sub: "Deep · Chelsea" },
-  { src: hero(ID.bedroomPlants),         thumb: thumb(ID.bedroomPlants),         label: "Bedroom",      sub: "Biweekly · Ann Arbor" },
-  { src: hero(ID.exteriorMountain),      thumb: thumb(ID.exteriorMountain),      label: "Exterior",     sub: "Move-out · Dexter" },
+  { src: hero(ID.livingArchVaultGrey),   thumb: thumb(ID.livingArchVaultGrey),   label: "Living room", sub: "Standard · Ann Arbor" },
+  { src: hero(ID.kitchenCreamNavy),      thumb: thumb(ID.kitchenCreamNavy),      label: "Kitchen",     sub: "Deep · Saline" },
+  { src: hero(ID.bathFarmhouseVanity),   thumb: thumb(ID.bathFarmhouseVanity),   label: "Bathroom",    sub: "Deep · Dexter" },
+  { src: hero(ID.bedBlueFourPoster),     thumb: thumb(ID.bedBlueFourPoster),     label: "Bedroom",     sub: "Biweekly · Chelsea" },
+  { src: hero(ID.livingStoneFireplace),  thumb: thumb(ID.livingStoneFireplace),  label: "Living room", sub: "Weekly · Ypsilanti" },
+  { src: hero(ID.kitchenFarmhouse),      thumb: thumb(ID.kitchenFarmhouse),      label: "Kitchen",     sub: "Standard · Saline" },
+  { src: hero(ID.bathSubwayPedestal),    thumb: thumb(ID.bathSubwayPedestal),    label: "Bathroom",    sub: "Move-out · Milan" },
+  { src: hero(ID.officeOpenPlan),        thumb: thumb(ID.officeOpenPlan),        label: "Office",      sub: "Recurring · Ann Arbor" },
+  { src: hero(ID.bedGreyMaster),         thumb: thumb(ID.bedGreyMaster),         label: "Bedroom",     sub: "Weekly · Manchester" },
+  { src: hero(ID.livingArchVaultBeige),  thumb: thumb(ID.livingArchVaultBeige),  label: "Living room", sub: "Biweekly · Pittsfield Twp" },
+  { src: hero(ID.kitchenCreamGranite),   thumb: thumb(ID.kitchenCreamGranite),   label: "Kitchen",     sub: "Standard · Scio Twp" },
+  { src: hero(ID.extStoneColonial),      thumb: thumb(ID.extStoneColonial),      label: "Exterior",    sub: "Move-in · Ann Arbor" },
+  { src: hero(ID.livingMustardVintage),  thumb: thumb(ID.livingMustardVintage),  label: "Living room", sub: "Biweekly · Ypsilanti" },
+  { src: hero(ID.bathMasterWood),        thumb: thumb(ID.bathMasterWood),        label: "Bathroom",    sub: "Deep · Whitmore Lake" },
+  { src: hero(ID.kitchenCharcoal),       thumb: thumb(ID.kitchenCharcoal),       label: "Kitchen",     sub: "Move-out · Superior Twp" },
+  { src: hero(ID.livingStoneCorner),     thumb: thumb(ID.livingStoneCorner),     label: "Living room", sub: "Standard · Saline" },
+  { src: hero(ID.bedVelvetSofa),         thumb: thumb(ID.bedVelvetSofa),         label: "Bedroom",     sub: "Biweekly · Dexter" },
+  { src: hero(ID.officeConferenceWood),  thumb: thumb(ID.officeConferenceWood),  label: "Office",      sub: "Recurring · Ann Arbor" },
+  { src: hero(ID.livingWoodPanelFloral), thumb: thumb(ID.livingWoodPanelFloral), label: "Great room",  sub: "Deep · Chelsea" },
+  { src: hero(ID.extCraftsmanFall),      thumb: thumb(ID.extCraftsmanFall),      label: "Exterior",    sub: "Move-out · Ann Arbor" },
+  { src: hero(ID.bedSunnyBay),           thumb: thumb(ID.bedSunnyBay),           label: "Bedroom",     sub: "Deep · Manchester" },
+  { src: hero(ID.livingTraditionalBrown),thumb: thumb(ID.livingTraditionalBrown),label: "Living room", sub: "Standard · Saline" },
+  { src: hero(ID.extBrickTurret),        thumb: thumb(ID.extBrickTurret),        label: "Exterior",    sub: "Move-out · Ann Arbor" },
+  { src: hero(ID.extBrickPorch),         thumb: thumb(ID.extBrickPorch),         label: "Exterior",    sub: "Standard · Ann Arbor" },
+  { src: hero(ID.livingWhiteStone),      thumb: thumb(ID.livingWhiteStone),      label: "Living room", sub: "Weekly · Ann Arbor" },
+  { src: hero(ID.extSnowClapboard),      thumb: thumb(ID.extSnowClapboard),      label: "Exterior",    sub: "Move-in · Dexter" },
+  { src: hero(ID.officeWorkstations),    thumb: thumb(ID.officeWorkstations),    label: "Office",      sub: "Recurring · Ypsilanti" },
 ];
 
 // PHOTOS retains the per-component named slots used across the site.
-// Each slot now points to a UNIQUE id so no two slots share a photo.
 export const PHOTOS = {
-  // Hero column photo
-  hero: hero(ID.livingSofaWhite),
-  heroAlt: "Sunlit living room with white sofa and clean wood floors",
+  // Hero column photo + glass-card thumbnails
+  hero: hero(ID.livingArchVaultGrey),
+  heroAlt: "A bright, vaulted living room with a brick fireplace, freshly cleaned",
+  heroThumb1: hero(ID.kitchenCreamNavy),
+  heroThumb2: hero(ID.bathFarmhouseVanity),
+  heroThumb3: hero(ID.bedBlueFourPoster),
 
-  // Hero glass card thumbnails (3 unique)
-  heroThumb1: hero(ID.kitchenWhiteStove),
-  heroThumb2: hero(ID.bathroomTub),
-  heroThumb3: hero(ID.bedroomVelvet),
-
-  // Stats big photo tile + section-header photo (filling white-space)
-  statsBigTile: hero(ID.livingBeams),
-  statsHeader: hero(ID.livingLeatherSofa),
+  // Stats big photo tile + section-header photo
+  statsBigTile: hero(ID.livingStoneFireplace),
+  statsHeader: hero(ID.livingWhiteStone),
 
   // PhotoQuote
-  photoQuote: hero(ID.livingMidCentury),
+  photoQuote: hero(ID.livingArchVaultBeige),
 
   // AboutHero
-  aboutHero: hero(ID.livingBlueCouch),
+  aboutHero: hero(ID.livingMustardVintage),
 
   // Guarantee
-  guarantee: hero(ID.livingChairsFireplace),
+  guarantee: hero(ID.livingStoneCorner),
 
   // FAQ feature photo
-  faqFeature: hero(ID.livingPampas),
+  faqFeature: hero(ID.livingTraditionalBrown),
 
-  // SubscriptionCallout 3-photo strip
-  subOne: hero(ID.livingArchway),
-  subTwo: hero(ID.livingLeatherSofa),
-  subThree: hero(ID.bedroomPlants),
+  // SubscriptionCallout 3-photo strip (kitchen, bathroom, bedroom)
+  subOne: hero(ID.kitchenFarmhouse),
+  subTwo: hero(ID.bathSubwayPedestal),
+  subThree: hero(ID.bedGreyMaster),
 
   // FinalCTA 3-photo strip
-  ctaOne: hero(ID.livingGreenBeige),
-  ctaTwo: hero(ID.kitchenMonochrome),
-  ctaThree: hero(ID.exteriorDusk),
+  ctaOne: hero(ID.extCraftsmanFall),
+  ctaTwo: hero(ID.kitchenCreamGranite),
+  ctaThree: hero(ID.extBrickPorch),
 
-  // HowItWorks step strips — 2 photos each, 6 unique
-  step1a: hero(ID.kitchenPendants),
-  step1b: hero(ID.bathroomWhite),
-  step2a: hero(ID.livingFireplaceView),
-  step2b: hero(ID.livingFlowerArt),
-  step3a: hero(ID.livingGreySofa),
-  step3b: hero(ID.livingSmallApt),
+  // HowItWorks step strips
+  step1a: hero(ID.kitchenCharcoal),
+  step1b: hero(ID.bathSubwayPedestal),
+  step2a: hero(ID.livingWhiteStone),
+  step2b: hero(ID.livingArchVaultBeige),
+  step3a: hero(ID.bedVelvetSofa),
+  step3b: hero(ID.livingTraditionalBrown),
 
-  // ServiceAreas HQ strip — 5 thumbnails. Reuses some kitchens/baths/living
-  // from later in the page (separate viewport), and exteriorMountain.
-  hq1: thumb(ID.kitchenPendants),
-  hq2: thumb(ID.bathroomTub),
-  hq3: thumb(ID.livingLeatherSofa),
-  hq4: thumb(ID.bedroomPlants),
-  hq5: thumb(ID.exteriorMountain),
+  // ServiceAreas HQ strip — 5 thumbnails (hq5 is a Michigan exterior)
+  hq1: thumb(ID.kitchenCreamGranite),
+  hq2: thumb(ID.bathMasterWood),
+  hq3: thumb(ID.livingWoodPanelFloral),
+  hq4: thumb(ID.bedSunnyBay),
+  hq5: thumb(ID.extStoneColonial),
 
-  // ServiceDetail per-tier photos (3 tiers × 2 slots = 6 unique)
-  standardHero: hero(ID.livingMidCentury),
-  standardIncludes: hero(ID.kitchenPendants),
-  deepHero: hero(ID.bathroomTub),
-  deepIncludes: hero(ID.livingBeams),
-  moveHero: hero(ID.livingFireplaceView),
-  moveIncludes: hero(ID.bedroomPlants),
+  // ServiceDetail per-tier photos (Standard / Deep / Move-out)
+  standardHero: hero(ID.livingStoneFireplace),
+  standardIncludes: hero(ID.kitchenCharcoal),
+  deepHero: hero(ID.bathFarmhouseVanity),
+  deepIncludes: hero(ID.livingArchVaultBeige),
+  moveHero: hero(ID.livingStoneCorner),
+  moveIncludes: hero(ID.bedVelvetSofa),
+
+  // Office service page (commercial)
+  officeHero: hero(ID.officeOpenPlan),
+  officeWorkstations: hero(ID.officeWorkstations),
+  officeConference: hero(ID.officeConferenceWood),
 } as const;

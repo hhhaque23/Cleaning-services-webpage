@@ -70,7 +70,7 @@ export function FAQ() {
             >
               <Image
                 src={PHOTOS.faqFeature}
-                alt="A bright clean room with a window seat"
+                alt="A bright, freshly cleaned living room"
                 fill
                 sizes="(min-width: 1024px) 36vw, 100vw"
                 className="object-cover"

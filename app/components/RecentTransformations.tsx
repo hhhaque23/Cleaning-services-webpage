@@ -8,7 +8,7 @@ import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 // 8 distinct photos for the grid. Indices chosen so within this grid every
 // photo is unique, and to minimize repeat with other home-page sections.
-const TILE_INDICES = [9, 11, 12, 17, 22, 1, 7, 18];
+const TILE_INDICES = [0, 1, 11, 2, 7, 3, 22, 12];
 
 const TILES = TILE_INDICES.map((i) => ALL_PHOTOS[i]);
 

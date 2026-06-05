@@ -119,7 +119,7 @@ function BigPhotoTile() {
     >
       <Image
         src={PHOTOS.statsBigTile}
-        alt="A bathroom on a quiet weekday afternoon after a Spectre clean"
+        alt="A cozy living room with a stone fireplace after a Spectre clean"
         fill
         sizes="(min-width: 1024px) 50vw, 100vw"
         className="object-cover animate-ken-burns"
