@@ -1,18 +1,30 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { useFormStatus } from "react-dom";
 import { Lock, ArrowRight, FlaskConical } from "lucide-react";
 import { SpectreMark } from "../../components/SpectreMark";
+import { signIn } from "./actions";
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-ink-950 hover:bg-ink-800 disabled:bg-ink-300 disabled:cursor-not-allowed text-[var(--surface)] font-semibold px-5 py-3.5 transition-colors cursor-pointer"
+    >
+      {pending ? "Signing in…" : "Sign in"}
+      {!pending && <ArrowRight className="h-4 w-4" />}
+    </button>
+  );
+}
 
 function LoginInner() {
   const params = useSearchParams();
   const next = params?.get("next") || "/admin";
-
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [submitting, setSubmitting] = useState(false);
+  const hasError = Boolean(params?.get("error"));
   const [demoMode, setDemoMode] = useState(false);
 
   useEffect(() => {
@@ -21,33 +33,6 @@ function LoginInner() {
       .then((d) => setDemoMode(Boolean(d.demo)))
       .catch(() => {});
   }, []);
-
-  async function onSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setSubmitting(true);
-    setError(null);
-    try {
-      const res = await fetch("/api/admin/login", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ password }),
-      });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || "Wrong password");
-      }
-      // Hard navigation (not router.push): forces a fresh top-level request that
-      // carries the just-set session cookie through middleware. The soft client
-      // nav could race the cookie and bounce back to login ("nothing happens").
-      const target =
-        next.startsWith("/") && !next.startsWith("//") ? next : "/admin";
-      window.location.assign(target);
-      return; // leave submitting=true; the document is being replaced
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Sign in failed");
-      setSubmitting(false);
-    }
-  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-5 py-12">
@@ -80,7 +65,8 @@ function LoginInner() {
           </div>
         )}
 
-        <form onSubmit={onSubmit} className="mt-8 space-y-4">
+        <form action={signIn} className="mt-8 space-y-4">
+          <input type="hidden" name="next" value={next} />
           <label className="block">
             <span className="block text-xs font-semibold uppercase tracking-wider text-ink-700/80 mb-1.5">
               Admin password
@@ -91,8 +77,8 @@ function LoginInner() {
               </span>
               <input
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                required
                 autoFocus
                 autoComplete="current-password"
                 className="w-full pl-10 pr-3.5 py-3 rounded-2xl border border-ink-200 bg-white text-ink-950 placeholder:text-ink-700/50 focus:border-ink-600 focus:ring-2 focus:ring-ink-600/20 outline-none transition-colors"
@@ -100,20 +86,13 @@ function LoginInner() {
             </span>
           </label>
 
-          {error && (
+          {hasError && (
             <div className="rounded-xl bg-[oklch(0.96_0.04_25)] text-[oklch(0.42_0.18_25)] text-sm font-medium px-3 py-2.5">
-              {error}
+              Wrong password
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={submitting || password.length === 0}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-ink-950 hover:bg-ink-800 disabled:bg-ink-300 disabled:cursor-not-allowed text-[var(--surface)] font-semibold px-5 py-3.5 transition-colors cursor-pointer"
-          >
-            {submitting ? "Signing in…" : "Sign in"}
-            {!submitting && <ArrowRight className="h-4 w-4" />}
-          </button>
+          <SubmitButton />
         </form>
       </div>
     </div>
