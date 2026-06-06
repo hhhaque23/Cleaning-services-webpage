@@ -21,11 +21,11 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   }
 
   if (isLogin) {
-    return <div className="min-h-screen bg-[var(--surface)]">{children}</div>;
+    return <div className="relative z-10 min-h-screen bg-[var(--surface)]">{children}</div>;
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--surface)]">
+    <div className="relative z-10 min-h-screen flex flex-col bg-[var(--surface)]">
       <header className="sticky top-0 z-40 bg-[var(--surface)]/85 backdrop-blur-md border-b border-line">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
           <Link href="/admin" className="flex items-center gap-2.5 cursor-pointer">
