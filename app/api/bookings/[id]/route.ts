@@ -4,6 +4,7 @@ import {
   getBooking,
   updateBookingStatus,
   updateBooking,
+  deleteBooking,
   countSlot,
   type Booking,
   type BookingStatus,
@@ -80,6 +81,21 @@ export async function PATCH(
   if (!updated)
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   return NextResponse.json({ id: updated.id, status: updated.status });
+}
+
+// DELETE = permanently remove the booking (admin only). Distinct from a status
+// change to "cancelled", which keeps the row.
+export async function DELETE(
+  _req: Request,
+  { params }: { params: { id: string } }
+) {
+  const token = cookies().get(SESSION_COOKIE)?.value;
+  if (!(await verifySessionToken(token))) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  const ok = await deleteBooking(params.id);
+  if (!ok) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  return NextResponse.json({ ok: true });
 }
 
 const TIERS = ["Standard", "Deep", "MoveInOut"];

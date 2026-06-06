@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { StatusActions } from "./StatusActions";
 import { ManageBooking } from "./ManageBooking";
+import { DeleteBooking } from "./DeleteBooking";
 
 const CADENCE_DAYS: Record<Frequency, number> = {
   onetime: 0,
@@ -238,6 +239,8 @@ export default async function AdminBookingDetail({ params }: Props) {
               </div>
             </div>
           </section>
+
+          <DeleteBooking id={booking.id} />
         </div>
       </div>
     </div>

@@ -47,7 +47,7 @@ Deployed on Railway at `https://cleaning-services-webpage-production.up.railway.
 |---|---|
 | `/admin/login` | Native HTML form POST → 303 with cookie set on the same response. Demo-mode banner when `ADMIN_PASSWORD` unset |
 | `/admin` | Dashboard (`force-dynamic`). Stats: new / booked-today / booked-out windows / week revenue. Today grouped by window, "New — needs action", "Upcoming". Status + recurring filter chips |
-| `/admin/[id]` | Booking detail: `StatusActions` (new → confirmed → scheduled → completed / cancel) **and** `ManageBooking` (assign cleaner, reschedule with live availability, edit any field — price recomputed server-side) |
+| `/admin/[id]` | Booking detail: `StatusActions` (new → confirmed → scheduled → completed / cancel), `ManageBooking` (assign cleaner, reschedule with live availability, edit any field — price recomputed server-side), and `DeleteBooking` (confirm-gated **permanent** delete in a danger zone) |
 | `/admin/calendar` | Week grid (7 days × 3 windows), capacity per cell, animated hover popovers, week nav |
 | `/admin/settings` | `CleanersManager` — add/remove cleaners. **Capacity = number of cleaners** |
 
@@ -77,7 +77,9 @@ Deployed on Railway at `https://cleaning-services-webpage-production.up.railway.
     Does **not** auto-assign a cleaner (assignment is manual via `ManageBooking`).
   - `GET /api/bookings/[id]` — public read · `PATCH` — status/assignment (auth) · `PUT` — rich edit
     (auth): reschedule with capacity re-check (self-excluded), edit details (price recompute), assign,
-    status. Backed by `updateBookingStatus()` (PATCH) and `updateBooking()` (PUT).
+    status. Backed by `updateBookingStatus()` (PATCH) and `updateBooking()` (PUT). · `DELETE` (auth) —
+    **permanently** remove the booking (`deleteBooking()`); frees its slot. Distinct from the
+    reversible `cancelled` status.
   - `GET /api/availability?start=YYYY-MM-DD&days=N&exclude=ID` — per-day per-window
     `{ booked, capacity, open }`. `exclude` subtracts a booking from its own slot (reschedule).
   - `GET/PUT /api/settings/cleaners` — list + capacity (PUT is auth, normalizes/dedupes, caps at 20).
@@ -164,7 +166,7 @@ context instead.
 - `app/privacy/page.tsx` · `app/terms/page.tsx`
 - `app/robots.ts` · `app/sitemap.ts` · `app/opengraph-image.tsx` · `app/icon.tsx`
 - `app/admin/layout.tsx` · `app/admin/_AdminShell.tsx` · `app/admin/page.tsx`
-- `app/admin/[id]/page.tsx` + `StatusActions.tsx` + `ManageBooking.tsx`
+- `app/admin/[id]/page.tsx` + `StatusActions.tsx` + `ManageBooking.tsx` + `DeleteBooking.tsx`
 - `app/admin/calendar/page.tsx` + `CalendarGrid.tsx`
 - `app/admin/settings/page.tsx` + `CleanersManager.tsx`
 - `app/admin/login/page.tsx`

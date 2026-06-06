@@ -186,6 +186,19 @@ export async function updateBookingStatus(
   return updated;
 }
 
+// Permanently remove a booking. Returns true if a row was deleted, false if the
+// id didn't exist. The freed (date, window) capacity comes back automatically,
+// since slotUsage/countSlot only count rows that still exist.
+export async function deleteBooking(id: string): Promise<boolean> {
+  const client = getSql();
+  if (client) {
+    await ensureSchema();
+    const rows = await client`DELETE FROM bookings WHERE id = ${id} RETURNING id`;
+    return rows.length > 0;
+  }
+  return memory.delete(id);
+}
+
 export type SlotWindow = "morning" | "midday" | "afternoon";
 
 const SLOT_WINDOWS: SlotWindow[] = ["morning", "midday", "afternoon"];
