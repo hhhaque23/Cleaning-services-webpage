@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ShieldCheck, Users, MapPin } from "lucide-react";
 import { PHOTOS } from "@/lib/unsplash";
 import { SplitText } from "./motion/SplitText";
+import { ClockFace } from "./ClockFace";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 export function AboutHero() {
@@ -127,6 +128,24 @@ export function AboutHero() {
                 On Thumbtack
               </div>
               <div className="font-display font-extrabold text-3xl text-ink-950 leading-none">5★</div>
+            </motion.div>
+
+            {/* Live "booked in 60 seconds" clock — second hand sweeps once a minute */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, rotate: 3 }}
+              animate={{ opacity: 1, scale: 1, rotate: 3 }}
+              transition={{ delay: 1.25, duration: 0.6, ease: EASE_OUT_QUINT }}
+              className="absolute -top-3 -right-3 sm:-top-5 sm:-right-5 bg-[var(--surface)] rounded-2xl px-3.5 py-3 shadow-card border border-line flex items-center gap-2.5"
+            >
+              <ClockFace className="h-11 w-11 flex-none" />
+              <div className="leading-none">
+                <div className="text-[10px] uppercase tracking-[0.1em] font-bold text-ink-600">
+                  Booked in
+                </div>
+                <div className="mt-1 font-display font-extrabold text-xl text-ink-950 leading-none">
+                  60 sec
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </div>
