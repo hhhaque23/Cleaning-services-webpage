@@ -39,6 +39,7 @@ export async function GET(
   const booking = await getBooking(params.id);
   if (!booking)
     return NextResponse.json({ error: "Not found" }, { status: 404 });
+  // Public, unauthenticated read — status only, NO customer PII.
   return NextResponse.json({
     id: booking.id,
     status: booking.status,
@@ -47,7 +48,6 @@ export async function GET(
     slotWindow: booking.slotWindow,
     tier: booking.tier,
     priceTotal: booking.priceTotal,
-    address: booking.address,
   });
 }
 

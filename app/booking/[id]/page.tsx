@@ -20,10 +20,14 @@ export default async function BookingPage({ params }: Props) {
   const booking = await getBooking(params.id.toUpperCase());
   if (!booking) notFound();
 
+  // This page is public and unauthenticated (anyone with the id can open it),
+  // so never ship customer PII to the client. Status/date/price only.
+  const safe = { ...booking, address: "", apt: null, phone: "", email: "" };
+
   return (
     <main className="relative">
       <Navbar />
-      <TrackingView booking={booking} />
+      <TrackingView booking={safe} />
       <Footer />
     </main>
   );

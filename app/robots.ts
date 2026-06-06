@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { SITE } from "@/lib/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -9,6 +10,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin", "/admin/", "/api/", "/booking/"],
       },
     ],
-    sitemap: "https://cleaning-services-webpage-production.up.railway.app/sitemap.xml",
+    sitemap: `${SITE.url}/sitemap.xml`,
   };
 }

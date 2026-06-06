@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ScrollProgressRail } from "./components/motion/ScrollProgressRail";
 import { PastelRibbons } from "./components/motion/PastelRibbons";
+import { SITE } from "@/lib/site";
 
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -19,7 +20,7 @@ const sans = Hanken_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://spectrecleaningsolutions.com"),
+  metadataBase: new URL(SITE.url),
   title: "Spectre Cleaning Solutions · Book a cleaner in 60 seconds",
   description:
     "Washtenaw County's no-friction home & office cleaning. Transparent pricing, same-day availability, eco-friendly products. Book online in under a minute.",

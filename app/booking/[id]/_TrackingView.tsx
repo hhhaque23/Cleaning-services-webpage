@@ -10,7 +10,6 @@ import {
 import { useCallback, useRef } from "react";
 import {
   CalendarClock,
-  MapPin,
   Phone,
   Mail,
   Hash,
@@ -173,13 +172,6 @@ export function TrackingView({ booking }: { booking: Booking }) {
               label="When"
               value={`${date} · ${WINDOW_LABEL[booking.slotWindow] ?? booking.slotWindow}`}
             />
-            <Row
-              icon={MapPin}
-              label="Where"
-              value={`${booking.address}${booking.apt ? `, ${booking.apt}` : ""}`}
-            />
-            <Row icon={Phone} label="Text" value={booking.phone} />
-            <Row icon={Mail} label="Email" value={booking.email} />
           </motion.ul>
         </motion.div>
 

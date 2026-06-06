@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
+import { SITE } from "@/lib/site";
 
-const BASE_URL = "https://cleaning-services-webpage-production.up.railway.app";
+const BASE_URL = SITE.url;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
@@ -11,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/services/standard", priority: 0.85, changeFrequency: "monthly" },
     { path: "/services/deep", priority: 0.85, changeFrequency: "monthly" },
     { path: "/services/move-in-out", priority: 0.85, changeFrequency: "monthly" },
+    { path: "/services/office", priority: 0.85, changeFrequency: "monthly" },
   ];
   return routes.map(({ path, priority, changeFrequency }) => ({
     url: `${BASE_URL}${path}`,

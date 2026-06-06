@@ -10,11 +10,15 @@ function LoginInner() {
   const next = params?.get("next") || "/admin";
   const hasError = Boolean(params?.get("error"));
   const [demoMode, setDemoMode] = useState(false);
+  const [locked, setLocked] = useState(false);
 
   useEffect(() => {
     fetch("/api/admin/mode")
       .then((r) => r.json())
-      .then((d) => setDemoMode(Boolean(d.demo)))
+      .then((d) => {
+        setDemoMode(Boolean(d.demo));
+        setLocked(Boolean(d.locked));
+      })
       .catch(() => {});
   }, []);
 
@@ -45,6 +49,16 @@ function LoginInner() {
               <strong className="font-semibold">Demo mode.</strong> Type anything,
               you&apos;re in. Set <code className="font-mono">ADMIN_PASSWORD</code> on
               Railway to lock this down.
+            </div>
+          </div>
+        )}
+
+        {locked && (
+          <div className="mt-6 rounded-2xl bg-[oklch(0.96_0.05_25)] ring-1 ring-[oklch(0.8_0.1_25)] px-4 py-3 flex items-start gap-3">
+            <Lock className="h-4 w-4 flex-none text-[oklch(0.5_0.18_25)] mt-0.5" />
+            <div className="text-xs text-[oklch(0.42_0.16_25)] leading-relaxed">
+              <strong className="font-semibold">Admin is disabled.</strong> Set{" "}
+              <code className="font-mono">ADMIN_PASSWORD</code> on the server to enable sign-in.
             </div>
           </div>
         )}

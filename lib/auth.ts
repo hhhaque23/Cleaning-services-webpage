@@ -1,19 +1,31 @@
 const COOKIE = "spectre_admin";
 const TTL_SECONDS = 60 * 60 * 12; // 12 hours
 
-// When ADMIN_PASSWORD is unset we run in DEMO mode: any non-empty password
-// works. Tokens are still signed (with this constant) so direct admin URL
-// access without going through /admin/login still gets bounced to login.
+// Admin secret resolution & launch safety:
+//   - DEV  + no real ADMIN_PASSWORD  -> demo mode (any non-empty password works).
+//   - PROD + no real ADMIN_PASSWORD  -> LOCKED: no login succeeds and no token is
+//     accepted, instead of silently leaving the admin console wide open.
+//   - real ADMIN_PASSWORD (>=4 chars) -> normal HMAC auth.
 const DEMO_SECRET = "spectre-demo-secret-set-ADMIN_PASSWORD-to-lock";
+const IS_PROD = process.env.NODE_ENV === "production";
 
-function getSecret(): string {
+function realSecret(): string | null {
   const pw = process.env.ADMIN_PASSWORD;
-  return pw && pw.length >= 4 ? pw : DEMO_SECRET;
+  return pw && pw.length >= 4 ? pw : null;
 }
 
+function getSecret(): string {
+  return realSecret() ?? DEMO_SECRET;
+}
+
+/** Production with no configured ADMIN_PASSWORD: admin is fully closed. */
+export function isLocked(): boolean {
+  return IS_PROD && realSecret() === null;
+}
+
+/** Dev with no configured ADMIN_PASSWORD: any non-empty password works. */
 export function isDemoMode(): boolean {
-  const pw = process.env.ADMIN_PASSWORD;
-  return !(pw && pw.length >= 4);
+  return !IS_PROD && realSecret() === null;
 }
 
 async function hmac(message: string, key: string): Promise<string> {
@@ -40,6 +52,7 @@ export async function makeSessionToken(): Promise<string> {
 }
 
 export async function verifySessionToken(token: string | undefined): Promise<boolean> {
+  if (isLocked()) return false; // never accept a token when admin is locked
   if (!token) return false;
   const secret = getSecret();
   const [expStr, sig] = token.split(".");
@@ -55,7 +68,8 @@ export async function verifySessionToken(token: string | undefined): Promise<boo
 }
 
 export function checkPassword(input: string): boolean {
-  // Demo mode: anything non-empty is accepted.
+  if (isLocked()) return false; // prod + no ADMIN_PASSWORD => nobody gets in
+  // Demo mode (dev only): anything non-empty is accepted.
   if (isDemoMode()) return input.length > 0;
   const secret = getSecret();
   if (input.length !== secret.length) return false;
