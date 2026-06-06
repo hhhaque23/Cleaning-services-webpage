@@ -1,15 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Phone,
   Mail,
   CalendarClock,
   MapPin,
-  Hash,
-  ArrowRight,
   Copy,
   Check,
 } from "lucide-react";
@@ -20,7 +17,6 @@ import { Confetti } from "../motion/Confetti";
 import { SplitText } from "../motion/SplitText";
 import { EASE_OUT_QUINT } from "../motion/motion-primitives";
 import { SITE } from "@/lib/site";
-import { MagneticButton } from "../motion/MagneticButton";
 
 type Props = {
   contact: Contact;
@@ -153,29 +149,6 @@ export function StepSuccess({ contact, slot, total, bookingId }: Props) {
           <Row icon={Phone} label="Text" value={contact.phone} />
           <Row icon={Mail} label="Email" value={contact.email} />
         </motion.ul>
-        {bookingId && (
-          <MagneticButton as="div" radius={120} strength={0.18} className="block">
-            <Link
-              href={`/booking/${bookingId}`}
-              className="flex items-center justify-between gap-3 px-5 py-4 border-t border-line hover:bg-ink-50/70 transition-colors cursor-pointer group"
-            >
-              <span className="flex items-center gap-3">
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-grass-500/15 text-grass-700">
-                  <Hash className="h-4 w-4" />
-                </span>
-                <span className="leading-tight text-left">
-                  <span className="block text-[11px] uppercase tracking-wider font-semibold text-ink-700">
-                    Track this booking
-                  </span>
-                  <span className="block text-sm font-semibold text-ink-950">
-                    Status updates and contact info
-                  </span>
-                </span>
-              </span>
-              <ArrowRight className="h-4 w-4 text-ink-700 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </MagneticButton>
-        )}
       </motion.div>
 
       <motion.p

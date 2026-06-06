@@ -10,7 +10,6 @@ import {
   MapPin,
   Phone,
   StickyNote,
-  ExternalLink,
   Repeat,
 } from "lucide-react";
 import { StatusActions } from "./StatusActions";
@@ -92,14 +91,6 @@ export default async function AdminBookingDetail({ params }: Props) {
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-current" />
             {meta.label}
           </span>
-          <Link
-            href={`/booking/${booking.id}`}
-            target="_blank"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-ink-700 hover:text-ink-950 cursor-pointer"
-          >
-            Customer view
-            <ExternalLink className="h-3.5 w-3.5" />
-          </Link>
         </div>
       </div>
 

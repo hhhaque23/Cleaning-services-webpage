@@ -11,7 +11,8 @@ visitor into a confirmed booking in under sixty seconds, without phone calls or 
 surfaces:
 
 - **Customer side** — landing page, live-pricing booking flow (now backed by **real availability**),
-  per-tier and office pages, and a customer tracking page after submission.
+  per-tier and office pages, and a customer tracking page (kept, but **no longer linked from the UI** —
+  customers get updates by text; reachable by direct URL only).
 - **Operator side** — password-protected ops console at `/admin`: dashboard, **ops calendar**,
   **settings/cleaners**, and per-booking management (status workflow, reschedule, reassign, edit).
 
@@ -36,7 +37,7 @@ Deployed on Railway at `https://cleaning-services-webpage-production.up.railway.
 | `/services/[tier]` | Per-tier detail: `/services/standard`, `/services/deep`, `/services/move-in-out` |
 | `/services/office` | Commercial office cleaning page; CTAs are `mailto:` quote requests (no live pricing) |
 | `/about` | AboutHero, Reviews, ServiceAreas, FAQ, FinalCTA |
-| `/booking/[id]` | Read-only customer tracking (no auth, `noindex`, `force-dynamic`) |
+| `/booking/[id]` | Read-only customer tracking (no auth, `noindex`, `force-dynamic`). **Unlinked from the UI** — direct URL only (operator + success-screen links removed; updates are texted) |
 | `/privacy`, `/terms` | Legal pages |
 | SEO | `robots.ts`, `sitemap.ts`, `opengraph-image.tsx` (Edge), `icon.tsx` (favicon) |
 
@@ -204,7 +205,7 @@ npm run dev          # open http://localhost:3000
 
 # Customer flow
 # 1. /book → fill steps → submit → success with an SP-XXXXXX id
-# 2. /booking/SP-XXXXXX → read-only tracking shows status "new"
+# 2. /booking/SP-XXXXXX (direct URL — no longer linked from the flow) → tracking shows status "new"
 
 # Operator flow
 # 3. /admin/login → any password (demo) → /admin renders a populated dashboard

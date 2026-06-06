@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, ExternalLink, User } from "lucide-react";
+import { ChevronLeft, ChevronRight, User } from "lucide-react";
 import { STATUS_META, type BookingStatus } from "@/lib/booking-types";
 
 type Win = "morning" | "midday" | "afternoon";
@@ -240,14 +240,6 @@ export function CalendarGrid({
                                       className="flex-1 inline-flex items-center justify-center rounded-lg bg-ink-950 text-white text-xs font-semibold px-2 py-1.5 cursor-pointer hover:bg-ink-800"
                                     >
                                       Open booking
-                                    </Link>
-                                    <Link
-                                      href={`/booking/${j.id}`}
-                                      target="_blank"
-                                      aria-label="Customer view"
-                                      className="inline-flex items-center justify-center rounded-lg bg-white ring-1 ring-line px-2 py-1.5 text-ink-700 hover:text-ink-950 cursor-pointer"
-                                    >
-                                      <ExternalLink className="h-3.5 w-3.5" />
                                     </Link>
                                   </div>
                                 </motion.div>
