@@ -8,6 +8,7 @@ import {
   type BookingStatus,
 } from "@/lib/bookings";
 import { getCapacity } from "@/lib/settings";
+import { businessToday } from "@/lib/dates";
 import { FREQUENCY_META, TIER_META } from "../components/Booking/pricing";
 import {
   CalendarClock,
@@ -20,8 +21,6 @@ import {
   Repeat,
 } from "lucide-react";
 
-const pad = (n: number) => String(n).padStart(2, "0");
-const ymd = (d: Date) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 const WINDOW_SHORT: Record<string, string> = {
   morning: "Morning · 8–11",
   midday: "Midday · 11–2",
@@ -51,7 +50,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
   const allBookings = await listBookings();
   const stats = await bookingStats();
   const capacity = await getCapacity();
-  const todayISO = ymd(new Date());
+  const todayISO = businessToday();
 
   const filtered =
     filter === "all"

@@ -4,6 +4,7 @@ import {
   type BookingStatus,
 } from "@/lib/bookings";
 import { getCapacity } from "@/lib/settings";
+import { businessToday } from "@/lib/dates";
 import { TIER_META, FREQUENCY_META } from "../../components/Booking/pricing";
 import { CalendarGrid } from "./CalendarGrid";
 
@@ -39,12 +40,12 @@ export default async function CalendarPage({
   searchParams: { week?: string };
 }) {
   const wk = searchParams?.week;
-  const base = wk && /^\d{4}-\d{2}-\d{2}$/.test(wk) ? parseISO(wk) : new Date();
+  const base = wk && /^\d{4}-\d{2}-\d{2}$/.test(wk) ? parseISO(wk) : parseISO(businessToday());
   const monday = mondayOf(base);
   const days = Array.from({ length: 7 }, (_, i) => addDays(monday, i));
   const startISO = fmt(days[0]);
   const endISO = fmt(days[6]);
-  const todayISO = fmt(new Date());
+  const todayISO = businessToday();
 
   const [bookings, capacity] = await Promise.all([
     listBookingsInRange(startISO, endISO),
@@ -109,7 +110,7 @@ export default async function CalendarPage({
       monthLabel={monthLabel}
       prevWeek={fmt(addDays(monday, -7))}
       nextWeek={fmt(addDays(monday, 7))}
-      thisWeek={fmt(mondayOf(new Date()))}
+      thisWeek={fmt(mondayOf(parseISO(businessToday())))}
     />
   );
 }

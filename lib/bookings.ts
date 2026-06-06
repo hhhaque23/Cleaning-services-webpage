@@ -1,5 +1,6 @@
 import postgres from "postgres";
 import type { Booking, BookingStatus, NewBooking } from "./booking-types";
+import { businessToday, toBusinessDate } from "./dates";
 
 export type { Booking, BookingStatus, NewBooking } from "./booking-types";
 export { STATUS_FLOW, STATUS_META } from "./booking-types";
@@ -366,10 +367,11 @@ export async function bookingStats(): Promise<{
 }> {
   const all = await listBookings();
   const now = new Date();
-  const todayISO = now.toISOString().slice(0, 10);
+  const todayISO = businessToday();
   const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-  const todayCount = all.filter((b) => b.createdAt.slice(0, 10) === todayISO)
-    .length;
+  const todayCount = all.filter(
+    (b) => toBusinessDate(b.createdAt) === todayISO
+  ).length;
   const weekItems = all.filter((b) => new Date(b.createdAt) >= weekAgo);
   return {
     todayCount,
