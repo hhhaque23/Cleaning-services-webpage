@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ShieldCheck } from "lucide-react";
 import { MagneticButton } from "./motion/MagneticButton";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
-import { SpectreMark } from "./SpectreMark";
+import { BrandLockup } from "./BrandLockup";
 import { SITE } from "@/lib/site";
 
 const LINKS = [
@@ -138,13 +138,7 @@ export function Navbar() {
               className="flex items-center gap-2.5 cursor-pointer"
               aria-label="Spectre Cleaning Solutions home"
             >
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/5 ring-1 ring-white/10">
-                <SpectreMark size={26} alt="Spectre Cleaning Solutions" priority />
-              </span>
-              <span className="font-display font-bold text-[15px] sm:text-base tracking-tight text-white">
-                Spectre
-                <span className="font-medium text-accent-400"> Cleaning</span>
-              </span>
+              <BrandLockup priority />
             </Link>
 
             <nav

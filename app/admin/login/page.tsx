@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Lock, ArrowRight, FlaskConical } from "lucide-react";
-import { SpectreMark } from "../../components/SpectreMark";
+import { BrandLockup } from "../../components/BrandLockup";
 
 function LoginInner() {
   const params = useSearchParams();
@@ -26,11 +26,8 @@ function LoginInner() {
     <div className="min-h-screen flex flex-col items-center justify-center px-5 py-12">
       <div className="w-full max-w-sm">
         <div className="flex items-center justify-center">
-          <span className="inline-flex items-center gap-2.5 rounded-2xl bg-gradient-to-br from-ink-900 to-ink-950 pl-3 pr-5 py-2.5 shadow-ring">
-            <SpectreMark size={32} alt="Spectre Cleaning Solutions" />
-            <span className="font-display font-bold text-xl text-white">
-              Spectre<span className="font-medium text-accent-400"> Cleaning</span>
-            </span>
+          <span className="inline-flex items-center rounded-2xl bg-gradient-to-br from-ink-900 to-ink-950 px-4 py-3 shadow-ring">
+            <BrandLockup size="lg" />
           </span>
         </div>
         <div className="mt-5 text-center">
