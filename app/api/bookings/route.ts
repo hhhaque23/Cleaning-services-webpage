@@ -11,6 +11,8 @@ import { getCapacity } from "@/lib/settings";
 import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth";
 import { SLUG_TO_TIER } from "@/lib/tiers";
 import { computePrice, ADDON_META, type AddOn } from "../../components/Booking/pricing";
+import { sendEmail, bookingConfirmationEmail } from "@/lib/email";
+import { SITE } from "@/lib/site";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -111,7 +113,25 @@ export async function POST(req: Request) {
 
   try {
     const booking = await createBooking(input);
-    return NextResponse.json({ id: booking.id, status: booking.status });
+
+    // Fire the confirmation email. Fail-open: a missing key or a provider error
+    // must never turn a successful booking into an error for the customer.
+    let emailed = false;
+    try {
+      const { subject, html, text } = bookingConfirmationEmail(booking);
+      const r = await sendEmail({
+        to: booking.email,
+        subject,
+        html,
+        text,
+        replyTo: SITE.email,
+      });
+      emailed = r.ok;
+    } catch (e) {
+      console.error("confirmation email failed", e);
+    }
+
+    return NextResponse.json({ id: booking.id, status: booking.status, emailed });
   } catch (err) {
     console.error("createBooking failed", err);
     return bad("Storage failure", 500);

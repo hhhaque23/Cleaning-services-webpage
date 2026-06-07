@@ -23,9 +23,10 @@ type Props = {
   slot: Slot | null;
   total: number;
   bookingId: string | null;
+  emailed?: boolean;
 };
 
-export function StepSuccess({ contact, slot, total, bookingId }: Props) {
+export function StepSuccess({ contact, slot, total, bookingId, emailed }: Props) {
   const [copied, setCopied] = useState(false);
   const date = slot?.dateISO
     ? new Date(slot.dateISO + "T00:00:00").toLocaleDateString("en-US", {
@@ -150,6 +151,18 @@ export function StepSuccess({ contact, slot, total, bookingId }: Props) {
           <Row icon={Mail} label="Email" value={contact.email} />
         </motion.ul>
       </motion.div>
+
+      {emailed && contact.email && (
+        <motion.p
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.3, duration: 0.4 }}
+          className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-grass-700"
+        >
+          <Mail className="h-4 w-4" />
+          Confirmation &amp; code emailed to {contact.email}
+        </motion.p>
+      )}
 
       <motion.p
         initial={{ opacity: 0 }}

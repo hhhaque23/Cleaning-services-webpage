@@ -81,6 +81,7 @@ export function BookingFlow() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [bookingId, setBookingId] = useState<string | null>(null);
+  const [emailed, setEmailed] = useState(false);
   const formCardRef = useRef<HTMLDivElement | null>(null);
 
   // When the step changes, scroll the form card back to the top so the user
@@ -132,6 +133,7 @@ export function BookingFlow() {
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "Could not submit booking");
       setBookingId(data.id);
+      setEmailed(Boolean(data.emailed));
       setStep(4);
     } catch (e) {
       setSubmitError(e instanceof Error ? e.message : "Network error");
@@ -220,6 +222,7 @@ export function BookingFlow() {
                     slot={slot}
                     total={price.total}
                     bookingId={bookingId}
+                    emailed={emailed}
                   />
                 )}
               </motion.div>
