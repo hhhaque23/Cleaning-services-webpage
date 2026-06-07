@@ -217,7 +217,7 @@ const CONTENT: Record<Tier, TierContent> = {
       },
     ],
     durationHint: "Typical 2 bed / 1 bath empty: 5 to 6 hours.",
-    extras: ["Carpet shampoo bookable as an add-on"],
+    extras: ["Add pet-hair removal or an extra laundry load at checkout"],
   },
 };
 
@@ -326,10 +326,10 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                   </Link>
                 </MagneticButton>
                 <Link
-                  href="/#tiers"
+                  href="/services"
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--surface-elevated)] hover:bg-[var(--surface)] border border-line text-ink-950 font-semibold px-7 py-3.5 text-[15px] transition-all duration-300 ease-out-quint cursor-pointer"
                 >
-                  Compare tiers
+                  See all cleans
                 </Link>
               </motion.div>
             </div>
@@ -374,7 +374,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
                   </span>
                   <div className="leading-tight">
                     <div className="text-[10px] uppercase tracking-[0.1em] font-bold text-ink-600">
-                      Tier
+                      Service
                     </div>
                     <div className="font-display font-bold text-base text-ink-950">
                       {meta.label}
@@ -515,7 +515,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
             Best for
           </div>
           <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 max-w-2xl text-balance leading-[1.05]">
-            Pick this tier when{" "}
+            Choose this clean when{" "}
             <span className="italic font-medium text-ink-700">these are true.</span>
           </h2>
 
@@ -572,7 +572,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
         </div>
       </section>
 
-      {/* Sticky tier CTA — appears after hero scrolls past */}
+      {/* Sticky CTA — appears after hero scrolls past */}
       <motion.div
         initial={false}
         animate={{ y: showSticky ? 0 : 80, opacity: showSticky ? 1 : 0 }}

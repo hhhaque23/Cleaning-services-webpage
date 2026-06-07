@@ -137,7 +137,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Residential tiers */}
+      {/* Home cleaning options */}
       <section className="relative pb-16 sm:pb-20 border-t border-line pt-14 sm:pt-16">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="max-w-2xl">
@@ -145,11 +145,12 @@ export default function ServicesPage() {
               Home cleaning
             </div>
             <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance">
-              Three levels of clean.
+              The clean your home needs.
             </h2>
             <p className="mt-4 text-ink-700 leading-relaxed">
-              No fixed packages — tell us about your home and how often, and your exact price is built
-              in Get a price. Recurring plans save up to 20%.
+              No fixed packages — just regular upkeep, a top-to-bottom deep clean, or a move-out
+              detail. Tell us about your home and your exact price is built in Get a price. Recurring
+              plans save up to 20%.
             </p>
           </div>
 

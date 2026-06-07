@@ -33,7 +33,7 @@ const STEPS = [
   {
     n: "01",
     title: "Configure",
-    body: "Pick a tier, set rooms and add-ons. The price is live. No hidden fees, no quote forms.",
+    body: "Pick the type of clean, set rooms and add-ons. The price is live. No hidden fees, no quote forms.",
     accent: "Tap. Drag. Done.",
   },
   {

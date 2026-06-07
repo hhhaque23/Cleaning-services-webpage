@@ -104,7 +104,7 @@ export function StepConfigure({ config, setConfig }: Props) {
     <div className="space-y-7">
       <div>
         <div className="text-xs font-semibold uppercase tracking-wider text-ink-700/80 mb-3">
-          Service tier
+          Type of clean
         </div>
         <div className="grid grid-cols-3 gap-2 sm:gap-3">
           {(Object.keys(TIER_META) as Tier[]).map((t) => {
