@@ -1,8 +1,9 @@
 // Unsplash photo IDs — every one of these has been downloaded and viewed.
-// Theme: traditional MICHIGAN / Midwest-suburban homes (brick colonials, warm
-// wood, classic interiors, fall/winter exteriors) + real OFFICES. ZERO people,
-// zero faces, zero product shots, zero readable text/brand. If you add an ID,
-// download and view it first, and check it crops well at the slot's aspect.
+// Theme: traditional MICHIGAN / Midwest-suburban home INTERIORS (warm wood,
+// classic furnishings) + real OFFICE interiors. INTERIORS ONLY — no exterior /
+// outside-of-building shots. ZERO people, zero faces, zero product shots, zero
+// readable text/brand. If you add an ID, download and view it first, and check
+// it crops well at the slot's aspect.
 
 const hero = (id: string) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1200&q=72`;
@@ -15,7 +16,7 @@ const avatar = (id: string) =>
 const thumb = (id: string) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=480&q=70`;
 
-// Verified traditional Midwest interiors/exteriors + offices.
+// Verified traditional Midwest interiors + office interiors.
 const ID = {
   // Living / great rooms
   livingArchVaultGrey: "1560185009-dddeb820c7b7",      // bright brick-arch vaulted, grey sofa
@@ -44,12 +45,12 @@ const ID = {
   bedVelvetSofa: "1600494448655-ae58f58bb945",         // bright bedroom, velvet sofa
   bedSunnyBay: "1499916078039-922301b0eb9b",           // sunny bay-window bedroom, plants
 
-  // Exteriors (Michigan suburban)
-  extStoneColonial: "1688307193832-a6f711942705",      // stone/brick colonial, white columns
-  extBrickPorch: "1601041597271-71988152f98b",         // red brick, white columned porch
-  extCraftsmanFall: "1605450195878-3b5c4e70163c",      // craftsman in autumn foliage
-  extBrickTurret: "1635823316459-dcdf55edb133",        // red brick home with turret
-  extSnowClapboard: "1520099823969-e9c747f601a4",      // white clapboard house in snow
+  // More interiors (dining, laundry, entry, library, hallway) — Michigan/Midwest
+  diningTraditional: "1635108197332-54105c0ec888",     // traditional dining room, crystal chandelier
+  laundryWhite: "1646592474094-342fbc28736c",          // bright white laundry room, utility sink
+  entryStaircase: "1560185127-59e4420e2c93",           // entry hall, iron-baluster staircase
+  libraryDen: "1739918075668-fc7844c6d921",            // warm wood-paneled home library / den
+  hallwayClassic: "1771354959667-96360bf59eab",        // classic entry hall, wood + iron stairs
 
   // Offices / commercial
   officeOpenPlan: "1572521165329-b197f9ea3da6",        // bright open-plan office
@@ -72,7 +73,7 @@ export const ALL_PHOTOS: { src: string; thumb: string; label: string; sub: strin
   { src: hero(ID.bedGreyMaster),         thumb: thumb(ID.bedGreyMaster),         label: "Bedroom",     sub: "Weekly · Manchester" },
   { src: hero(ID.livingArchVaultBeige),  thumb: thumb(ID.livingArchVaultBeige),  label: "Living room", sub: "Biweekly · Pittsfield Twp" },
   { src: hero(ID.kitchenCreamGranite),   thumb: thumb(ID.kitchenCreamGranite),   label: "Kitchen",     sub: "Standard · Scio Twp" },
-  { src: hero(ID.extStoneColonial),      thumb: thumb(ID.extStoneColonial),      label: "Exterior",    sub: "Move-in · Ann Arbor" },
+  { src: hero(ID.diningTraditional),     thumb: thumb(ID.diningTraditional),     label: "Dining room", sub: "Deep · Ann Arbor" },
   { src: hero(ID.livingMustardVintage),  thumb: thumb(ID.livingMustardVintage),  label: "Living room", sub: "Biweekly · Ypsilanti" },
   { src: hero(ID.bathMasterWood),        thumb: thumb(ID.bathMasterWood),        label: "Bathroom",    sub: "Deep · Whitmore Lake" },
   { src: hero(ID.kitchenCharcoal),       thumb: thumb(ID.kitchenCharcoal),       label: "Kitchen",     sub: "Move-out · Superior Twp" },
@@ -80,13 +81,13 @@ export const ALL_PHOTOS: { src: string; thumb: string; label: string; sub: strin
   { src: hero(ID.bedVelvetSofa),         thumb: thumb(ID.bedVelvetSofa),         label: "Bedroom",     sub: "Biweekly · Dexter" },
   { src: hero(ID.officeConferenceWood),  thumb: thumb(ID.officeConferenceWood),  label: "Office",      sub: "Recurring · Ann Arbor" },
   { src: hero(ID.livingWoodPanelFloral), thumb: thumb(ID.livingWoodPanelFloral), label: "Great room",  sub: "Deep · Chelsea" },
-  { src: hero(ID.extCraftsmanFall),      thumb: thumb(ID.extCraftsmanFall),      label: "Exterior",    sub: "Move-out · Ann Arbor" },
+  { src: hero(ID.entryStaircase),        thumb: thumb(ID.entryStaircase),        label: "Entryway",    sub: "Move-out · Ann Arbor" },
   { src: hero(ID.bedSunnyBay),           thumb: thumb(ID.bedSunnyBay),           label: "Bedroom",     sub: "Deep · Manchester" },
   { src: hero(ID.livingTraditionalBrown),thumb: thumb(ID.livingTraditionalBrown),label: "Living room", sub: "Standard · Saline" },
-  { src: hero(ID.extBrickTurret),        thumb: thumb(ID.extBrickTurret),        label: "Exterior",    sub: "Move-out · Ann Arbor" },
-  { src: hero(ID.extBrickPorch),         thumb: thumb(ID.extBrickPorch),         label: "Exterior",    sub: "Standard · Ann Arbor" },
+  { src: hero(ID.laundryWhite),          thumb: thumb(ID.laundryWhite),          label: "Laundry room", sub: "Move-out · Ann Arbor" },
+  { src: hero(ID.libraryDen),            thumb: thumb(ID.libraryDen),            label: "Home library", sub: "Standard · Ann Arbor" },
   { src: hero(ID.livingWhiteStone),      thumb: thumb(ID.livingWhiteStone),      label: "Living room", sub: "Weekly · Ann Arbor" },
-  { src: hero(ID.extSnowClapboard),      thumb: thumb(ID.extSnowClapboard),      label: "Exterior",    sub: "Move-in · Dexter" },
+  { src: hero(ID.hallwayClassic),        thumb: thumb(ID.hallwayClassic),        label: "Hallway",     sub: "Move-in · Dexter" },
   { src: hero(ID.officeWorkstations),    thumb: thumb(ID.officeWorkstations),    label: "Office",      sub: "Recurring · Ypsilanti" },
 ];
 
@@ -118,9 +119,9 @@ export const PHOTOS = {
   subThree: hero(ID.bedGreyMaster),
 
   // FinalCTA 3-photo strip
-  ctaOne: hero(ID.extCraftsmanFall),
+  ctaOne: hero(ID.entryStaircase),
   ctaTwo: hero(ID.kitchenCreamGranite),
-  ctaThree: hero(ID.extBrickPorch),
+  ctaThree: hero(ID.libraryDen),
 
   // HowItWorks step strips
   step1a: hero(ID.kitchenCharcoal),
@@ -130,12 +131,12 @@ export const PHOTOS = {
   step3a: hero(ID.bedVelvetSofa),
   step3b: hero(ID.livingTraditionalBrown),
 
-  // ServiceAreas HQ strip — 5 thumbnails (hq5 is a Michigan exterior)
+  // ServiceAreas HQ strip — 5 interior thumbnails
   hq1: thumb(ID.kitchenCreamGranite),
   hq2: thumb(ID.bathMasterWood),
   hq3: thumb(ID.livingWoodPanelFloral),
   hq4: thumb(ID.bedSunnyBay),
-  hq5: thumb(ID.extStoneColonial),
+  hq5: thumb(ID.diningTraditional),
 
   // ServiceDetail per-tier photos (Standard / Deep / Move-out)
   standardHero: hero(ID.livingStoneFireplace),
