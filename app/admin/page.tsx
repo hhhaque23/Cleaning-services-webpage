@@ -135,8 +135,8 @@ export default async function AdminDashboard({ searchParams }: Props) {
               href={f.id === "all" ? "/admin" : `/admin?status=${f.id}`}
               className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
                 active
-                  ? "bg-ink-950 text-[var(--surface)]"
-                  : "bg-[var(--surface-elevated)] border border-line text-ink-700 hover:text-ink-950 hover:border-ink-300"
+                  ? "bg-ink-950 text-[var(--surface)] shadow-soft"
+                  : "bg-[var(--surface-elevated)]/70 text-ink-600 hover:text-ink-950 hover:bg-[var(--surface-elevated)]"
               }`}
             >
               {f.label}
@@ -168,7 +168,8 @@ export default async function AdminDashboard({ searchParams }: Props) {
             {todayJobs.length === 0 ? (
               <p className="mt-3 text-sm text-ink-600">No jobs scheduled today.</p>
             ) : (
-              <div className="mt-4 grid lg:grid-cols-3 gap-5">
+              <div className="mt-4 rounded-2xl bg-[var(--surface-tint)]/30 ring-1 ring-line shadow-soft p-4 sm:p-5">
+                <div className="grid lg:grid-cols-3 gap-x-6 gap-y-5">
                 {(["morning", "midday", "afternoon"] as const).map((w) => (
                   <div key={w}>
                     <div className="flex items-center justify-between text-[11px] uppercase tracking-wider font-semibold text-ink-700 mb-2">
@@ -190,6 +191,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
                     </ul>
                   </div>
                 ))}
+                </div>
               </div>
             )}
           </section>
@@ -298,7 +300,7 @@ function Stat({
     amber: "bg-[oklch(0.95_0.08_75)] text-[oklch(0.55_0.16_70)]",
   }[tone];
   return (
-    <div className={`rounded-2xl bg-white ring-1 ${ring} px-5 py-4 shadow-soft`}>
+    <div className={`rounded-2xl bg-white ring-1 ${ring} px-5 py-4 shadow-card`}>
       <div className="flex items-center justify-between">
         <span className={`inline-flex h-9 w-9 items-center justify-center rounded-xl ${iconBg}`}>
           <Icon className="h-4 w-4" />
@@ -340,7 +342,7 @@ function BookingRow({ booking }: { booking: Booking }) {
     <li>
       <Link
         href={`/admin/${booking.id}`}
-        className="group block rounded-2xl bg-white ring-1 ring-line hover:ring-ink-300 hover:shadow-card transition-all px-5 py-4 cursor-pointer"
+        className="group block rounded-2xl bg-white ring-1 ring-line shadow-soft hover:ring-ink-300 hover:shadow-card transition-all px-5 py-4 cursor-pointer"
       >
         <div className="grid grid-cols-[auto_1fr_auto] sm:grid-cols-[auto_1.4fr_1fr_1fr_auto] gap-4 items-center">
           <StatusDot tone={meta.tone} />
