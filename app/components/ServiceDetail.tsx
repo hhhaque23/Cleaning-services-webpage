@@ -292,13 +292,14 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
               >
                 <div>
                   <div className="text-[11px] uppercase tracking-[0.12em] font-semibold text-ink-600">
-                    From
+                    Pricing
                   </div>
-                  <div className="mt-0.5 flex items-baseline gap-2">
-                    <span className="font-display font-extrabold text-5xl text-ink-950 tabular-nums">
-                      ${meta.base}
+                  <div className="mt-0.5 max-w-[15rem]">
+                    <span className="font-display font-bold text-lg text-ink-950">Custom-priced</span>
+                    <span className="text-ink-700 text-sm">
+                      {" "}
+                      — built around your home in Get a price.
                     </span>
-                    <span className="text-ink-700 text-sm">flat-priced</span>
                   </div>
                 </div>
                 <div className="h-10 w-px bg-line-strong" />
@@ -594,7 +595,6 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
             <span className="text-sm">
               Book a {meta.label.toLowerCase()} clean
             </span>
-            <span className="text-grass-400 font-mono text-sm">${meta.base}+</span>
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </MagneticButton>

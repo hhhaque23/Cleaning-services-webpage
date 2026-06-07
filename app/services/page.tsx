@@ -16,7 +16,7 @@ import { Footer } from "../components/Footer";
 import { FinalCTA } from "../components/FinalCTA";
 import { PHOTOS } from "@/lib/unsplash";
 import { SITE } from "@/lib/site";
-import { TIER_META, startingPrice, type Tier } from "../components/Booking/pricing";
+import { TIER_META, type Tier } from "../components/Booking/pricing";
 import { TIER_SLUG } from "@/lib/tiers";
 
 export const metadata: Metadata = {
@@ -145,11 +145,11 @@ export default function ServicesPage() {
               Home cleaning
             </div>
             <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance">
-              Pick the depth your place needs.
+              Three levels of clean.
             </h2>
             <p className="mt-4 text-ink-700 leading-relaxed">
-              Transparent, flat pricing — see your exact price before you book. Recurring plans save
-              up to 20%.
+              No fixed packages — tell us about your home and how often, and your exact price is built
+              in Get a price. Recurring plans save up to 20%.
             </p>
           </div>
 
@@ -169,20 +169,24 @@ export default function ServicesPage() {
                     {meta.label}
                   </div>
                   <p className="mt-2 text-[15px] text-ink-700 leading-relaxed flex-1">{blurb}</p>
-                  <div className="mt-5 flex items-center justify-between">
-                    <span className="text-sm text-ink-700">
-                      from{" "}
-                      <span className="font-display font-bold text-lg text-ink-950">
-                        ${startingPrice(tier)}
-                      </span>
-                    </span>
+                  <div className="mt-5 flex items-center justify-end">
                     <span className="inline-flex items-center gap-1 text-sm font-semibold text-grass-700 group-hover:gap-2 transition-all">
-                      Details <ArrowRight className="h-4 w-4" />
+                      What&apos;s included <ArrowRight className="h-4 w-4" />
                     </span>
                   </div>
                 </Link>
               );
             })}
+          </div>
+
+          <div className="mt-8">
+            <Link
+              href="/book"
+              className="inline-flex items-center gap-2 rounded-2xl bg-grass-500 hover:bg-grass-600 text-white font-semibold px-6 py-3.5 text-[15px] shadow-commit transition-colors cursor-pointer"
+            >
+              Build your price
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
@@ -194,7 +198,7 @@ export default function ServicesPage() {
             <TrustItem icon={Users} label="New & locally owned" />
             <TrustItem icon={ShieldCheck} label="Vetted local cleaners" />
             <TrustItem icon={MapPin} label="Serving Washtenaw County" />
-            <TrustItem icon={Check} label="Transparent flat pricing" />
+            <TrustItem icon={Check} label="Upfront custom pricing" />
           </div>
         </div>
       </section>
