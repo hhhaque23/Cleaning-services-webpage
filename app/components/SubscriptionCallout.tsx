@@ -16,8 +16,7 @@ const PLANS: Record<
   {
     label: string;
     cadence: string;
-    perVisit: number;
-    visitsPerYear: number;
+    savePct: number; // matches the discounts in FREQUENCY_META (pricing.ts)
     perks: string[];
     badge?: string;
   }
@@ -25,15 +24,13 @@ const PLANS: Record<
   "one-time": {
     label: "One-time",
     cadence: "every now and then",
-    perVisit: 169,
-    visitsPerYear: 4,
+    savePct: 0,
     perks: ["Fresh slot each booking", "Same crew when available"],
   },
   biweekly: {
     label: "Biweekly",
     cadence: "every two weeks",
-    perVisit: 144,
-    visitsPerYear: 26,
+    savePct: 15,
     badge: "Most popular",
     perks: [
       "Same cleaner every visit",
@@ -44,8 +41,7 @@ const PLANS: Record<
   weekly: {
     label: "Weekly",
     cadence: "every week",
-    perVisit: 129,
-    visitsPerYear: 52,
+    savePct: 20,
     perks: ["Lowest per-visit rate", "Cleaner becomes part of your household routine"],
   },
 };
@@ -56,11 +52,6 @@ export function SubscriptionCallout() {
   const [active, setActive] = useState<Freq>("biweekly");
   const reduce = useReducedMotion();
   const plan = PLANS[active];
-  const oneTimePerVisit = PLANS["one-time"].perVisit;
-  const annualSpend = plan.perVisit * plan.visitsPerYear;
-  const annualFullPrice = oneTimePerVisit * plan.visitsPerYear;
-  const annualSavings = annualFullPrice - annualSpend;
-  const savingsPct = Math.round((annualSavings / annualFullPrice) * 100);
 
   return (
     <section className="relative py-20 sm:py-28">
@@ -122,12 +113,11 @@ export function SubscriptionCallout() {
 
               <div className="mt-9 rounded-2xl bg-[var(--surface)] p-5 sm:p-6 border border-line shadow-soft">
                 <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
-                  Your annual savings at this cadence
+                  Your recurring discount
                 </div>
                 <div className="mt-2 flex items-baseline gap-3">
                   <span className="font-display font-extrabold text-5xl sm:text-6xl text-ink-950 tabular-nums tracking-[-0.03em]">
-                    $
-                    <AnimatedNumber value={annualSavings} />
+                    <AnimatedNumber value={plan.savePct} />%
                   </span>
                   <AnimatePresence mode="wait">
                     <motion.span
@@ -137,36 +127,32 @@ export function SubscriptionCallout() {
                       exit={{ opacity: 0, y: -6 }}
                       transition={{ duration: 0.28 }}
                       className={`inline-flex items-center gap-1 text-sm font-bold rounded-full px-2.5 py-1 ${
-                        savingsPct > 0
+                        plan.savePct > 0
                           ? "bg-grass-500/15 text-grass-700"
                           : "bg-ink-100 text-ink-600"
                       }`}
                     >
                       <TrendingDown className="h-3.5 w-3.5" />
-                      {savingsPct}% off
+                      {plan.savePct > 0 ? "off every visit" : "no commitment"}
                     </motion.span>
                   </AnimatePresence>
                 </div>
                 <p className="mt-2 text-sm text-ink-700">
-                  vs paying one-time rates for {plan.visitsPerYear} visits over a year.
+                  {plan.savePct > 0
+                    ? `Locked in for as long as you stay on a ${plan.label.toLowerCase()} schedule.`
+                    : "One-time cleans pay the standard rate — switch to recurring to save."}
                 </p>
 
-                <div className="mt-5 space-y-3">
-                  <Bar
-                    label="One-time per visit"
-                    value={`$${oneTimePerVisit}`}
-                    pct={100}
-                    muted
-                    keySuffix={active}
-                  />
-                  <Bar
-                    label={`${plan.label} per visit`}
-                    value={`$${plan.perVisit}`}
-                    pct={Math.max(20, Math.round((plan.perVisit / oneTimePerVisit) * 100))}
-                    highlight
-                    keySuffix={active}
-                  />
-                </div>
+                <p className="mt-4 text-sm text-ink-700">
+                  No set packages — your exact price is built from your home in{" "}
+                  <Link
+                    href="/book"
+                    className="font-semibold text-ink-950 underline underline-offset-4 hover:text-grass-700 cursor-pointer"
+                  >
+                    Get a price
+                  </Link>
+                  . Recurring just locks in the discount.
+                </p>
               </div>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
@@ -269,10 +255,19 @@ function FreqCard({
           <div className="mt-0.5 text-sm text-ink-700">{plan.cadence}</div>
         </div>
         <div className="text-right">
-          <div className="font-display font-extrabold text-2xl text-ink-950 tabular-nums">
-            ${plan.perVisit}
-          </div>
-          <div className="text-[11px] text-ink-faint font-medium">per visit</div>
+          {plan.savePct > 0 ? (
+            <>
+              <div className="font-display font-extrabold text-2xl text-ink-950 tabular-nums">
+                {plan.savePct}%
+              </div>
+              <div className="text-[11px] text-ink-faint font-medium">off every visit</div>
+            </>
+          ) : (
+            <>
+              <div className="font-display font-extrabold text-lg text-ink-950">Flexible</div>
+              <div className="text-[11px] text-ink-faint font-medium">no commitment</div>
+            </>
+          )}
         </div>
       </div>
 
@@ -304,42 +299,6 @@ function FreqCard({
         )}
       </AnimatePresence>
     </motion.button>
-  );
-}
-
-function Bar({
-  label,
-  value,
-  pct,
-  highlight,
-  muted,
-  keySuffix,
-}: {
-  label: string;
-  value: string;
-  pct: number;
-  highlight?: boolean;
-  muted?: boolean;
-  keySuffix: string;
-}) {
-  return (
-    <div>
-      <div className="flex items-center justify-between text-sm">
-        <span className={muted ? "text-ink-700" : "text-ink-950 font-semibold"}>{label}</span>
-        <span className={highlight ? "text-grass-700 font-bold tabular-nums" : "text-ink-700 font-semibold tabular-nums"}>
-          {value}
-        </span>
-      </div>
-      <div className="mt-1.5 h-2 rounded-full bg-ink-100 overflow-hidden">
-        <motion.div
-          key={`${keySuffix}-${highlight ? "h" : "m"}`}
-          initial={{ width: 0 }}
-          animate={{ width: `${pct}%` }}
-          transition={{ duration: 0.9, ease: EASE_OUT_QUINT }}
-          className={`h-full rounded-full ${highlight ? "bg-grass-500" : "bg-ink-400"}`}
-        />
-      </div>
-    </div>
   );
 }
 
