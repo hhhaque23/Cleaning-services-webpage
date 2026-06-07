@@ -2,7 +2,8 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { Lock, ArrowRight, FlaskConical } from "lucide-react";
+import Link from "next/link";
+import { Lock, ArrowRight, ArrowLeft, FlaskConical } from "lucide-react";
 import { BrandLockup } from "../../components/BrandLockup";
 
 function LoginInner() {
@@ -23,21 +24,30 @@ function LoginInner() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-5 py-12">
+    <div className="relative min-h-screen flex flex-col items-center justify-center px-5 py-12 overflow-hidden">
+      {/* Subtle branded backdrop — a soft halo behind the sign-in card. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(60% 50% at 50% 0%, oklch(0.58 0.15 238 / 0.10), transparent 70%)",
+        }}
+      />
       <div className="w-full max-w-sm">
         <div className="flex items-center justify-center">
-          <span className="inline-flex items-center rounded-2xl bg-gradient-to-br from-ink-900 to-ink-950 px-4 py-3 shadow-ring">
-            <BrandLockup size="lg" />
-          </span>
+          <BrandLockup size="lg" framed priority />
         </div>
-        <div className="mt-5 text-center">
-          <h1 className="font-display font-extrabold text-3xl text-ink-950 tracking-tight">
-            Operations
-          </h1>
-          <p className="mt-2 text-sm text-ink-700">
-            Sign in to see today&apos;s bookings and manage the queue.
-          </p>
-        </div>
+
+        <div className="mt-6 rounded-3xl bg-white ring-1 ring-line shadow-card p-7 sm:p-8">
+          <div className="text-center">
+            <h1 className="font-display font-extrabold text-3xl text-ink-950 tracking-tight">
+              Operations
+            </h1>
+            <p className="mt-2 text-sm text-ink-700">
+              Sign in to see today&apos;s bookings and manage the queue.
+            </p>
+          </div>
 
         {demoMode && (
           <div className="mt-6 rounded-2xl bg-[oklch(0.97_0.06_75)] ring-1 ring-[oklch(0.78_0.12_75)] px-4 py-3 flex items-start gap-3">
@@ -98,6 +108,17 @@ function LoginInner() {
             <ArrowRight className="h-4 w-4" />
           </button>
         </form>
+        </div>
+
+        <div className="mt-6 text-center">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-600 hover:text-ink-950 transition-colors cursor-pointer"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to site
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -42,7 +42,15 @@ const TONE_BADGE: Record<string, string> = {
   rose: "bg-[oklch(0.95_0.05_25)] text-[oklch(0.45_0.18_25)]",
 };
 
-const COLS = "84px repeat(7, minmax(0, 1fr))";
+const COLS = "96px repeat(7, minmax(0, 1fr))";
+
+// Hover-popover geometry. The popover renders position:fixed (see openPopover)
+// so it escapes the calendar's overflow-x-auto / overflow-hidden wrappers, which
+// would otherwise clip it on bottom-row and right-edge cells.
+const POP_W = 264;
+const POP_H = 200;
+const POP_GAP = 6;
+const POP_M = 12;
 
 export function CalendarGrid({
   week,
@@ -61,10 +69,23 @@ export function CalendarGrid({
   nextWeek: string;
   thisWeek: string;
 }) {
-  const [hover, setHover] = useState<string | null>(null);
+  const [hover, setHover] = useState<{ key: string; top: number; left: number } | null>(null);
+
+  // Anchor the popover to the hovered chip in viewport space, clamped to the
+  // edges and flipped above when there isn't room below.
+  function openPopover(key: string, el: HTMLElement) {
+    const r = el.getBoundingClientRect();
+    const left = Math.min(Math.max(POP_M, r.left), window.innerWidth - POP_W - POP_M);
+    const below = r.bottom + POP_GAP;
+    const top =
+      below + POP_H + POP_M > window.innerHeight
+        ? Math.max(POP_M, r.top - POP_H - POP_GAP)
+        : below;
+    setHover({ key, top, left });
+  }
 
   return (
-    <div className="mx-auto max-w-7xl px-5 sm:px-8 py-10">
+    <div className="mx-auto max-w-[1400px] px-5 sm:px-8 py-10">
       <div className="flex items-end justify-between gap-4 flex-wrap">
         <div>
           <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
@@ -108,12 +129,12 @@ export function CalendarGrid({
       </div>
 
       <div className="mt-8 overflow-x-auto pb-2">
-        <div className="min-w-[920px] rounded-2xl bg-white ring-1 ring-line overflow-hidden">
+        <div className="min-w-[1040px] rounded-2xl bg-white ring-1 ring-line overflow-hidden">
           {/* Day header */}
           <div className="grid" style={{ gridTemplateColumns: COLS }}>
             <div />
             {week.map((d) => (
-              <div key={d.date} className="px-2 py-3 text-center border-l border-line">
+              <div key={d.date} className="px-2 py-3.5 text-center border-l border-line">
                 <div
                   className={`text-[11px] font-semibold uppercase tracking-wider ${
                     d.isToday ? "text-grass-700" : "text-ink-600"
@@ -122,7 +143,7 @@ export function CalendarGrid({
                   {d.weekday}
                 </div>
                 <div
-                  className={`font-display font-extrabold text-xl tabular-nums ${
+                  className={`font-display font-extrabold text-2xl tabular-nums ${
                     d.isToday ? "text-grass-700" : "text-ink-950"
                   }`}
                 >
@@ -148,12 +169,12 @@ export function CalendarGrid({
                 return (
                   <div
                     key={d.date + win.id}
-                    className={`relative min-h-[90px] border-l border-line p-1.5 ${
+                    className={`relative min-h-[120px] border-l border-line p-2 ${
                       d.isToday ? "bg-grass-500/[0.04]" : ""
                     }`}
                   >
                     <div
-                      className={`inline-flex items-center rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
+                      className={`inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-bold ${
                         full
                           ? "bg-[oklch(0.95_0.05_25)] text-[oklch(0.45_0.18_25)]"
                           : cell.booked > 0
@@ -173,21 +194,21 @@ export function CalendarGrid({
                           <div
                             key={key}
                             className="relative"
-                            onMouseEnter={() => setHover(key)}
-                            onMouseLeave={() => setHover((h) => (h === key ? null : h))}
+                            onMouseEnter={(e) => openPopover(key, e.currentTarget)}
+                            onMouseLeave={() => setHover((h) => (h?.key === key ? null : h))}
                           >
                             <Link
                               href={`/admin/${j.id}`}
-                              onFocus={() => setHover(key)}
-                              onBlur={() => setHover((h) => (h === key ? null : h))}
-                              className={`flex items-center gap-1.5 rounded-lg px-1.5 py-1 text-[11px] ring-1 transition-colors cursor-pointer ${
+                              onFocus={(e) => openPopover(key, e.currentTarget)}
+                              onBlur={() => setHover((h) => (h?.key === key ? null : h))}
+                              className={`flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs ring-1 transition-colors cursor-pointer ${
                                 cancelled
                                   ? "opacity-50 ring-line bg-white line-through"
                                   : "ring-line bg-white hover:ring-ink-300"
                               }`}
                             >
                               <span
-                                className={`inline-block h-1.5 w-1.5 flex-none rounded-full ${
+                                className={`inline-block h-2 w-2 flex-none rounded-full ${
                                   TONE_DOT[meta.tone]
                                 }`}
                               />
@@ -198,13 +219,14 @@ export function CalendarGrid({
                             </Link>
 
                             <AnimatePresence>
-                              {hover === key && (
+                              {hover?.key === key && (
                                 <motion.div
                                   initial={{ opacity: 0, y: 6, scale: 0.97 }}
                                   animate={{ opacity: 1, y: 0, scale: 1 }}
                                   exit={{ opacity: 0, y: 4, scale: 0.98 }}
                                   transition={{ duration: 0.16 }}
-                                  className="absolute z-30 left-0 top-full mt-1 w-64 rounded-2xl bg-white ring-1 ring-ink-200 shadow-lift p-3.5 text-left"
+                                  style={{ position: "fixed", top: hover.top, left: hover.left, width: POP_W }}
+                                  className="z-50 rounded-2xl bg-white ring-1 ring-ink-200 shadow-lift p-3.5 text-left"
                                 >
                                   <div className="flex items-center justify-between gap-2">
                                     <span className="font-mono text-xs font-bold text-ink-950">
