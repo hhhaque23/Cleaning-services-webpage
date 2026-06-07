@@ -1,6 +1,14 @@
 import { NextResponse } from "next/server";
-import { createBooking, countSlot, type NewBooking, type SlotWindow } from "@/lib/bookings";
+import { cookies } from "next/headers";
+import {
+  createBooking,
+  deleteAllBookings,
+  countSlot,
+  type NewBooking,
+  type SlotWindow,
+} from "@/lib/bookings";
 import { getCapacity } from "@/lib/settings";
+import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth";
 import { SLUG_TO_TIER } from "@/lib/tiers";
 import { computePrice, ADDON_META, type AddOn } from "../../components/Booking/pricing";
 
@@ -108,4 +116,20 @@ export async function POST(req: Request) {
     console.error("createBooking failed", err);
     return bad("Storage failure", 500);
   }
+}
+
+// DELETE = wipe ALL bookings (admin only). Requires an explicit confirm token in
+// the body so it can never be triggered casually. Powers the Settings
+// "delete all bookings" control for clearing test data before launch.
+export async function DELETE(req: Request) {
+  const token = cookies().get(SESSION_COOKIE)?.value;
+  if (!(await verifySessionToken(token))) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  const body = await req.json().catch(() => ({} as Record<string, unknown>));
+  if (body?.confirm !== "DELETE_ALL") {
+    return bad("Confirmation required", 400);
+  }
+  const deleted = await deleteAllBookings();
+  return NextResponse.json({ deleted });
 }

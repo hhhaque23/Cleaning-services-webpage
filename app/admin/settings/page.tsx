@@ -1,11 +1,14 @@
 import { getCleaners, isDbConfigured } from "@/lib/settings";
+import { countBookings } from "@/lib/bookings";
 import { CleanersManager } from "./CleanersManager";
+import { ClearBookings } from "./ClearBookings";
 
 export const dynamic = "force-dynamic";
 
 export default async function SettingsPage() {
   const cleaners = await getCleaners();
   const dbReady = isDbConfigured();
+  const bookingCount = await countBookings();
 
   return (
     <div className="mx-auto max-w-2xl px-5 sm:px-8 py-10">
@@ -30,6 +33,8 @@ export default async function SettingsPage() {
       <div className="mt-8">
         <CleanersManager initial={cleaners} />
       </div>
+
+      <ClearBookings count={bookingCount} />
     </div>
   );
 }

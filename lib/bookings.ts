@@ -200,6 +200,31 @@ export async function deleteBooking(id: string): Promise<boolean> {
   return memory.delete(id);
 }
 
+// Permanently remove EVERY booking (admin "delete all" / launch reset). Returns
+// the number of bookings deleted.
+export async function deleteAllBookings(): Promise<number> {
+  const client = getSql();
+  if (client) {
+    await ensureSchema();
+    const result = await client`DELETE FROM bookings`;
+    return result.count ?? 0;
+  }
+  const n = memory.size;
+  memory.clear();
+  return n;
+}
+
+// Total number of bookings (any status).
+export async function countBookings(): Promise<number> {
+  const client = getSql();
+  if (client) {
+    await ensureSchema();
+    const rows = await client`SELECT COUNT(*)::int AS n FROM bookings`;
+    return Number(rows[0]?.n ?? 0);
+  }
+  return memory.size;
+}
+
 export type SlotWindow = "morning" | "midday" | "afternoon";
 
 const SLOT_WINDOWS: SlotWindow[] = ["morning", "midday", "afternoon"];
