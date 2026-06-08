@@ -27,7 +27,7 @@ const FAQS = [
   },
   {
     q: "You're new — why should I book you?",
-    a: "We're a locally-owned Washtenaw County crew, based in Ann Arbor, building our reputation one clean at a time. You can read our real reviews on Thumbtack.",
+    a: "We're a locally-owned Washtenaw County crew, based in Ann Arbor, building our reputation one clean at a time — already five-star rated by our first clients.",
   },
   {
     q: "What if my cleaner is late or cancels?",

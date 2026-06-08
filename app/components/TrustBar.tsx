@@ -9,7 +9,7 @@ const ITEMS = [
   { icon: Leaf, label: "Eco-friendly, pet-safe products" },
   { icon: Clock, label: "Same-day available" },
   { icon: MapPin, label: "Ann Arbor · Washtenaw County" },
-  { icon: Star, label: "5★ on Thumbtack" },
+  { icon: Star, label: "5★ average rating" },
 ];
 
 const ROW = [...ITEMS, ...ITEMS];

@@ -182,7 +182,7 @@ export function Hero() {
                       <Star key={i} className="h-3 w-3 fill-grass-500 stroke-grass-500" />
                     ))}
                   </div>
-                  <div className="text-xs text-ink-700 font-medium">10+ on Thumbtack</div>
+                  <div className="text-xs text-ink-700 font-medium">10+ five-star reviews</div>
                 </div>
               </div>
             </motion.div>

@@ -125,7 +125,7 @@ export function AboutHero() {
               className="absolute -bottom-3 -left-3 sm:-bottom-5 sm:-left-5 bg-[var(--surface)] rounded-2xl px-4 py-3 shadow-card border border-line"
             >
               <div className="text-[10px] uppercase tracking-[0.1em] font-bold text-ink-600">
-                On Thumbtack
+                Average rating
               </div>
               <div className="font-display font-extrabold text-3xl text-ink-950 leading-none">5★</div>
             </motion.div>

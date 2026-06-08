@@ -209,7 +209,7 @@ function RatingTile() {
         <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
           Average rating
         </div>
-        <span className="text-[10px] text-ink-600 font-medium">10+ on Thumbtack</span>
+        <span className="text-[10px] text-ink-600 font-medium">10+ reviews</span>
       </div>
       <div className="font-display font-extrabold text-ink-950 leading-none tracking-[-0.02em]">
         <span className="text-5xl tabular-nums">

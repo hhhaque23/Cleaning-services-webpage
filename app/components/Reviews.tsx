@@ -2,9 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Star, Quote, Pin, ArrowRight } from "lucide-react";
+import { Star, Quote } from "lucide-react";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
-import { SITE } from "@/lib/site";
 
 type Review = {
   name: string;
@@ -13,7 +12,7 @@ type Review = {
   body: string;
 };
 
-// Placeholder reviews — swap these for real Thumbtack reviews as they come in.
+// Placeholder reviews — swap these for real client reviews as they come in.
 const REVIEWS: Review[] = [
   {
     name: "Sarah M.",
@@ -135,18 +134,9 @@ export function Reviews() {
               <span className="italic font-medium text-ink-700">across Washtenaw County.</span>
             </h2>
             <p className="mt-3 text-ink-700 text-lg leading-relaxed">
-              10+ five-star reviews on Thumbtack — and growing.
+              10+ five-star reviews — and growing.
             </p>
           </div>
-          <a
-            href={SITE.reviewsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 self-start lg:self-end rounded-xl border border-line-strong bg-[var(--surface-elevated)] hover:bg-[var(--surface)] px-4 py-2.5 text-sm font-semibold text-ink-950 whitespace-nowrap transition-colors cursor-pointer"
-          >
-            <Pin className="h-4 w-4 text-accent-600" /> Read all on Thumbtack
-            <ArrowRight className="h-4 w-4" />
-          </a>
         </motion.div>
       </div>
 

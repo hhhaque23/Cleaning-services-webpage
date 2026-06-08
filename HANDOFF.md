@@ -96,7 +96,7 @@ Deployed on Railway at `https://cleaning-services-webpage-production.up.railway.
   `RevealOnView`, `ScrollProgressRail`, `Confetti`, plus the `PastelRibbons` backdrop. Shared eases/
   durations in `motion-primitives.ts`. (`AnimatedBorder`, `Spotlight` exist but are currently unused;
   `Confetti` **is** used by `StepSuccess` and `_TrackingView`.)
-- `lib/site.ts` is the single source of brand facts (name, email, area, HQ, Thumbtack reviews URL).
+- `lib/site.ts` is the single source of brand facts (name, email, area, HQ).
 
 ### ⚠️ Layout / stacking invariant (read before touching backgrounds)
 
@@ -151,7 +151,7 @@ context instead.
 - **Capacity check is count-then-insert (not atomic).** Fine at this volume; TODO advisory lock if
   contention appears.
 - **`/services/office` is missing from `app/sitemap.ts`.** Add it if you want it indexed explicitly.
-- **Reviews are hardcoded placeholders** in `Reviews.tsx` (swap for real Thumbtack reviews).
+- **Reviews are hardcoded placeholders** in `Reviews.tsx` (swap for real client reviews).
 - Three time windows are hardcoded in `StepSchedule.tsx`, `api/availability/route.ts`, and
   `lib/bookings.ts` — changing them is a multi-file edit.
 

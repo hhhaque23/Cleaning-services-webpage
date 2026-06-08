@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { Mail, MapPin, Star, ShieldCheck, Leaf, Clock, Sparkles, Pin } from "lucide-react";
+import { Mail, MapPin, Star, ShieldCheck, Leaf, Clock, Sparkles } from "lucide-react";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 import { SpectreMark } from "./SpectreMark";
 import { SITE } from "@/lib/site";
@@ -26,7 +26,7 @@ const NAV: { title: string; links: FooterLink[] }[] = [
     links: [
       { label: "How it works", href: "/#how" },
       { label: "About us", href: "/about" },
-      { label: "Reviews", href: SITE.reviewsUrl, external: true },
+      { label: "Reviews", href: "/about#reviews" },
       { label: "FAQ", href: "/about#faq" },
     ],
   },
@@ -41,7 +41,7 @@ const NAV: { title: string; links: FooterLink[] }[] = [
 ];
 
 const MARQUEE_ITEMS = [
-  { icon: Star, label: "5★ on Thumbtack" },
+  { icon: Star, label: "5★ average rating" },
   { icon: ShieldCheck, label: "Locally owned & operated" },
   { icon: MapPin, label: "Ann Arbor · Washtenaw County" },
   { icon: Leaf, label: "Eco-friendly, pet-safe products" },
@@ -134,17 +134,6 @@ export function Footer() {
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
-                <Pin className="h-4 w-4 text-accent-400 shrink-0" />
-                <a
-                  href={SITE.reviewsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white cursor-pointer"
-                >
-                  Read our reviews on Thumbtack
-                </a>
-              </li>
-              <li className="flex items-center gap-2.5">
                 <MapPin className="h-4 w-4 text-accent-400 shrink-0" />
                 <span>{SITE.areaLong}</span>
               </li>
@@ -185,16 +174,6 @@ export function Footer() {
             © {new Date().getFullYear()} {SITE.name}. Locally owned &amp; operated.
           </div>
           <div className="flex items-center gap-3">
-            <motion.a
-              href={SITE.reviewsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Reviews on Thumbtack"
-              whileHover={reduce ? undefined : { y: -2 }}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
-            >
-              <Pin className="h-4 w-4" />
-            </motion.a>
             <a href="/privacy" className="text-xs text-white/60 hover:text-white cursor-pointer">
               Privacy
             </a>
