@@ -8,7 +8,7 @@
 
 ## Mission
 
-A premium home-cleaning service site for **Washtenaw County, MI** (based in Ann Arbor) that converts a
+A premium home-cleaning service site for **Wayne & Washtenaw County, MI** (based in Canton) that converts a
 visitor into a confirmed booking in under sixty seconds, without phone calls or quote forms. Two
 surfaces:
 
