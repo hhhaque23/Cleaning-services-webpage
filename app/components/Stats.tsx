@@ -136,9 +136,11 @@ function BigPhotoTile() {
           </span>
           <span className="text-[clamp(1.5rem,3vw,2.5rem)] text-grass-300">+</span>
         </div>
-        <p className="mt-2 text-[var(--surface)]/85 leading-relaxed max-w-md text-sm sm:text-base">
-          homes cleaned across Washtenaw County — and counting.
-        </p>
+        <div className="mt-3 self-start max-w-md rounded-xl bg-[oklch(0.13_0.045_230/0.5)] backdrop-blur-md ring-1 ring-white/10 shadow-lift px-3.5 py-2.5">
+          <p className="text-[var(--surface)] leading-relaxed text-sm sm:text-base">
+            homes cleaned across Washtenaw County — and counting.
+          </p>
+        </div>
       </div>
     </motion.div>
   );
