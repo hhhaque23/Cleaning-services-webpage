@@ -84,10 +84,12 @@ const C = {
   ink: "#14233a",
   inkSoft: "#5b6b82",
   accent: "#2f6fe0",
+  accentLight: "#7fb0ff",
   page: "#eef2f8",
   card: "#ffffff",
-  line: "#e3e9f2",
+  line: "#e6ebf3",
   codeBg: "#eef4ff",
+  codeBorder: "#cfe0ff",
 };
 
 function esc(s: string) {
@@ -142,50 +144,52 @@ export function bookingConfirmationEmail(b: Booking): {
     .join("");
 
   const html = `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>${esc(subject)}</title></head>
-<body style="margin:0;padding:0;background:${C.page};">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light only"><title>${esc(subject)}</title></head>
+<body style="margin:0;padding:0;background:${C.page};-webkit-font-smoothing:antialiased;">
   <div style="display:none;max-height:0;overflow:hidden;opacity:0;">Your booking ${esc(b.id)} is confirmed — ${esc(when)}, ${esc(windowLabel)}.</div>
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.page};padding:24px 12px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.page};padding:28px 12px;">
     <tr><td align="center">
-      <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="width:560px;max-width:100%;">
-        <!-- Brand bar -->
-        <tr><td style="padding:6px 6px 18px;">
-          <span style="font:800 18px/1 -apple-system,Segoe UI,Roboto,Arial,sans-serif;color:${C.ink};letter-spacing:-.01em;">Spectre<span style="color:${C.accent};font-weight:600;"> Cleaning</span></span>
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:100%;border-radius:20px;overflow:hidden;border:1px solid ${C.line};">
+
+        <!-- Dark brand header (echoes the site navbar) -->
+        <tr><td style="background:${C.ink};padding:22px 30px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+            <td style="font:800 18px/1 -apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#ffffff;letter-spacing:-.01em;">Spectre<span style="color:${C.accentLight};font-weight:600;"> Cleaning</span></td>
+            <td align="right"><span style="display:inline-block;background:rgba(255,255,255,.10);color:#ffffff;font:700 10px/1 -apple-system,Segoe UI,Roboto,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:7px 11px;border-radius:999px;">Booking&nbsp;confirmed</span></td>
+          </tr></table>
         </td></tr>
 
-        <!-- Card -->
-        <tr><td style="background:${C.card};border:1px solid ${C.line};border-radius:18px;padding:32px 28px;">
-          <div style="font:600 12px/1.4 -apple-system,Segoe UI,Roboto,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:${C.accent};">Booking confirmed</div>
-          <h1 style="margin:8px 0 0;font:800 28px/1.1 -apple-system,Segoe UI,Roboto,Arial,sans-serif;color:${C.ink};letter-spacing:-.02em;">You're booked.</h1>
-          <p style="margin:10px 0 0;font:400 15px/1.6 -apple-system,Segoe UI,Roboto,Arial,sans-serif;color:${C.inkSoft};">
-            Thanks for booking with Spectre Cleaning. Keep this email — your booking code is below if you ever need to reference it.
-          </p>
+        <!-- White body -->
+        <tr><td style="background:${C.card};padding:34px 30px 30px;">
+          <h1 style="margin:0;font:800 27px/1.12 -apple-system,Segoe UI,Roboto,Arial,sans-serif;color:${C.ink};letter-spacing:-.02em;">You&apos;re booked.</h1>
+          <p style="margin:10px 0 0;font:400 15px/1.6 -apple-system,Segoe UI,Roboto,Arial,sans-serif;color:${C.inkSoft};">Thanks for booking with Spectre Cleaning. Keep this email — your booking code and full details are below.</p>
 
           <!-- Code box -->
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:22px 0 6px;">
-            <tr><td style="background:${C.codeBg};border:1px dashed ${C.accent};border-radius:14px;padding:18px 20px;" align="center">
-              <div style="font:600 11px/1.4 -apple-system,Segoe UI,Roboto,Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:${C.inkSoft};">Your booking code</div>
-              <div style="margin-top:6px;font:800 30px/1.1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.06em;color:${C.ink};">${esc(b.id)}</div>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:24px 0 4px;">
+            <tr><td align="center" style="background:${C.codeBg};border:1px solid ${C.codeBorder};border-radius:14px;padding:18px 20px;">
+              <div style="font:700 11px/1.4 -apple-system,Segoe UI,Roboto,Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:${C.inkSoft};">Your booking code</div>
+              <div style="margin-top:6px;font:800 30px/1.1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.08em;color:${C.ink};">${esc(b.id)}</div>
             </td></tr>
           </table>
 
           <!-- Details -->
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:18px;">
-            ${rowsHtml}
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;">${rowsHtml}
           </table>
 
-          <!-- Next steps -->
+          <!-- What happens next -->
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:22px;">
             <tr><td style="background:${C.page};border-radius:14px;padding:16px 18px;font:400 14px/1.6 -apple-system,Segoe UI,Roboto,Arial,sans-serif;color:${C.ink};">
-              <strong style="color:${C.ink};">What happens next:</strong> we'll text you within 15 minutes to confirm your cleaner and arrival window. Need to change anything? Just reply to this email or reach us at <a href="mailto:${esc(SITE.email)}" style="color:${C.accent};text-decoration:none;font-weight:600;">${esc(SITE.email)}</a>.
+              <strong style="color:${C.ink};">What happens next:</strong> we&apos;ll text you within 15 minutes to confirm your cleaner and arrival window. Need to change anything? Just reply to this email or reach us at <a href="mailto:${esc(SITE.email)}" style="color:${C.accent};text-decoration:none;font-weight:600;">${esc(SITE.email)}</a>.
             </td></tr>
           </table>
         </td></tr>
+      </table>
 
-        <!-- Footer -->
-        <tr><td style="padding:18px 8px 6px;font:400 12px/1.6 -apple-system,Segoe UI,Roboto,Arial,sans-serif;color:${C.inkSoft};">
+      <!-- Footer (below the card) -->
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:100%;">
+        <tr><td style="padding:16px 10px 4px;text-align:center;font:400 12px/1.6 -apple-system,Segoe UI,Roboto,Arial,sans-serif;color:${C.inkSoft};">
           Spectre Cleaning Solutions · ${esc(SITE.areaLong)}<br>
-          <a href="${esc(SITE.url)}" style="color:${C.inkSoft};">${esc(SITE.url.replace(/^https?:\/\//, ""))}</a>
+          <a href="${esc(SITE.url)}" style="color:${C.inkSoft};text-decoration:underline;">${esc(SITE.url.replace(/^https?:\/\//, ""))}</a>
         </td></tr>
       </table>
     </td></tr>
