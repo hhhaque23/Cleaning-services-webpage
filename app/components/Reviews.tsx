@@ -19,21 +19,21 @@ const REVIEWS: Review[] = [
     city: "Ann Arbor",
     service: "Biweekly",
     body:
-      "Booked at 10pm Sunday, cleaner showed up Monday morning. The same person every two weeks since. I forgot what doing chores even feels like.",
+      "Every other week my whole place is spotless — counters, baseboards, even the hard-water spots on the shower glass are gone. Same cleaner each time, and she remembers the little things.",
   },
   {
     name: "Daniel K.",
     city: "Ypsilanti",
-    service: "Move-out",
+    service: "Deep clean",
     body:
-      "Landlord refunded my full deposit, no questions asked. The photo report at the end was worth the price by itself.",
+      "The deep clean blew me away. They scrubbed the stovetop, degreased the backsplash, and got grime off grout I'd given up on. My kitchen actually sparkles now.",
   },
   {
     name: "Lena P.",
     city: "Saline",
-    service: "Deep clean",
+    service: "Weekly",
     body:
-      "I have a labrador and a 2-year-old. They got pet hair out of corners I didn't know existed. Eco products didn't bother either of them.",
+      "Two kids and a labrador means constant mess. They pulled pet hair out of corners I didn't know existed and left every floor gleaming — and the eco products didn't bother anyone.",
   },
 ];
 

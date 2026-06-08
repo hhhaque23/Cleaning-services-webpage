@@ -1,8 +1,10 @@
 # Spectre Cleaning Solutions — Handoff
 
-> Last refreshed 2026-06-05, after the **Operations overhaul** (capacity/availability, ops calendar,
-> settings/cleaners, reschedule/edit) and the **ops-console z-index fix**. This document reflects the
-> current `main`.
+> Last refreshed 2026-06-08 — **the site is live on its custom domain** (`spectrecleaningsolutions.com`,
+> hosted on Railway, DNS via Cloudflare). This session also added **booking confirmation emails**
+> (Resend), removed all **Thumbtack** mentions, **de-tiered** the services copy (no "tiers/levels", no
+> carpet shampoo), and gave the **ops console** a polish pass (branded backdrop, "View site" link,
+> "delete all bookings", bigger calendar, un-clipped popover, unified logo). Reflects current `main`.
 
 ## Mission
 
@@ -21,8 +23,29 @@ dark surfaces against tinted off-white, real photography of real homes/offices, 
 centered. Type: Bricolage Grotesque (display) + Hanken Grotesk (body). OKLCH color system; accent is
 cool cyan (legacy `grass` tokens alias to `accent`).
 
-Deployed on Railway at `https://cleaning-services-webpage-production.up.railway.app` (Nixpacks,
-`npm start`, auto-deploys from `main`).
+---
+
+## Deployment & custom domain (live)
+
+- **Host: Railway** — Node server (Nixpacks, `npm start`) + Postgres. **Auto-deploys on push to `main`**
+  (`git push origin main` rebuilds and updates the live site in a few minutes). Default Railway URL:
+  `https://cleaning-services-webpage-production.up.railway.app`.
+- **Live on the custom domain:** `https://spectrecleaningsolutions.com` **and**
+  `https://www.spectrecleaningsolutions.com` (valid HTTPS, certs issued by Railway).
+- **DNS is on Cloudflare** (free plan). Nameservers `collins.ns.cloudflare.com` /
+  `scott.ns.cloudflare.com`. The domain is still *registered* at Squarespace — only the **nameservers**
+  were repointed to Cloudflare. Records, all **DNS-only / "gray cloud"** (not proxied):
+  - `CNAME  @    → i2l2azjb.up.railway.app` — Cloudflare **CNAME-flattening** makes a root CNAME work
+    (Squarespace's DNS refused a CNAME at the apex; that's the whole reason DNS moved to Cloudflare).
+  - `CNAME  www  → 8np1wewk.up.railway.app`
+  - `TXT    _railway-verify → railway-verify=…` — Railway's domain-ownership check.
+  - (harmless leftovers kept: a `_domainconnect` CNAME and a `google-site-verification` TXT.)
+  - To enable Cloudflare's proxy/CDN/WAF later, first set **SSL/TLS → Full (strict)** in Cloudflare,
+    *then* flip the records to orange — otherwise Railway's HTTPS redirect causes a loop.
+- **GitHub Pages was attempted and removed** (commit `4337fa7` deleted `.github/workflows/nextjs.yml`
+  + `CNAME`). **Pages cannot host this app** — its workflow forces `output: export`, which is
+  incompatible with the `force-dynamic` API routes (`/api/admin/login`, etc.). **Do not re-add a Pages
+  workflow**; also set the repo's Settings → Pages source to "None".
 
 ---
 
@@ -125,9 +148,12 @@ context instead.
 
 ### Setup the user still needs to do
 
-- **Set `ADMIN_PASSWORD` on Railway**
-  (`railway variable set "ADMIN_PASSWORD=…" --service Cleaning-services-webpage`). Until then the
-  admin login is in demo mode and any password works.
+- **`ADMIN_PASSWORD` is set on Railway ✓** — live `/api/admin/mode` returns
+  `{"demo":false,"locked":false}`. (If it ever shows demo mode again, the var was lost on the web
+  service.)
+- **Email (recommended): set `RESEND_API_KEY` + `EMAIL_FROM` on Railway** and verify the Resend
+  sending domain (add the SPF/DKIM records it gives you in **Cloudflare**). The live test sent OK
+  (`emailed:true`); domain verification just locks in inbox deliverability.
 - **Delete the duplicate Postgres service** if not already done. Two were provisioned
   (`Postgres` and `Postgres-Bg-T`); the web service is wired to the first via
   `${{ Postgres.DATABASE_URL }}`. Removing a service needs the dashboard
@@ -136,8 +162,12 @@ context instead.
 ### Features not implemented (out of scope so far)
 
 - **No payments**. The flow ends at a confirmation ID; copy says "billed after the clean." No Stripe.
-- **No email/SMS notifications**. Hook point: `POST /api/bookings` after `createBooking` returns
-  (add Resend/Twilio there).
+- **Email confirmations: DONE (SMS not).** `lib/email.ts` sends a branded **booking confirmation email**
+  via **Resend** (plain `fetch`, no npm dep; **fail-open** — a missing key or provider error never
+  breaks a booking, with an 8s timeout). `bookingConfirmationEmail(booking)` builds the HTML/text; it's
+  sent from `POST /api/bookings` right after `createBooking`, and the response returns an `emailed`
+  boolean (the success screen shows "Confirmation & code emailed to …" only when `true`). Live test →
+  `emailed:true`. Requires `RESEND_API_KEY` + `EMAIL_FROM`. No SMS/Twilio yet.
 - **No tests** (no unit/integration/e2e). Verified manually / via Playwright screenshots.
 - **No image optimization service** — `next.config.js` sets `unoptimized: true` and hotlinks
   Unsplash (`w=1600&q=78`).
@@ -151,7 +181,9 @@ context instead.
 - **Capacity check is count-then-insert (not atomic).** Fine at this volume; TODO advisory lock if
   contention appears.
 - **`/services/office` is missing from `app/sitemap.ts`.** Add it if you want it indexed explicitly.
-- **Reviews are hardcoded placeholders** in `Reviews.tsx` (swap for real client reviews).
+- **Reviews are hardcoded placeholders** in `Reviews.tsx` (now house-cleaning-focused — no
+  landlord/move-out copy; swap for real client reviews as they come in). **Thumbtack** + the
+  `reviewsUrl` were removed site-wide; the footer "Reviews" link now points to `/about#reviews`.
 - Three time windows are hardcoded in `StepSchedule.tsx`, `api/availability/route.ts`, and
   `lib/bookings.ts` — changing them is a multi-file edit.
 
@@ -223,6 +255,15 @@ Railway it's wired via `${{ Postgres.DATABASE_URL }}`.
 
 ## Commit history highlights (newest first)
 
+- `4337fa7` — **Go-live cleanup**: remove the GitHub Pages workflow + `CNAME` (Pages can't host a server
+  app; site runs on Railway, custom domain via Cloudflare)
+- `334de93` — **Booking confirmation emails** via Resend (`lib/email.ts`, fail-open; `POST /api/bookings`
+  returns `emailed`; success screen surfaces it)
+- `9b1f379` / `777e623` — Ops/login/calendar polish: unified brand logo, login card glow-up, larger
+  calendar + un-clipped hover popover, branded backdrop + declutter + "View site" link on the console
+- `f330a51` — Remove all **Thumbtack** mentions (kept the 5★ / "10+ five-star reviews" credibility)
+- `4e13370` — **De-tier** the services copy site-wide (no "tiers/levels/packages") + remove carpet shampoo
+- `883eb15` — Add **"delete all bookings"** to Settings (type-to-confirm danger zone)
 - `9b7df08` — Fix ops console vanishing: lift `/admin` content above the fixed PastelRibbons backdrop
   (`relative z-10` on the AdminShell wrappers; see the stacking invariant above)
 - `ba25bf3` — Login: native form POST → 303 with cookie set on the same response (no client nav)
