@@ -43,7 +43,7 @@ const NAV: { title: string; links: FooterLink[] }[] = [
 const MARQUEE_ITEMS = [
   { icon: Star, label: "5★ average rating" },
   { icon: ShieldCheck, label: "Locally owned & operated" },
-  { icon: MapPin, label: "Ann Arbor · Washtenaw County" },
+  { icon: MapPin, label: "Canton · Wayne & Washtenaw" },
   { icon: Leaf, label: "Eco-friendly, pet-safe products" },
   { icon: Clock, label: "Same-day available" },
   { icon: Sparkles, label: "Booked like delivery" },

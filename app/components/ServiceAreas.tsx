@@ -12,21 +12,21 @@ type City = { name: string; minutes: number };
 
 // Sorted ascending by minutes — used directly for distance-ordered wave reveal.
 const CITIES: City[] = [
-  { name: "Ann Arbor", minutes: 5 },
-  { name: "Barton Hills", minutes: 7 },
-  { name: "Scio Twp", minutes: 9 },
-  { name: "Pittsfield Twp", minutes: 10 },
-  { name: "Ypsilanti", minutes: 12 },
-  { name: "Saline", minutes: 15 },
-  { name: "Dexter", minutes: 16 },
-  { name: "Superior Twp", minutes: 16 },
-  { name: "Whitmore Lake", minutes: 18 },
-  { name: "Webster Twp", minutes: 18 },
-  { name: "Milan", minutes: 20 },
-  { name: "Chelsea", minutes: 22 },
-  { name: "Salem Twp", minutes: 23 },
-  { name: "Manchester", minutes: 25 },
-  { name: "Sharon Twp", minutes: 27 },
+  { name: "Canton", minutes: 3 },
+  { name: "Plymouth", minutes: 8 },
+  { name: "Westland", minutes: 10 },
+  { name: "Wayne", minutes: 11 },
+  { name: "Northville", minutes: 12 },
+  { name: "Belleville", minutes: 13 },
+  { name: "Ypsilanti", minutes: 14 },
+  { name: "Superior Twp", minutes: 15 },
+  { name: "Pittsfield Twp", minutes: 16 },
+  { name: "Livonia", minutes: 16 },
+  { name: "Novi", minutes: 18 },
+  { name: "Romulus", minutes: 18 },
+  { name: "Salem Twp", minutes: 19 },
+  { name: "Ann Arbor", minutes: 20 },
+  { name: "Saline", minutes: 24 },
 ];
 
 const HQ_PHOTOS = [
@@ -59,8 +59,8 @@ export function ServiceAreas() {
             <span>Where we clean</span>
           </div>
           <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance leading-[1.05]">
-            Based in Ann Arbor.{" "}
-            <span className="italic font-medium text-ink-700">Serving Washtenaw County.</span>
+            Based in Canton.{" "}
+            <span className="italic font-medium text-ink-700">Serving Wayne &amp; Washtenaw County.</span>
           </h2>
           <p className="mt-4 text-ink-700 text-lg leading-relaxed max-w-md">
             Fifteen neighborhoods, a short drive from home base. Outside our zone? Drop your ZIP at
@@ -105,12 +105,12 @@ export function ServiceAreas() {
                   Headquarters
                 </div>
                 <div className="mt-2 font-display font-extrabold text-2xl sm:text-3xl tracking-[-0.022em]">
-                  Ann Arbor, MI
+                  Canton, MI
                 </div>
                 <p className="mt-1 text-white/75 text-sm sm:text-base leading-relaxed max-w-md">
                   Our home base. From here we cover{" "}
-                  <span className="font-semibold text-white">15 nearby neighborhoods</span>{" "}
-                  across Washtenaw County, most within a short drive.
+                  <span className="font-semibold text-white">15 nearby cities</span>{" "}
+                  across Wayne &amp; Washtenaw County, most within a short drive.
                 </p>
 
                 {/* HQ photo strip — 5 thumbnails inside the dark card */}
@@ -182,7 +182,7 @@ export function ServiceAreas() {
             <span>covered</span>
           </span>
           <span className="text-line-strong">·</span>
-          <span>A short drive from Ann Arbor</span>
+          <span>A short drive from Canton</span>
           <span className="text-line-strong">·</span>
           <span>Same-day available when slots are open</span>
         </motion.div>

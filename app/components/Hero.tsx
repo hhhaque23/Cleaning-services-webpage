@@ -77,7 +77,7 @@ export function Hero() {
               variants={fadeUp}
               className="mt-7 max-w-xl text-lead text-ink-700 leading-relaxed text-pretty"
             >
-              Washtenaw County&apos;s home &amp; office cleaning you can actually book like a delivery order.
+              Wayne &amp; Washtenaw County&apos;s home &amp; office cleaning you can actually book like a delivery order.
               Transparent pricing, vetted cleaners, same-day availability. No phone tag, no quote
               forms, no two-day reply windows.
             </motion.p>
@@ -147,7 +147,7 @@ export function Hero() {
                   <div className="text-[10px] uppercase tracking-[0.08em] text-ink-600 font-semibold">
                     Locally owned
                   </div>
-                  <div className="text-sm font-semibold text-ink-950">Ann Arbor, MI</div>
+                  <div className="text-sm font-semibold text-ink-950">Canton, MI</div>
                 </div>
               </div>
             </motion.div>
@@ -241,7 +241,7 @@ export function Hero() {
                   Serving
                 </div>
                 <div className="text-[12px] font-semibold text-ink-950">
-                  Ann Arbor · Ypsilanti
+                  Canton · Plymouth
                 </div>
               </div>
               <Zap className="h-3.5 w-3.5 text-grass-600" />

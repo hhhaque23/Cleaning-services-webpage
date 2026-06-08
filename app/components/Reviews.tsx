@@ -16,7 +16,7 @@ type Review = {
 const REVIEWS: Review[] = [
   {
     name: "Sarah M.",
-    city: "Ann Arbor",
+    city: "Plymouth",
     service: "Biweekly",
     body:
       "Every other week my whole place is spotless — counters, baseboards, even the hard-water spots on the shower glass are gone. Same cleaner each time, and she remembers the little things.",
@@ -131,7 +131,7 @@ export function Reviews() {
             </div>
             <h2 className="mt-3 font-display font-extrabold text-display-1 text-ink-950 text-balance leading-[1.05]">
               Five-star cleans{" "}
-              <span className="italic font-medium text-ink-700">across Washtenaw County.</span>
+              <span className="italic font-medium text-ink-700">across Wayne &amp; Washtenaw County.</span>
             </h2>
             <p className="mt-3 text-ink-700 text-lg leading-relaxed">
               10+ five-star reviews — and growing.

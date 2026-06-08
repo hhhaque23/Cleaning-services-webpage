@@ -8,7 +8,7 @@ const ITEMS = [
   { icon: BadgeCheck, label: "Vetted, local cleaners" },
   { icon: Leaf, label: "Eco-friendly, pet-safe products" },
   { icon: Clock, label: "Same-day available" },
-  { icon: MapPin, label: "Ann Arbor · Washtenaw County" },
+  { icon: MapPin, label: "Canton · Wayne & Washtenaw" },
   { icon: Star, label: "5★ average rating" },
 ];
 

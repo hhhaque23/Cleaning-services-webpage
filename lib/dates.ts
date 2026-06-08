@@ -6,7 +6,7 @@
 // YYYY-MM-DD calendar dates, so anything comparing them against "now" must use
 // the BUSINESS timezone, not the server's.
 //
-// Default is America/Detroit (Ann Arbor / Washtenaw County). Override with the
+// Default is America/Detroit (Canton / metro Detroit). Override with the
 // BUSINESS_TZ env var if the service area ever moves.
 
 const BUSINESS_TZ = process.env.BUSINESS_TZ || "America/Detroit";

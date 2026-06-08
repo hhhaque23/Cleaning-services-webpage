@@ -21,7 +21,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Office cleaning · Spectre Cleaning Solutions",
   description:
-    "Commercial and office cleaning across Washtenaw County. Recurring or one-time, custom-quoted for your space. Email us for a quote.",
+    "Commercial and office cleaning across Wayne & Washtenaw County. Recurring or one-time, custom-quoted for your space. Email us for a quote.",
 };
 
 const COVERED = [
@@ -78,7 +78,7 @@ export default function OfficeServicePage() {
 
               <p className="mt-5 max-w-xl text-lead text-ink-700 leading-relaxed text-pretty">
                 Recurring or one-time cleans for offices, suites, and small commercial
-                spaces across Washtenaw County. Every space is priced for its size and
+                spaces across Wayne &amp; Washtenaw County. Every space is priced for its size and
                 schedule, so you get a quote that fits — not a generic rate.
               </p>
 

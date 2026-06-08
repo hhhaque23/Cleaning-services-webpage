@@ -116,7 +116,7 @@ export default function OpenGraphImage() {
               lineHeight: 1.4,
             }}
           >
-            Ann Arbor · Washtenaw County · transparent pricing · vetted cleaners.
+            Canton · Wayne & Washtenaw · transparent pricing · vetted cleaners.
           </div>
         </div>
       </div>

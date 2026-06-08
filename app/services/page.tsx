@@ -22,7 +22,7 @@ import { TIER_SLUG } from "@/lib/tiers";
 export const metadata: Metadata = {
   title: "Services · Spectre Cleaning Solutions",
   description:
-    "A new, locally-owned Ann Arbor crew cleaning both homes and businesses across Washtenaw County — recurring or one-time, transparent pricing.",
+    "A new, locally-owned Canton crew cleaning both homes and businesses across Wayne & Washtenaw County — recurring or one-time, transparent pricing.",
 };
 
 const HOME_TIERS: { tier: Tier; blurb: string }[] = [
@@ -58,7 +58,7 @@ export default function ServicesPage() {
           <div className="grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-14 items-center">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-grass-500/12 text-grass-700 text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">
-                <Sparkles className="h-3.5 w-3.5" /> New in Washtenaw County
+                <Sparkles className="h-3.5 w-3.5" /> New in the Canton area
               </div>
 
               <h1 className="mt-4 font-display font-extrabold text-hero text-balance text-ink-950 leading-[1.02] tracking-[-0.028em]">
@@ -67,9 +67,9 @@ export default function ServicesPage() {
               </h1>
 
               <p className="mt-5 max-w-xl text-lead text-ink-700 leading-relaxed text-pretty">
-                Spectre Cleaning is a new, locally-owned crew based in Ann Arbor. We clean houses{" "}
+                Spectre Cleaning is a new, locally-owned crew based in Canton. We clean houses{" "}
                 <span className="font-semibold text-ink-900">and</span> commercial spaces across
-                Washtenaw County — the same vetted team and the same care, whether it&apos;s your
+                Wayne &amp; Washtenaw County — the same vetted team and the same care, whether it&apos;s your
                 living room or your lobby.
               </p>
 
@@ -96,7 +96,7 @@ export default function ServicesPage() {
               <div className="relative aspect-[5/6] rounded-[2rem] overflow-hidden shadow-lift">
                 <Image
                   src={PHOTOS.statsHeader}
-                  alt="A bright, freshly cleaned living room in a Washtenaw County home"
+                  alt="A bright, freshly cleaned living room in a metro Detroit home"
                   fill
                   priority
                   sizes="(min-width: 1024px) 520px, 100vw"
@@ -198,7 +198,7 @@ export default function ServicesPage() {
           <div className="card p-6 sm:p-7 flex flex-wrap items-center gap-x-8 gap-y-3">
             <TrustItem icon={Users} label="New & locally owned" />
             <TrustItem icon={ShieldCheck} label="Vetted local cleaners" />
-            <TrustItem icon={MapPin} label="Serving Washtenaw County" />
+            <TrustItem icon={MapPin} label="Serving Wayne & Washtenaw" />
             <TrustItem icon={Check} label="Upfront custom pricing" />
           </div>
         </div>

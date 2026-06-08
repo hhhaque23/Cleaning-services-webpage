@@ -10,11 +10,11 @@ import { ClockFace } from "./ClockFace";
 import { EASE_OUT_QUINT } from "./motion/motion-primitives";
 
 const RECENT_BOOKINGS = [
-  { city: "Ann Arbor", tier: "Deep clean", min: 2 },
-  { city: "Ypsilanti", tier: "Standard", min: 4 },
-  { city: "Saline", tier: "Move-out", min: 7 },
-  { city: "Dexter", tier: "Biweekly", min: 11 },
-  { city: "Chelsea", tier: "Standard", min: 16 },
+  { city: "Canton", tier: "Deep clean", min: 2 },
+  { city: "Plymouth", tier: "Standard", min: 4 },
+  { city: "Northville", tier: "Move-out", min: 7 },
+  { city: "Ypsilanti", tier: "Biweekly", min: 11 },
+  { city: "Westland", tier: "Standard", min: 16 },
 ];
 
 export function Stats() {
@@ -29,10 +29,10 @@ export function Stats() {
             transition={{ duration: 0.6, ease: EASE_OUT_QUINT }}
           >
             <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
-              New &amp; locally owned · Washtenaw County
+              New &amp; locally owned · Wayne &amp; Washtenaw
             </div>
             <h2 className="mt-3 font-display font-extrabold text-display-1 text-balance text-ink-950 leading-[1.05]">
-              A new Washtenaw County crew,{" "}
+              A new Wayne &amp; Washtenaw County crew,{" "}
               <span className="italic font-medium text-ink-700">building trust</span> one clean
               at a time.
             </h2>
@@ -138,7 +138,7 @@ function BigPhotoTile() {
         </div>
         <div className="mt-3 self-start max-w-md rounded-xl bg-[oklch(0.13_0.045_230/0.5)] backdrop-blur-md ring-1 ring-white/10 shadow-lift px-3.5 py-2.5">
           <p className="text-[var(--surface)] leading-relaxed text-sm sm:text-base">
-            homes cleaned across Washtenaw County — and counting.
+            homes cleaned across Wayne &amp; Washtenaw County — and counting.
           </p>
         </div>
       </div>
@@ -297,7 +297,7 @@ function LiveTickerTile() {
         </span>
         <div className="min-w-0">
           <div className="text-[11px] uppercase tracking-[0.14em] text-ink-600 font-semibold">
-            Across Washtenaw County
+            Across Wayne &amp; Washtenaw
           </div>
           <div className="relative h-7 mt-0.5">
             <AnimatePresence mode="wait">
@@ -319,7 +319,7 @@ function LiveTickerTile() {
       </div>
       <div className="hidden sm:inline-flex items-center gap-1.5 text-xs text-ink-700">
         <ShieldCheck className="h-3.5 w-3.5 text-grass-600" />
-        Washtenaw County
+        Wayne &amp; Washtenaw
       </div>
     </TileShell>
   );
