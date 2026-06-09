@@ -1,24 +1,22 @@
 import Link from "next/link";
 import {
-  bookingStats,
   isDbConfigured,
   listBookings,
   STATUS_META,
   type Booking,
   type BookingStatus,
 } from "@/lib/bookings";
-import { getCapacity } from "@/lib/settings";
+import { getCapacity, getCleaners } from "@/lib/settings";
 import { businessToday } from "@/lib/dates";
 import { FREQUENCY_META, TIER_META } from "../components/Booking/pricing";
+import { QuickActions } from "./_QuickActions";
 import {
-  CalendarClock,
   ArrowRight,
   AlertTriangle,
   CalendarDays,
-  TrendingUp,
-  Inbox,
-  CheckCheck,
   Repeat,
+  CheckCheck,
+  ListFilter,
 } from "lucide-react";
 
 const WINDOW_SHORT: Record<string, string> = {
@@ -45,28 +43,30 @@ type Props = { searchParams: { status?: string } };
 
 export default async function AdminDashboard({ searchParams }: Props) {
   const dbReady = isDbConfigured();
-  const filter = (searchParams?.status as FilterId) ?? "all";
+  const statusParam = searchParams?.status;
+  // No ?status -> the slim "action queue + today" view. With ?status -> the full
+  // filterable bookings list (preserves every existing /admin?status=… URL).
+  const showQueue = statusParam === undefined;
+  const filter = (statusParam as FilterId) ?? "all";
 
   const allBookings = await listBookings();
-  const stats = await bookingStats();
   const capacity = await getCapacity();
+  const cleaners = await getCleaners();
   const todayISO = businessToday();
 
-  const filtered =
-    filter === "all"
-      ? allBookings
-      : filter === "recurring"
-      ? allBookings.filter((b) => b.frequency !== "onetime")
-      : allBookings.filter((b) => b.status === (filter as BookingStatus));
+  const filtered = showQueue
+    ? []
+    : filter === "all"
+    ? allBookings
+    : filter === "recurring"
+    ? allBookings.filter((b) => b.frequency !== "onetime")
+    : allBookings.filter((b) => b.status === (filter as BookingStatus));
 
   const todayJobs = allBookings.filter(
     (b) => b.slotDate === todayISO && b.status !== "cancelled",
   );
   const byWindow: Record<string, Booking[]> = { morning: [], midday: [], afternoon: [] };
   for (const b of todayJobs) byWindow[b.slotWindow]?.push(b);
-  const bookedOutToday = (["morning", "midday", "afternoon"] as const).filter(
-    (w) => byWindow[w].length >= capacity,
-  ).length;
 
   const newJobs = allBookings.filter((b) => b.status === "new");
   const upcoming = allBookings
@@ -84,18 +84,37 @@ export default async function AdminDashboard({ searchParams }: Props) {
             Operations
           </div>
           <h1 className="mt-2 font-display font-extrabold text-3xl sm:text-4xl text-ink-950 tracking-tight">
-            Your day at a glance
+            {showQueue ? "Action queue" : "All bookings"}
           </h1>
           <p className="mt-1 text-sm text-ink-700">
-            Today&apos;s jobs, what needs action, and what&apos;s coming up.
+            {showQueue
+              ? "New bookings to confirm and assign, plus today's schedule."
+              : "Filter and review every booking."}
           </p>
         </div>
-        <Link
-          href="/admin/calendar"
-          className="inline-flex items-center gap-1.5 rounded-xl bg-ink-950 hover:bg-ink-800 text-white text-sm font-semibold px-4 py-2.5 cursor-pointer transition-colors"
-        >
-          <CalendarDays className="h-4 w-4" /> Open calendar
-        </Link>
+        <div className="flex items-center gap-2">
+          {showQueue ? (
+            <Link
+              href="/admin?status=all"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[var(--surface-elevated)] ring-1 ring-line hover:ring-ink-300 text-ink-800 text-sm font-semibold px-4 py-2.5 cursor-pointer transition-all"
+            >
+              <ListFilter className="h-4 w-4" /> All bookings
+            </Link>
+          ) : (
+            <Link
+              href="/admin"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[var(--surface-elevated)] ring-1 ring-line hover:ring-ink-300 text-ink-800 text-sm font-semibold px-4 py-2.5 cursor-pointer transition-all"
+            >
+              <ArrowRight className="h-4 w-4 rotate-180" /> Back to queue
+            </Link>
+          )}
+          <Link
+            href="/admin/calendar"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-ink-950 hover:bg-ink-800 text-white text-sm font-semibold px-4 py-2.5 cursor-pointer transition-colors"
+          >
+            <CalendarDays className="h-4 w-4" /> Open calendar
+          </Link>
+        </div>
       </div>
 
       {!dbReady && (
@@ -109,56 +128,30 @@ export default async function AdminDashboard({ searchParams }: Props) {
         </div>
       )}
 
-      <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Stat icon={Inbox} label="New, pending" value={stats.newCount} tone="amber" />
-        <Stat icon={CalendarClock} label="Booked today" value={stats.todayCount} tone="ink" />
-        <Stat
-          icon={AlertTriangle}
-          label="Booked-out windows today"
-          value={`${bookedOutToday}/3`}
-          tone={bookedOutToday > 0 ? "amber" : "grass"}
-        />
-        <Stat
-          icon={TrendingUp}
-          label="This week revenue"
-          value={`$${stats.weekRevenue.toLocaleString()}`}
-          tone="grass"
-        />
-      </div>
-
-      <div className="mt-10 flex items-center gap-2 overflow-x-auto scrollbar-none">
-        {FILTERS.map((f) => {
-          const active = filter === f.id;
-          return (
-            <Link
-              key={f.id}
-              href={f.id === "all" ? "/admin" : `/admin?status=${f.id}`}
-              className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
-                active
-                  ? "bg-ink-950 text-[var(--surface)] shadow-soft"
-                  : "bg-[var(--surface-elevated)]/70 text-ink-600 hover:text-ink-950 hover:bg-[var(--surface-elevated)]"
-              }`}
-            >
-              {f.label}
-            </Link>
-          );
-        })}
-      </div>
-
-      {filter !== "all" ? (
-        <div className="mt-6">
-          {filtered.length === 0 ? (
-            <EmptyState filter={filter} />
-          ) : (
-            <ul className="grid gap-3">
-              {filtered.map((b) => (
-                <BookingRow key={b.id} booking={b} />
-              ))}
-            </ul>
-          )}
-        </div>
-      ) : (
+      {showQueue ? (
         <div className="mt-8 space-y-10">
+          {/* Hero: what needs action right now */}
+          <section>
+            <SectionHead
+              title="New — needs action"
+              count={newJobs.length}
+              sub={newJobs.length ? "Confirm and assign a cleaner" : undefined}
+            />
+            {newJobs.length === 0 ? (
+              <div className="mt-4 rounded-2xl border border-dashed border-line bg-[var(--surface-elevated)] px-5 py-8 text-center text-sm text-ink-600">
+                You&apos;re all caught up — no new bookings waiting.
+              </div>
+            ) : (
+              <ul className="mt-4 grid gap-3">
+                {newJobs.slice(0, 10).map((b) => (
+                  <NewBookingRow key={b.id} booking={b} cleaners={cleaners} />
+                ))}
+              </ul>
+            )}
+            {newJobs.length > 10 && <ViewAll status="new" label="View all new" />}
+          </section>
+
+          {/* Today, by window */}
           <section>
             <SectionHead
               title="Today"
@@ -170,57 +163,84 @@ export default async function AdminDashboard({ searchParams }: Props) {
             ) : (
               <div className="mt-4 rounded-2xl bg-[var(--surface-tint)]/30 ring-1 ring-line shadow-soft p-4 sm:p-5">
                 <div className="grid lg:grid-cols-3 gap-x-6 gap-y-5">
-                {(["morning", "midday", "afternoon"] as const).map((w) => (
-                  <div key={w}>
-                    <div className="flex items-center justify-between text-[11px] uppercase tracking-wider font-semibold text-ink-700 mb-2">
-                      <span>{WINDOW_SHORT[w]}</span>
-                      <span
-                        className={
-                          byWindow[w].length >= capacity ? "text-red-600" : "text-ink-500"
-                        }
-                      >
-                        {byWindow[w].length}/{capacity}
-                      </span>
+                  {(["morning", "midday", "afternoon"] as const).map((w) => (
+                    <div key={w}>
+                      <div className="flex items-center justify-between text-[11px] uppercase tracking-wider font-semibold text-ink-700 mb-2">
+                        <span>{WINDOW_SHORT[w]}</span>
+                        <span
+                          className={
+                            byWindow[w].length >= capacity ? "text-red-600" : "text-ink-500"
+                          }
+                        >
+                          {byWindow[w].length}/{capacity}
+                        </span>
+                      </div>
+                      <ul className="space-y-2">
+                        {byWindow[w].length === 0 ? (
+                          <li className="text-xs text-ink-500 italic">Open</li>
+                        ) : (
+                          byWindow[w].map((b) => <CompactRow key={b.id} booking={b} />)
+                        )}
+                      </ul>
                     </div>
-                    <ul className="space-y-2">
-                      {byWindow[w].length === 0 ? (
-                        <li className="text-xs text-ink-500 italic">Open</li>
-                      ) : (
-                        byWindow[w].map((b) => <CompactRow key={b.id} booking={b} />)
-                      )}
-                    </ul>
-                  </div>
-                ))}
+                  ))}
                 </div>
               </div>
             )}
           </section>
 
-          {newJobs.length > 0 && (
-            <section>
-              <SectionHead title="New — needs action" count={newJobs.length} />
-              <ul className="mt-4 grid gap-3">
-                {newJobs.slice(0, 8).map((b) => (
-                  <BookingRow key={b.id} booking={b} />
-                ))}
-              </ul>
-              {newJobs.length > 8 && <ViewAll status="new" />}
-            </section>
-          )}
-
+          {/* Upcoming — a quick peek; full schedule lives in the calendar */}
           <section>
             <SectionHead title="Upcoming" count={upcoming.length} />
             {upcoming.length === 0 ? (
               <p className="mt-3 text-sm text-ink-600">Nothing scheduled yet.</p>
             ) : (
               <ul className="mt-4 grid gap-3">
-                {upcoming.slice(0, 8).map((b) => (
+                {upcoming.slice(0, 5).map((b) => (
                   <BookingRow key={b.id} booking={b} />
                 ))}
               </ul>
             )}
-            {upcoming.length > 8 && <ViewAll status="scheduled" />}
+            <Link
+              href="/admin/calendar"
+              className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-ink-700 hover:text-ink-950 cursor-pointer"
+            >
+              Open calendar <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
           </section>
+        </div>
+      ) : (
+        <div className="mt-8">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1">
+            {FILTERS.map((f) => {
+              const active = filter === f.id;
+              return (
+                <Link
+                  key={f.id}
+                  href={`/admin?status=${f.id}`}
+                  className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
+                    active
+                      ? "bg-ink-950 text-[var(--surface)] shadow-soft"
+                      : "bg-[var(--surface-elevated)]/70 text-ink-600 hover:text-ink-950 hover:bg-[var(--surface-elevated)]"
+                  }`}
+                >
+                  {f.label}
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="mt-6">
+            {filtered.length === 0 ? (
+              <EmptyState filter={filter} />
+            ) : (
+              <ul className="grid gap-3">
+                {filtered.map((b) => (
+                  <BookingRow key={b.id} booking={b} />
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       )}
     </div>
@@ -238,6 +258,69 @@ function SectionHead({ title, count, sub }: { title: string; count: number; sub?
       </div>
       {sub && <span className="text-xs text-ink-600">{sub}</span>}
     </div>
+  );
+}
+
+// A NEW booking with inline quick-actions (confirm + assign). Not a single link,
+// because it contains its own interactive controls.
+function NewBookingRow({ booking, cleaners }: { booking: Booking; cleaners: string[] }) {
+  const tier = TIER_META[booking.tier];
+  const freq = FREQUENCY_META[booking.frequency];
+  const isRecurring = booking.frequency !== "onetime";
+  const date = new Date(booking.slotDate + "T00:00:00").toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
+  const win = { morning: "AM", midday: "Mid", afternoon: "PM" }[booking.slotWindow];
+  const created = new Date(booking.createdAt).toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  return (
+    <li className="rounded-2xl bg-white ring-1 ring-line shadow-soft px-5 py-4">
+      <div className="flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <div className="flex items-baseline gap-2 flex-wrap">
+            <span className="font-mono text-xs font-bold text-ink-950 tabular-nums">
+              {booking.id}
+            </span>
+            <span className="text-xs text-ink-faint">·</span>
+            <span className="text-xs text-ink-700">{tier.label}</span>
+            {isRecurring && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-grass-500/15 text-grass-700 text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5">
+                <Repeat className="h-2.5 w-2.5" strokeWidth={2.8} />
+                {freq.label}
+              </span>
+            )}
+          </div>
+          <div className="mt-1 text-sm font-semibold text-ink-950 truncate">
+            {booking.address}
+            {booking.apt ? `, ${booking.apt}` : ""}
+          </div>
+          <div className="mt-0.5 text-xs text-ink-700">
+            {date} {win} · {booking.bedrooms} bd · {booking.bathrooms} ba ·{" "}
+            {booking.sqft.toLocaleString()} sqft
+          </div>
+          <div className="mt-0.5 text-[11px] text-ink-faint">Received {created}</div>
+        </div>
+        <div className="flex flex-col items-end gap-1 flex-none">
+          <span className="font-display font-bold text-lg text-ink-950 tabular-nums">
+            ${booking.priceTotal}
+          </span>
+          <Link
+            href={`/admin/${booking.id}`}
+            className="inline-flex items-center gap-1 text-xs font-semibold text-ink-700 hover:text-ink-950 cursor-pointer"
+          >
+            Open <ArrowRight className="h-3 w-3" />
+          </Link>
+        </div>
+      </div>
+      <QuickActions id={booking.id} cleaners={cleaners} assignedTo={booking.assignedTo} />
+    </li>
   );
 }
 
@@ -267,52 +350,14 @@ function CompactRow({ booking }: { booking: Booking }) {
   );
 }
 
-function ViewAll({ status }: { status: string }) {
+function ViewAll({ status, label }: { status: string; label?: string }) {
   return (
     <Link
       href={`/admin?status=${status}`}
       className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-ink-700 hover:text-ink-950 cursor-pointer"
     >
-      View all <ArrowRight className="h-3.5 w-3.5" />
+      {label ?? "View all"} <ArrowRight className="h-3.5 w-3.5" />
     </Link>
-  );
-}
-
-function Stat({
-  icon: Icon,
-  label,
-  value,
-  tone,
-}: {
-  icon: typeof Inbox;
-  label: string;
-  value: string | number;
-  tone: "ink" | "grass" | "amber";
-}) {
-  const ring = {
-    ink: "ring-line",
-    grass: "ring-grass-500/30",
-    amber: "ring-[oklch(0.8_0.1_75)]",
-  }[tone];
-  const iconBg = {
-    ink: "bg-ink-100 text-ink-800",
-    grass: "bg-grass-500/15 text-grass-700",
-    amber: "bg-[oklch(0.95_0.08_75)] text-[oklch(0.55_0.16_70)]",
-  }[tone];
-  return (
-    <div className={`rounded-2xl bg-white ring-1 ${ring} px-5 py-4 shadow-card`}>
-      <div className="flex items-center justify-between">
-        <span className={`inline-flex h-9 w-9 items-center justify-center rounded-xl ${iconBg}`}>
-          <Icon className="h-4 w-4" />
-        </span>
-      </div>
-      <div className="mt-3 font-display font-extrabold text-3xl text-ink-950 tabular-nums">
-        {value}
-      </div>
-      <div className="mt-0.5 text-xs font-semibold uppercase tracking-wider text-ink-700">
-        {label}
-      </div>
-    </div>
   );
 }
 
@@ -395,9 +440,7 @@ function BookingRow({ booking }: { booking: Booking }) {
           </div>
         </div>
 
-        <div className="mt-2 text-[11px] text-ink-faint">
-          Received {created}
-        </div>
+        <div className="mt-2 text-[11px] text-ink-faint">Received {created}</div>
       </Link>
     </li>
   );

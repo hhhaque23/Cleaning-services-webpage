@@ -10,10 +10,13 @@ export function BrandLockup({
   size = "md",
   priority = false,
   framed = false,
+  compactMobile = false,
 }: {
   size?: "md" | "lg";
   priority?: boolean;
   framed?: boolean;
+  /** Hide the "Spectre Cleaning" wordmark below `sm` (saves room in crowded bars). */
+  compactMobile?: boolean;
 }) {
   const c =
     size === "lg"
@@ -26,7 +29,11 @@ export function BrandLockup({
       >
         <SpectreMark size={c.mark} alt="Spectre Cleaning Solutions" priority={priority} />
       </span>
-      <span className={`font-display font-bold tracking-tight text-white ${c.text}`}>
+      <span
+        className={`font-display font-bold tracking-tight text-white ${c.text} ${
+          compactMobile ? "hidden sm:inline" : ""
+        }`}
+      >
         Spectre<span className="font-medium text-accent-400"> Cleaning</span>
       </span>
     </span>

@@ -4,8 +4,9 @@ import {
   getBooking,
   updateBookingStatus,
   updateBooking,
+  rescheduleBookingChecked,
   deleteBooking,
-  countSlot,
+  SlotFullError,
   type Booking,
   type BookingStatus,
   type BookingPatch,
@@ -193,15 +194,12 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
     targetWindow = sw as SlotWindow;
   }
 
-  const slotChanged =
+  // Capacity for a slot change is re-checked ATOMICALLY below in
+  // rescheduleBookingChecked (advisory lock + in-txn count, excluding self).
+  const slotChanged = Boolean(
     (patch.slotDate && patch.slotDate !== existing.slotDate) ||
-    (patch.slotWindow && patch.slotWindow !== existing.slotWindow);
-  if (slotChanged) {
-    const cap = await getCapacity();
-    const used = await countSlot(targetDate, targetWindow, existing.id);
-    if (used >= cap)
-      return NextResponse.json({ error: "That window is fully booked." }, { status: 409 });
-  }
+      (patch.slotWindow && patch.slotWindow !== existing.slotWindow)
+  );
 
   const pricingKeys = ["tier", "bedrooms", "bathrooms", "sqft", "floors", "frequency", "addOns"];
   if (pricingKeys.some((k) => k in patch)) {
@@ -220,7 +218,26 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
     patch.priceTotal = price.total;
   }
 
-  const updated = await updateBooking(params.id, patch);
+  // When the slot moved, do the capacity re-check + write atomically; otherwise a
+  // plain update is fine (no slot contention).
+  let updated;
+  if (slotChanged) {
+    const cap = await getCapacity();
+    try {
+      updated = await rescheduleBookingChecked(params.id, patch, cap, {
+        date: targetDate,
+        window: targetWindow,
+      });
+    } catch (err) {
+      if (err instanceof SlotFullError) {
+        return NextResponse.json({ error: "That window is fully booked." }, { status: 409 });
+      }
+      throw err;
+    }
+  } else {
+    updated = await updateBooking(params.id, patch);
+  }
+
   if (!updated) return NextResponse.json({ error: "Not found" }, { status: 404 });
   return NextResponse.json({
     id: updated.id,

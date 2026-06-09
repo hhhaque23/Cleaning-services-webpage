@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import {
-  createBooking,
+  createBookingChecked,
   deleteAllBookings,
-  countSlot,
+  SlotFullError,
   type NewBooking,
-  type SlotWindow,
 } from "@/lib/bookings";
 import { getCapacity } from "@/lib/settings";
 import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth";
@@ -102,40 +101,41 @@ export async function POST(req: Request) {
     priceTotal: price.total,
   };
 
-  // Capacity / no-double-booking: a (date, window) can hold at most `capacity`
-  // (= number of cleaners) non-cancelled jobs. Count-then-insert is not atomic;
-  // acceptable at this volume (TODO: advisory lock if contention appears).
+  // Capacity / no-double-booking is enforced ATOMICALLY inside createBookingChecked
+  // (advisory lock + in-txn re-count + insert), so two concurrent requests can
+  // never overbook the same (date, window). Capacity is read here because it lives
+  // in the separate settings table and rarely changes mid-booking.
   const capacity = await getCapacity();
-  const used = await countSlot(input.slotDate, input.slotWindow as SlotWindow);
-  if (used >= capacity) {
-    return bad("That slot just filled up — pick another time.", 409);
-  }
 
+  let booking;
   try {
-    const booking = await createBooking(input);
-
-    // Fire the confirmation email. Fail-open: a missing key or a provider error
-    // must never turn a successful booking into an error for the customer.
-    let emailed = false;
-    try {
-      const { subject, html, text } = bookingConfirmationEmail(booking);
-      const r = await sendEmail({
-        to: booking.email,
-        subject,
-        html,
-        text,
-        replyTo: SITE.email,
-      });
-      emailed = r.ok;
-    } catch (e) {
-      console.error("confirmation email failed", e);
-    }
-
-    return NextResponse.json({ id: booking.id, status: booking.status, emailed });
+    booking = await createBookingChecked(input, capacity);
   } catch (err) {
+    if (err instanceof SlotFullError) {
+      return bad("That slot just filled up — pick another time.", 409);
+    }
     console.error("createBooking failed", err);
     return bad("Storage failure", 500);
   }
+
+  // Fire the confirmation email OUTSIDE the transaction. Fail-open: a missing key
+  // or a provider error must never turn a successful booking into an error.
+  let emailed = false;
+  try {
+    const { subject, html, text } = bookingConfirmationEmail(booking);
+    const r = await sendEmail({
+      to: booking.email,
+      subject,
+      html,
+      text,
+      replyTo: SITE.email,
+    });
+    emailed = r.ok;
+  } catch (e) {
+    console.error("confirmation email failed", e);
+  }
+
+  return NextResponse.json({ id: booking.id, status: booking.status, emailed });
 }
 
 // DELETE = wipe ALL bookings (admin only). Requires an explicit confirm token in

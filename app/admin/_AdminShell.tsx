@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, CalendarDays, Settings, LogOut, Home } from "lucide-react";
+import { LayoutDashboard, CalendarDays, DollarSign, Settings, LogOut, Home } from "lucide-react";
 import { useTransition } from "react";
 import { BrandLockup } from "../components/BrandLockup";
 
@@ -42,13 +42,14 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-40 bg-[var(--surface)]/85 backdrop-blur-md border-b border-line">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
           <Link href="/admin" className="flex items-center gap-2.5 cursor-pointer">
-            <BrandLockup framed />
+            <BrandLockup framed compactMobile />
             <span className="hidden sm:block text-sm font-semibold text-ink-700">Operations</span>
           </Link>
 
           <nav className="flex items-center gap-1">
-            <NavLink href="/admin" active={pathname === "/admin"} icon={LayoutDashboard} label="Bookings" />
+            <NavLink href="/admin" active={pathname === "/admin"} icon={LayoutDashboard} label="Queue" />
             <NavLink href="/admin/calendar" active={pathname === "/admin/calendar"} icon={CalendarDays} label="Calendar" />
+            <NavLink href="/admin/financial" active={pathname === "/admin/financial"} icon={DollarSign} label="Financial" />
             <NavLink href="/admin/settings" active={pathname === "/admin/settings"} icon={Settings} label="Settings" />
             <Link
               href="/"

@@ -65,6 +65,40 @@ const memory: Map<string, Booking> =
   globalRef.__spectreBookings ?? new Map<string, Booking>();
 globalRef.__spectreBookings = memory;
 
+// Thrown by the *Checked writers when a (date, window) is already at capacity.
+// Routes catch this and return a 409 instead of a 500.
+export class SlotFullError extends Error {
+  constructor(message = "Slot full") {
+    super(message);
+    this.name = "SlotFullError";
+  }
+}
+
+// Per-slot serialization for the IN-MEMORY fallback (no DATABASE_URL). A single
+// Node process still has an async gap between counting and inserting, so two
+// requests for the last slot could both pass. We chain same-slot writers on a
+// promise keyed by `date|window`; the work fn counts + memory.set with NO await
+// in between, closing the gap. Different slots never block each other.
+const memSlotLocks = new Map<string, Promise<unknown>>();
+
+function slotKey(dateISO: string, window: SlotWindow): string {
+  return `${dateISO}|${window}`;
+}
+
+function withMemSlotLock<T>(key: string, fn: () => T): Promise<T> {
+  const prev = memSlotLocks.get(key) ?? Promise.resolve();
+  const next = prev.then(() => fn(), () => fn());
+  // Store a never-rejecting tail so one failure doesn't poison the chain.
+  memSlotLocks.set(
+    key,
+    next.then(
+      () => undefined,
+      () => undefined
+    )
+  );
+  return next;
+}
+
 function makeId() {
   const chars = "23456789ABCDEFGHJKMNPQRSTUVWXYZ";
   let s = "";
@@ -382,6 +416,116 @@ export async function updateBooking(
   const updated: Booking = { ...existing, ...(patch as Partial<Booking>) };
   memory.set(id, updated);
   return updated;
+}
+
+// Atomic create: capacity check + insert happen together so two concurrent
+// requests can never overbook the same (date, window). On Postgres this runs in
+// one transaction guarded by a per-slot advisory lock (re-count inside the lock,
+// then insert, else throw SlotFullError -> rollback releases the lock). Without a
+// DB it serializes on the in-memory per-slot lock. `capacity` is read once by the
+// caller (it lives in the separate settings table and rarely changes).
+export async function createBookingChecked(
+  input: NewBooking,
+  capacity: number
+): Promise<Booking> {
+  const id = makeId();
+  const client = getSql();
+  if (client) {
+    await ensureSchema();
+    return client.begin(async (sql) => {
+      await sql`SELECT pg_advisory_xact_lock(hashtext(${input.slotDate} || ':' || ${input.slotWindow}))`;
+      const countRows = await sql`
+        SELECT COUNT(*)::int AS n FROM bookings
+        WHERE status <> 'cancelled'
+          AND slot_date = ${input.slotDate}
+          AND slot_window = ${input.slotWindow}
+      `;
+      if (Number(countRows[0]?.n ?? 0) >= capacity) throw new SlotFullError();
+      const rows = await sql`
+        INSERT INTO bookings (
+          id, email, phone, address, apt, notes, tier,
+          bedrooms, bathrooms, sqft, floors, frequency, add_ons,
+          slot_date, slot_window, price_subtotal, price_discount, price_total
+        ) VALUES (
+          ${id}, ${input.email}, ${input.phone}, ${input.address},
+          ${input.apt}, ${input.notes}, ${input.tier},
+          ${input.bedrooms}, ${input.bathrooms}, ${input.sqft}, ${input.floors},
+          ${input.frequency}, ${input.addOns},
+          ${input.slotDate}, ${input.slotWindow},
+          ${input.priceSubtotal}, ${input.priceDiscount}, ${input.priceTotal}
+        )
+        RETURNING *
+      `;
+      return rowToBooking(rows[0]);
+    }) as Promise<Booking>;
+  }
+  return withMemSlotLock(slotKey(input.slotDate, input.slotWindow), () => {
+    let used = 0;
+    for (const b of memory.values()) {
+      if (b.status === "cancelled") continue;
+      if (b.slotDate === input.slotDate && b.slotWindow === input.slotWindow) used++;
+    }
+    if (used >= capacity) throw new SlotFullError();
+    const booking: Booking = {
+      id,
+      createdAt: new Date().toISOString(),
+      status: "new",
+      assignedTo: null,
+      ...input,
+    };
+    memory.set(id, booking);
+    return booking;
+  });
+}
+
+// Atomic reschedule: same capacity guard as createBookingChecked, keyed on the
+// TARGET (date, window) and excluding the booking's own id. Used by the PUT route
+// only when the slot actually changes. Returns null if the booking is gone.
+export async function rescheduleBookingChecked(
+  id: string,
+  patch: BookingPatch,
+  capacity: number,
+  target: { date: string; window: SlotWindow }
+): Promise<Booking | null> {
+  const keys = (Object.keys(patch) as (keyof BookingPatch)[]).filter(
+    (k) => k in PATCH_COL
+  );
+  const client = getSql();
+  if (client) {
+    await ensureSchema();
+    return client.begin(async (sql) => {
+      await sql`SELECT pg_advisory_xact_lock(hashtext(${target.date} || ':' || ${target.window}))`;
+      const countRows = await sql`
+        SELECT COUNT(*)::int AS n FROM bookings
+        WHERE status <> 'cancelled'
+          AND slot_date = ${target.date}
+          AND slot_window = ${target.window}
+          AND id <> ${id}
+      `;
+      if (Number(countRows[0]?.n ?? 0) >= capacity) throw new SlotFullError();
+      if (keys.length === 0) {
+        const rows = await sql`SELECT * FROM bookings WHERE id = ${id} LIMIT 1`;
+        return rows[0] ? rowToBooking(rows[0]) : null;
+      }
+      const snake: Record<string, unknown> = {};
+      for (const k of keys) snake[PATCH_COL[k as string]] = patch[k];
+      const rows = await sql`UPDATE bookings SET ${sql(snake)} WHERE id = ${id} RETURNING *`;
+      return rows[0] ? rowToBooking(rows[0]) : null;
+    }) as Promise<Booking | null>;
+  }
+  return withMemSlotLock(slotKey(target.date, target.window), () => {
+    let used = 0;
+    for (const b of memory.values()) {
+      if (b.status === "cancelled") continue;
+      if (b.slotDate === target.date && b.slotWindow === target.window && b.id !== id) used++;
+    }
+    if (used >= capacity) throw new SlotFullError();
+    const existing = memory.get(id);
+    if (!existing) return null;
+    const updated: Booking = { ...existing, ...(patch as Partial<Booking>) };
+    memory.set(id, updated);
+    return updated;
+  });
 }
 
 export async function bookingStats(): Promise<{
