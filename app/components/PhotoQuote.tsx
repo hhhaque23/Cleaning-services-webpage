@@ -24,7 +24,7 @@ export function PhotoQuote() {
   return (
     <section
       ref={ref}
-      className="relative py-20 sm:py-28 overflow-hidden"
+      className="relative py-12 sm:py-28 overflow-hidden"
     >
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
@@ -54,7 +54,7 @@ export function PhotoQuote() {
               whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.85, ease: EASE_OUT_QUINT }}
-              className="font-display font-extrabold text-[6rem] sm:text-[8rem] leading-none text-grass-500/35 -mb-6 block select-none"
+              className="font-display font-extrabold text-[4rem] sm:text-[8rem] leading-none text-grass-500/35 -mb-4 sm:-mb-6 block select-none"
               style={{ transformOrigin: "left bottom" }}
             >
               &ldquo;

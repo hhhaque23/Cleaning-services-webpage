@@ -43,7 +43,7 @@ export function FinalCTA() {
   const spotlight = useMotionTemplate`radial-gradient(700px circle at ${mx}% ${my}%, oklch(0.65 0.13 220 / 0.32), transparent 65%)`;
 
   return (
-    <section className="relative py-24 sm:py-32">
+    <section className="relative py-14 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           ref={ref}

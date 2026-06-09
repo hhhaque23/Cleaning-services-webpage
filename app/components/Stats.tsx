@@ -19,7 +19,7 @@ const RECENT_BOOKINGS = [
 
 export function Stats() {
   return (
-    <section className="relative py-24 sm:py-32 overflow-hidden">
+    <section className="relative py-14 sm:py-32 overflow-hidden">
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-14 items-center">
           <motion.div

@@ -38,7 +38,7 @@ const FAQS = [
 export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="relative py-24 sm:py-32 scroll-mt-24">
+    <section id="faq" className="relative py-14 sm:py-32 scroll-mt-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-16 items-start">
           <div className="lg:sticky lg:top-24 space-y-6">

@@ -160,7 +160,7 @@ export function BookingFlow() {
   const freq = FREQUENCY_META[config.frequency];
 
   return (
-    <section id="booking" className="relative py-20 sm:py-28 scroll-mt-24">
+    <section id="booking" className="relative py-12 sm:py-28 scroll-mt-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -450,7 +450,7 @@ function SidebarPricing({
           <div className="mt-1.5 flex items-baseline gap-1.5">
             <PriceTicker
               value={price.total}
-              className="font-display font-extrabold text-5xl sm:text-6xl tracking-tight text-white"
+              className="font-display font-extrabold text-4xl sm:text-6xl tracking-tight text-white"
             />
             <span className="text-ink-100/85 text-sm">/ visit</span>
           </div>

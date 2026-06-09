@@ -75,7 +75,7 @@ export function HowItWorks() {
     <section
       id="how"
       ref={sectionRef}
-      className="relative py-24 sm:py-32 scroll-mt-24 overflow-hidden"
+      className="relative py-14 sm:py-32 scroll-mt-24 overflow-hidden"
     >
       <div
         aria-hidden="true"

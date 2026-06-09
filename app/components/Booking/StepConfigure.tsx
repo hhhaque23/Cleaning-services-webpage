@@ -120,7 +120,7 @@ export function StepConfigure({ config, setConfig }: Props) {
                 whileTap={reduce ? undefined : { scale: 0.97 }}
                 animate={{ y: active ? -4 : 0 }}
                 transition={{ type: "spring", stiffness: 320, damping: 24 }}
-                className={`relative rounded-2xl px-3 sm:px-4 py-3.5 text-left transition-all cursor-pointer overflow-hidden ${
+                className={`relative rounded-2xl px-2.5 sm:px-4 py-3 sm:py-3.5 text-left transition-all cursor-pointer overflow-hidden ${
                   active
                     ? "bg-ink-950 text-white shadow-lift"
                     : "bg-[var(--surface)] border border-line hover:border-line-strong hover:shadow-card"
@@ -142,7 +142,7 @@ export function StepConfigure({ config, setConfig }: Props) {
                   }`}
                 />
                 <div
-                  className={`relative mt-2 text-sm font-semibold ${
+                  className={`relative mt-2 text-[13px] sm:text-sm font-semibold ${
                     active ? "text-white" : "text-ink-950"
                   }`}
                 >

@@ -54,7 +54,7 @@ export function SubscriptionCallout() {
   const plan = PLANS[active];
 
   return (
-    <section className="relative py-20 sm:py-28">
+    <section className="relative py-12 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

@@ -30,7 +30,7 @@ export function Hero() {
     <section
       id="top"
       ref={ref}
-      className="relative overflow-hidden pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 lg:pb-24 min-h-[88vh] flex items-center"
+      className="relative overflow-hidden pt-24 sm:pt-28 lg:pt-32 pb-10 sm:pb-20 lg:pb-24 lg:min-h-[88vh] flex items-center"
     >
       <HeroVideo />
 
@@ -39,7 +39,7 @@ export function Hero() {
           variants={stagger}
           initial="hidden"
           animate="show"
-          className="grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14 items-center"
+          className="grid lg:grid-cols-[1.05fr_1fr] gap-7 sm:gap-10 lg:gap-14 items-center"
         >
           <div className="relative isolate">
             <div

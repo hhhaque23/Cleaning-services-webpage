@@ -42,7 +42,7 @@ function ReviewCard({ r }: { r: Review }) {
     <motion.figure
       whileHover={{ y: -4 }}
       transition={{ duration: 0.25, ease: EASE_OUT_QUINT }}
-      className="group relative w-[20rem] sm:w-[26rem] flex-none mr-6 sm:mr-8 rounded-2xl bg-[var(--surface-elevated)] border border-line hover:border-grass-500/40 shadow-soft hover:shadow-card transition-all p-6"
+      className="group relative w-[80vw] sm:w-[26rem] flex-none mr-4 sm:mr-8 snap-start rounded-2xl bg-[var(--surface-elevated)] border border-line hover:border-grass-500/40 shadow-soft hover:shadow-card transition-all p-6"
     >
       <div
         aria-hidden
@@ -111,7 +111,7 @@ export function Reviews() {
     <section
       ref={sectionRef}
       id="reviews"
-      className="relative py-24 sm:py-32 overflow-hidden scroll-mt-24"
+      className="relative py-14 sm:py-32 overflow-hidden scroll-mt-24"
     >
       <div
         aria-hidden
@@ -143,7 +143,7 @@ export function Reviews() {
       <div className="relative mt-16 space-y-8 group">
         <div className="relative">
           <div
-            className="flex animate-marquee group-hover:[animation-play-state:paused]"
+            className="flex overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-none animate-marquee group-hover:[animation-play-state:paused]"
             style={{ animationPlayState: playState }}
           >
             {[...rowA, ...rowA].map((r, i) => (
@@ -153,7 +153,7 @@ export function Reviews() {
         </div>
         <div className="relative">
           <div
-            className="flex animate-marquee [animation-direction:reverse] [animation-duration:46s] group-hover:[animation-play-state:paused]"
+            className="flex overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-none animate-marquee [animation-direction:reverse] [animation-duration:46s] group-hover:[animation-play-state:paused]"
             style={{ animationPlayState: playState }}
           >
             {[...rowB, ...rowB].map((r, i) => (
@@ -161,8 +161,8 @@ export function Reviews() {
             ))}
           </div>
         </div>
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-[var(--surface)] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-40 bg-gradient-to-l from-[var(--surface)] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-6 sm:w-40 bg-gradient-to-r from-[var(--surface)] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-6 sm:w-40 bg-gradient-to-l from-[var(--surface)] to-transparent" />
       </div>
     </section>
   );

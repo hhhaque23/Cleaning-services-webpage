@@ -7,3 +7,15 @@ out/
 .vercel
 next-env.d.ts
 tsconfig.tsbuildinfo
+
+# Local mobile-audit / dev scratch (not part of the app)
+/audit-mobile*.mjs
+/probe-*.mjs
+/sweep.mjs
+/verify-*.mjs
+/h[0-9][0-9].png
+/m-*.png
+/p-*.png
+/nav.png
+/cfg.png
+/home-check.png

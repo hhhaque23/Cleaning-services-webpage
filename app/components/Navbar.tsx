@@ -185,15 +185,19 @@ export function Navbar() {
                 Email us
               </a>
 
-              <MagneticButton as="div" radius={70} strength={0.22} className="hidden sm:inline-flex">
-                <Link
-                  href="/admin/login"
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 hover:border-white/25 text-white/85 hover:text-white text-sm font-semibold px-3.5 py-3 transition-all cursor-pointer"
-                >
-                  <ShieldCheck className="h-3.5 w-3.5" />
-                  Ops
-                </Link>
-              </MagneticButton>
+              {/* Wrapper carries the responsive hide: MagneticButton forces an
+                  inline `display`, which would otherwise defeat the `hidden` class. */}
+              <div className="hidden sm:inline-flex">
+                <MagneticButton as="div" radius={70} strength={0.22}>
+                  <Link
+                    href="/admin/login"
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 hover:border-white/25 text-white/85 hover:text-white text-sm font-semibold px-3.5 py-3 transition-all cursor-pointer"
+                  >
+                    <ShieldCheck className="h-3.5 w-3.5" />
+                    Ops
+                  </Link>
+                </MagneticButton>
+              </div>
 
               <MagneticButton as="div" radius={90} strength={0.28}>
                 <Link

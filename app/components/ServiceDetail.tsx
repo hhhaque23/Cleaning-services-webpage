@@ -253,7 +253,7 @@ export function ServiceDetail({ tier }: { tier: Tier }) {
     <>
       <section
         ref={heroRef}
-        className="relative overflow-hidden pt-32 sm:pt-36 lg:pt-44 pb-20 sm:pb-24"
+        className="relative overflow-hidden pt-24 sm:pt-36 lg:pt-44 pb-20 sm:pb-24"
       >
         <div className="absolute inset-0 -z-10 bg-grid-faint bg-grid-32 [mask-image:radial-gradient(ellipse_at_top,black_25%,transparent_70%)]" />
 

@@ -64,7 +64,7 @@ export function StepSuccess({ contact, slot, total, bookingId, emailed }: Props)
         <Confetti count={42} duration={1.8} spread={280} />
       </div>
 
-      <h3 className="mt-6 font-display font-extrabold text-3xl text-ink-950 tracking-tight">
+      <h3 className="mt-6 font-display font-extrabold text-2xl sm:text-3xl text-ink-950 tracking-tight">
         <SplitText mode="word" trigger="load" stagger={0.05}>
           {"Your clean is locked in."}
         </SplitText>

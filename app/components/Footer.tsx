@@ -82,8 +82,8 @@ export function Footer() {
     <footer className="relative bg-ink-950 text-white overflow-hidden mt-10">
       {/* Top marquee */}
       <div className="relative border-b border-white/10 overflow-hidden">
-        <div className="absolute inset-y-0 left-0 w-16 z-10 pointer-events-none bg-gradient-to-r from-ink-950 to-transparent" />
-        <div className="absolute inset-y-0 right-0 w-16 z-10 pointer-events-none bg-gradient-to-l from-ink-950 to-transparent" />
+        <div className="absolute inset-y-0 left-0 w-8 sm:w-16 z-10 pointer-events-none bg-gradient-to-r from-ink-950 to-transparent" />
+        <div className="absolute inset-y-0 right-0 w-8 sm:w-16 z-10 pointer-events-none bg-gradient-to-l from-ink-950 to-transparent" />
         <div className="group flex py-4">
           <motion.div
             animate={reduce ? undefined : { x: ["0%", "-50%"] }}
