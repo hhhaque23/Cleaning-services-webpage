@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NIGHT SHIFT — Spectre Cleaning Solutions // Tape №4</title>
+<style>
+  :root{
+    --phosphor:#cfd6c8;
+    --dim:#7c857a;
+    --bezel:#17181a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:radial-gradient(ellipse at 50% 35%, #101312 0%, #060707 70%, #020303 100%);
+    color:var(--phosphor);
+    font-family:"Courier New",ui-monospace,monospace;
+    display:flex;align-items:center;justify-content:center;
+    min-height:100vh;padding:16px;
+    -webkit-user-select:none;user-select:none;
+  }
+  #frame{
+    width:min(96vw, 150vh);
+    background:linear-gradient(#232527,#121314 60%,#0b0c0d);
+    border:1px solid #000;
+    border-radius:18px;
+    padding:22px 22px 14px;
+    box-shadow:0 30px 80px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.06);
+  }
+  #screenWrap{
+    position:relative;
+    background:#000;
+    border-radius:10px;
+    overflow:hidden;
+    aspect-ratio:4/3;
+    border:2px solid #000;
+    box-shadow:inset 0 0 60px rgba(0,0,0,.9);
+  }
+  canvas#view{
+    position:absolute;inset:0;width:100%;height:100%;
+    image-rendering:pixelated;
+    filter:contrast(1.12) saturate(.7) brightness(1.02);
+  }
+  /* CRT dressing */
+  #scanlines{
+    position:absolute;inset:0;pointer-events:none;z-index:3;
+    background:repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0 2px, rgba(0,0,0,.28) 2px 4px);
+    mix-blend-mode:multiply;
+    animation:flick 4s steps(60) infinite;
+  }
+  @keyframes flick{0%,100%{opacity:.85}50%{opacity:.95}}
+  #vignette{
+    position:absolute;inset:0;pointer-events:none;z-index:4;
+    background:radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%);
+  }
+  #glass{
+    position:absolute;inset:0;pointer-events:none;z-index:5;
+    background:linear-gradient(115deg, rgba(255,255,255,.05) 0%, rgba(255,255,255,0) 30%);
+  }
+  /* overlays */
+  .overlay{
+    position:absolute;inset:0;z-index:10;display:none;
+    flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;background:rgba(2,4,2,.86);padding:6%;
+    letter-spacing:.08em;line-height:1.7;
+  }
+  .overlay.show{display:flex}
+  .overlay h1{font-size:clamp(15px,2.6vw,26px);font-weight:700;letter-spacing:.3em;margin-bottom:.4em}
+  .overlay .sub{color:var(--dim);font-size:clamp(10px,1.4vw,14px)}
+  .overlay .body{font-size:clamp(10px,1.5vw,15px);max-width:34em;margin:1.2em 0}
+  .overlay .quote{color:#9aa694;font-style:italic}
+  button{
+    font-family:inherit;letter-spacing:.15em;cursor:pointer;
+    background:#0d100d;color:var(--phosphor);
+    border:1px solid #3a4238;border-radius:3px;
+    padding:.55em 1.3em;font-size:clamp(10px,1.4vw,14px);
+  }
+  button:hover{background:#1a201a;border-color:#5a655a}
+  button:active{transform:translateY(1px)}
+  button:disabled{opacity:.35;cursor:default}
+  button.sel{background:#283226;border-color:#8fa287;color:#e4eade}
+  .blink{animation:bl 1s steps(2) infinite}
+  @keyframes bl{50%{opacity:.15}}
+  /* report modal */
+  #reportModal{background:rgba(2,4,2,.92);z-index:12}
+  #reportModal .grid{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:.6em 0 1.2em}
+  #reportModal .lbl{color:var(--dim);font-size:clamp(9px,1.2vw,12px);letter-spacing:.25em;margin-top:.8em}
+  /* control deck */
+  #deck{
+    display:flex;gap:8px;align-items:center;justify-content:space-between;
+    margin-top:14px;flex-wrap:wrap;
+  }
+  #camBtns{display:flex;gap:6px;flex-wrap:wrap}
+  #camBtns button{min-width:2.6em;padding:.5em .6em}
+  #camBtns button.active{background:#232b21;border-color:#7d9073;color:#e7eee0}
+  #reportBtn{border-color:#5d4a3a;color:#d8c8b4;letter-spacing:.25em}
+  #reportBtn:hover{background:#241c14;border-color:#8a6e52}
+  #pager{
+    flex:1 1 100%;min-height:1.6em;margin-top:8px;
+    color:#a8b39f;font-size:clamp(9px,1.3vw,13px);letter-spacing:.1em;
+    opacity:0;transition:opacity .6s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  #pager.show{opacity:1}
+  #brand{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:10px;color:#3f4540;font-size:10px;letter-spacing:.35em;
+  }
+  #led{width:7px;height:7px;border-radius:50%;background:#e04a3a;box-shadow:0 0 6px #e04a3a;display:inline-block}
+</style>
+</head>
+<body>
+<div id="frame">
+  <div id="screenWrap">
+    <canvas id="view" width="320" height="240"></canvas>
+    <div id="scanlines"></div>
+    <div id="vignette"></div>
+    <div id="glass"></div>
+
+    <div id="titleScreen" class="overlay show">
+      <div class="sub">SPECTRE CLEANING SOLUTIONS — INTERNAL USE ONLY</div>
+      <h1>NIGHT&nbsp;SHIFT</h1>
+      <div class="sub">ORIENTATION TAPE №4 &nbsp;·&nbsp; PROPERTY OF SITE B, ANN ARBOR MI</div>
+      <div class="body">
+        You are the night cleaner. You do not clean.<br>
+        You watch the cameras <b>[1–6]</b> and you keep the log.<br><br>
+        When a room is <i>wrong</i> — a figure, a moved object, an open door,
+        dead lights — press <b>[R] REPORT</b>, name the camera and the fault.<br>
+        False reports lock the panel. Unreported faults <span class="blink">escalate</span>.<br><br>
+        <span class="quote">“The building cleans itself. You just watch.”</span>
+      </div>
+      <button id="playBtn">▶&nbsp;&nbsp;PLAY TAPE</button>
+      <div class="sub" style="margin-top:1.2em">headphones recommended · contains sudden noise</div>
+    </div>
+
+    <div id="reportModal" class="overlay">
+      <h1 style="letter-spacing:.2em;font-size:clamp(12px,1.8vw,18px)">INCIDENT REPORT</h1>
+      <div class="lbl">CAMERA</div>
+      <div class="grid" id="repCams"></div>
+      <div class="lbl">FAULT OBSERVED</div>
+      <div class="grid" id="repTypes"></div>
+      <div class="grid">
+        <button id="repSubmit" disabled>TRANSMIT</button>
+        <button id="repCancel">CANCEL&nbsp;[ESC]</button>
+      </div>
+    </div>
+
+    <div id="endScreen" class="overlay"></div>
+  </div>
+
+  <div id="deck">
+    <div id="camBtns"></div>
+    <button id="reportBtn">⬤ REPORT [R]</button>
+    <div id="pager"></div>
+  </div>
+
+  <div id="brand"><span>SPECTRE&nbsp;VISION&nbsp;·&nbsp;MODEL&nbsp;SV-1994</span><span><span id="led"></span>&nbsp;PWR</span></div>
+</div>
+
+<script>
+'use strict';
+/* ============================ CONSTANTS ============================ */
+const W=320, H=240, HOUR=45, TOTAL=HOUR*6;
+const TYPES=['FIGURE','OBJECT','DOOR','LIGHTS'];
+const TYPE_LABEL={FIGURE:'FIGURE PRESENT',OBJECT:'OBJECT MOVED',DOOR:'DOOR OPEN',LIGHTS:'LIGHTS OUT'};
+const CAMS=['LOBBY','HALLWAY','OFFICE A','BREAK ROOM','STORAGE','BASEMENT'];
+const CAP      =[1,2,2,3,3,4];
+const INTERVAL =[18,15,13,11,9,8];
+const STAGETIME=[26,24,21,19,17,15];
+const P={wall:'#767f74',wall2:'#666e65',floor:'#4d534b',floorD:'#3b403a',
+         dark:'#141713',line:'#2c302b',lite:'#a9b1a3',mid:'#5d645b',ink:'#0a0c09'};
+
+const MSGS=[
+  "PAGER · MGMT: cameras get noisy after midnight. log anything odd via the panel. do not leave the booth. —D",
+  "PAGER · MGMT: if something has moved, report it. do NOT go put it back.",
+  "PAGER · MGMT: reminder — there is only one man on the tapes. if you count two, report the second.",
+  "PAGER · MGMT: disregard the 1AM page. nobody here messaged you at 1AM.",
+  "PAGER · UNKNOWN: it prefers the rooms you watch least.",
+  "PAGER · UNKNOWN: one more hour. whatever happens, keep it out of the lobby."
+];
+
+/* ============================ STATE ============================ */
+let S=null;
+function freshState(){return{
+  mode:'title', t:0, last:performance.now(), cam:0,
+  anomalies:[], spawnT:9+Math.random()*4,
+  lockout:0, verify:null, switchGlitch:0,
+  reported:0, hourShown:-1, msgT:0,
+  beatT:0, subFlash:0, endT:0
+};}
+
+/* ============================ DOM ============================ */
+const $=id=>document.getElementById(id);
+const view=$('view'), vg=view.getContext('2d');
+const sc=document.createElement('canvas'); sc.width=W; sc.height=H;
+const g=sc.getContext('2d');
+vg.imageSmoothingEnabled=false;
+
+const camBtns=[];
+for(let i=0;i<6;i++){
+  const b=document.createElement('button');
+  b.textContent=String(i+1);
+  b.title='CAM 0'+(i+1)+' '+CAMS[i];
+  b.onclick=()=>switchCam(i);
+  $('camBtns').appendChild(b); camBtns.push(b);
+}
+$('reportBtn').onclick=()=>toggleReport();
+$('playBtn').onclick=()=>startGame();
+$('repCancel').onclick=()=>closeReport();
+$('repSubmit').onclick=()=>submitReport();
+
+let selCam=0, selType=null;
+const repCamBtns=[], repTypeBtns=[];
+for(let i=0;i<6;i++){
+  const b=document.createElement('button');
+  b.textContent='0'+(i+1);
+  b.onclick=()=>{selCam=i;syncModal();};
+  $('repCams').appendChild(b); repCamBtns.push(b);
+}
+for(const ty of TYPES){
+  const b=document.createElement('button');
+  b.textContent=TYPE_LABEL[ty];
+  b.onclick=()=>{selType=ty;syncModal();};
+  $('repTypes').appendChild(b); repTypeBtns.push(b);
+}
+function syncModal(){
+  repCamBtns.forEach((b,i)=>b.classList.toggle('sel',i===selCam));
+  repTypeBtns.forEach((b,i)=>b.classList.toggle('sel',TYPES[i]===selType));
+  $('repSubmit').disabled=!selType;
+}
+
+document.addEventListener('keydown',e=>{
+  if(S.mode==='title'&&(e.key==='Enter'||e.key===' ')){startGame();return;}
+  if(S.mode==='over'||S.mode==='win'){if(e.key==='Enter'||e.key===' ')restart();return;}
+  if(S.mode!=='shift')return;
+  if(e.key>='1'&&e.key<='6'){
+    if(reportOpen()){selCam=+e.key-1;syncModal();}else switchCam(+e.key-1);
+  }
+  else if(e.key==='ArrowRight')switchCam((S.cam+1)%6);
+  else if(e.key==='ArrowLeft')switchCam((S.cam+5)%6);
+  else if(e.key==='r'||e.key==='R')toggleReport();
+  else if(e.key==='Escape')closeReport();
+  else if(e.key==='Enter'&&reportOpen()&&selType)submitReport();
+});
+
+function reportOpen(){return $('reportModal').classList.contains('show');}
+function toggleReport(){
+  if(S.mode!=='shift')return;
+  if(reportOpen()){closeReport();return;}
+  if(S.lockout>0||S.verify)return;
+  selCam=S.cam; selType=null; syncModal();
+  $('reportModal').classList.add('show');
+  blip(520,.05,'square',.05);
+}
+function closeReport(){$('reportModal').classList.remove('show');}
+function submitReport(){
+  if(!selType)return;
+  closeReport();
+  S.verify={cam:selCam,type:selType,t:1.5};
+  blip(660,.08,'square',.06);
+}
+
+function switchCam(i){
+  if(S.mode!=='shift'||i===S.cam)return;
+  S.cam=i; S.switchGlitch=.5;
+  camBtns.forEach((b,k)=>b.classList.toggle('active',k===i));
+  burst(.18,.10,1400);
+}
+
+/* ============================ AUDIO ============================ */
+let AC=null,master,noiseBuf,hissGain,droneGain;
+function audioInit(){
+  if(AC)return;
+  try{AC=new(window.AudioContext||window.webkitAudioContext)();}catch(e){return;}
+  master=AC.createGain(); master.gain.value=.75; master.connect(AC.destination);
+  const len=AC.sampleRate*2;
+  noiseBuf=AC.createBuffer(1,len,AC.sampleRate);
+  const d=noiseBuf.getChannelData(0);
+  for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
+  const hiss=AC.createBufferSource(); hiss.buffer=noiseBuf; hiss.loop=true;
+  const lp=AC.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=850;
+  hissGain=AC.createGain(); hissGain.gain.value=.028;
+  hiss.connect(lp); lp.connect(hissGain); hissGain.connect(master); hiss.start();
+  droneGain=AC.createGain(); droneGain.gain.value=.045; droneGain.connect(master);
+  for(const f of [46,46.7]){
+    const o=AC.createOscillator(); o.type='sine'; o.frequency.value=f;
+    o.connect(droneGain); o.start();
+  }
+}
+function burst(dur,vol,hp){
+  if(!AC)return;
+  const s=AC.createBufferSource(); s.buffer=noiseBuf;
+  const f=AC.createBiquadFilter(); f.type='highpass'; f.frequency.value=hp||900;
+  const gn=AC.createGain();
+  gn.gain.setValueAtTime(vol,AC.currentTime);
+  gn.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+dur);
+  s.connect(f); f.connect(gn); gn.connect(master);
+  s.start(); s.stop(AC.currentTime+dur+.05);
+}
+function blip(freq,dur,type,vol){
+  if(!AC)return;
+  const o=AC.createOscillator(),gn=AC.createGain();
+  o.type=type||'square'; o.frequency.value=freq;
+  gn.gain.setValueAtTime(vol||.08,AC.currentTime);
+  gn.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+dur);
+  o.connect(gn); gn.connect(master);
+  o.start(); o.stop(AC.currentTime+dur+.05);
+}
+function thump(){
+  if(!AC)return;
+  const o=AC.createOscillator(),gn=AC.createGain();
+  o.type='sine';
+  o.frequency.setValueAtTime(85,AC.currentTime);
+  o.frequency.exponentialRampToValueAtTime(38,AC.currentTime+.25);
+  gn.gain.setValueAtTime(.4,AC.currentTime);
+  gn.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+.3);
+  o.connect(gn); gn.connect(master);
+  o.start(); o.stop(AC.currentTime+.35);
+}
+function scare(){
+  if(!AC)return;
+  burst(1.4,.5,150);
+  const o=AC.createOscillator(),gn=AC.createGain();
+  o.type='sawtooth';
+  o.frequency.setValueAtTime(220,AC.currentTime);
+  o.frequency.exponentialRampToValueAtTime(28,AC.currentTime+1.3);
+  gn.gain.setValueAtTime(.3,AC.currentTime);
+  gn.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+1.4);
+  o.connect(gn); gn.connect(master);
+  o.start(); o.stop(AC.currentTime+1.5);
+}
+
+/* ============================ GAME FLOW ============================ */
+function startGame(){
+  audioInit();
+  if(AC&&AC.state==='suspended')AC.resume();
+  $('titleScreen').classList.remove('show');
+  S=freshState(); S.mode='shift'; S.last=performance.now();
+  camBtns.forEach((b,k)=>b.classList.toggle('active',k===0));
+  burst(.4,.2,600);
+}
+function restart(){
+  $('endScreen').classList.remove('show');
+  startGame();
+}
+function hourOf(t){return Math.min(5,Math.floor(t/HOUR));}
+
+function spawnAnomaly(){
+  const hour=hourOf(S.t);
+  for(let tries=0;tries<20;tries++){
+    const cam=(Math.random()*6)|0, type=TYPES[(Math.random()*4)|0];
+    if(S.anomalies.some(a=>a.cam===cam&&a.type===type))continue;
+    S.anomalies.push({cam,type,stage:1,stageT:0,seed:Math.random()});
+    if(cam===S.cam)S.switchGlitch=Math.max(S.switchGlitch,.6);
+    burst(.12,.05,2000);
+    return;
+  }
+}
+function gameOver(){
+  S.mode='dying'; S.endT=0;
+  closeReport(); scare();
+}
+function showEnd(win){
+  const e=$('endScreen');
+  if(win){
+    e.innerHTML=`
+      <div class="sub">SPECTRE CLEANING SOLUTIONS · SITE B</div>
+      <h1>06:00 AM — SHIFT COMPLETE</h1>
+      <div class="body">FAULTS LOGGED AND CLEARED: ${S.reported}<br><br>
+      Leave the tape in the drop box on your way out.<br>
+      <span class="quote">Do not watch it at home. It watches back.</span></div>
+      <button onclick="restart()">⏪&nbsp;NEXT TAPE</button>`;
+  }else{
+    e.innerHTML=`
+      <h1 style="color:#c65a4a">█ SIGNAL LOST █</h1>
+      <div class="sub">TAPE №4 — RECORDING ENDS ABRUPTLY</div>
+      <div class="body">EMPLOYEE #0413 DID NOT CLOCK OUT.<br>
+      FAULTS LOGGED BEFORE LOSS: ${S.reported}<br><br>
+      <span class="quote">Spectre Cleaning Solutions thanks you for your service.<br>
+      A replacement has already been scheduled.</span></div>
+      <button onclick="restart()">⏪&nbsp;REWIND TAPE</button>`;
+  }
+  e.classList.add('show');
+}
+
+/* ============================ UPDATE ============================ */
+function update(dt){
+  if(S.switchGlitch>0)S.switchGlitch=Math.max(0,S.switchGlitch-dt*1.6);
+  if(S.subFlash>0)S.subFlash-=dt;
+  if(S.msgT>0){S.msgT-=dt;if(S.msgT<=0)$('pager').classList.remove('show');}
+
+  if(S.mode==='dying'){
+    S.endT+=dt;
+    if(S.endT>2.1){S.mode='over';showEnd(false);}
+    return;
+  }
+  if(S.mode!=='shift')return;
+
+  S.t+=dt;
+  const hour=hourOf(S.t);
+
+  if(S.t>=TOTAL){S.mode='win';burst(.5,.15,500);showEnd(true);return;}
+
+  // hourly pager messages
+  if(hour!==S.hourShown){
+    S.hourShown=hour;
+    showMsg(MSGS[hour]);
+  }
+
+  // spawning
+  if(S.anomalies.length<CAP[hour]){
+    S.spawnT-=dt;
+    if(S.spawnT<=0){
+      spawnAnomaly();
+      S.spawnT=INTERVAL[hour]+Math.random()*5;
+    }
+  }
+
+  // escalation
+  for(const a of S.anomalies){
+    a.stageT+=dt;
+    if(a.stageT>STAGETIME[hour]){
+      a.stage++; a.stageT=0;
+      if(a.stage>=3){gameOver();return;}
+      thump();
+      if(a.cam===S.cam)S.switchGlitch=Math.max(S.switchGlitch,.5);
+    }
+  }
+
+  // verify pending report
+  if(S.verify){
+    S.verify.t-=dt;
+    if(S.verify.t<=0){
+      const v=S.verify; S.verify=null;
+      const i=S.anomalies.findIndex(a=>a.cam===v.cam&&a.type===v.type);
+      if(i>=0){
+        S.anomalies.splice(i,1); S.reported++;
+        blip(740,.12,'sine',.09); blip(990,.15,'sine',.07);
+        if(S.reported===1)showMsg("PAGER · MGMT: good catch. keep the tape running.");
+      }else{
+        S.lockout=5;
+        blip(140,.5,'sawtooth',.1);
+      }
+    }
+  }
+  if(S.lockout>0)S.lockout-=dt;
+
+  // heartbeat under pressure
+  const danger=S.anomalies.some(a=>a.stage>=2);
+  if(danger){
+    S.beatT-=dt;
+    if(S.beatT<=0){thump();S.beatT=.8;}
+  }
+  if(AC)hissGain.gain.value=.028+.012*S.anomalies.length;
+
+  // subliminal single-frame flashes in the late hours
+  if(hour>=2&&Math.random()<dt*.022){S.subFlash=.08;burst(.08,.06,300);}
+
+  $('reportBtn').disabled=S.lockout>0||!!S.verify;
+}
+function showMsg(txt){
+  const p=$('pager'); p.textContent=txt; p.classList.add('show');
+  S.msgT=12; blip(880,.07,'square',.05); setTimeout(()=>blip(880,.07,'square',.05),160);
+}
+
+/* ============================ ROOM DRAWING ============================ */
+function R(x,y,w,h,c){g.fillStyle=c;g.fillRect(x,y,w,h);}
+function txt(s,x,y,c,size){g.fillStyle=c;g.font=(size||10)+'px "Courier New",monospace';g.fillText(s,x,y);}
+function figure(x,y,h,stage){ // x = feet center, y = feet line
+  g.fillStyle=P.ink;
+  const w=h*.3;
+  g.fillRect(x-w/2,y-h*.74,w,h*.74);
+  g.beginPath();g.arc(x,y-h*.8,h*.115,0,7);g.fill();
+  if(stage>=2){
+    g.fillStyle='#e4e8de';
+    g.fillRect(x-h*.05,y-h*.83,Math.max(1,h*.03),Math.max(1,h*.03));
+    g.fillRect(x+h*.02,y-h*.83,Math.max(1,h*.03),Math.max(1,h*.03));
+  }
+}
+function lightsOut(extra){
+  g.fillStyle='rgba(3,5,3,.9)';g.fillRect(0,0,W,H);
+  if(extra)extra();
+}
+function baseRoom(wallC,floorC,horizon){
+  R(0,0,W,horizon,wallC);
+  R(0,horizon,W,H-horizon,floorC);
+  R(0,horizon-2,W,2,P.line);
+}
+
+/* CAM 01 — LOBBY */
+function drawLobby(t,A){
+  baseRoom(P.wall,P.floor,150);
+  for(let x=0;x<W;x+=40)R(x,150,1,90,P.floorD);            // tiles
+  txt('SPECTRE',118,60,P.mid,16); txt('CLEANING SOLUTIONS',108,74,P.line,8);
+  // front doors
+  const open=A.DOOR;
+  R(28,70,64,80,P.line); R(31,73,28,74,open?P.ink:P.mid); R(61,73,28,74,P.mid);
+  if(open){R(31,73,10,74,P.dark); R(24,73,7,74,P.mid);}    // swung pane
+  // reception desk
+  R(196,128,104,10,P.mid); R(200,138,96,42,'#575d54'); R(200,138,96,3,P.lite);
+  // plant (OBJECT anomaly: moved to centre & tipped)
+  if(!A.OBJECT){
+    R(168,132,14,18,'#4a4f47');
+    g.fillStyle=P.line;g.beginPath();g.arc(175,124,12,0,7);g.fill();
+  }else{
+    R(120,196,20,12,'#4a4f47');
+    g.fillStyle=P.line;g.beginPath();g.arc(146,200,12,0,7);g.fill();
+  }
+  if(A.FIGURE){
+    if(A.FIGURE<2)figure(248,150,58,1);        // behind the desk
+    else figure(150,212,116,2);                // centre of the lobby
+  }
+  if(A.LIGHTS)lightsOut(()=>{txt('EXIT',40,66,'#5c2f28',8);});
+}
+
+/* CAM 02 — HALLWAY */
+function drawHallway(t,A){
+  R(0,0,W,H,P.wall2);
+  // one-point perspective
+  g.fillStyle=P.floor;g.beginPath();
+  g.moveTo(0,240);g.lineTo(110,140);g.lineTo(210,140);g.lineTo(320,240);g.closePath();g.fill();
+  R(110,80,100,60,P.wall);                                  // end wall
+  g.strokeStyle=P.line;g.lineWidth=1;
+  g.beginPath();g.moveTo(0,240);g.lineTo(110,140);g.moveTo(320,240);g.lineTo(210,140);g.stroke();
+  g.beginPath();g.moveTo(0,0);g.lineTo(110,80);g.moveTo(320,0);g.lineTo(210,80);g.stroke();
+  // side doors
+  R(40,90,26,86,P.mid); R(84,108,18,58,P.mid);
+  R(254,90,26,86,P.mid); R(218,108,18,58,P.mid);
+  if(A.DOOR){R(254,90,26,86,P.dark);R(280,88,5,90,P.mid);}  // right door hangs open
+  // end-of-hall door
+  R(146,96,28,44,P.line);
+  // wet floor sign (OBJECT anomaly: it is gone)
+  if(!A.OBJECT){
+    g.fillStyle=P.lite;g.beginPath();
+    g.moveTo(160,168);g.lineTo(150,196);g.lineTo(170,196);g.closePath();g.fill();
+    txt('!',157,190,P.dark,12);
+  }
+  if(A.FIGURE){
+    if(A.FIGURE<2)figure(160,138,30,1);        // far end of the hall
+    else figure(160,206,92,2);                 // halfway down, facing you
+  }
+  if(A.LIGHTS)lightsOut();
+}
+
+/* CAM 03 — OFFICE A */
+function drawOffice(t,A){
+  baseRoom(P.wall,P.floor,146);
+  // window band with blinds
+  R(24,36,120,52,P.mid);
+  for(let y=40;y<86;y+=6)R(24,y,120,2,P.wall);
+  // back door
+  const open=A.DOOR;
+  R(258,68,40,78,open?P.dark:P.mid); R(256,66,44,3,P.line);
+  if(open)R(296,66,5,80,P.mid);
+  // two desks with monitors
+  for(const dx of [40,150]){
+    R(dx,150,86,8,P.mid); R(dx+6,158,6,30,P.line); R(dx+74,158,6,30,P.line);
+    R(dx+26,126,30,24,P.dark); R(dx+30,130,22,16,'#242a23');
+  }
+  // chair (OBJECT anomaly: dragged to face the camera)
+  if(!A.OBJECT){
+    R(96,168,22,6,P.line); R(104,174,6,16,P.line); R(94,158,26,12,P.dark);
+  }else{
+    R(146,206,34,8,P.line); R(159,214,8,20,P.line); R(142,186,42,22,P.dark);
+  }
+  if(A.FIGURE){
+    if(A.FIGURE<2){                            // seated at the far desk
+      g.fillStyle=P.ink;
+      g.fillRect(168,112,28,38);
+      g.beginPath();g.arc(182,106,10,0,7);g.fill();
+    }else figure(180,216,112,2);
+  }
+  if(A.LIGHTS)lightsOut(()=>{R(184,130,14,10,'#39423a');}); // one monitor still glows
+}
+
+/* CAM 04 — BREAK ROOM */
+function drawBreak(t,A){
+  baseRoom(P.wall,P.floor,148);
+  // wall clock — shows real shift time unless OBJECT anomaly (hands hang dead at 6:30-ish)
+  g.fillStyle=P.lite;g.beginPath();g.arc(160,52,17,0,7);g.fill();
+  g.strokeStyle=P.dark;g.lineWidth=2;
+  const mins=S?S.t/TOTAL*360:0;
+  let ha=A.OBJECT? Math.PI : (mins/60)*(Math.PI/6)-Math.PI/2;
+  let ma=A.OBJECT? Math.PI : (mins%60)*(Math.PI/30)-Math.PI/2;
+  g.beginPath();g.moveTo(160,52);g.lineTo(160+Math.cos(ha)*8,52+Math.sin(ha)*8);g.stroke();
+  g.beginPath();g.moveTo(160,52);g.lineTo(160+Math.cos(ma)*13,52+Math.sin(ma)*13);g.stroke();
+  // fridge (DOOR anomaly: ajar)
+  R(252,66,46,96,P.lite); R(252,104,46,3,P.mid);
+  if(A.DOOR){R(252,66,20,96,P.dark);R(244,64,8,100,P.lite);}
+  // counter + microwave
+  R(18,118,110,34,P.mid); R(30,96,34,22,P.dark); R(36,101,16,12,'#242a23');
+  // table + chairs
+  R(120,178,86,8,P.lite); R(128,186,7,26,P.line); R(190,186,7,26,P.line);
+  R(96,170,18,8,P.line); R(212,170,18,8,P.line);
+  if(A.FIGURE){
+    if(A.FIGURE<2)figure(236,164,62,1);        // wedged beside the fridge
+    else figure(158,222,118,2);                // standing on the table side, close
+  }
+  if(A.LIGHTS)lightsOut(()=>{g.fillStyle='#39423a';g.fillRect(36,101,16,12);});
+}
+
+/* CAM 05 — STORAGE */
+function drawStorage(t,A){
+  baseRoom(P.wall2,P.floorD,142);
+  // shelf racks
+  for(const rx of [16,232]){
+    R(rx,52,72,130,'transparent');
+    g.strokeStyle=P.line;g.lineWidth=3;
+    g.strokeRect(rx,52,72,130);
+    for(const sy of [92,132])R(rx,sy,72,3,P.line);
+    if(!A.OBJECT){                              // boxes on shelves
+      R(rx+8,66,24,24,P.mid); R(rx+40,72,22,18,P.mid);
+      R(rx+6,104,30,26,P.mid); R(rx+44,110,20,20,P.mid);
+      R(rx+10,146,26,34,P.mid); R(rx+42,152,22,28,P.mid);
+    }
+  }
+  if(A.OBJECT){                                 // every box, stacked in one column
+    for(let i=0;i<6;i++)R(146-((i%2)*4),196-i*24,32+(i%2)*6,22,P.mid);
+  }
+  // mop bucket
+  R(104,182,18,16,'#5a6058'); R(101,178,24,4,P.line);
+  if(A.FIGURE){
+    if(A.FIGURE<2)figure(160,150,44,1);        // in the aisle, far back
+    else figure(160,214,108,2);
+  }
+  if(A.LIGHTS)lightsOut();
+}
+
+/* CAM 06 — BASEMENT */
+function drawBasement(t,A){
+  baseRoom('#4c5249','#33372f',138);
+  // stairs, upper left
+  for(let i=0;i<6;i++)R(20+i*10,44+i*14,70-i*8,12,i%2?'#3d423a':'#464b42');
+  // pipes
+  R(0,20,W,6,P.line); R(210,20,6,120,P.line);
+  // furnace with flickering glow
+  R(232,80,64,88,'#3a3f37'); R(240,88,48,10,P.line);
+  const fl=.5+.5*Math.sin(t*13)+.3*Math.sin(t*29);
+  g.fillStyle='rgba(190,120,60,'+(.25+.2*fl)+')';
+  g.fillRect(248,118,32,26);
+  // crawlspace hatch (DOOR anomaly: open)
+  if(!A.DOOR){R(140,120,44,20,P.line);}
+  else{R(140,120,44,20,P.ink);R(136,116,4,26,P.line);}
+  // paint can (OBJECT anomaly: moved to the foot of the stairs)
+  if(!A.OBJECT){R(196,150,14,16,P.mid);}
+  else{R(78,138,14,16,P.mid);}
+  if(A.FIGURE){
+    if(A.FIGURE<2)figure(56,136,44,1);         // at the foot of the stairs
+    else figure(160,216,112,2);
+  }
+  if(A.LIGHTS)lightsOut(()=>{
+    g.fillStyle='rgba(190,120,60,'+(.2+.15*fl)+')';
+    g.fillRect(248,118,32,26);
+  });
+}
+
+const ROOMS=[drawLobby,drawHallway,drawOffice,drawBreak,drawStorage,drawBasement];
+
+/* ============================ NOISE / POST FX ============================ */
+const noiseFrames=[];
+for(let i=0;i<8;i++){
+  const c=document.createElement('canvas');c.width=160;c.height=120;
+  const nctx=c.getContext('2d');
+  const id=nctx.createImageData(160,120);
+  for(let p=0;p<id.data.length;p+=4){
+    const v=(Math.random()*255)|0;
+    id.data[p]=id.data[p+1]=id.data[p+2]=v;id.data[p+3]=255;
+  }
+  nctx.putImageData(id,0,0);
+  noiseFrames.push(c);
+}
+
+function pad2(n){return n<10?'0'+n:''+n;}
+function clockStr(){
+  const gm=S.t*(360/TOTAL);                    // minutes since midnight
+  const h=Math.floor(gm/60), m=Math.floor(gm%60), s=Math.floor((gm*60)%60);
+  return pad2(((h+11)%12)+1)+':'+pad2(m)+':'+pad2(s)+' AM';
+}
+
+function face(){
+  g.fillStyle='#000';g.fillRect(0,0,W,H);
+  g.fillStyle='#c6ccbf';
+  g.beginPath();g.ellipse(W/2,H/2,46,64,0,0,7);g.fill();
+  g.fillStyle='#000';
+  g.beginPath();g.ellipse(W/2-17,H/2-14,7,17,0,0,7);g.fill();
+  g.beginPath();g.ellipse(W/2+17,H/2-14,7,17,0,0,7);g.fill();
+  g.beginPath();g.ellipse(W/2,H/2+34,10,22,0,0,7);g.fill();
+}
+
+function render(now){
+  const t=now/1000;
+  // ---- scene to offscreen ----
+  g.clearRect(0,0,W,H);
+  if(S.mode==='title'){
+    g.fillStyle='#060806';g.fillRect(0,0,W,H);
+  }else if(S.mode==='dying'){
+    if(S.endT<.4){ROOMS[S.cam](t,{});}
+    else if(S.endT<1.5){ (Math.floor(S.endT*18)%2===0)?face():(g.fillStyle='#000',g.fillRect(0,0,W,H)); }
+    else{g.fillStyle='#000';g.fillRect(0,0,W,H);}
+  }else{
+    const A={};
+    for(const a of S.anomalies)if(a.cam===S.cam)A[a.type]=a.stage;
+    ROOMS[S.cam](t,A);
+    if(S.subFlash>0){                          // single-frame close silhouette
+      g.globalAlpha=.55;figure(W/2,H+30,260,2);g.globalAlpha=1;
+    }
+  }
+
+  // ---- composite ----
+  vg.clearRect(0,0,W,H);
+  let glitch=S.switchGlitch;
+  if(S.mode==='shift'){
+    if(S.verify)glitch=Math.max(glitch,.55);
+    if(S.lockout>0)glitch=Math.max(glitch,.4);
+    for(const a of S.anomalies)if(a.cam===S.cam)glitch=Math.max(glitch,a.stage*.16);
+  }
+  if(S.mode==='dying')glitch=1;
+
+  if(glitch>0.05){
+    const strips=Math.floor(glitch*7);
+    let y=0;
+    while(y<H){
+      const sh=8+Math.random()*26;
+      const dx=(Math.random()<glitch*.7)?(Math.random()*glitch*30-glitch*15)|0:0;
+      vg.drawImage(sc,0,y,W,sh,dx,y,W,sh);
+      y+=sh;
+    }
+  }else{
+    vg.drawImage(sc,0,0);
+  }
+
+  // rolling tracking bar
+  const barY=(t*22)%(H+40)-20;
+  const grad=vg.createLinearGradient(0,barY,0,barY+22);
+  grad.addColorStop(0,'rgba(255,255,255,0)');
+  grad.addColorStop(.5,'rgba(255,255,255,.06)');
+  grad.addColorStop(1,'rgba(0,0,0,.12)');
+  vg.fillStyle=grad;vg.fillRect(0,barY,W,22);
+
+  // static
+  vg.globalAlpha=Math.min(.55,.07+glitch*.45);
+  vg.drawImage(noiseFrames[(Math.random()*8)|0],0,0,W,H);
+  vg.globalAlpha=1;
+
+  // ---- OSD ----
+  if(S.mode==='shift'||S.mode==='dying'){
+    vg.fillStyle='#dfe5d8';vg.font='10px "Courier New",monospace';
+    if(Math.floor(t*2)%2===0){vg.fillStyle='#d5493a';vg.fillText('●',6,14);vg.fillStyle='#dfe5d8';}
+    vg.fillText(' REC',10,14);
+    vg.fillText('SP',W-24,14);
+    vg.fillText('CAM 0'+(S.cam+1)+'  '+CAMS[S.cam],6,H-8);
+    vg.fillText('OCT 31 1994',6,H-20);
+    const cs=(S.mode==='shift')?clockStr():'--:--:-- --';
+    vg.fillText(cs,W-cs.length*6-6,H-8);
+    if(S.mode==='shift'){
+      const n=S.anomalies.length;
+      if(n>0&&Math.floor(t*2.5)%2===0){
+        const w='▲ '+n+' UNRESOLVED FAULT'+(n>1?'S':'');
+        vg.fillStyle='#d8b03c';vg.fillText(w,W/2-w.length*3,26);
+      }
+      if(S.verify){
+        vg.fillStyle='#dfe5d8';
+        vg.fillText('VERIFYING REPORT…',W/2-51,H/2);
+      }else if(S.lockout>0){
+        vg.fillStyle='#c65a4a';
+        vg.fillText('NO FAULT FOUND — PANEL LOCKED '+Math.ceil(S.lockout),W/2-93,H/2);
+      }
+    }
+  }
+}
+
+/* ============================ MAIN LOOP ============================ */
+S=freshState();
+function frame(now){
+  const dt=Math.min(.1,(now-S.last)/1000);
+  S.last=now;
+  update(dt);
+  render(now);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
