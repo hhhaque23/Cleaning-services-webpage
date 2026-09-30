@@ -8,6 +8,7 @@ import {
 } from "@/lib/bookings";
 import { getCleaners } from "@/lib/settings";
 import { businessToday } from "@/lib/dates";
+import { emailHealth } from "@/lib/email";
 import { FREQUENCY_META, TIER_META } from "../components/Booking/pricing";
 import { OpsBoard } from "./_OpsBoard";
 import {
@@ -45,6 +46,7 @@ export default async function AdminDashboard({ searchParams }: Props) {
 
   const allBookings = await listBookings();
   const cleaners = await getCleaners();
+  const email = await emailHealth();
   const todayISO = businessToday();
 
   const filtered = showQueue
@@ -110,6 +112,17 @@ export default async function AdminDashboard({ searchParams }: Props) {
             <strong className="font-semibold">DATABASE_URL is not set.</strong> Bookings
             are being stored in memory and will reset on every deploy. Provision Postgres
             on Railway (Add Service → Database → PostgreSQL) and re-deploy.
+          </div>
+        </div>
+      )}
+
+      {email.problem && (
+        <div className="mt-6 rounded-2xl border border-[oklch(0.78_0.12_75)] bg-[oklch(0.97_0.05_75)] px-5 py-4 flex items-start gap-3">
+          <AlertTriangle className="h-5 w-5 flex-none text-[oklch(0.55_0.18_70)] mt-0.5" />
+          <div className="text-sm text-[oklch(0.35_0.12_70)] leading-relaxed">
+            <strong className="font-semibold">Customers aren&apos;t getting confirmation emails.</strong>{" "}
+            {email.problem} Once it&apos;s fixed, use &ldquo;Resend confirmation&rdquo; on any
+            booking that missed its email.
           </div>
         </div>
       )}

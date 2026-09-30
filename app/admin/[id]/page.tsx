@@ -15,6 +15,7 @@ import {
 import { StatusActions } from "./StatusActions";
 import { ManageBooking } from "./ManageBooking";
 import { DeleteBooking } from "./DeleteBooking";
+import { ResendConfirmation } from "./ResendConfirmation";
 
 const CADENCE_DAYS: Record<Frequency, number> = {
   onetime: 0,
@@ -239,6 +240,8 @@ export default async function AdminBookingDetail({ params }: Props) {
               </div>
             </div>
           </section>
+
+          <ResendConfirmation id={booking.id} email={booking.email} />
 
           <DeleteBooking id={booking.id} />
         </div>

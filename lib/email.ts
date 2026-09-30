@@ -14,15 +14,40 @@ import { TIER_META, FREQUENCY_META, ADDON_META } from "@/app/components/Booking/
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 // `from` must be on a Resend-verified domain in production. The resend.dev
 // fallback only delivers to your own Resend account email — handy for a first
-// live test before the domain is verified.
+// live test before the domain is verified, but it silently fails for real
+// customers, so we warn about it loudly.
 const EMAIL_FROM =
   process.env.EMAIL_FROM || "Spectre Cleaning <onboarding@resend.dev>";
+
+if (RESEND_API_KEY && !process.env.EMAIL_FROM && process.env.NODE_ENV === "production") {
+  console.warn(
+    "[email] EMAIL_FROM not set — falling back to onboarding@resend.dev, which only delivers to the Resend account owner. Set EMAIL_FROM to an address on your verified domain."
+  );
+}
 
 export function isEmailConfigured() {
   return Boolean(RESEND_API_KEY);
 }
 
+/** Domain part of EMAIL_FROM, e.g. "spectrecleaningsolutions.com". */
+function fromDomain(): string {
+  const addr = EMAIL_FROM.match(/<([^>]+)>/)?.[1] ?? EMAIL_FROM;
+  return addr.split("@")[1]?.trim().toLowerCase() ?? "";
+}
+
 type SendResult = { ok: boolean; skipped?: boolean; id?: string; error?: string };
+
+// Resend error bodies look like { statusCode, name, message }. Surface the
+// message (e.g. "The example.com domain is not verified…") instead of a bare code.
+function resendErrorMessage(status: number, body: string): string {
+  try {
+    const msg = (JSON.parse(body) as { message?: unknown })?.message;
+    if (typeof msg === "string" && msg) return msg;
+  } catch {
+    /* not JSON */
+  }
+  return `Resend ${status}`;
+}
 
 export async function sendEmail(opts: {
   to: string;
@@ -60,7 +85,7 @@ export async function sendEmail(opts: {
     if (!res.ok) {
       const body = await res.text().catch(() => "");
       console.error("[email] Resend error", res.status, body);
-      return { ok: false, error: `Resend ${res.status}` };
+      return { ok: false, error: resendErrorMessage(res.status, body) };
     }
     const data = (await res.json().catch(() => ({}))) as { id?: string };
     return { ok: true, id: data?.id };
@@ -70,6 +95,91 @@ export async function sendEmail(opts: {
   } finally {
     clearTimeout(timeout);
   }
+}
+
+// ---- Health check (ops console banner) ----
+
+export type EmailHealth = {
+  configured: boolean;
+  fromDomain: string;
+  /** true/false from Resend's domain list; null = couldn't tell (e.g. a sending-only key). */
+  verified: boolean | null;
+  /** Human-readable reason emails won't reach customers, if any. */
+  problem?: string;
+};
+
+const HEALTH_TTL_MS = 5 * 60_000;
+let healthCache: { at: number; value: EmailHealth } | null = null;
+
+// Never throws. Cached so the dashboard doesn't hit Resend on every load.
+export async function emailHealth(): Promise<EmailHealth> {
+  const domain = fromDomain();
+  if (!RESEND_API_KEY) {
+    return {
+      configured: false,
+      fromDomain: domain,
+      verified: null,
+      problem: "RESEND_API_KEY is not set, so confirmation emails are skipped.",
+    };
+  }
+  if (domain === "resend.dev") {
+    return {
+      configured: true,
+      fromDomain: domain,
+      verified: null,
+      problem:
+        "EMAIL_FROM is not set, so emails come from onboarding@resend.dev and only reach the Resend account owner.",
+    };
+  }
+  if (healthCache && Date.now() - healthCache.at < HEALTH_TTL_MS) return healthCache.value;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  let value: EmailHealth = { configured: true, fromDomain: domain, verified: null };
+  try {
+    const res = await fetch("https://api.resend.com/domains", {
+      headers: { Authorization: `Bearer ${RESEND_API_KEY}` },
+      signal: controller.signal,
+      cache: "no-store",
+    });
+    if (res.ok) {
+      const data = (await res.json().catch(() => ({}))) as {
+        data?: { name?: string; status?: string }[];
+      };
+      const match = data.data?.find((d) => d.name?.toLowerCase() === domain);
+      if (!match) {
+        value = {
+          ...value,
+          verified: false,
+          problem: `${domain} hasn't been added to Resend, so confirmation emails are rejected.`,
+        };
+      } else if (match.status !== "verified") {
+        value = {
+          ...value,
+          verified: false,
+          problem: `${domain} is not verified in Resend (status: ${match.status ?? "unknown"}), so confirmation emails are rejected. Add Resend's DNS records in Cloudflare, then click Verify.`,
+        };
+      } else {
+        value = { ...value, verified: true };
+      }
+    } else if ([400, 401, 403].includes(res.status)) {
+      // A "sending access" key can't list domains (restricted_api_key) — that's
+      // fine, status just stays unknown. Anything else means the key is bad.
+      const body = await res.text().catch(() => "");
+      if (!/restricted/i.test(body)) {
+        value = {
+          ...value,
+          problem: `Resend rejected the API key (${resendErrorMessage(res.status, body)}). Check RESEND_API_KEY on Railway.`,
+        };
+      }
+    }
+  } catch (e) {
+    console.error("[email] health check failed", e);
+  } finally {
+    clearTimeout(timeout);
+  }
+  healthCache = { at: Date.now(), value };
+  return value;
 }
 
 // ---- Booking confirmation template ----

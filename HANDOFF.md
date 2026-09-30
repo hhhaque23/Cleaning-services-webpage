@@ -40,6 +40,15 @@ cool cyan (legacy `grass` tokens alias to `accent`).
   - `CNAME  www  → 8np1wewk.up.railway.app`
   - `TXT    _railway-verify → railway-verify=…` — Railway's domain-ownership check.
   - (harmless leftovers kept: a `_domainconnect` CNAME and a `google-site-verification` TXT.)
+  - **⚠️ Mail records were NOT carried over in the move to Cloudflare** (found 2026-09-30: no MX, no
+    Resend DKIM/SPF, no DMARC). So `owner@spectrecleaningsolutions.com` received nothing, and Resend
+    rejected customer confirmations. `owner@` is a **Google Workspace** mailbox, so it needs Google's 5 MX
+    records **in Cloudflare**: `aspmx.l.google.com` (1), `alt1`/`alt2.aspmx.l.google.com` (5), and
+    `alt3`/`alt4.aspmx.l.google.com` (10). Squarespace's DNS panel still lists them, but it's
+    **not authoritative** anymore, so records there do nothing. Also needed: root SPF
+    `v=spf1 include:_spf.google.com ~all`, the **Resend domain records** (`resend._domainkey` TXT,
+    `send` MX + TXT, DNS-only), and `_dmarc` TXT `v=DMARC1; p=none;`.
+    Check with `Resolve-DnsName spectrecleaningsolutions.com -Type MX -Server 1.1.1.1`.
   - To enable Cloudflare's proxy/CDN/WAF later, first set **SSL/TLS → Full (strict)** in Cloudflare,
     *then* flip the records to orange — otherwise Railway's HTTPS redirect causes a loop.
 - **GitHub Pages was attempted and removed** (commit `4337fa7` deleted `.github/workflows/nextjs.yml`
@@ -152,8 +161,11 @@ context instead.
   `{"demo":false,"locked":false}`. (If it ever shows demo mode again, the var was lost on the web
   service.)
 - **Email (recommended): set `RESEND_API_KEY` + `EMAIL_FROM` on Railway** and verify the Resend
-  sending domain (add the SPF/DKIM records it gives you in **Cloudflare**). The live test sent OK
-  (`emailed:true`); domain verification just locks in inbox deliverability.
+  sending domain (add the SPF/DKIM records it gives you in **Cloudflare**). **Domain verification is
+  required, not optional:** until it's verified, Resend only delivers to the Resend account owner's
+  own address. The earlier "live test sent OK (`emailed:true`)" was a booking made with that address,
+  which hid the fact that real customers got nothing. The `/admin` dashboard now shows an amber banner
+  while email is broken (`emailHealth()` in `lib/email.ts`).
 - **Delete the duplicate Postgres service** if not already done. Two were provisioned
   (`Postgres` and `Postgres-Bg-T`); the web service is wired to the first via
   `${{ Postgres.DATABASE_URL }}`. Removing a service needs the dashboard
@@ -166,8 +178,10 @@ context instead.
   via **Resend** (plain `fetch`, no npm dep; **fail-open** — a missing key or provider error never
   breaks a booking, with an 8s timeout). `bookingConfirmationEmail(booking)` builds the HTML/text; it's
   sent from `POST /api/bookings` right after `createBooking`, and the response returns an `emailed`
-  boolean (the success screen shows "Confirmation & code emailed to …" only when `true`). Live test →
-  `emailed:true`. Requires `RESEND_API_KEY` + `EMAIL_FROM`. No SMS/Twilio yet.
+  boolean (the success screen shows "Confirmation & code emailed to …" only when `true`). Requires
+  `RESEND_API_KEY` + `EMAIL_FROM` + a **verified** Resend domain. `/admin/[id]` has a **Resend
+  confirmation** button (`POST /api/bookings/[id]/email`, admin-only) for bookings that missed their
+  email. Send failures now carry Resend's real message (e.g. "domain is not verified"). No SMS/Twilio yet.
 - **No tests** (no unit/integration/e2e). Verified manually / via Playwright screenshots.
 - **No image optimization service** — `next.config.js` sets `unoptimized: true` and hotlinks
   Unsplash (`w=1600&q=78`).
