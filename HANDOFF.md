@@ -47,7 +47,10 @@ cool cyan (legacy `grass` tokens alias to `accent`).
     `alt3`/`alt4.aspmx.l.google.com` (10). Squarespace's DNS panel still lists them, but it's
     **not authoritative** anymore, so records there do nothing. Also needed: root SPF
     `v=spf1 include:_spf.google.com ~all`, the **Resend domain records** (`resend._domainkey` TXT,
-    `send` MX + TXT, DNS-only), and `_dmarc` TXT `v=DMARC1; p=none;`.
+    plus CNAMEs `send` and `rsend` pointing at `*.forge.rmta.net`, all DNS-only), and `_dmarc` TXT
+    `v=DMARC1; p=none;`. **All added and verified 2026-09-30.** Sending also needed `EMAIL_FROM` set on
+    Railway (it had never been set), and a `RESEND_API_KEY` from the **same Resend account** that holds
+    the verified domain (the old key was from another account). A live test booking returned `emailed:true`.
     Check with `Resolve-DnsName spectrecleaningsolutions.com -Type MX -Server 1.1.1.1`.
   - To enable Cloudflare's proxy/CDN/WAF later, first set **SSL/TLS → Full (strict)** in Cloudflare,
     *then* flip the records to orange — otherwise Railway's HTTPS redirect causes a loop.
